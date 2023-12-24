@@ -1,0 +1,103 @@
+@import '../responsive.scss';
+
+.without-selection {
+    max-width: 466px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .without-inner {
+
+        img {
+            @include mobile {
+                width: 200px;
+                height: 100px;
+                margin: auto;
+            }
+        }
+
+
+        h3 {
+            color: #FF6900;
+            font-size: 30px;
+            font-weight: 800;
+            text-align: center;
+
+            @include mobile {
+                font-size: 20px;
+            }
+            @include tablet {
+                font-size: 25px;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            text-align: center;
+
+            @include mobile {
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            @include tablet {
+                font-size: 15px;
+            }
+        }
+    }
+
+
+    .selection-button {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        max-width: 326px;
+
+        a {
+            margin: auto;
+            margin-top: 20px;
+            width: 100%;
+            padding: 17px 7px;
+            background-color: white;
+            color: #FF6900;
+            border-radius: 8px;
+            border: 1px solid #FF6900;
+            font-weight: 500;
+            display: inline-block;
+            text-align: center;
+            transition: all ease .2s;
+
+            @include mobile {
+                padding: 10px 5px;
+                font-size: 14px;
+            }
+
+        }
+
+        a:hover {
+            background: #FF6900;
+            border: 1px solid #fff;
+            color: #fff;
+        }
+    }
+
+    .selection-footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 16px;
+
+        @include mobile {
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+        p {
+            @include mobile {
+                font-size: 14px;
+            }
+        }
+    }
+}
