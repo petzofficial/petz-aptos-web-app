@@ -1,0 +1,372 @@
+@import '../responsive.scss';
+
+.setting {
+    padding-top: 90px;
+    @include mobile {
+        padding-top: 70px;
+    }
+
+    @include tablet {
+        padding-top: 80px;
+    }
+
+    .addcontainer {
+        max-width: 1280px;
+        margin: auto;
+
+        .setting-inner {
+            .setting-left {
+                max-width: 327px;
+
+                @include mobile {
+                    margin: auto;
+                    max-width: 600px;
+                }
+
+                @include tablet {
+                    margin: 0 auto;
+                    max-width: 600px;
+                }
+
+                .setting-left-navbar {
+                    margin-top: 48px;
+
+                    @include mobile {
+                        margin-top: 10px;
+                    }
+
+                    .nav-item {
+
+                        div{
+
+                            @include tablet{
+                                justify-content: space-between;
+                            }
+                            @include mobile{
+                                justify-content: space-between;
+                            }
+                        }
+
+                        h4{
+                            width: 160px;
+                            @include mobile{
+                                width: auto ;
+                            }
+                        }
+
+                        @include mobile {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+
+            .setting-right {
+                max-width: 600px;
+
+                @include mobile {
+                    padding-top: 15px;
+                    margin: 0 auto;
+                }
+
+                @include tablet {
+                    padding-top: 25px;
+                    margin: 0 auto;
+                }
+
+                h2 {
+                    font-size: 30px;
+                    font-weight: 700;
+
+                    @include mobile {
+                        font-size: 20px;
+                    }
+
+                    @include tablet {
+                        font-size: 25px;
+                    }
+                }
+
+                .main-setting {
+                    max-width: 327px;
+
+                    @include mobile {
+                        margin: auto;
+                        max-width: 600px;
+                    }
+
+                    @include tablet {
+                        margin: auto;
+                        max-width: 600px;
+                    }
+
+                    h4 {
+                        font-size: 16px;
+                        font-weight: 700;
+                    }
+                    p{
+                        @include mobile{
+                            font-size: 14px;
+                        }
+                    }
+
+                    .flex {
+                        justify-content: space-between;
+
+                        p {
+                            line-height: 1.2rem;
+                            color: #545454;
+                        }
+                    }
+
+                    button {
+                        padding: 16px 40px;
+                        background: #FF6900;
+                        border-radius: 8px;
+                        margin-top: 50px;
+
+                        @include mobile {
+                            margin-top: 20px;
+                            padding: 10px 20px;
+                        }
+                    }
+
+                    .switch {
+                        position: relative;
+                        display: inline-block;
+                        height: 17px;
+                    }
+
+                    .switch input {
+                        opacity: 0;
+                        width: 30px;
+                        height: 0;
+                    }
+
+                    .slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        -webkit-transition: .4s;
+                        transition: .4s;
+                    }
+
+                    .slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 10px;
+                        width: 10px;
+                        left: 4px;
+                        bottom: 4px;
+                        background-color: white;
+                        -webkit-transition: .4s;
+                        transition: .4s;
+                    }
+
+                    input:checked+.slider {
+                        background-color: #2196F3;
+                    }
+
+                    input:focus+.slider {
+                        box-shadow: 0 0 1px #2196F3;
+                    }
+
+                    input:checked+.slider:before {
+                        -webkit-transform: translateX(26px);
+                        -ms-transform: translateX(26px);
+                        transform: translateX(12px);
+                    }
+
+                    /* Rounded sliders */
+                    .slider.round {
+                        border-radius: 34px;
+                    }
+
+                    .slider.round:before {
+                        border-radius: 50%;
+                    }
+                }
+
+                .setting-about {
+                    @include tablet{
+                        margin-top: 40px;
+                    }
+                    div {
+                        margin: 40px 0;
+
+                        @include mobile{
+                            margin: 20px 0;
+                        }
+                        @include tablet{
+                            margin: 30px 0;
+                        }
+
+                        h4 {
+                            font-size: 22px;
+                            font-weight: 700;
+                            color: #111111;
+                            margin-bottom: 10px;
+
+                            @include mobile {
+                                font-size: 18px;
+                                margin-bottom: 6px;
+                            }
+
+                            @include tablet {
+                                font-size: 20px;
+                                margin-bottom: 8px;
+                            }
+                        }
+
+                        p {
+                            line-height: 1.2rem;
+                            color: #6c6767;
+                            @include mobile {
+                                font-size: 14px;
+                            }
+
+                            @include tablet {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+
+                .setting-terms {
+                    h4 {
+                        font-weight: 700;
+                        font-size: 22px;
+
+                        @include mobile {
+                            font-size: 18px;
+                        }
+                    }
+
+                    p {
+                        line-height: 1.2rem;
+                        color: #6c6969;
+
+                        @include mobile {
+                            font-size: 14px;
+                        }
+                    }
+                }
+
+                .setting-privacy {
+                    @include mobile {
+                        margin-top: 20px;
+                    }
+
+                    .search-bar {
+                        max-width: 327px;
+
+                        @include tablet{
+                            max-width: 600px;
+                        }
+
+                        input {
+                            border: 2px solid #7A7A7A;
+                            border-radius: 8px;
+                        }
+                    }
+
+                    p {
+                        line-height: 1.2rem;
+                        @include mobile {
+                            font-size: 14px;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+
+                .setting-support {
+                    .support-hero {
+                        img {
+                            @include tablet {
+                                margin: auto;
+                            }
+                        }
+
+                        .details {
+                            max-width: 400px;
+                            margin: auto;
+
+                            @include mobile {
+                                max-width: 300px;
+                            }
+
+                            @include tablet {
+                                max-width: 327px;
+                            }
+
+                            h3 {
+                                font-weight: 700;
+                                font-size: 24px;
+                                color: #FF6900;
+
+                                @include mobile {
+                                    font-size: 18px;
+                                }
+                                @include tablet {
+                                    font-size: 22px;
+                                }
+                            }
+
+                            p {
+                                line-height: 1.2rem;
+                                @include mobile {
+                                    font-size: 14px;
+                                }
+
+                                @include tablet {
+                                    font-size: 16px;
+                                }
+                            }
+                        }
+                    }
+
+                    .support-btn {
+                        gap: 10px;
+
+                        button {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            margin: 20px auto;
+                            border: 1px solid #252525;
+                            padding: 15px 0;
+                            border-radius: 8px;
+                            transition: all ease .2s;
+                            width: 100%;
+
+                            @include mobile {
+                                margin: 15px auto;
+                                max-width: 327px;
+                            }
+
+                            @include tablet {
+                                margin: 15px auto;
+                                max-width: 327px;
+                            }
+
+                            @include desktop {
+                                margin: auto;
+                                max-width: 327px;
+                            }
+                        }
+
+                        button:hover {
+                            color: #ffff;
+                            background: #FF6900;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

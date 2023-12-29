@@ -1,0 +1,127 @@
+@import '../responsive.scss';
+
+.statistics {
+    padding-top: 90px;
+    @include mobile {
+        padding-top: 70px;
+    }
+
+    @include tablet {
+        padding-top: 80px;
+    }
+
+    .addcontainer {
+        max-width: 1280px;
+        margin: auto;
+
+        .statistics-title {
+            button {
+                font-weight: 700;
+            }
+        }
+
+        .statistics-inner {
+            h2 {
+                font-size: 30px;
+                font-weight: 600;
+                max-width: 328px;
+                margin: auto;
+                text-align: center;
+                margin-top: -45px;
+                color: #FF6900;
+
+                @include mobile {
+                    font-size: 20px;
+                    margin-top: -30px;
+                }
+
+                @include tablet {
+                    font-size: 25px;
+                    margin-top: -33px;
+                }
+            }
+
+            .week-month-year-btn {
+                max-width: 328px;
+                margin: 30px auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                @include mobile{
+                    margin-bottom: 10px;
+                    margin-top: 2rem;
+                }
+                @include tablet{
+                    margin-bottom: 10px;
+                }
+
+                button {
+                    width: 100px;
+                    height: 52px;
+                    border-radius: 8px;
+                    border: 1px solid #898989;
+                    transition: .2s all ease;
+
+                    @include mobile {
+                        height: 40px;
+                        width: 70px;
+                    }
+
+                    @include tablet {
+                        height: 47px;
+                    }
+                }
+
+                button:hover {
+                    background-color: #FF6900;
+                    color: white;
+                }
+            }
+
+            .weekly-summ {
+                max-width: 327px;
+                margin: 30px auto;
+                border-radius: 8px;
+                border: 1px solid #898989;
+
+                @include mobile{
+                    max-width: 600px;
+                    margin: auto;
+                }
+                @include tablet{
+                   margin-top: 0px;
+                }
+
+                .summ-title {
+                    border-bottom: 1px solid #bfbcbc;
+                }
+            }
+
+            .statistics-bar {
+                max-width: 600px;
+                margin: 60px auto;
+                padding: 40px;
+                border-radius: 10px;
+                border: 1px solid #696969;
+
+                @include mobile {
+                    margin: 30px auto;
+                    max-width: 100%;
+                    padding: 15px;
+                }
+                @media (max-width:250px) {
+                    padding: 7px;
+                }
+                @include tablet {
+                    margin: auto;
+                }
+
+                p,
+                span {
+                    letter-spacing: -1px;
+                }
+            }
+        }
+    }
+}

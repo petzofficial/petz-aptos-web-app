@@ -1,0 +1,181 @@
+@import '../responsive.scss';
+
+.selection-nft {
+    background: url('../../assets/nft/Rectangle\ 34626066.png') no-repeat;
+    background-size: cover;
+    text-align: center;
+
+    @include mobile {
+        height: auto;
+    }
+
+    .addcontainer {
+        max-width: 1280px;
+        margin: auto;
+    }
+
+    .selection-title {
+        h2 {
+            color: #FF6900;
+            font-size: 40px;
+            font-weight: 700;
+
+            @include mobile {
+                font-size: 25px;
+            }
+
+            @include tablet {
+                font-size: 30px;
+            }
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: -20px;
+
+            @include mobile {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            @include tablet {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .selection-inner {
+        margin-top: 40px;
+
+        .pick-cards {
+
+            @include tablet{
+                display: grid;
+                padding: 30px 0;
+            }
+            @include mobile{
+                display: grid;
+            }
+
+            @media (max-width:375px) {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+                width: 200px;
+                height: 250px;
+                padding: 20px;
+                background: #fff;
+                border-radius: 14px;
+                color: black;
+                transition: .3s;
+                border: 1px solid #898989;
+
+                @include mobile {
+                    width: 170px;
+                    height: 200px;
+                }
+
+                .image {
+                    width: 135px;
+                    height: 134px;
+                    background-color: rgba(255, 105, 0, 0.25);
+                    backface-visibility: 25%;
+                    border-radius: 13px;
+
+                    @include mobile {
+                        width: 100px;
+                        height: 99px;
+                        padding: 20px;
+                    }
+                }
+
+                .pitbull-footer {
+                    width: 135px;
+                    display: flex;
+                    justify-content: space-between;
+
+                    p {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .box:hover {
+                background: #FF6900;
+
+                .image {
+                    background: white;
+                }
+
+                .pitbull-footer {
+                    font-size: 16px;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .selection-button {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+
+        a {
+            width: 100%;
+            margin: auto;
+            margin-top: 20px;
+            padding: 17px 7px;
+            border-radius: 8px;
+            border: 1px solid #FF6900;
+            color: #FF6900;
+            font-weight: 600;
+            background-color: white;
+
+            @include mobile {
+                padding: 10px 5px;
+                font-size: 14px;
+            }
+        }
+
+        a:hover {
+            background: #FF6900;
+            border: 1px solid white;
+            color: white;
+        }
+    }
+
+    .selection-footer {
+        padding-top: 20px;
+        font-size: 16px;
+
+        @include mobile {
+            font-size: 14px;
+            padding-bottom: 10px;
+        }
+
+        @include tablet {
+            font-size: 15px;
+        }
+        @include desktop {
+            margin-top: 100px;
+        }
+
+        p {
+            @include mobile {
+                font-size: 14px;
+            }
+
+            @include tablet {
+                font-size: 15px;
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+@import '../responsive.scss';
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    
+    .active-page {
+        color: #FF6900;
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        border: 1px solid #FF6900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        font-weight: 700;
+        font-size: 22px;
+
+        @include mobile {
+            font-size: 15px;
+        }
+    }
+}

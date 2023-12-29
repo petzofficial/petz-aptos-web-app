@@ -1,0 +1,220 @@
+@import '../responsive.scss';
+
+.nft {
+    padding-top: 90px;
+    @include mobile{
+        padding-top: 70px;
+    }
+
+    @include tablet{
+        padding-top: 80px;
+    }
+
+    .addcontainer {
+        max-width: 1280px;
+        margin: auto;
+
+        .nft-inner {
+            max-width: 300px;
+            margin: -45px auto 0 auto;
+
+            @include mobile{
+                margin-top: -30px;
+            }
+            @include tablet{
+                margin-top: -35px;
+            }
+
+            h2 {
+                font-size: 30px;
+                font-weight: 600;
+                text-align: center;
+                color: #FF6900;
+                margin-bottom: 60px;
+
+                @include mobile{
+                    font-size: 20px;
+                    margin-bottom: 2rem;
+                }
+
+                @include tablet {
+                    font-size: 26px;
+                    margin-bottom: 40px;
+                }
+            }
+
+            .box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                max-width: 250px;
+                height: 300px;
+                padding: 20px;
+                background: #fff;
+                border-radius: 8px;
+                color: black;
+                transition: .3s;
+                border: 1px solid #898989;
+
+                .image {
+                    width: 135px;
+                    height: 134px;
+                    background-color: rgba(255, 105, 0, 0.25);
+                    backface-visibility: 25%;
+                    border-radius: 13px;
+                }
+
+                .pitbull-footer {
+                    width: 135px;
+                    display: flex;
+                    justify-content: space-between;
+
+                    p {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .star-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 22px;
+                color: #FFB72B;
+                margin: 20px 0;
+
+                @include mobile{
+                    font-size: 16px;
+                }
+
+                @include tablet {
+                    font-size: 20px;
+                }
+            }
+
+            .opportunities{
+                font-weight: 600;
+                color: #959595;
+
+                p{
+                    width: 40%;
+                }
+
+                h5{
+                    color: #FF6900;
+                }
+            }
+
+            .sell-select-btn{
+                margin: 50px 0;
+                max-width: 327px;
+                margin: 50px auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                button{
+                    width: 100%;
+                    padding: 10px 0;
+                    border: #FF6900 3px solid;
+                    border-radius: 8px;
+                    color: #FF6900;
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin: 10px 0;
+                    transition: all ease .2s;
+
+                    @include mobile{
+                        font-size: 16px;
+                    }
+
+                    @include tablet {
+                        font-size: 18px;
+                    }
+                }
+
+                button:hover{
+                    background: #FF6900;
+                    color: #fff;
+                }
+            }
+
+
+
+
+            .skill {
+                position: relative;
+                overflow-x: hidden;
+
+            }
+
+            .skill:before {
+                width: 90%;
+                height: 5px;
+                content: "";
+                display: block;
+                position: absolute;
+                background: #cfcaca;
+                bottom: 0;
+                border-radius: 5px;
+            }
+
+            .skill-bar {
+                width: 100%;
+                height: 5px;
+                background: #FF6900;
+                display: block;
+                position: relative;
+                border-radius: 5px;
+            }
+
+            .skill-bar span {
+                position: absolute;
+                border-top: 5px solid #f4392f;
+                top: -30px;
+                padding: 0;
+                font-size: 18px;
+                padding: 3px 0;
+                font-weight: 500;
+            }
+
+            .skill-bar {
+                position: relative;
+
+            }
+
+            .skill1 .skill-count1 {
+                right: 0;
+            }
+
+            /* SKILL 2 */
+            .skill2 {
+                width: 60%;
+            }
+
+            .skill2 .skill-count2 {
+                right: 0;
+            }
+
+            /* SKILL 3 */
+            .skill3 {
+                width: 80%;
+                background: #FF6900;
+            }
+
+            .skill4 {
+                width: 50%;
+                background: #FF6900;
+            }
+            .skill5 {
+                width: 40%;
+                background: #FF6900;
+            }
+            .skill6 {
+                width: 30%;
+                background: #FF6900;
+            }
+        }
+    }
+}

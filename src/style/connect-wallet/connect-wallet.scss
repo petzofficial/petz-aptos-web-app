@@ -1,0 +1,202 @@
+@import '../responsive.scss';
+
+.connect-wallet {
+    width: 100%;
+    background: url('../../assets/wallet/pexels-moose-photos-1037915\ 1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+
+    @include mobile{
+        height: auto;
+    }
+    @include tablet{
+        height: auto;
+    }
+
+    .addcontainer {
+        max-width: 1280px;
+        margin: auto;
+
+
+        .connect-wallet-inner {
+            justify-content: space-between;
+
+            @include tablet {
+                display: block;
+            }   
+
+            .connect-wallet-left {
+
+                @include mobile {
+                    max-width: 327px;
+                    margin: auto;
+                }
+
+                @include tablet {
+                    max-width: 1000px;
+                    margin: auto;
+                }   
+
+                .logo {
+                    display: flex;
+                    align-items: center;
+
+                    @include mobile {
+                        padding: 10px 0;
+                    }
+                    @include tablet {
+                        padding: 40px 0;
+                    }
+
+                    img {
+                        @include mobile {
+                            width: 60px;
+                            height: 60px;
+                        }
+
+                        @include tablet {
+                            width: 90px;
+                            height: 90px;
+                        }
+                    }
+
+                    h3 {
+                        font-size: 26px;
+                        font-weight: 700;
+                        color: #ffff;
+
+                        @include mobile {
+                            font-size: 22px;
+                        }
+
+                        @include tablet {
+                            font-size: 25px;
+                        }
+                    }
+                }
+
+                .text-box {
+                    background: rgba(0, 0, 0, 0.4);
+                    margin: 30px 0 20px 0;
+                    max-width: 600px;
+
+                    @include mobile {
+                        margin-top: 10px;
+                    }
+
+                    @include tablet {
+                        margin-top: 10px;
+                        max-width:1000px;
+                    }
+
+                    h2 {
+                        color: #FF6900;
+                        font-size: 38px;
+                        font-weight: 700;
+
+                        @include mobile {
+                            font-size: 22px;
+                        }
+
+                        @include tablet {
+                            font-size: 30px;
+                        }
+                    }
+
+                    p {
+                        font-size: 19px;
+                        color: #fff;
+                        margin: 18px 0;
+                        line-height: 1.2;
+
+                        @include mobile {
+                            font-size: 14px;
+                        }
+
+                        @include tablet {
+                            font-size: 16.5px;
+                        }
+
+                        a {
+                            color: #FF6900;
+                            text-decoration: underline;
+                            margin: 0 5px;
+                        }
+                    }
+                }
+            }
+
+            .connect-wallet-right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                flex: 1;
+                max-width: 327px;
+
+                @include mobile {
+                    margin: auto;
+                }
+                @include tablet {
+                    max-width: 1000px;
+                    margin: auto;
+                }
+
+                a {
+                    background: #D9D9D9;
+                    margin-bottom: 15px;
+                    border-radius: 8px;
+                    transition: all ease .2s;
+                    border: 2px solid transparent;
+                    font-weight: 600;
+                    width: 100%;
+
+                    @include mobile {
+                        margin-bottom: 25px;
+                    }  
+
+                    @include tablet {
+                        max-width: 100%;
+                    }   
+                }
+
+                a:hover {
+                    border: 2px solid #D9D9D9;
+                    background: #FF6900;
+                    color: #ffff;
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    padding: 20px 20px;
+                    border-radius: 5px;
+                    gap: 20px;
+                }
+            }
+        }
+
+        .connect-wallet-footer {
+            max-width: 400px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 500;
+            color: #ffff;
+            margin: auto;
+
+
+            @include mobile {
+                font-size: 13px;
+            }
+
+            @include tablet {
+                font-size: 16px;
+            }
+
+            @media (min-width: 1024px) {
+                margin-top: 60px;
+            }
+        }
+    }
+}

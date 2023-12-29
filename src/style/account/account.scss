@@ -1,0 +1,360 @@
+@import '../responsive.scss';
+
+.account {
+    padding-top: 90px;
+
+    @include mobile {
+        padding-top: 70px;
+    }
+
+    @include tablet {
+        padding-top: 80px;
+    }
+
+    .addcontainer {
+        max-width: 1280px;
+        margin: auto;
+
+        .account-top {
+            a {
+                @include mobile {
+                    margin-top: 30px;
+                }
+            }
+
+            .max-width {
+                max-width: 400px;
+
+                @include tablet {
+                    max-width: 600px;
+                }
+
+                @include mobile {
+                    max-width: 600px;
+                }
+            }
+
+            h2 {
+                font-size: 30px;
+                color: #FF6900;
+                font-weight: 600;
+
+                @include mobile {
+                    font-size: 20px;
+                    text-align: center;
+
+                }
+                @include tablet {
+                    font-size: 25px;
+                    text-align: center;
+
+                }
+            }
+
+            .token-trans-btn {
+                margin-top: 2.5rem;
+
+                @include mobile {
+                    padding-top: 0px;
+                    max-width: 600px;
+                    display: grid;
+                    margin: 16px auto 5px auto;
+                }
+
+                @include tablet {
+                    max-width: 600px;
+                    display: grid;
+                    margin: auto;
+                    margin-top: 15px;
+                }
+
+                button {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    padding: 10px 7px;
+                    border: 1px solid #898989;
+                    width: 100%;
+                    margin: 7px 0;
+                    font-weight: 700;
+                    font-size: 24px;
+
+                    @include tablet {
+                        font-size: 22px;
+                        max-width: 100%;
+                    }
+
+                    @include mobile {
+                        font-size: 16px;
+                        max-width: 100%;
+                        margin: 3.5px 0;
+                    }
+
+                    svg {
+                        font-size: 22px;
+                        color: #898989;
+
+                        @include mobile {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+
+            .first-box {
+                padding: 13px;
+                border-radius: 16px;
+                border: 1px solid rgba(164, 164, 164, 1);
+
+                .skill {
+                    p {
+                        font-weight: 600;
+                    }
+                }
+
+                p {
+                    color: #FF6900;
+                }
+
+                h4 {
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+
+            }
+
+            .play-move-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                button {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 14px;
+                    background: #FF6900;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    svg {
+                        width: 23px;
+                        height: 23px;
+                        color: white;
+                    }
+                }
+            }
+
+            .skill {
+                margin-bottom: 20px;
+                position: relative;
+                overflow-x: hidden;
+
+            }
+
+            .skill:before {
+                width: 100%;
+                height: 5px;
+                content: "";
+                display: block;
+                position: absolute;
+                background: #959595;
+                bottom: 0;
+                border-radius: 5px;
+            }
+
+            .skill-bar {
+                width: 100%;
+                height: 5px;
+                background: #4CB54A;
+                display: block;
+                position: relative;
+                border-radius: 5px;
+            }
+
+            .skill-bar span {
+                position: absolute;
+                border-top: 5px solid #f4392f;
+                top: -30px;
+                padding: 0;
+                font-size: 18px;
+                padding: 3px 0;
+                font-weight: 500;
+            }
+
+            .skill-bar {
+                position: relative;
+
+            }
+
+            .skill1 .skill-count1 {
+                right: 0;
+            }
+
+            /* SKILL 2 */
+            .skill2 {
+                width: 60%;
+            }
+
+            .skill2 .skill-count2 {
+                right: 0;
+            }
+
+            /* SKILL 3 */
+            .skill3 {
+                width: 80%;
+                background: #5C6CFF;
+            }
+        }
+
+        .account-token {
+            max-width: 900px;
+            margin: auto;
+
+            .pick-cards {
+                @media (max-width: 375px) {
+                        grid-template-columns: repeat(1, minmax(0, 1fr));
+                        justify-content: center;
+                }
+
+                .box {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-around;
+                    width: 200px;
+                    height: 250px;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 14px;
+                    color: black;
+                    transition: .3s;
+                    border: 1px solid #8B8B8B;
+
+                    @include mobile {
+                        width: 170px;
+                        height: 200px;
+                    }
+
+                    .image {
+                        width: 135px;
+                        height: 134px;
+                        background-color: rgba(255, 105, 0, 0.25);
+                        backface-visibility: 25%;
+                        border-radius: 13px;
+
+                        @include mobile {
+                            width: 100px;
+                            height: 99px;
+                            padding: 20px;
+                        }
+                    }
+
+                    .pitbull-footer {
+                        width: 135px;
+                        display: flex;
+                        justify-content: space-between;
+
+                        p {
+                            font-size: 16px;
+                        }
+                    }
+                }
+
+                .box:hover {
+                    background: #FF6900;
+
+                    .image {
+                        background: white;
+                    }
+
+                    .pitbull-footer {
+                        font-size: 16px;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .account-transactions {
+            max-width: 660px;
+            margin: auto;
+
+            @include mobile {
+                padding-top: 1rem;
+            }
+
+            @include tablet {
+                padding-top: 2rem;
+                max-width: 900px;
+            }
+
+            a {
+                border: 1px solid #4A4A4A;
+                align-items: center;
+                display: flex;
+                justify-content: space-between;
+                border-radius: 12px;
+
+                .icon {
+                    font-size: 20px;
+                    color: white;
+                    width: 33px;
+                    height: 33px;
+                    border-radius: 8px;
+                    background: #191D31;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    @include mobile {
+                        font-size: 16px;
+                        width: 25px;
+                        height: 25px;
+                    }
+
+                    @include tablet {
+                        font-size: 18px;
+                        width: 29px;
+                        height: 29px;
+                    }
+                }
+
+                p {
+                    color: #A7A9B7;
+                    font-weight: 700;
+
+                    @include mobile {
+                        font-size: 13px;
+                        font-weight: 600;
+                    }
+
+                    @include tablet {
+                        font-size: 20px;
+                    }
+
+                    @include desktop {
+                        font-size: 25px;
+                    }
+                }
+
+                h4 {
+                    font-weight: 600;
+                    color: #191D31;
+
+                    @include mobile {
+                        font-size: 16px;
+                    }
+
+                    @include tablet {
+                        font-size: 20px;
+                    }
+
+                    @include desktop {
+                        font-size: 22px;
+                    }
+                }
+            }
+        }
+    }
+}
