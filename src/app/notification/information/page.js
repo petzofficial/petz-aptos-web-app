@@ -1,58 +1,81 @@
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
-import GoBackBtn from '@/components/button/GoBackBtn'
-import React from 'react'
-import { Outfit } from 'next/font/google'
-import Link from 'next/link'
-import '../../../style/notification/notification.scss'
+"use client";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import GoBackBtn from "@/components/button/GoBackBtn";
+import React, { useState } from "react";
+import { Outfit } from "next/font/google";
+import Link from "next/link";
+import "../../../style/notification/notification.scss";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
-
-const outfit = Outfit({ subsets: ['latin'] })
+const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
-
-    return (
-        <div>
-            <Navbar method={'notification'} />
-
-            <section className='notification'>
-                <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-                    <div className="notification-title-bar">
-                        <Link href={'/home'} className='text-[30px] font-bold flex-1'>
-                            <GoBackBtn />
-                        </Link>
-                    </div>
-
-                    <div className="info-inner">
-                        <div className="not-box flex-1">
-                            <h3>Notification</h3>
-                        </div>
-                        <div className="info mt-12">
-                            <div className="title">
-                                <h4>Lorem Ipsum</h4>
-                            </div>
-                            <div className="flex justify-between my-2">
-                                <p>Lorem Ipsum</p>
-                                <p className='font-semibold'>2.54 ETH</p>
-                            </div>
-                            <div className="flex justify-between my-2">
-                                <p>Paid On</p>
-                                <p className='font-semibold'>November 15, 2023</p>
-                            </div>
-
-                            <div className="description">
-                                <h4>Description</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur. Aliquet feugiat et id sollicitudin vitae congue risus ac. Viverra arcu blandit diam at. Nec convallis morbi semper turpis nisl enim consectetur a rhoncus. Sit placerat ultricies ac egestas risus tincidunt. Blandit est elit mattis arcu amet morbi gravida cras.</p>
-                                <p className='my-10 max-md:mt-4'>Nullam suspendisse erat pellentesque tellus ut lectus at. Nulla a purus erat tortor platea orci cras. Mauris nec quis quam eget auctor sed duis feugiat. Pellentesque rhoncus turpis risus eget tristique consequat mi malesuada mauris. Risus pulvinar a leo massa. Sit.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <Footer />
-        </div>
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const itemID = searchParams.get("id");
+  const [notification, setNotification] = useState(
+    JSON.parse(localStorage.getItem("all-notifications")).find(
+      (item) => item.id == itemID
     )
-}
+  );
 
-export default Page
+  if (!notification) {
+    router.push("/home", { scroll: true });
+  }
+
+  const convertTimestampToDate = (timestamp) => {
+    const timestampInMilliseconds = timestamp * 1000;
+    const date = new Date(timestampInMilliseconds);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    return formattedDate;
+  };
+
+  return (
+    <div>
+      <Navbar method={"notification"} />
+
+      <section className="notification">
+        <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
+          <div className="notification-title-bar">
+            <Link href={"/home"} className="text-[30px] font-bold flex-1">
+              <GoBackBtn />
+            </Link>
+          </div>
+
+          <div className="info-inner">
+            <div className="not-box flex-1">
+              <h3>Notification</h3>
+            </div>
+            <div className="info mt-12">
+              <div className="title">
+                <p>{notification.headings.en}</p>
+              </div>
+              <div className="flex justify-between my-2">
+                <p>Lorem Ipsum</p>
+                <p className="font-semibold">2.54 ETH</p>
+              </div>
+              <div className="flex justify-between my-2">
+                <p>Paid On</p>
+                <p className="font-semibold">{convertTimestampToDate(notification.queued_at)}</p>
+              </div>
+
+              <div className="description">
+                <h4>Description</h4>
+                <p>{notification.contents.en}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Page;
