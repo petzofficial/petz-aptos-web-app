@@ -26,6 +26,8 @@ const Page = () => {
   const [task, setTask] = useState(
     getTaskData().find((item) => item._id == itemID)
   );
+  const settingsLocalData =
+    JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("settings") : null)) || false;
 
   if (!task) {
     router.push("/task", { scroll: true });
@@ -39,13 +41,43 @@ const Page = () => {
 
   const handleStatus = (id) => {
     const currentStatus = task.status;
-    const newStatus = currentStatus === "Completed" ? "In Progress" : "Completed";
+    const newStatus =
+      currentStatus === "Completed" ? "In Progress" : "Completed";
     updateTask(id, { status: newStatus });
     const updatedTask = { ...task, status: newStatus };
     setTask(updatedTask);
     const toastMessage =
       newStatus === "Completed" ? "Task Completed" : "Task In Progress";
     toast.success(toastMessage);
+  };
+
+  const handleButtonClick = () => {
+    if (task.status === "Completed") {
+      toast.error("Task is already completed");
+    }
+  };
+
+  // Convert total and average time to HH:mm format
+  const convertToHHMMSS = (timeInSeconds) => {
+    if (timeInSeconds < 60) {
+      // Display seconds
+      if (timeInSeconds == 0) {
+        return `${timeInSeconds} min`;
+      }
+      return `${timeInSeconds} sec`;
+    } else if (timeInSeconds < 3600) {
+      // Display minutes and seconds
+      const mins = Math.floor(timeInSeconds / 60);
+      const secs = timeInSeconds % 60;
+      return `${mins} min ${secs} sec`;
+    } else {
+      // Display hours, minutes, and seconds
+      const hours = Math.floor(timeInSeconds / 3600);
+      const remainingSecs = timeInSeconds % 3600;
+      const mins = Math.floor(remainingSecs / 60);
+      const secs = remainingSecs % 60;
+      return `${hours} hr ${mins} min ${secs} sec`;
+    }
   };
 
   return (
@@ -67,15 +99,39 @@ const Page = () => {
               <h3 className="text-[#FF6900]">{task.status}</h3>
             </div>
             <div className="button-bar flex justify-center items-center space-x-4">
-              <button>
-                <FaSquare />
-              </button>
-              <button className="!text-[#fff] !bg-[#FF6900]">
-                <FaPlay />
-              </button>
-              <button>
-                <IoIosRefresh />
-              </button>
+              <Link
+                key={task._id}
+                href={
+                  task.status === "Completed" ? "#" : `/home?id=${task._id}`
+                }
+              >
+                <button onClick={handleButtonClick}>
+                  <FaSquare />
+                </button>
+              </Link>
+              <Link
+                key={task._id}
+                href={
+                  task.status === "Completed" ? "#" : `/home?id=${task._id}`
+                }
+              >
+                <button
+                  onClick={handleButtonClick}
+                  className="!text-[#fff] !bg-[#FF6900]"
+                >
+                  <FaPlay />
+                </button>
+              </Link>
+              <Link
+                key={task._id}
+                href={
+                  task.status === "Completed" ? "#" : `/home?id=${task._id}`
+                }
+              >
+                <button onClick={handleButtonClick}>
+                  <IoIosRefresh />
+                </button>
+              </Link>
             </div>
             <div className="info lg:p-8 p-1 shadow-md">
               <div>
@@ -96,15 +152,20 @@ const Page = () => {
               </div>
               <div>
                 <p>Cycle count</p>
-                <span>2</span>
+                <span>{task.cycleCount}</span>
               </div>
               <div>
                 <p>Session</p>
-                <span>1/4</span>
+                <span>
+                  {task.sessionCount}/
+                  {settingsLocalData && settingsLocalData.cycleCount
+                    ? settingsLocalData.cycleCount
+                    : "4"}
+                </span>
               </div>
               <div>
                 <p>Total time spent</p>
-                <span>30 minutes</span>
+                <span>{convertToHHMMSS(task.time)}</span>
               </div>
 
               <div>
@@ -143,7 +204,8 @@ const Page = () => {
                   handleStatus(task._id);
                 }}
               >
-                Mark As {task?.status === "Completed" ? "In Progress" : "Complete"}
+                Mark As{" "}
+                {task?.status === "Completed" ? "In Progress" : "Complete"}
               </button>
               <Link href={`/task/task-edit?id=${task._id}`}>Edit Task</Link>
               <button

@@ -24,7 +24,7 @@ const Page = () => {
     const appId = "1d687e3b-eae1-4d68-b7c5-eebf24226a9e";
     const apiKey = "MmNlMzEwZjUtZTZmMi00ZmI5LWE0ZDEtZDdlNzliNWVkODk5";
     // Replace with the subscriber's player ID
-    const notificationUserId = localStorage.getItem("notificationUserId");
+    const notificationUserId = (typeof window !== 'undefined' ? localStorage.getItem("notificationUserId") : null);
     const playerId = notificationUserId;
 
     const fetchNotifications = async () => {

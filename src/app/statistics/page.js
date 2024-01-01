@@ -17,7 +17,7 @@ const urban = Urbanist({ subsets: ["latin"] });
 const Page = () => {
   const [timeRange, setTimeRange] = useState("Weekly");
   const [data, setData] = useState(
-    JSON.parse(localStorage.getItem("statistics")) || {}
+    JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("statistics") : null)) || {}
   );
 
   const getFilteredData = () => {
@@ -142,6 +142,7 @@ const Page = () => {
 
   //   calculate weeklyData
   const totalSummary = calculateTotalAndAverageTime(getFilteredData());
+
 
   // chart Data
   const chartData = {

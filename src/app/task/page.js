@@ -15,7 +15,7 @@ import { getTaskData } from "@/utilities/localDB";
 const Page = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
-
+  const settingsLocalData = JSON.parse((typeof window !== 'undefined' ? localStorage.getItem('settings') : null)) || false;
   useEffect(() => {
     const storedTasks = getTaskData();
     setTasks(storedTasks);
@@ -31,6 +31,29 @@ const Page = () => {
       setFilteredTasks(filtered);
     }
   };
+
+  // Convert total and average time to HH:mm format
+  const convertToHHMMSS = (timeInSeconds) => {
+    if (timeInSeconds < 60) {
+        // Display seconds
+        if(timeInSeconds == 0){
+          return `${timeInSeconds} min`
+        }
+        return `${timeInSeconds} sec`;
+    } else if (timeInSeconds < 3600) {
+        // Display minutes and seconds
+        const mins = Math.floor(timeInSeconds / 60);
+        const secs = timeInSeconds % 60;
+        return `${mins} min ${secs} sec`;
+    } else {
+        // Display hours, minutes, and seconds
+        const hours = Math.floor(timeInSeconds / 3600);
+        const remainingSecs = timeInSeconds % 3600;
+        const mins = Math.floor(remainingSecs / 60);
+        const secs = remainingSecs % 60;
+        return `${hours} hr ${mins} min ${secs} sec`;
+    }
+};
 
   return (
     <div>
@@ -79,11 +102,11 @@ const Page = () => {
                       <div className="middle flex justify-between">
                         <div>
                           <h1>{item.title}</h1>
-                          <p>{item.time}</p>
+                          <p>{convertToHHMMSS(item.time)}</p>
                         </div>
                         <div className="text-end">
-                          <p>0/1</p>
-                          <p>5 min</p>
+                          <p>{item.cycleCount}/{settingsLocalData && settingsLocalData.cycleCount ? settingsLocalData.cycleCount : '4'}</p>
+                          <p>{settingsLocalData && settingsLocalData.shortBreak ? settingsLocalData.shortBreak : '5'} min</p>
                         </div>
                       </div>
                       <div className="play">

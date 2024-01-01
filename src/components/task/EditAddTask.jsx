@@ -46,12 +46,14 @@ const EditAddTask = ({ method }) => {
     // create object
     const addObj = {
       title: workOut,
-      time: "0 Minutes",
+      time: 0,
       color: "#14985A",
       addDescription: addDescription,
       priority: priority,
       date: formattedDate,
       status: "In Progress",
+      cycleCount: 0,
+      sessionCount: 0,
       _id: unique_id,
     };
 

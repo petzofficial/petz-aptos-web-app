@@ -17,7 +17,7 @@ const Page = () => {
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
   const [notification, setNotification] = useState(
-    JSON.parse(localStorage.getItem("all-notifications")).find(
+    JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("all-notifications") : null)).find(
       (item) => item.id == itemID
     )
   );

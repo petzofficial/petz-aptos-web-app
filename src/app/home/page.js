@@ -12,14 +12,18 @@ import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
-import { getTaskData } from "@/utilities/localDB";
+import { getTaskData, updateTask } from "@/utilities/localDB";
+import toast from "react-hot-toast";
+import { useSearchParams } from "next/navigation";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
+  const searchParams = useSearchParams();
+  const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
-  const [selectedData, setSelectedData] = useState("choose");
+  const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [seconds, setSeconds] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [settings, setSettings] = useState({
@@ -38,15 +42,30 @@ const Page = () => {
     const status = "In Progress";
     const filtered = tasks.filter((task) => task.status === status);
     setFilteredTasks(filtered);
+    if(itemID){
+      setSelectedTaskId(itemID);
+      handleSelectDataFunc(itemID);
+    }
   }, []);
 
+  const handleSelectDataFunc = (id) => {
+    let tmpCycle = 1;
+    const tasks = getTaskData();
+    const filtered = tasks.find((task) => task._id === id);
+    if (filtered && filtered.sessionCount) {
+      tmpCycle = filtered.sessionCount;
+    }
+    setSelectedTaskId(id);
+    setCurrentCycle(tmpCycle);
+  };
+
   const handleSelectData = (e) => {
-    setSelectedData(e.target.value);
+    handleSelectDataFunc(e.target.value);
   };
 
   // pomodoro timer
   useEffect(() => {
-    const settingsLocalData = JSON.parse(localStorage.getItem("settings"));
+    const settingsLocalData = JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("settings") : null));
 
     if (settingsLocalData) {
       setSeconds(parseInt(settingsLocalData.focusTime) * 60);
@@ -72,7 +91,7 @@ const Page = () => {
         const options = { day: "numeric", month: "numeric", year: "numeric" };
         const formattedDate = currentDate.toLocaleDateString("en-GB", options);
 
-        let statisticsData = JSON.parse(localStorage.getItem("statistics"));
+        let statisticsData = JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("statistics") : null));
 
         if (!statisticsData) {
           statisticsData = {};
@@ -80,19 +99,26 @@ const Page = () => {
 
         if (
           statisticsData[formattedDate] &&
-          statisticsData[formattedDate][selectedData]
+          statisticsData[formattedDate][selectedTaskId]
         ) {
           if (currentState === "focus") {
-            statisticsData[formattedDate][selectedData].focus++;
+            statisticsData[formattedDate][selectedTaskId].focus++;
+            const tasks = getTaskData();
+            const findData = tasks.find((task) => task._id === selectedTaskId);
+            let tempTotalTime = 0;
+            if (findData && findData.time) {
+              tempTotalTime = findData.time;
+            }
+            updateTask(selectedTaskId, { time: tempTotalTime + 1 });
           } else if (currentState === "shortBreak") {
-            statisticsData[formattedDate][selectedData].shortBreak++;
+            statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
-            statisticsData[formattedDate][selectedData].longBreak++;
+            statisticsData[formattedDate][selectedTaskId].longBreak++;
           }
         } else {
           statisticsData[formattedDate] = {
             ...statisticsData[formattedDate],
-            [selectedData]: {
+            [selectedTaskId]: {
               focus: 0,
               shortBreak: 0,
               longBreak: 0,
@@ -101,6 +127,9 @@ const Page = () => {
         }
 
         localStorage.setItem("statistics", JSON.stringify(statisticsData));
+
+        // cycle update
+        updateTask(selectedTaskId, { sessionCount: currentCycle + 1 });
       }, 1000);
     }
 
@@ -119,16 +148,21 @@ const Page = () => {
     if (settings.autoStart && !isRunning) {
       startTimer();
     }
-  }, [settings.autoStart, isRunning, selectedData]);
+  }, [settings.autoStart, isRunning, selectedTaskId]);
 
   const startTimer = () => {
-    if (selectedData && selectedData !== "choose") {
+    if (selectedTaskId && selectedTaskId !== "choose") {
       setIsRunning(true);
+    } else if (selectedTaskId === "choose") {
+      toast.error("Set the task or created");
     }
   };
 
   const pauseTimer = () => {
     setIsRunning(false);
+    if (selectedTaskId === "choose") {
+      toast.error("Set the task or created");
+    }
   };
 
   const resetTimer = () => {
@@ -136,6 +170,9 @@ const Page = () => {
     setSeconds(settings.focusDuration);
     setCurrentState("focus");
     setCurrentCycle(1);
+    if (selectedTaskId === "choose") {
+      toast.error("Set the task or created");
+    }
   };
 
   const handleTimerEnd = () => {
@@ -143,6 +180,14 @@ const Page = () => {
 
     if (currentState === "focus") {
       setCurrentCycle((prevCycle) => prevCycle + 1);
+      // update cycle count
+      const tasks = getTaskData();
+      const findData = tasks.find((task) => task._id === selectedTaskId);
+      let tempSession = 0;
+      if (findData && findData.cycleCount) {
+        tempSession = findData.cycleCount;
+      }
+      updateTask(selectedTaskId, { cycleCount: tempSession + 1 });
 
       if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");
@@ -210,12 +255,12 @@ const Page = () => {
             </div>
 
             <div className="first-box mt-5">
-              {/* <Link href={'/task/task-add'}> */}
               <select
                 name="task"
                 id="task"
                 className="w-full outline-none"
                 onChange={handleSelectData}
+                value={selectedTaskId}
               >
                 <option className="font-semibold" value="choose">
                   Choose Task
@@ -224,7 +269,6 @@ const Page = () => {
                   return <option value={task._id}>{task.title}</option>;
                 })}
               </select>
-              {/* </Link> */}
             </div>
 
             <div className="first-box mt-5">
@@ -241,10 +285,16 @@ const Page = () => {
                 </div>
               </div>
               <div className="flex justify-center space-x-3">
-                <span>Time to {currentState}</span>
-                <span>
-                  {currentCycle}/{settings.cycleCount}
-                </span>
+                {selectedTaskId !== "choose" ? (
+                  <>
+                    <span>Time to {currentState}</span>
+                    <span>
+                      {currentCycle}/{settings.cycleCount}
+                    </span>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="play-move-btn space-x-2 mt-5">
                 <button onClick={pauseTimer}>

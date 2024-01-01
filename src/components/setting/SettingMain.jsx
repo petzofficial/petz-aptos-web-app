@@ -3,7 +3,7 @@ import React from "react";
 import toast from "react-hot-toast";
 
 const SettingMain = () => {
-  const settingsLocalData = JSON.parse(localStorage.getItem("settings"));
+  const settingsLocalData = JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("settings") : null));
   const handleSave = (e) => {
     e.preventDefault();
     const form = e.target;
