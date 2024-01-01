@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import Navbar from "@/components/Navbar";
 import React from "react";
 import Image from "next/image";
 import img1 from "../../assets/home/pgt-removebg-preview 2.png";
@@ -10,7 +10,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
-import Footer from "../../components/Footer";
+import Footer from "@/components/Footer";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });

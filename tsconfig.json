@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "preserve",

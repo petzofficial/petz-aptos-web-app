@@ -1,21 +1,21 @@
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
-import GoBackBtn from '@/components/button/GoBackBtn'
-import Link from 'next/link'
-import React from 'react'
-import '../../../style/account/transaction.scss'
-import { Outfit } from 'next/font/google'
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import GoBackBtn from "@/components/button/GoBackBtn";
+import Link from "next/link";
+import React from "react";
+import "../../../style/account/transaction.scss";
+import { Outfit } from "next/font/google";
 
-const outfit = Outfit({ subsets: ['latin'] })
+const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
   return (
     <div>
-      <Navbar method={'account'} />
+      <Navbar method={"account"} />
 
-      <section className='transaction-details'>
+      <section className="transaction-details">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-          <Link href={'/home'} className='text-[30px] font-bold'>
+          <Link href={"/home"} className="text-[30px] font-bold">
             <GoBackBtn />
           </Link>
 
@@ -57,7 +57,7 @@ const Page = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

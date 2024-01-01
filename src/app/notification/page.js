@@ -1,7 +1,7 @@
 "use client";
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
-import GoBackBtn from "../../components/button/GoBackBtn";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import GoBackBtn from "@/components/button/GoBackBtn";
 import React, { useEffect, useState } from "react";
 import { Outfit } from "next/font/google";
 import Link from "next/link";
@@ -9,8 +9,8 @@ import { TbMessage2Check } from "react-icons/tb";
 import { FiBox } from "react-icons/fi";
 import { LuBadgeInfo } from "react-icons/lu";
 import "../../style/notification/notification.scss";
-import Pagination from "../../components/button/Pagination";
-import { FetchNotifications } from "../../components/notification/getNotifications";
+import Pagination from "@/components/button/Pagination";
+import { FetchNotifications } from "@/components/notification/getNotifications";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
