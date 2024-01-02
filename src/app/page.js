@@ -11,9 +11,15 @@ import martiam from "../assets/wallet/unnamed 1.png";
 import "../style/connect-wallet/connect-wallet.scss";
 import runOneSignal from "../components/notification/notification";
 import { useEffect, useState } from "react";
-import { AppContext } from "../components/aptosIntegrations/AppContext";
-import WalletsModalHome from "../components/aptosIntegrations/WalletModelHome";
-import WalletButton from "../components/aptosIntegrations/WalletButton";
+import { AppContext } from "@/components/aptosIntegrations/AppContext";
+import WalletsModalHome from "@/components/aptosIntegrations/WalletModelHome";
+import WalletButton from "@/components/aptosIntegrations/WalletButton";
+import dynamic from "next/dynamic";
+const ComponentC = dynamic(
+  () => import("@/components/aptosIntegrations/WalletModelHome"),
+  { ssr: false }
+);
+
 const urban = Urbanist({ subsets: ["latin"] });
 const Page = () => {
   const [modalOpen, setModalOpen] = useState(true);
@@ -80,7 +86,7 @@ const Page = () => {
                 </button>
               </Link>
             </div> */}
-            <WalletsModalHome modalOpen={modalOpen} />
+            <ComponentC modalOpen={modalOpen} />
           </div>
           <div className="connect-wallet-footer pb-3">
             We do not own your private keys and cannot access your funds without
