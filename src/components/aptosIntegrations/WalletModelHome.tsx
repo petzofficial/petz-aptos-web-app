@@ -208,12 +208,11 @@ export default function WalletsModalHome({
       flexDirection: "column",
       height: 500,
       overflow: "hidden",
-      overflowY: "scroll",
+      // overflowY: "scroll",
       // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
     }}>
 
-
-      <Stack
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -258,7 +257,7 @@ export default function WalletsModalHome({
           )}
         </Box>
         <Box>{renderWalletsList()}</Box>
-      </Stack>
+      </Box>
     </Box>
   );
 }

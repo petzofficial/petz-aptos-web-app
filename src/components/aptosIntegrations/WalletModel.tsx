@@ -69,9 +69,8 @@ const ConnectWalletRow: React.FC<{
           }}
         />
         <Button
-          variant="contained"
+          style={{ backgroundColor: "blue", color: "white" }}
           size="small"
-          className="wallet-connect-button"
         >
           Connect
         </Button>
@@ -210,6 +209,7 @@ export default function WalletsModal({
       maxWidth="xs"
       fullWidth
     >
+
       <Stack
         sx={{
           display: "flex",
