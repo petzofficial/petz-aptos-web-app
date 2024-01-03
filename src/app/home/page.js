@@ -36,24 +36,12 @@ const Page = () => {
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
 
-  // select set
-  useEffect(() => {
-    const tasks = getTaskData();
-    const status = "In Progress";
-    const filtered = tasks.filter((task) => task.status === status);
-    setFilteredTasks(filtered);
-    if(itemID){
-      setSelectedTaskId(itemID);
-      handleSelectDataFunc(itemID);
-    }
-  }, []);
-
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    if (filtered && filtered.cycleCount) {
-      tmpCycle = filtered.cycleCount + 1;
+    if (filtered && filtered.cycleCount && filtered.cycleCount>0) {
+      tmpCycle = filtered.cycleCount;
     }
     setSelectedTaskId(id);
     setCurrentCycle(tmpCycle);
@@ -76,6 +64,15 @@ const Page = () => {
         cycleCount: parseInt(settingsLocalData.cycleCount),
         autoStart: settingsLocalData.check,
       });
+    }
+
+    const tasks = getTaskData();
+    const status = "In Progress";
+    const filtered = tasks.filter((task) => task.status === status);
+    setFilteredTasks(filtered);
+    if(itemID){
+      setSelectedTaskId(itemID);
+      handleSelectDataFunc(itemID);
     }
   }, []);
 
@@ -128,7 +125,7 @@ const Page = () => {
 
         localStorage.setItem("statistics", JSON.stringify(statisticsData));
 
-      }, 1000);
+      }, 1);
     }
 
     return () => {
@@ -178,7 +175,7 @@ const Page = () => {
 
     if (currentState === "focus") {
       // cycle update
-      updateTask(selectedTaskId, { cycleCount: currentCycle });
+      updateTask(selectedTaskId, { cycleCount: currentCycle + 1 });
       setCurrentCycle((prevCycle) => prevCycle + 1);
 
       if (currentCycle < settings.cycleCount) {

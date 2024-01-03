@@ -52,7 +52,7 @@ const EditAddTask = ({ method }) => {
       priority: priority,
       date: formattedDate,
       status: "In Progress",
-      cycleCount: 0,
+      cycleCount: 1,
       _id: unique_id,
     };
 
