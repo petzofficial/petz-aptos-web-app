@@ -52,8 +52,8 @@ const Page = () => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    if (filtered && filtered.cycleCount && filtered.cycleCount>0) {
-      tmpCycle = filtered.cycleCount;
+    if (filtered && filtered.cycleCount) {
+      tmpCycle = filtered.cycleCount + 1;
     }
     setSelectedTaskId(id);
     setCurrentCycle(tmpCycle);
@@ -178,7 +178,7 @@ const Page = () => {
 
     if (currentState === "focus") {
       // cycle update
-      updateTask(selectedTaskId, { cycleCount: currentCycle + 1 });
+      updateTask(selectedTaskId, { cycleCount: currentCycle });
       setCurrentCycle((prevCycle) => prevCycle + 1);
 
       if (currentCycle < settings.cycleCount) {
