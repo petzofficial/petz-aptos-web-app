@@ -52,8 +52,8 @@ const Page = () => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    if (filtered && filtered.sessionCount) {
-      tmpCycle = filtered.sessionCount;
+    if (filtered && filtered.cycleCount && filtered.cycleCount>0) {
+      tmpCycle = filtered.cycleCount;
     }
     setSelectedTaskId(id);
     setCurrentCycle(tmpCycle);
@@ -128,8 +128,6 @@ const Page = () => {
 
         localStorage.setItem("statistics", JSON.stringify(statisticsData));
 
-        // cycle update
-        updateTask(selectedTaskId, { sessionCount: currentCycle + 1 });
       }, 1000);
     }
 
@@ -179,15 +177,9 @@ const Page = () => {
     setIsRunning(false);
 
     if (currentState === "focus") {
+      // cycle update
+      updateTask(selectedTaskId, { cycleCount: currentCycle + 1 });
       setCurrentCycle((prevCycle) => prevCycle + 1);
-      // update cycle count
-      const tasks = getTaskData();
-      const findData = tasks.find((task) => task._id === selectedTaskId);
-      let tempSession = 0;
-      if (findData && findData.cycleCount) {
-        tempSession = findData.cycleCount;
-      }
-      updateTask(selectedTaskId, { cycleCount: tempSession + 1 });
 
       if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");

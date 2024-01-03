@@ -53,7 +53,6 @@ const EditAddTask = ({ method }) => {
       date: formattedDate,
       status: "In Progress",
       cycleCount: 0,
-      sessionCount: 0,
       _id: unique_id,
     };
 

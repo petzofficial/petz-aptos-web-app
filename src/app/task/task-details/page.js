@@ -24,7 +24,7 @@ const Page = () => {
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
   const [task, setTask] = useState(
-    getTaskData().find((item) => item._id == itemID)
+    getTaskData()?.find((item) => item._id == itemID)
   );
   const settingsLocalData =
     JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("settings") : null)) || false;
@@ -152,16 +152,10 @@ const Page = () => {
               </div>
               <div>
                 <p>Cycle count</p>
-                <span>{task.cycleCount}</span>
-              </div>
-              <div>
-                <p>Session</p>
-                <span>
-                  {task.sessionCount}/
+                <span>{task.cycleCount}/
                   {settingsLocalData && settingsLocalData.cycleCount
                     ? settingsLocalData.cycleCount
-                    : "4"}
-                </span>
+                    : "4"}</span>
               </div>
               <div>
                 <p>Total time spent</p>
