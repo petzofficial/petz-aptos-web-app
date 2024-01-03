@@ -125,7 +125,7 @@ const Page = () => {
 
         localStorage.setItem("statistics", JSON.stringify(statisticsData));
 
-      }, 1);
+      }, 1000);
     }
 
     return () => {
