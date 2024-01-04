@@ -40,6 +40,11 @@ const Page = () => {
     setCurrentPage(pageNumber);
   };
 
+  const clearAllNotifications = () => {
+    setTotalNotifications(0);
+    setNotificationList([]);
+  };
+
   const paginatedNotifications = notificationList.slice(
     (currentPage - 1) * notificationsPerPage,
     currentPage * notificationsPerPage
@@ -67,7 +72,7 @@ const Page = () => {
               </div>
             </div>
             <div className="clear-btn">
-              <button>Clear All</button>
+              <button onClick={() => clearAllNotifications()}>Clear All</button>
             </div>
           </div>
           {loading ? (
