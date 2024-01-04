@@ -33,6 +33,7 @@ export default function WalletMenu({
   const handleLogout = () => {
     disconnect();
     handlePopoverClose();
+    localStorage.removeItem("account")
   };
 
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);

@@ -21,7 +21,7 @@ const Navbar = ({ method }) => {
     <AppContext>
       <nav className="w-full bg-white fixed z-20 shadow-md py-1">
         <div className="navbar 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-          <Link href={"/home"}>
+          <Link href={"/"}>
             <div className="logo flex items-center">
               <Image src={logo} width={60} height={60} alt="Logo" />
               <p>PetZ</p>
@@ -70,10 +70,10 @@ const Navbar = ({ method }) => {
                 <IoNotifications />
               </button>
             </Link>
-            {/* <Link className="max-md:hidden lg:flex" href={"/"}>
-            <button className="user-icon font-bold">Connect</button>
-          </Link> */}
-            <WalletConnector />
+            <div className="max-md:hidden lg:flex">
+              <WalletConnector />
+            </div>
+
             <button
               onClick={() => setResponsive(!responsive)}
               className="text-[25px] text-[#2f2f2f] md:hidden"
@@ -108,9 +108,6 @@ const Navbar = ({ method }) => {
             >
               Account
             </button>
-          </Link>
-          <Link className="mt-3" href={"/"}>
-            <button className="user-icon">Connect</button>
           </Link>
           <WalletConnector />
         </div>

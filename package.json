@@ -41,6 +41,7 @@
     "onesignal-node": "^3.4.0",
     "petra-plugin-wallet-adapter": "^0.3.0",
     "react": "^18",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
     "react-onesignal": "^3.0.1",

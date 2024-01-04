@@ -222,7 +222,6 @@ export default function WalletsModalHome({
           p: 3,
         }}
       >
-        <WalletButton method="notification" handleModalOpen={() => { }} handleNavigate={handleNavigate} />
         {/* <Typography style={{ color: "white" }} align="center" variant="h5" pt={2}>
           Connect Wallet
         </Typography> */}

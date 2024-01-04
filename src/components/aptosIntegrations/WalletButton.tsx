@@ -6,7 +6,7 @@ import WalletMenu from "./WalletMenu";
 import React from "react";
 import { truncateAddress } from "./utils";
 import { AccountBalanceWalletOutlined as AccountBalanceWalletOutlinedIcon } from "@mui/icons-material";
-
+import { storeAccountInLocalStorage } from "../utils/account";
 type WalletButtonProps = {
   handleModalOpen: () => void;
   handleNavigate?: () => void;
@@ -18,7 +18,7 @@ export default function WalletButton({
   handleNavigate,
 }: WalletButtonProps): JSX.Element {
   const { connected, account, wallet } = useWallet();
-
+  console.log(account)
   const [popoverAnchor, setPopoverAnchor] = useState<HTMLButtonElement | null>(
     null
   );
@@ -35,6 +35,9 @@ export default function WalletButton({
     handleModalOpen();
   };
 
+  if (connected) {
+    storeAccountInLocalStorage(account, connected);
+  }
   return (
     <>
       <Button
@@ -42,25 +45,24 @@ export default function WalletButton({
         variant="contained"
         onClick={connected ? handleClick : onConnectWalletClick}
         className="user-icon font-bold"
-        sx={{ borderRadius: "10px" }}
+        sx={{
+          borderRadius: "10px",
+          "&:hover": {
+            backgroundColor: "#FF6900",
+          },
+          backgroundColor: "#FF6900"
+        }}
       >
         {connected ? (
           <>
-            <Avatar
-              alt={wallet?.name}
-              src={wallet?.icon}
-              sx={{ width: 24, height: 24 }}
-            />
+
             <Typography noWrap ml={2}>
-              {account?.ansName
-                ? account?.ansName
-                : truncateAddress(account?.address!)}
+              connected
             </Typography>
           </>
         ) : (
           <>
-            <AccountBalanceWalletOutlinedIcon sx={{ marginRight: 1 }} />
-            <Typography noWrap>Connect Wallet</Typography>
+            <Typography noWrap>Connect </Typography>
           </>
         )}
       </Button>

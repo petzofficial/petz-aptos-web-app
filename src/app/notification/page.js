@@ -86,16 +86,9 @@ const Page = () => {
                       key={item.id}
                       className="message-box flex justify-between items-start py-5"
                     >
-                      {item?.global_image ? (
-                        <div
-                          style={notificationIconStyle}
-                          className="icon mt-1"
-                        >
-                          <img src={item?.global_image} alt="" />
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                      <div style={notificationIconStyle} className="icon mt-1">
+                        <TbMessage2Check />
+                      </div>
 
                       <div className="message">
                         <h3>{item.name}</h3>
