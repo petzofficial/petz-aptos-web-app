@@ -17,23 +17,33 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const [totalNotifications, setTotalNotifications] = useState(0);
   const [notificationList, setNotificationList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const notificationsPerPage = 9; // Set the number of notifications per page
+
   useEffect(() => {
-    const FetchData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
         const response = await FetchNotifications();
-        const { total_count, notifications, limit, offset } = response;
+        const { total_count, notifications } = response;
+
         setTotalNotifications(total_count);
         setNotificationList(notifications);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error("Error fetching notifications:", error);
       }
     };
-    FetchData();
+    fetchData();
   }, []);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
+  const paginatedNotifications = notificationList.slice(
+    (currentPage - 1) * notificationsPerPage,
+    currentPage * notificationsPerPage
+  );
   const notificationIconStyle = {
     height: "30px",
     width: "30px",
@@ -64,32 +74,42 @@ const Page = () => {
             <p>Loading...</p>
           ) : (
             <div className="notification-inner pt-16">
-              {notificationList?.map((item) => {
+              {paginatedNotifications?.map((item) => {
                 return (
-                  <div
-                    key={item.id}
-                    className="message-box flex justify-between items-start py-5"
-                  >
-                    {item?.global_image ? (
-                      <div style={notificationIconStyle} className="icon mt-1">
-                        <img src={item?.global_image} alt="" />
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                  <Link href={`/notification/${item?.id}`}>
+                    <div
+                      key={item.id}
+                      className="message-box flex justify-between items-start py-5"
+                    >
+                      {item?.global_image ? (
+                        <div
+                          style={notificationIconStyle}
+                          className="icon mt-1"
+                        >
+                          <img src={item?.global_image} alt="" />
+                        </div>
+                      ) : (
+                        ""
+                      )}
 
-                    <Link href={`/notification/${item?.id}`}>
                       <div className="message">
                         <h3>{item.name}</h3>
                         <p>Tap to see the message</p>
                       </div>
-                    </Link>
-                    <span className={outfit.className}>2 m ago</span>
-                  </div>
+
+                      <span className={outfit.className}>2 m ago</span>
+                    </div>{" "}
+                  </Link>
                 );
               })}
 
-              <Pagination />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={Math.ceil(
+                  totalNotifications / notificationsPerPage
+                )}
+                onPageChange={handlePageChange}
+              />
             </div>
           )}
         </div>
