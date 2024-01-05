@@ -15,11 +15,15 @@ import Footer from "@/components/Footer";
 import { getTaskData, updateTask } from "@/utilities/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
+import { FaPause } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
+import { Refresh } from "@mui/icons-material";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -40,7 +44,7 @@ const Page = () => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    if (filtered && filtered.cycleCount && filtered.cycleCount>0) {
+    if (filtered && filtered.cycleCount && filtered.cycleCount > 0) {
       tmpCycle = filtered.cycleCount;
     }
     setSelectedTaskId(id);
@@ -53,7 +57,9 @@ const Page = () => {
 
   // pomodoro timer
   useEffect(() => {
-    const settingsLocalData = JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("settings") : null));
+    const settingsLocalData = JSON.parse(
+      typeof window !== "undefined" ? localStorage.getItem("settings") : null
+    );
 
     if (settingsLocalData) {
       setSeconds(parseInt(settingsLocalData.focusTime) * 60);
@@ -70,7 +76,7 @@ const Page = () => {
     const status = "In Progress";
     const filtered = tasks.filter((task) => task.status === status);
     setFilteredTasks(filtered);
-    if(itemID){
+    if (itemID) {
       setSelectedTaskId(itemID);
       handleSelectDataFunc(itemID);
     }
@@ -88,7 +94,11 @@ const Page = () => {
         const options = { day: "numeric", month: "numeric", year: "numeric" };
         const formattedDate = currentDate.toLocaleDateString("en-GB", options);
 
-        let statisticsData = JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("statistics") : null));
+        let statisticsData = JSON.parse(
+          typeof window !== "undefined"
+            ? localStorage.getItem("statistics")
+            : null
+        );
 
         if (!statisticsData) {
           statisticsData = {};
@@ -124,7 +134,6 @@ const Page = () => {
         }
 
         localStorage.setItem("statistics", JSON.stringify(statisticsData));
-
       }, 1000);
     }
 
@@ -174,24 +183,36 @@ const Page = () => {
     setIsRunning(false);
 
     if (currentState === "focus") {
-      // cycle update
-      updateTask(selectedTaskId, { cycleCount: currentCycle + 1 });
-      setCurrentCycle((prevCycle) => prevCycle + 1);
-
       if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");
         setSeconds(settings.shortBreakDuration);
       } else {
         setCurrentState("longBreak");
-        setCurrentCycle(1);
         setSeconds(settings.longBreakDuration);
+        updateTask(selectedTaskId, { cycleCount: 1, status: "Completed" });
       }
     } else if (currentState === "shortBreak") {
+      // cycle update
+      updateTask(selectedTaskId, { cycleCount: currentCycle + 1 });
+      setCurrentCycle((prevCycle) => prevCycle + 1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
+      // cycle update
+      updateTask(selectedTaskId, { cycleCount: 1 });
+      setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
+      // Update filteredTasks after task completion
+      const updatedTasks = getTaskData();
+      const updatedFilteredTasks = updatedTasks.filter(
+        (task) => task.status === "In Progress"
+      );
+      setFilteredTasks(updatedFilteredTasks);
+
+      router.push("/home", { scroll: true });
+      // Show success toast
+      toast.success(`Task is Completed`);
     }
   };
 
@@ -289,8 +310,11 @@ const Page = () => {
                 <button onClick={pauseTimer}>
                   <FaSquare />
                 </button>
-                <button onClick={startTimer} className="mid">
-                  <FaPlay />
+                <button
+                  onClick={startTimer}
+                  className="mid"
+                >
+                  {isRunning ? <FaPause /> : <FaPlay />}
                 </button>
                 <button onClick={resetTimer}>
                   <ReplayIcon className="font-bold" />

@@ -27,7 +27,9 @@ const Page = () => {
     getTaskData()?.find((item) => item._id == itemID)
   );
   const settingsLocalData =
-    JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("settings") : null)) || false;
+    JSON.parse(
+      typeof window !== "undefined" ? localStorage.getItem("settings") : null
+    ) || false;
 
   if (!task) {
     router.push("/task", { scroll: true });
@@ -42,18 +44,18 @@ const Page = () => {
   const handleStatus = (id) => {
     const currentStatus = task.status;
     const newStatus =
-      currentStatus === "Completed" ? "In Progress" : "Completed";
+      currentStatus === "In Progress" ? "Pending" : "In Progress";
     updateTask(id, { status: newStatus });
     const updatedTask = { ...task, status: newStatus };
     setTask(updatedTask);
     const toastMessage =
-      newStatus === "Completed" ? "Task Completed" : "Task In Progress";
+      newStatus === "Pending" ? "Task Pending" : "Task In Progress";
     toast.success(toastMessage);
   };
 
   const handleButtonClick = () => {
-    if (task.status === "Completed") {
-      toast.error("Task is already completed");
+    if (task.status === "Pending") {
+      toast.error("Task is Pending");
     }
   };
 
@@ -94,45 +96,53 @@ const Page = () => {
 
           <div className="task-details-inner">
             <h2 className={outfit.className}>Task</h2>
-            <div className="flex justify-between items-center status-bar">
+            <div
+              style={{ marginBottom: "70px" }}
+              className="flex justify-between items-center status-bar"
+            >
               <h3>Status</h3>
               <h3 className="text-[#FF6900]">{task.status}</h3>
             </div>
-            <div className="button-bar flex justify-center items-center space-x-4">
-              <Link
-                key={task._id}
-                href={
-                  task.status === "Completed" ? "#" : `/home?id=${task._id}`
-                }
-              >
-                <button onClick={handleButtonClick}>
-                  <FaSquare />
-                </button>
-              </Link>
-              <Link
-                key={task._id}
-                href={
-                  task.status === "Completed" ? "#" : `/home?id=${task._id}`
-                }
-              >
-                <button
-                  onClick={handleButtonClick}
-                  className="!text-[#fff] !bg-[#FF6900]"
+            {task.status === "Completed" ? (
+              ""
+            ) : (
+              <div className="button-bar flex justify-center items-center space-x-4">
+                <Link
+                  key={task._id}
+                  href={
+                    task.status === "Pending" ? "#" : `/home?id=${task._id}`
+                  }
                 >
-                  <FaPlay />
-                </button>
-              </Link>
-              <Link
-                key={task._id}
-                href={
-                  task.status === "Completed" ? "#" : `/home?id=${task._id}`
-                }
-              >
-                <button onClick={handleButtonClick}>
-                  <IoIosRefresh />
-                </button>
-              </Link>
-            </div>
+                  <button onClick={handleButtonClick}>
+                    <FaSquare />
+                  </button>
+                </Link>
+                <Link
+                  key={task._id}
+                  href={
+                    task.status === "Pending" ? "#" : `/home?id=${task._id}`
+                  }
+                >
+                  <button
+                    onClick={handleButtonClick}
+                    className="!text-[#fff] !bg-[#FF6900]"
+                  >
+                    <FaPlay />
+                  </button>
+                </Link>
+                <Link
+                  key={task._id}
+                  href={
+                    task.status === "Pending" ? "#" : `/home?id=${task._id}`
+                  }
+                >
+                  <button onClick={handleButtonClick}>
+                    <IoIosRefresh />
+                  </button>
+                </Link>
+              </div>
+            )}
+
             <div className="info lg:p-8 p-1 shadow-md">
               <div>
                 <p>Task name</p>
@@ -152,10 +162,12 @@ const Page = () => {
               </div>
               <div>
                 <p>Cycle count</p>
-                <span>{task.cycleCount}/
+                <span>
+                  {task.cycleCount}/
                   {settingsLocalData && settingsLocalData.cycleCount
                     ? settingsLocalData.cycleCount
-                    : "4"}</span>
+                    : "4"}
+                </span>
               </div>
               <div>
                 <p>Total time spent</p>
@@ -193,15 +205,23 @@ const Page = () => {
             </div>
 
             <div className="edit-delete-btn">
-              <button
-                onClick={() => {
-                  handleStatus(task._id);
-                }}
-              >
-                Mark As{" "}
-                {task?.status === "Completed" ? "In Progress" : "Complete"}
-              </button>
-              <Link href={`/task/task-edit?id=${task._id}`}>Edit Task</Link>
+              {task.status === "Completed" ? (
+                ""
+              ) : (
+                <button
+                  onClick={() => {
+                    handleStatus(task._id);
+                  }}
+                >
+                  Mark As{" "}
+                  {task?.status === "In Progress" ? "Pending" : "In Progress"}
+                </button>
+              )}
+              {task.status === "Completed" ? (
+                ""
+              ) : (
+                <Link href={`/task/task-edit?id=${task._id}`}>Edit Task</Link>
+              )}
               <button
                 onClick={() => {
                   handleDelete(task._id);

@@ -81,7 +81,7 @@ const Page = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   <IoMdTime />
-                  <button onClick={() => handleFilter('Completed')}>Complete</button>
+                  <button onClick={() => handleFilter('Pending')}>Complete</button>
                 </div>
               </div>
             </div>

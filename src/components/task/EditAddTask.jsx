@@ -51,7 +51,7 @@ const EditAddTask = ({ method }) => {
       addDescription: addDescription,
       priority: priority,
       date: formattedDate,
-      status: "In Progress",
+      status: "Pending",
       cycleCount: 1,
       _id: unique_id,
     };
