@@ -73,8 +73,8 @@ const Page = () => {
     }
 
     const tasks = getTaskData();
-    const status = "In Progress";
-    const filtered = tasks.filter((task) => task.status === status);
+    const status = "Completed";
+    const filtered = tasks.filter((task) => task.status !== status);
     setFilteredTasks(filtered);
     if (itemID) {
       setSelectedTaskId(itemID);
@@ -156,6 +156,7 @@ const Page = () => {
 
   const startTimer = () => {
     if (selectedTaskId && selectedTaskId !== "choose") {
+      updateTask(selectedTaskId, { status: "In Progress" });
       setIsRunning(true);
     } else if (selectedTaskId === "choose") {
       toast.error("Set the task or created");
@@ -206,7 +207,7 @@ const Page = () => {
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
       const updatedFilteredTasks = updatedTasks.filter(
-        (task) => task.status === "In Progress"
+        (task) => task.status !== "Completed"
       );
       setFilteredTasks(updatedFilteredTasks);
 

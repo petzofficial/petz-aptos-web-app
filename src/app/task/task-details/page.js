@@ -44,13 +44,11 @@ const Page = () => {
   const handleStatus = (id) => {
     const currentStatus = task.status;
     const newStatus =
-      currentStatus === "In Progress" ? "Pending" : "In Progress";
+      currentStatus === "In Progress" || "Pending" ? "Completed" : "Completed";
     updateTask(id, { status: newStatus });
     const updatedTask = { ...task, status: newStatus };
     setTask(updatedTask);
-    const toastMessage =
-      newStatus === "Pending" ? "Task Pending" : "Task In Progress";
-    toast.success(toastMessage);
+    toast.success("Task Completed");
   };
 
   const handleButtonClick = () => {
@@ -110,7 +108,7 @@ const Page = () => {
                 <Link
                   key={task._id}
                   href={
-                    task.status === "Pending" ? "#" : `/home?id=${task._id}`
+                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
                   }
                 >
                   <button onClick={handleButtonClick}>
@@ -120,7 +118,7 @@ const Page = () => {
                 <Link
                   key={task._id}
                   href={
-                    task.status === "Pending" ? "#" : `/home?id=${task._id}`
+                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
                   }
                 >
                   <button
@@ -133,7 +131,7 @@ const Page = () => {
                 <Link
                   key={task._id}
                   href={
-                    task.status === "Pending" ? "#" : `/home?id=${task._id}`
+                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
                   }
                 >
                   <button onClick={handleButtonClick}>
@@ -214,7 +212,7 @@ const Page = () => {
                   }}
                 >
                   Mark As{" "}
-                  {task?.status === "In Progress" ? "Pending" : "In Progress"}
+                  {task?.status === "In Progress" || "Pending" ? "Completed" : "Completed"}
                 </button>
               )}
               {task.status === "Completed" ? (
