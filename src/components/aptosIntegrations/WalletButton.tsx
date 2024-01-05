@@ -18,7 +18,6 @@ export default function WalletButton({
   handleNavigate,
 }: WalletButtonProps): JSX.Element {
   const { connected, account, wallet } = useWallet();
-  console.log(account)
   const [popoverAnchor, setPopoverAnchor] = useState<HTMLButtonElement | null>(
     null
   );

@@ -146,9 +146,11 @@ export default function WalletsModal({
   const theme = useTheme();
 
   const onWalletSelect = async (walletName: WalletName) => {
-    const resp = await connect(walletName)
     handleClose();
+    await connect(walletName)
+
     window.location.reload()
+
   };
 
   const renderWalletsList = () => {
