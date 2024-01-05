@@ -190,7 +190,7 @@ const Page = () => {
       } else {
         setCurrentState("longBreak");
         setSeconds(settings.longBreakDuration);
-        updateTask(selectedTaskId, { cycleCount: 1, status: "Completed" });
+        // updateTask(selectedTaskId, { status: "Completed" });
       }
     } else if (currentState === "shortBreak") {
       // cycle update
@@ -204,6 +204,7 @@ const Page = () => {
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
+      updateTask(selectedTaskId, { status: "Completed" });
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
       const updatedFilteredTasks = updatedTasks.filter(
