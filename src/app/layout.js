@@ -1,5 +1,6 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { AppContext } from "@/components/aptosIntegrations/AppContext";
 
 const sans = Open_Sans({ subsets: ["latin"] });
 
@@ -11,7 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={sans.className}>{children}</body>
+      <body className={sans.className}>
+        <AppContext>{children}</AppContext>
+      </body>
     </html>
   );
 }

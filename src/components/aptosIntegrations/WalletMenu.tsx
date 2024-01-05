@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type WalletMenuProps = {
   popoverAnchor: HTMLButtonElement | null;
@@ -21,12 +22,13 @@ export default function WalletMenu({
   handlePopoverClose,
   handleNavigate,
 }: WalletMenuProps): JSX.Element {
+  const router = useRouter()
   const { account, disconnect } = useWallet();
   const popoverOpen = Boolean(popoverAnchor);
   const id = popoverOpen ? "wallet-popover" : undefined;
 
   const onAccountOptionClicked = () => {
-    handleNavigate && handleNavigate();
+    router.push("/account")
     handlePopoverClose();
   };
 
@@ -34,6 +36,8 @@ export default function WalletMenu({
     disconnect();
     handlePopoverClose();
     localStorage.removeItem("account")
+    window.location.reload();
+
   };
 
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);

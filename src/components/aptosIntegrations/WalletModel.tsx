@@ -141,12 +141,14 @@ export default function WalletsModal({
   modalOpen,
   networkSupport,
 }: WalletsModalProps): JSX.Element {
-  const { wallets, connect } = useWallet();
+  const { wallets, connect, connected } = useWallet();
 
   const theme = useTheme();
 
   const onWalletSelect = (walletName: WalletName) => {
-    connect(walletName);
+    const resp = connect(walletName);
+    console.log(resp)
+
     handleClose();
   };
 
@@ -156,7 +158,6 @@ export default function WalletsModal({
       const isWalletReady =
         wallet.readyState === WalletReadyState.Installed ||
         wallet.readyState === WalletReadyState.Loadable;
-
       const Container: React.FC<PropsWithChildren> = ({ children }) => {
         return (
           <Grid xs={12} paddingY={0.5} item>

@@ -1,12 +1,12 @@
 "use client"
 import { Avatar, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import WalletMenu from "./WalletMenu";
+import { AccountAddress } from "@aptos-labs/ts-sdk";
+
 import React from "react";
-import { truncateAddress } from "./utils";
 import { AccountBalanceWalletOutlined as AccountBalanceWalletOutlinedIcon } from "@mui/icons-material";
-import { storeAccountInLocalStorage } from "../utils/account";
 type WalletButtonProps = {
   handleModalOpen: () => void;
   handleNavigate?: () => void;
@@ -35,9 +35,7 @@ export default function WalletButton({
     handleModalOpen();
   };
 
-  if (connected) {
-    storeAccountInLocalStorage(account, connected);
-  }
+
   return (
     <>
       <Button

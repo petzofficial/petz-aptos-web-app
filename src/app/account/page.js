@@ -1,13 +1,13 @@
 "use client";
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
-import GoBackBtn from "../../components/button/GoBackBtn";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import img1 from "../../assets/home/pgt-removebg-preview 2.png";
-import img2 from "../../assets/home/pst-removebg-preview 2.png";
-import img3 from "../../assets/home/image 23.png";
+import img1 from "@/assets/home/pgt-removebg-preview 2.png";
+import img2 from "@/assets/home/pst-removebg-preview 2.png";
+import img3 from "@/assets/home/image 23.png";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "../../style/account/account.scss";
 import { TbCircleLetterT } from "react-icons/tb";
@@ -16,21 +16,30 @@ import { IoCopy } from "react-icons/io5";
 import Token from "../../components/account/Token";
 import Transactions from "../../components/account/Transactions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { truncateAddress } from "@/components/aptosIntegrations/utils";
-import { Avatar, Typography } from "@mui/material";
 
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
+import { Tooltip } from "@mui/material";
 
 const Page = () => {
   const [slug, setSlug] = useState("token");
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
   const { connected, account, wallet } = useWallet();
   console.log("these are from account info");
   console.log(connected, account);
-  console.log(wallet);
+  const copyAddress = async (e) => {
+    await navigator.clipboard.writeText(account?.address);
+    setTooltipOpen(true);
+
+    setTimeout(() => {
+      setTooltipOpen(false);
+    }, 2000);
+  };
+
   return (
     <AppContext>
       <div>
@@ -84,16 +93,29 @@ const Page = () => {
                   </div>
                 </div>
 
-                <div className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]">
+                <div
+                  style={{ width: "max-content" }}
+                  className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]"
+                >
                   <p className="max-sm:text-[12px]">
                     {connected ? <>{account?.address}</> : <>not connected</>}
                   </p>
 
-                  <CopyToClipboard text={account?.address}>
-                    <button className="text-[#FF6900]">
+                  <Tooltip
+                    title="Copied"
+                    placement="bottom-end"
+                    open={tooltipOpen}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                  >
+                    <button
+                      onClick={() => copyAddress()}
+                      className="text-[#FF6900]"
+                    >
                       <IoCopy />
                     </button>
-                  </CopyToClipboard>
+                  </Tooltip>
                 </div>
                 <div className="first-box mt-5">
                   <div className="box-inner flex items-center mt-3">
