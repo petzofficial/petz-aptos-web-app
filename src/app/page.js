@@ -1,5 +1,6 @@
+"use client";
 import Navbar from "@/components/Navbar";
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import img1 from "@/assets/home/pgt-removebg-preview 2.png";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
@@ -12,10 +13,15 @@ import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
+import { useEffect } from "react";
+import runOneSignal from "@/components/notification/notification";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
+  useEffect(() => {
+    runOneSignal();
+  }, []);
   return (
     <AppContext>
       <div>

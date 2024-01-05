@@ -84,15 +84,19 @@ const Page = () => {
                   <Link href={`/notification/${item?.id}`}>
                     <div
                       key={item.id}
-                      className="message-box flex justify-between items-start py-5"
+                      className="message-box flex   justify-between items-start py-5"
                     >
-                      <div style={notificationIconStyle} className="icon mt-1">
-                        <TbMessage2Check />
-                      </div>
-
-                      <div className="message">
-                        <h3>{item.name}</h3>
-                        <p>Tap to see the message</p>
+                      <div className="flex  gap-8 items-start">
+                        <div
+                          style={notificationIconStyle}
+                          className="icon  w mt-1"
+                        >
+                          <TbMessage2Check />
+                        </div>
+                        <div className="message">
+                          <h3>{item.name}</h3>
+                          <p>Tap to see the message</p>
+                        </div>
                       </div>
 
                       <span className={outfit.className}>2 m ago</span>

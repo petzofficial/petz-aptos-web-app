@@ -4,11 +4,10 @@ export default async function runOneSignal() {
   try {
     OneSignal.init({
       appId: process.env.NEXT_PUBLIC_ONE_SIGNAL_APP_ID,
-      autoRegister,
-      autoResubscribe,
-      allowLocalhostAsSecureOrigin,
+      autoResubscribe: true,
+      autoRegister: true,
+      allowLocalhostAsSecureOrigin: true,
     });
-    OneSignal.Notifications.requestPermission();
   } catch (e) {
     console.log(e);
   }

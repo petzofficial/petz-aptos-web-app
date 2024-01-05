@@ -6,7 +6,7 @@ import GoBackBtn from "@/components/button/GoBackBtn";
 import React, { useEffect, useState } from "react";
 import { Outfit } from "next/font/google";
 import Link from "next/link";
-import "../../../style/notification/notification.scss";
+import "@/style/notification/notification.scss";
 import { FetchSingleNotifications } from "@/components/notification/getNotifications";
 
 const outfit = Outfit({ subsets: ["latin"] });
@@ -19,13 +19,10 @@ const Page = () => {
       try {
         setLoading(true);
         const response = await FetchSingleNotifications(id);
-        console.log(response);
         setNotification(response);
-        console.log(notification);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error("Error fetching notifications:", error);
       }
     };
     FetchData();
