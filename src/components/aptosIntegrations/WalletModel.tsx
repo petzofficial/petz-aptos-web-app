@@ -24,7 +24,7 @@ import { grey } from "./aptosColorPalette";
 // reported bug with loading mui icons with esm, therefore need to import like this https://github.com/mui/material-ui/issues/35233
 import { LanOutlined as LanOutlinedIcon } from "@mui/icons-material";
 import { Close as CloseIcon } from "@mui/icons-material";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 
 const ConnectWalletRow: React.FC<{
   wallet: Wallet;
@@ -145,11 +145,10 @@ export default function WalletsModal({
 
   const theme = useTheme();
 
-  const onWalletSelect = (walletName: WalletName) => {
-    const resp = connect(walletName);
-    console.log(resp)
-
+  const onWalletSelect = async (walletName: WalletName) => {
+    const resp = await connect(walletName)
     handleClose();
+    window.location.reload()
   };
 
   const renderWalletsList = () => {
