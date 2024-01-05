@@ -74,7 +74,7 @@ const Page = () => {
 
     const tasks = getTaskData();
     const status = "Completed";
-    const filtered = tasks.filter((task) => task.status !== status);
+    const filtered = tasks.filter((task) => task.status != status);
     setFilteredTasks(filtered);
     if (itemID) {
       setSelectedTaskId(itemID);
@@ -159,14 +159,14 @@ const Page = () => {
       updateTask(selectedTaskId, { status: "In Progress" });
       setIsRunning(true);
     } else if (selectedTaskId === "choose") {
-      toast.error("Set the task or created");
+      toast.error("Select the task or create new");
     }
   };
 
   const pauseTimer = () => {
     setIsRunning(false);
     if (selectedTaskId === "choose") {
-      toast.error("Set the task or created");
+      toast.error("Select the task or create new");
     }
   };
 
@@ -176,7 +176,7 @@ const Page = () => {
     setCurrentState("focus");
     setCurrentCycle(1);
     if (selectedTaskId === "choose") {
-      toast.error("Set the task or created");
+      toast.error("Select the task or create new");
     }
   };
 
@@ -190,7 +190,6 @@ const Page = () => {
       } else {
         setCurrentState("longBreak");
         setSeconds(settings.longBreakDuration);
-        // updateTask(selectedTaskId, { status: "Completed" });
       }
     } else if (currentState === "shortBreak") {
       // cycle update
@@ -200,7 +199,8 @@ const Page = () => {
       setSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
-      updateTask(selectedTaskId, { cycleCount: 1 });
+      //updateTask(selectedTaskId, { cycleCount: 1 });
+	  setSelectedTaskId('choose');
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
@@ -211,8 +211,6 @@ const Page = () => {
         (task) => task.status !== "Completed"
       );
       setFilteredTasks(updatedFilteredTasks);
-
-      router.push("/home", { scroll: true });
       // Show success toast
       toast.success(`Task is Completed`);
     }

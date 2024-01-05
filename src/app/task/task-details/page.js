@@ -43,8 +43,7 @@ const Page = () => {
 
   const handleStatus = (id) => {
     const currentStatus = task.status;
-    const newStatus =
-      currentStatus === "In Progress" || "Pending" ? "Completed" : "Completed";
+    const newStatus = "Completed";
     updateTask(id, { status: newStatus });
     const updatedTask = { ...task, status: newStatus };
     setTask(updatedTask);
@@ -52,8 +51,8 @@ const Page = () => {
   };
 
   const handleButtonClick = () => {
-    if (task.status === "Pending") {
-      toast.error("Task is Pending");
+    if (task.status == "Completed") {
+      toast.error("Task is Completed");
     }
   };
 
