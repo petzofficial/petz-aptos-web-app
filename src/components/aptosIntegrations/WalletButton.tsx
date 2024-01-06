@@ -38,10 +38,8 @@ export default function WalletButton({
   return (
     <>
       <button
-
         onClick={connected ? handleClick : onConnectWalletClick}
         className="user-icon font-bold"
-
       >
         {connected ? (
 
