@@ -43,10 +43,10 @@ export default function WalletButton({
       >
         {connected ? (
 
-          "connected"
+          "CONNECTED"
         ) : (
 
-          "Connect"
+          "CONNECT"
 
         )}
       </button>

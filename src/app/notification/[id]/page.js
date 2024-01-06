@@ -19,6 +19,7 @@ const Page = () => {
       try {
         setLoading(true);
         const response = await FetchSingleNotifications(id);
+        console.log(response);
         setNotification(response);
         setLoading(false);
       } catch (error) {
