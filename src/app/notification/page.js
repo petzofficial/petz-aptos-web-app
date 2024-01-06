@@ -11,6 +11,8 @@ import { LuBadgeInfo } from "react-icons/lu";
 import "../../style/notification/notification.scss";
 import Pagination from "@/components/button/Pagination";
 import { FetchNotifications } from "@/components/notification/getNotifications";
+import { getFormattedDateTime } from "@/components/common/datetime";
+import { truncateString } from "@/components/common/truncate";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
@@ -19,22 +21,7 @@ const Page = () => {
   const [notificationList, setNotificationList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const notificationsPerPage = 9; // Set the number of notifications per page
-  const getFormattedDateTime = (timestamp) => {
-    const date = new Date(timestamp * 1000);
 
-    const optionsDate = { year: "numeric", month: "short", day: "numeric" };
-    const formattedDate = date.toLocaleDateString(undefined, optionsDate);
-
-    const optionsTime = { hour: "numeric", minute: "2-digit", hour12: true };
-    const formattedTime = date.toLocaleTimeString([], optionsTime);
-
-    return { formattedDate, formattedTime };
-  };
-  const truncateString = (str, numWords) => {
-    const words = str.split(" ");
-    const truncatedWords = words.slice(0, numWords).join(" ");
-    return words.length > numWords ? `${truncatedWords} ...` : truncatedWords;
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,6 +38,7 @@ const Page = () => {
     };
     fetchData();
   }, []);
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -119,10 +107,10 @@ const Page = () => {
 
                       <span className={outfit.className}>
                         {getFormattedDateTime(item?.completed_at)
-                          .formattedTime +
+                          .formattedDate +
                           " " +
                           getFormattedDateTime(item?.completed_at)
-                            .formattedDate}
+                            .formattedTime}
                       </span>
                     </div>{" "}
                   </Link>

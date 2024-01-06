@@ -8,7 +8,7 @@ import { Outfit } from "next/font/google";
 import Link from "next/link";
 import "@/style/notification/notification.scss";
 import { FetchSingleNotifications } from "@/components/notification/getNotifications";
-
+import { getFormattedDateTime } from "@/components/common/datetime";
 const outfit = Outfit({ subsets: ["latin"] });
 const Page = () => {
   const { id } = useParams();
@@ -28,17 +28,6 @@ const Page = () => {
     };
     FetchData();
   }, []);
-  const getFormattedDateTime = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-
-    const optionsDate = { year: "numeric", month: "short", day: "numeric" };
-    const formattedDate = date.toLocaleDateString(undefined, optionsDate);
-
-    const optionsTime = { hour: "numeric", minute: "2-digit", hour12: true };
-    const formattedTime = date.toLocaleTimeString([], optionsTime);
-
-    return { formattedDate, formattedTime };
-  };
 
   return (
     <div>
@@ -67,10 +56,11 @@ const Page = () => {
                 <div className="flex justify-between my-2">
                   <span className={outfit.className}>
                     {getFormattedDateTime(notification?.completed_at)
-                      .formattedTime +
+                      .formattedDate +
                       " " +
                       getFormattedDateTime(notification?.completed_at)
-                        .formattedDate}
+                        .formattedTime}
+                    ;
                   </span>
                 </div>
                 <div className="description">
