@@ -19,7 +19,22 @@ const Page = () => {
   const [notificationList, setNotificationList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const notificationsPerPage = 9; // Set the number of notifications per page
+  const getFormattedDateTime = (timestamp) => {
+    const date = new Date(timestamp * 1000);
 
+    const optionsDate = { year: "numeric", month: "short", day: "numeric" };
+    const formattedDate = date.toLocaleDateString(undefined, optionsDate);
+
+    const optionsTime = { hour: "numeric", minute: "2-digit", hour12: true };
+    const formattedTime = date.toLocaleTimeString([], optionsTime);
+
+    return { formattedDate, formattedTime };
+  };
+  const truncateString = (str, numWords) => {
+    const words = str.split(" ");
+    const truncatedWords = words.slice(0, numWords).join(" ");
+    return words.length > numWords ? `${truncatedWords} ...` : truncatedWords;
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,6 +68,7 @@ const Page = () => {
     height: "30px",
     width: "30px",
   };
+
   return (
     <div>
       <Navbar method={"notification"} />
@@ -94,12 +110,20 @@ const Page = () => {
                           <TbMessage2Check />
                         </div>
                         <div className="message">
-                          <h3>{item.name}</h3>
-                          <p>Tap to see the message</p>
+                          <h3>{truncateString(item?.name, 5)}</h3>
+                          <p>
+                            {<h3>{truncateString(item?.contents?.en, 5)}</h3>}
+                          </p>
                         </div>
                       </div>
 
-                      <span className={outfit.className}>2 m ago</span>
+                      <span className={outfit.className}>
+                        {getFormattedDateTime(item?.completed_at)
+                          .formattedTime +
+                          " " +
+                          getFormattedDateTime(item?.completed_at)
+                            .formattedDate}
+                      </span>
                     </div>{" "}
                   </Link>
                 );

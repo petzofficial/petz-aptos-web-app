@@ -28,6 +28,17 @@ const Page = () => {
     };
     FetchData();
   }, []);
+  const getFormattedDateTime = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+
+    const optionsDate = { year: "numeric", month: "short", day: "numeric" };
+    const formattedDate = date.toLocaleDateString(undefined, optionsDate);
+
+    const optionsTime = { hour: "numeric", minute: "2-digit", hour12: true };
+    const formattedTime = date.toLocaleTimeString([], optionsTime);
+
+    return { formattedDate, formattedTime };
+  };
 
   return (
     <div>
@@ -52,17 +63,17 @@ const Page = () => {
                 <div className="title">
                   <h4>{notification.name}</h4>
                 </div>
-                <div className="flex justify-between my-2">
-                  <p>Lorem Ipsum</p>
-                  <p className="font-semibold">2.54 ETH</p>
-                </div>
-                <div className="flex justify-between my-2">
-                  <p>Paid On</p>
-                  <p className="font-semibold">November 15, 2023</p>
-                </div>
 
+                <div className="flex justify-between my-2">
+                  <span className={outfit.className}>
+                    {getFormattedDateTime(notification?.completed_at)
+                      .formattedTime +
+                      " " +
+                      getFormattedDateTime(notification?.completed_at)
+                        .formattedDate}
+                  </span>
+                </div>
                 <div className="description">
-                  <h4>Description</h4>
                   <p>{notification?.contents?.en}</p>
                   <p className="my-10 max-md:mt-4"></p>
                 </div>
