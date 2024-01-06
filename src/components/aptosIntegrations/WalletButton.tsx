@@ -37,32 +37,21 @@ export default function WalletButton({
 
   return (
     <>
-      <Button
-        size="large"
-        variant="contained"
+      <button
+
         onClick={connected ? handleClick : onConnectWalletClick}
         className="user-icon font-bold"
-        sx={{
-          borderRadius: "10px",
-          "&:hover": {
-            backgroundColor: "#FF6900",
-          },
-          backgroundColor: "#FF6900"
-        }}
+
       >
         {connected ? (
-          <>
 
-            <Typography noWrap ml={2}>
-              connected
-            </Typography>
-          </>
+          "connected"
         ) : (
-          <>
-            <Typography noWrap>Connect </Typography>
-          </>
+
+          "Connect"
+
         )}
-      </Button>
+      </button>
       <WalletMenu
         popoverAnchor={popoverAnchor}
         handlePopoverClose={handlePopoverClose}

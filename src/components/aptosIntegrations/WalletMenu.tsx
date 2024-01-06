@@ -64,25 +64,7 @@ export default function WalletMenu({
       }}
     >
       <List>
-        <Tooltip
-          title="Copied"
-          placement="bottom-end"
-          open={tooltipOpen}
-          disableFocusListener
-          disableHoverListener
-          disableTouchListener
-        >
-          <ListItem disablePadding>
-            <ListItemButton onClick={copyAddress}>
-              <ListItemText primary="Copy Address" />
-            </ListItemButton>
-          </ListItem>
-        </Tooltip>
-        <ListItem disablePadding>
-          <ListItemButton onClick={onAccountOptionClicked}>
-            <ListItemText primary="Account" />
-          </ListItemButton>
-        </ListItem>
+
         <ListItem disablePadding>
           <ListItemButton onClick={handleLogout}>
             <ListItemText primary="Logout" />
