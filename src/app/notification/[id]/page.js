@@ -66,6 +66,11 @@ const Page = () => {
                   <p>{notification?.contents?.en}</p>
                   <p className="my-10 max-md:mt-4"></p>
                 </div>
+                {notification?.global_image && (
+                  <div>
+                    <img src={notification?.global_image} alt="" />
+                  </div>
+                )}
               </div>
             )}
           </div>
