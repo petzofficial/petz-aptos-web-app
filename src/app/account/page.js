@@ -20,7 +20,6 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Tooltip } from "@mui/material";
 
