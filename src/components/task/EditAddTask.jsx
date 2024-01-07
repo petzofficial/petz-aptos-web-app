@@ -47,7 +47,7 @@ const EditAddTask = ({ method }) => {
     const addObj = {
       title: workOut,
       time: 0,
-      color: "#14985A",
+      color: "#8B0000",
       addDescription: addDescription,
       priority: priority,
       date: formattedDate,

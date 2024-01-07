@@ -156,7 +156,7 @@ const Page = () => {
 
   const startTimer = () => {
     if (selectedTaskId && selectedTaskId !== "choose") {
-      updateTask(selectedTaskId, { status: "In Progress" });
+      updateTask(selectedTaskId, { status: "In Progress", color: "#FED000" });
       setIsRunning(true);
     } else if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
@@ -204,7 +204,7 @@ const Page = () => {
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
-      updateTask(selectedTaskId, { status: "Completed" });
+      updateTask(selectedTaskId, { status: "Completed", color: "#14985A" });
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
       const updatedFilteredTasks = updatedTasks.filter(
