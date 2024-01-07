@@ -24,8 +24,7 @@ const Page = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log(notifications);
-  console.log(notificationList);
+
   const paginatedNotifications = notifications?.slice(
     (currentPage - 1) * notificationsPerPage,
     currentPage * notificationsPerPage
@@ -50,7 +49,7 @@ const Page = () => {
               <div
                 className={`font-semibold text-center flex justify-center items-center ${outfit.className}`}
               >
-                Recent<p>{total_count}</p>
+                Recent<p>{total_count ? total_count : 0}</p>
               </div>
             </div>
             <div className="clear-btn">
