@@ -72,16 +72,16 @@ const Page = () => {
                   <button onClick={() => handleFilter('All')}>All</button>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <IoMdDoneAll />
-                  <button onClick={() => handleFilter('Completed')}>Complete</button>
+                  <IoMdTime />
+                  <button onClick={() => handleFilter('Pending')}>Pending</button>
                 </div>
                 <div className="flex items-center space-x-4">
                   <CgTimelapse className="border rounded-full" />
                   <button onClick={() => handleFilter('In Progress')}>In Progress</button>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <IoMdTime />
-                  <button onClick={() => handleFilter('Pending')}>Complete</button>
+                  <IoMdDoneAll />
+                  <button onClick={() => handleFilter('Completed')}>Completed</button>
                 </div>
               </div>
             </div>
