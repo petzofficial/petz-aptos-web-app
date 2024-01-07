@@ -7,27 +7,13 @@ import React, { useEffect, useState } from "react";
 import { Outfit } from "next/font/google";
 import Link from "next/link";
 import "@/style/notification/notification.scss";
-import { FetchSingleNotifications } from "@/components/notification/getNotifications";
+import { useSingleNotification } from "@/components/notification/getNotifications";
 import { getFormattedDateTime } from "@/components/common/datetime";
+
 const outfit = Outfit({ subsets: ["latin"] });
 const Page = () => {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [notification, setNotification] = useState([]);
-  useEffect(() => {
-    const FetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await FetchSingleNotifications(id);
-        console.log(response);
-        setNotification(response);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-      }
-    };
-    FetchData();
-  }, []);
+  const { data: notification, isLoading, isError } = useSingleNotification(id);
 
   return (
     <div>
@@ -45,7 +31,7 @@ const Page = () => {
             <div className="not-box flex-1">
               <h3>Notification</h3>
             </div>
-            {loading ? (
+            {isLoading ? (
               <p>Loading...</p>
             ) : (
               <div className="info mt-12">

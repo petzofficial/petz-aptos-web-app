@@ -1,7 +1,7 @@
-// In fetchNotifications.js or the relevant file
+import { useQuery } from "react-query";
 import axios from "axios";
 
-export const FetchNotifications = async () => {
+const fetchNotifications = async () => {
   const queryParams = {
     app_id: process.env.NEXT_PUBLIC_ONE_SIGNAL_APP_ID,
     limit: 10,
@@ -12,24 +12,15 @@ export const FetchNotifications = async () => {
     Accept: "application/json",
   };
 
-  try {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_ONE_SIGNAL_API_URL,
-      {
-        params: queryParams,
-        headers: headers,
-      }
-    );
+  const response = await axios.get(process.env.NEXT_PUBLIC_ONE_SIGNAL_API_URL, {
+    params: queryParams,
+    headers: headers,
+  });
 
-    // Return the response data
-    return response.data;
-  } catch (error) {
-    // Throw the error to be caught by the calling function
-    throw error;
-  }
+  return response.data;
 };
 
-export const FetchSingleNotifications = async (notification_id) => {
+const fetchSingleNotification = async (notification_id) => {
   const queryParams = {
     app_id: process.env.NEXT_PUBLIC_ONE_SIGNAL_APP_ID,
     notification_id: notification_id,
@@ -40,19 +31,23 @@ export const FetchSingleNotifications = async (notification_id) => {
     Accept: "application/json",
   };
 
-  try {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_ONE_SIGNAL_API_URL + `/${notification_id}`,
-      {
-        params: queryParams,
-        headers: headers,
-      }
-    );
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_ONE_SIGNAL_API_URL}/${notification_id}`,
+    {
+      params: queryParams,
+      headers: headers,
+    }
+  );
 
-    // Return the response data
-    return response.data;
-  } catch (error) {
-    // Throw the error to be caught by the calling function
-    throw error;
-  }
+  return response.data;
+};
+
+export const useNotifications = () => {
+  return useQuery("notifications", fetchNotifications);
+};
+
+export const useSingleNotification = (notification_id) => {
+  return useQuery(["notification", notification_id], () =>
+    fetchSingleNotification(notification_id)
+  );
 };

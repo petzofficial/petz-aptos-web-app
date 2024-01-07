@@ -9,46 +9,24 @@ import { TbMessage2Check } from "react-icons/tb";
 import { FiBox } from "react-icons/fi";
 import { LuBadgeInfo } from "react-icons/lu";
 import "../../style/notification/notification.scss";
+import { useNotifications } from "../../components/notification/getNotifications";
 import Pagination from "@/components/button/Pagination";
-import { FetchNotifications } from "@/components/notification/getNotifications";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import { truncateString } from "@/components/common/truncate";
+
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
-  const [loading, setLoading] = useState(true);
-  const [totalNotifications, setTotalNotifications] = useState(0);
-  const [notificationList, setNotificationList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const notificationsPerPage = 9; // Set the number of notifications per page
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await FetchNotifications();
-        const { total_count, notifications } = response;
-
-        setTotalNotifications(total_count);
-        setNotificationList(notifications);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
+  const { data: notificationList, isLoading, isError } = useNotifications();
+  const { notifications, limit, total_count } = notificationList || {};
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  const clearAllNotifications = () => {
-    setTotalNotifications(0);
-    setNotificationList([]);
-  };
-
-  const paginatedNotifications = notificationList.slice(
+  console.log(notifications);
+  console.log(notificationList);
+  const paginatedNotifications = notifications?.slice(
     (currentPage - 1) * notificationsPerPage,
     currentPage * notificationsPerPage
   );
@@ -72,22 +50,22 @@ const Page = () => {
               <div
                 className={`font-semibold text-center flex justify-center items-center ${outfit.className}`}
               >
-                Recent<p>{totalNotifications}</p>
+                Recent<p>{total_count}</p>
               </div>
             </div>
             <div className="clear-btn">
-              <button onClick={() => clearAllNotifications()}>Clear All</button>
+              <button>Clear All</button>
             </div>
           </div>
-          {loading ? (
+          {isLoading ? (
             <p>Loading...</p>
           ) : (
             <div className="notification-inner pt-16">
-              {paginatedNotifications?.map((item) => {
+              {paginatedNotifications?.map((item, id) => {
                 return (
-                  <Link href={`/notification/${item?.id}`}>
+                  <Link key={id} href={`/notification/${item?.id}`}>
                     <div
-                      key={item.id}
+                      key={id}
                       className="message-box flex   justify-between items-start py-5"
                     >
                       <div className="flex  gap-8 items-start">
@@ -98,10 +76,8 @@ const Page = () => {
                           <TbMessage2Check />
                         </div>
                         <div className="message">
-                          <h3>{truncateString(item?.name, 5)}</h3>
-                          <p>
-                            {<h3>{truncateString(item?.contents?.en, 5)}</h3>}
-                          </p>
+                          <p>{truncateString(item?.name, 5)}</p>
+                          <p>{truncateString(item?.contents?.en, 5)}</p>
                         </div>
                       </div>
 
@@ -119,9 +95,7 @@ const Page = () => {
 
               <Pagination
                 currentPage={currentPage}
-                totalPages={Math.ceil(
-                  totalNotifications / notificationsPerPage
-                )}
+                totalPages={Math.ceil(total_count / notificationsPerPage)}
                 onPageChange={handlePageChange}
               />
             </div>

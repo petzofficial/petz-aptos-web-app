@@ -1,7 +1,10 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
-
+import {
+  queryClient,
+  QueryClientProvider,
+} from "@/components/common/react_query";
 const sans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,7 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={sans.className}>
-        <AppContext>{children}</AppContext>
+        <QueryClientProvider client={queryClient}>
+          <AppContext>{children}</AppContext>
+        </QueryClientProvider>
       </body>
     </html>
   );
