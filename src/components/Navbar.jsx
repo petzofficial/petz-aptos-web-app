@@ -16,42 +16,6 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
   const [responsive, setResponsive] = useState(false);
-  /*const [initialized, setInitialized] = useState(false);
-  useEffect(() => {
-    const initializeOneSignal = async () => {
-      if (!initialized && typeof window !== "undefined") {
-        try {
-          await OneSignal.init({
-            appId: "1d687e3b-eae1-4d68-b7c5-eebf24226a9e",
-            safari_web_id:
-              "web.onesignal.auto.44737891-769a-4856-a052-0f3c94719003",
-            notifyButton: {
-              enable: false,
-            },
-            allowLocalhostAsSecureOrigin: true,
-          });
-
-          setInitialized(true);
-          OneSignal.Slidedown.promptPush();
-        } catch (error) {
-          console.error("Error initializing OneSignal:", error);
-        }
-      }
-    };
-
-    initializeOneSignal();
-  }, [initialized]);
-
-  useEffect(() => {
-    // This block will execute after initialization
-    if (initialized) {
-      localStorage.setItem(
-        "notificationUserId",
-        OneSignal.User.PushSubscription.id
-      );
-    }
-  }, [initialized]);
-*/
   return (
     <nav className="w-full bg-white fixed z-20 shadow-md py-1">
       <div className="navbar 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
