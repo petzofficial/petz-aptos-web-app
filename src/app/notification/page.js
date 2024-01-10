@@ -13,7 +13,7 @@ import { useNotifications } from "../../components/notification/getNotifications
 import Pagination from "@/components/button/Pagination";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import { truncateString } from "@/components/common/truncate";
-
+import LoadingCircle from "@/components/common/loading";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
@@ -57,7 +57,18 @@ const Page = () => {
             </div>
           </div>
           {isLoading ? (
-            <p>Loading...</p>
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                marginTop: "30px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <LoadingCircle />
+            </div>
           ) : (
             <div className="notification-inner pt-16">
               {paginatedNotifications?.map((item, id) => {

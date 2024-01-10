@@ -1,6 +1,7 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import React, { use } from "react";
+import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import img1 from "@/assets/home/pgt-removebg-preview 2.png";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
@@ -105,10 +106,11 @@ const Page = () => {
                   </button>
                 </div>
               </div>
-
-              <div className="home-foot my-12">
-                <Image src={group} width={380} height={305} alt="group" />
-              </div>
+              <Link href="/account">
+                <div className="home-foot my-12">
+                  <Image src={group} width={380} height={305} alt="group" />
+                </div>{" "}
+              </Link>
             </div>
           </div>
         </section>

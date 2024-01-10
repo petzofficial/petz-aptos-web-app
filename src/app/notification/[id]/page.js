@@ -9,7 +9,7 @@ import Link from "next/link";
 import "@/style/notification/notification.scss";
 import { useSingleNotification } from "@/components/notification/getNotifications";
 import { getFormattedDateTime } from "@/components/common/datetime";
-
+import LoadingCircle from "@/components/common/loading";
 const outfit = Outfit({ subsets: ["latin"] });
 const Page = () => {
   const { id } = useParams();
@@ -32,7 +32,7 @@ const Page = () => {
               <h3>Notification</h3>
             </div>
             {isLoading ? (
-              <p>Loading...</p>
+              <LoadingCircle />
             ) : (
               <div className="info mt-12">
                 <div className="title">
