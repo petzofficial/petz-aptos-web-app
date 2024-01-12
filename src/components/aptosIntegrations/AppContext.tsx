@@ -44,10 +44,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
         <AptosWalletAdapterProvider
             plugins={wallets}
             autoConnect={true}
-            onError={(error) => {
-                console.log("Custom error handling", error);
-                setErrorAlertMessage(error);
-            }}
+
         >
             {children}
         </AptosWalletAdapterProvider>
