@@ -3,9 +3,8 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Image from "next/image";
-import img1 from "@/assets/home/pgt-removebg-preview 2.png";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
 import img3 from "@/assets/home/image 23.png";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
@@ -25,14 +24,18 @@ import {
   selectTokens,
   fetchCoinsAction,
   selectCoins,
+  selectIsCoinsLoading,
+  selectIsTransactionLoading,
+  selectIsTokenLoading,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-
+import Coins from "@/components/coins/coin";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Tooltip } from "@mui/material";
+import { truncateAddress } from "@/components/aptosIntegrations/utils";
 
 const Page = () => {
   const [slug, setSlug] = useState("token");
@@ -40,15 +43,12 @@ const Page = () => {
   const newNetwork = useAppSelector(selectNewNetwork);
   const transactions = useAppSelector(selectTransactions);
   const coins = useAppSelector(selectCoins);
+  const coinsLoading = useAppSelector(selectIsCoinsLoading);
+  const transactionLoading = useAppSelector(selectIsTransactionLoading);
+  const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
-  console.log("these are tokens");
-  console.log(tokens);
-  console.log("these are transactions");
-  console.log(transactions);
-  console.log("these are coins ");
-  console.log(coins);
+
   const { connected, account, wallet } = useWallet();
-  console.log(connected, account);
   const dispatch = useAppDispatch();
 
   const copyAddress = async (e) => {
@@ -64,8 +64,7 @@ const Page = () => {
     dispatch(fetchTokensAction(account));
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
-  console.log("transiactions here");
-  console.log(selectTransactions());
+
   return (
     <AppContext>
       <div>
@@ -103,24 +102,17 @@ const Page = () => {
                 <h2 className={`flex justify-center ${outfit.className}`}>
                   Account
                 </h2>
-                <div className="first-box flex justify-between items-center mt-8">
-                  {coins?.map((x) => (
-                    <>
-                      <div className="flex items-center space-x-1">
-                        <Image src={img1} width={30} height={30} alt="PGT" />
-                        <p>
-                          {x?.amount} {x?.metadata?.symbol}
-                        </p>
-                      </div>
-                    </>
-                  ))}
-                </div>
+                <Coins isLoading={coinsLoading} coins={coins} />
                 <div
                   style={{ width: "max-content" }}
                   className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]"
                 >
                   <p className="max-sm:text-[12px]">
-                    {connected ? <>{account?.address}</> : <>not connected</>}
+                    {connected ? (
+                      <>{truncateAddress(account?.address)}</>
+                    ) : (
+                      <>not connected</>
+                    )}
                   </p>
 
                   <Tooltip
@@ -165,9 +157,16 @@ const Page = () => {
             </div>
 
             <div className="account-inner">
-              {slug === "token" ? <Token tokens={tokens} /> : ""}
+              {slug === "token" ? (
+                <Token isLoading={tokenLoading} tokens={tokens} />
+              ) : (
+                ""
+              )}
               {slug === "transactions" ? (
-                <Transactions transactions={transactions} />
+                <Transactions
+                  transactions={transactions}
+                  isLoading={transactionLoading}
+                />
               ) : (
                 ""
               )}

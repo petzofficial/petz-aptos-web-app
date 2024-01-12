@@ -26,6 +26,12 @@ export interface AccountState {
   specificTokenNftImg: object;
   transactionBlock: object;
   network: string;
+  isLoadingTransactions: boolean;
+  isLoadingSingleTransaction: boolean;
+  isLoadingTokens: boolean;
+  isLoadingSingleToken: boolean;
+  isLoadingCoins: boolean;
+  isLoadingSingleCoin: boolean;
 }
 
 const initialState: AccountState = {
@@ -39,23 +45,35 @@ const initialState: AccountState = {
   specificTokenNftImg: {},
   transactionBlock: {},
   network: "",
+  isLoadingTransactions: false,
+  isLoadingSingleTransaction: false,
+  isLoadingTokens: false,
+  isLoadingSingleToken: false,
+  isLoadingCoins: false,
+  isLoadingSingleCoin: false,
 };
 
 export const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    setTransactions: (state, action: PayloadAction<Array<any>>) => {
-      state.transactions = action.payload;
+    setTransactions: (state, action: PayloadAction<any>) => {
+      state.isLoadingTransactions = action.payload.isLoading;
+      state.transactions = action.payload.data;
+      state.isLoadingTransactions = action.payload.isLoading;
     },
     setAccount: (state, action: PayloadAction<any>) => {
       state.account = action.payload;
     },
     setCoins: (state, action: PayloadAction<any>) => {
-      state.coins = action.payload.current_fungible_asset_balances;
+      state.isLoadingCoins = action.payload.isLoading;
+      state.coins = action.payload.data?.current_fungible_asset_balances;
+      state.isLoadingCoins = action.payload.isLoading;
     },
     setTokens: (state, action: PayloadAction<any>) => {
-      state.tokens = action.payload.current_token_ownerships_v2;
+      state.isLoadingTokens = action.payload?.isLoading;
+      state.tokens = action.payload.data?.current_token_ownerships_v2;
+      state.isLoadingTokens = action.payload?.isLoading;
     },
     setBalanceDetails: (state, action: PayloadAction<any>) => {
       state.balanceDetails = action.payload;
@@ -127,6 +145,12 @@ export const selectSpecificToken = (tokenId: string) =>
     return specificTokenResponse;
   });
 
+export const selectIsCoinsLoading = (state: RootState) =>
+  state.account.isLoadingCoins;
+export const selectIsTransactionLoading = (state: RootState) =>
+  state.account.isLoadingTransactions;
+export const selectIsTokenLoading = (state: RootState) =>
+  state.account.isLoadingTokens;
 // export const fetchSpecificTokenAction =
 //   (tokenVersion: any) => (dispatch: any, getState: () => RootState) => {
 //     const tokens = getState().account.tokens;
@@ -165,12 +189,13 @@ export const fetchTransactionsAction =
     }
     const provider = getWalletNetwork(getState().account.network);
     try {
+      dispatch(setTransactions({ isLoading: true }));
       const transactionResource = await provider.getAccountTransactions(
         address
       );
-      console.log("these are transaction resources");
-      console.log(transactionResource);
-      dispatch(setTransactions(transactionResource));
+      dispatch(
+        setTransactions({ data: transactionResource, isLoading: false })
+      );
     } catch (e: any) {
       toast.error(e?.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -185,9 +210,9 @@ export const fetchCoinsAction =
     }
     const provider = getWalletNetwork(getState().account.network);
     try {
+      dispatch(setCoins({ isLoading: true }));
       const faResource: any = await provider.getAccountCoinsData(address);
-
-      dispatch(setCoins(faResource));
+      dispatch(setCoins({ data: faResource, isLoading: false }));
     } catch (e: any) {
       toast.error(e?.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -207,11 +232,13 @@ export const fetchTokensAction =
 
     const provider = getWalletNetwork(getState().account.network);
     try {
+      dispatch(setTokens({ isLoading: true }));
       const nftResource: any = await provider.getOwnedTokens(account.address);
-      dispatch(setTokens(nftResource));
+      dispatch(setTokens({ isLoading: false, data: nftResource }));
     } catch (e: any) {
       dispatch(setTokens([]));
       toast.error(e?.message);
+      dispatch(setTokens({ isLoading: false }));
     }
   };
 

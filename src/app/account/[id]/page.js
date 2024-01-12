@@ -61,7 +61,7 @@ const Page = () => {
               </div>
               <div>
                 <p>Timestamp</p>
-                <p>{formatTimestamp(specificTransaction.timestamp)}</p>
+                <p>{formatTimestamp(specificTransaction?.timestamp)}</p>
               </div>
               <div>
                 <p>Status</p>

@@ -6,6 +6,7 @@ import image3 from "../../assets/nft/01.png";
 import image4 from "../../assets/nft/29.png";
 import Link from "next/link";
 import Pagination from "../button/Pagination";
+import LoadingSkeleton from "../common/skeletonLoading";
 
 const items = [
   {
@@ -58,28 +59,39 @@ const items = [
   },
 ];
 
-const Token = ({ tokens }) => {
+const Token = ({ tokens, isLoading }) => {
   return (
     <div className="account-token max-md:pt-5 md:pt-10">
-      <div className="pick-cards grid max-lg:grid-cols-2 lg:grid-cols-4 justify-between items-center">
-        {tokens.map((item) => {
-          return (
-            <Link key={item.id} href={`/nft/${item.last_transaction_version}`}>
-              <div className="box shadow-md m-auto my-[10px]">
-                <div className="image flex justify-center items-center">
-                  <Image src={item.image} width={86} height={117} alt="petz" />
-                </div>
-                <div className="pitbull-footer">
-                  <p>#{item?.current_token_data?.token_name}</p>
-                  <p>{item.pick}</p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-
-      <Pagination />
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        <>
+          {" "}
+          <div className="pick-cards grid max-lg:grid-cols-2 lg:grid-cols-4 justify-between items-center">
+            {tokens.map((item, id) => {
+              return (
+                <Link key={id} href={`/nft/${item.last_transaction_version}`}>
+                  <div className="box shadow-md m-auto my-[10px]">
+                    <div className="image flex justify-center items-center">
+                      <Image
+                        src={item.image}
+                        width={86}
+                        height={117}
+                        alt="petz"
+                      />
+                    </div>
+                    <div className="pitbull-footer">
+                      <p>#{item?.current_token_data?.token_name}</p>
+                      <p>{item.pick}</p>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          <Pagination />
+        </>
+      )}
     </div>
   );
 };
