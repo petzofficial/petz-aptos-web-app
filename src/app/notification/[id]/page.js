@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Outfit } from "next/font/google";
 import Link from "next/link";
 import "@/style/notification/notification.scss";

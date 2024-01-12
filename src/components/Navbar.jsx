@@ -12,6 +12,7 @@ import { Outfit } from "next/font/google";
 import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { AppContext } from "./aptosIntegrations/AppContext";
+import { NetworkSelector } from "./aptosIntegrations/networkSelector";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
@@ -71,6 +72,7 @@ const Navbar = ({ method }) => {
               </button>
             </Link>
             <div className="max-md:hidden lg:flex">
+              <NetworkSelector />
               <WalletConnector />
             </div>
 
@@ -109,6 +111,7 @@ const Navbar = ({ method }) => {
               Account
             </button>
           </Link>
+
           <WalletConnector />
         </div>
       </nav>{" "}

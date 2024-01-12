@@ -1,17 +1,26 @@
+"use client";
+import { useParams } from "next/navigation";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React from "react";
-import image1 from "../../assets/nft/111.png";
+import image1 from "@/assets/nft/111.png";
 import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
-import "../../style/nft/nft.scss";
+import "@/style/nft/nft.scss";
 import { Outfit } from "next/font/google";
-
+import { useAppSelector } from "@/redux/app/hooks";
+import { selectSpecificToken } from "@/redux/app/reducers/AccountSlice";
+import { getFormattedDateTime } from "@/components/common/datetime";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
+  const { id } = useParams();
+  const token = useAppSelector(selectSpecificToken(id));
+  console.log("this is id token");
+  console.log(token);
+
   return (
     <div>
       <Navbar />
@@ -32,8 +41,7 @@ const Page = () => {
                   <Image src={image1} width={116} height={160} alt="petz" />
                 </div>
                 <div className="pitbull-footer">
-                  <p>#1273</p>
-                  <p>Pitbull</p>
+                  {token?.current_token_data?.token_name}
                 </div>
               </div>
             </div>
@@ -44,17 +52,32 @@ const Page = () => {
               <IoIosStar />
               <IoIosStar />
             </div>
-
-            <div className="progress-bar flex items-center">
-              <div className="skill flex-1">
-                <div className="skill-bar skill3 wow slideInLeft animated">
-                  <span className="skill-count2"></span>
-                </div>
-              </div>
-              <p>HP</p>
+            <div className=" justify-between flex items-center">
+              <p>token standard</p>
+              <p>{token?.current_token_data?.token_standard}</p>
             </div>
-
-            <div className="opportunities my-9">
+            <div className=" justify-between flex items-center">
+              <p>amount</p>
+              <p>{token?.amount}</p>
+            </div>
+            <div className=" justify-between flex items-center">
+              <p>is_fungible_v2</p>
+              <p>{token?.is_fungible_v2 ? "true" : "false"}</p>
+            </div>
+            <div className=" justify-between flex items-center">
+              <p>is_soulbound_v2</p>
+              <p>{token?.is_soulbound_v2 ? "true" : "false"}</p>
+            </div>
+            <div className=" justify-between flex items-center">
+              <p>last_transaction_version</p>
+              <p>
+                {
+                  getFormattedDateTime(token?.last_transaction_version)
+                    .formattedDate
+                }
+              </p>
+            </div>
+            {/* <div className="opportunities my-9">
               <div className="flex items-center my-2">
                 <p>Productivity</p>
                 <div className="skill w-[150px]">
@@ -91,7 +114,7 @@ const Page = () => {
                 </div>
                 <h5>4.5</h5>
               </div>
-            </div>
+            </div> */}
 
             <div className="sell-select-btn">
               <button>Sell</button>

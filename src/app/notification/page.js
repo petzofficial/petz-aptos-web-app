@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { Outfit } from "next/font/google";
 import Link from "next/link";
 import { TbMessage2Check } from "react-icons/tb";
@@ -14,6 +15,7 @@ import Pagination from "@/components/button/Pagination";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import { truncateString } from "@/components/common/truncate";
 import LoadingCircle from "@/components/common/loading";
+import imageNotification from "@/assets/notification/image.jpg";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
@@ -29,6 +31,7 @@ const Page = () => {
     (currentPage - 1) * notificationsPerPage,
     currentPage * notificationsPerPage
   );
+  // const paginatedNotifications = [];
   const notificationIconStyle = {
     height: "30px",
     width: "30px",
@@ -69,7 +72,7 @@ const Page = () => {
             >
               <LoadingCircle />
             </div>
-          ) : (
+          ) : paginatedNotifications?.length != 0 ? (
             <div className="notification-inner pt-16">
               {paginatedNotifications?.map((item, id) => {
                 return (
@@ -108,6 +111,17 @@ const Page = () => {
                 totalPages={Math.ceil(total_count / notificationsPerPage)}
                 onPageChange={handlePageChange}
               />
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "10px",
+              }}
+            >
+              <Image height={240} src={imageNotification} alt="f" />
             </div>
           )}
         </div>

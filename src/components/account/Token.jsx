@@ -58,19 +58,19 @@ const items = [
   },
 ];
 
-const Token = () => {
+const Token = ({ tokens }) => {
   return (
     <div className="account-token max-md:pt-5 md:pt-10">
       <div className="pick-cards grid max-lg:grid-cols-2 lg:grid-cols-4 justify-between items-center">
-        {items.map((item) => {
+        {tokens.map((item) => {
           return (
-            <Link key={item.id} href={"/nft"}>
+            <Link key={item.id} href={`/nft/${item.last_transaction_version}`}>
               <div className="box shadow-md m-auto my-[10px]">
                 <div className="image flex justify-center items-center">
                   <Image src={item.image} width={86} height={117} alt="petz" />
                 </div>
                 <div className="pitbull-footer">
-                  <p>#{item.num}</p>
+                  <p>#{item?.current_token_data?.token_name}</p>
                   <p>{item.pick}</p>
                 </div>
               </div>

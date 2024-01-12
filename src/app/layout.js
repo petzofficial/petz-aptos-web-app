@@ -1,6 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
+import { ReduxAppProvider } from "@/redux/provider";
 import {
   queryClient,
   QueryClientProvider,
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={sans.className}>
         <QueryClientProvider client={queryClient}>
-          <AppContext>{children}</AppContext>
+          <ReduxAppProvider>
+            <AppContext>{children}</AppContext>
+          </ReduxAppProvider>
         </QueryClientProvider>
       </body>
     </html>

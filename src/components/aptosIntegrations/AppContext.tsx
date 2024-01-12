@@ -28,6 +28,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
         new BloctoWallet({
             network: NetworkName.Testnet,
             bloctoAppId: "6d85f56e-5f2e-46cd-b5f2-5cf9695b4d46",
+
         }),
         // new FaceWallet(face!),
 

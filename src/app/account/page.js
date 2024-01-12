@@ -16,6 +16,17 @@ import { IoCopy } from "react-icons/io5";
 import Token from "../../components/account/Token";
 import Transactions from "../../components/account/Transactions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useEffect } from "react";
+import {
+  fetchTransactionsAction,
+  selectNewNetwork,
+  selectTransactions,
+  fetchTokensAction,
+  selectTokens,
+  fetchCoinsAction,
+  selectCoins,
+} from "@/redux/app/reducers/AccountSlice";
+import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -26,10 +37,20 @@ import { Tooltip } from "@mui/material";
 const Page = () => {
   const [slug, setSlug] = useState("token");
   const [tooltipOpen, setTooltipOpen] = useState(false);
-
+  const newNetwork = useAppSelector(selectNewNetwork);
+  const transactions = useAppSelector(selectTransactions);
+  const coins = useAppSelector(selectCoins);
+  const tokens = useAppSelector(selectTokens);
+  console.log("these are tokens");
+  console.log(tokens);
+  console.log("these are transactions");
+  console.log(transactions);
+  console.log("these are coins ");
+  console.log(coins);
   const { connected, account, wallet } = useWallet();
-  console.log("these are from account info");
   console.log(connected, account);
+  const dispatch = useAppDispatch();
+
   const copyAddress = async (e) => {
     await navigator.clipboard.writeText(account?.address);
     setTooltipOpen(true);
@@ -38,12 +59,17 @@ const Page = () => {
       setTooltipOpen(false);
     }, 2000);
   };
-
+  useEffect(() => {
+    dispatch(fetchTransactionsAction(account?.address));
+    dispatch(fetchTokensAction(account));
+    dispatch(fetchCoinsAction(account?.address));
+  }, [dispatch, account, newNetwork]);
+  console.log("transiactions here");
+  console.log(selectTransactions());
   return (
     <AppContext>
       <div>
         <Navbar method={"account"} />
-
         <section className="account">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="account-top">
@@ -78,20 +104,17 @@ const Page = () => {
                   Account
                 </h2>
                 <div className="first-box flex justify-between items-center mt-8">
-                  <div className="flex items-center space-x-1">
-                    <Image src={img1} width={30} height={30} alt="PGT" />
-                    <p>100 PGT</p>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Image src={img2} width={30} height={30} alt="PST" />
-                    <p>100 PST</p>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Image src={img3} width={30} height={30} alt="100 APT" />
-                    <p>100 APT</p>
-                  </div>
+                  {coins?.map((x) => (
+                    <>
+                      <div className="flex items-center space-x-1">
+                        <Image src={img1} width={30} height={30} alt="PGT" />
+                        <p>
+                          {x?.amount} {x?.metadata?.symbol}
+                        </p>
+                      </div>
+                    </>
+                  ))}
                 </div>
-
                 <div
                   style={{ width: "max-content" }}
                   className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]"
@@ -142,8 +165,12 @@ const Page = () => {
             </div>
 
             <div className="account-inner">
-              {slug === "token" ? <Token /> : ""}
-              {slug === "transactions" ? <Transactions /> : ""}
+              {slug === "token" ? <Token tokens={tokens} /> : ""}
+              {slug === "transactions" ? (
+                <Transactions transactions={transactions} />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </section>
