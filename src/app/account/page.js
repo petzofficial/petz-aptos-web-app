@@ -27,6 +27,7 @@ import {
   selectIsCoinsLoading,
   selectIsTransactionLoading,
   selectIsTokenLoading,
+  fetchNftImgAction,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
@@ -47,10 +48,11 @@ const Page = () => {
   const transactionLoading = useAppSelector(selectIsTransactionLoading);
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
-
+  console.log("these are tokens");
+  console.log(tokens);
   const { connected, account, wallet } = useWallet();
   const dispatch = useAppDispatch();
-
+  console.log(coins);
   const copyAddress = async (e) => {
     await navigator.clipboard.writeText(account?.address);
     setTooltipOpen(true);
@@ -61,9 +63,23 @@ const Page = () => {
   };
   useEffect(() => {
     dispatch(fetchTransactionsAction(account?.address));
-    dispatch(fetchTokensAction(account));
+    dispatch(fetchTokensAction(account?.address));
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
+  console.log(tokens);
+
+  useEffect(() => {
+    if (tokens) {
+      tokens?.forEach((token) => {
+        if (!token?.image) {
+          const tokenURI = token?.current_token_data?.token_uri;
+          dispatch(
+            fetchNftImgAction(tokenURI, token?.last_transaction_version)
+          );
+        }
+      });
+    }
+  }, [dispatch, tokens]);
 
   return (
     <AppContext>
@@ -102,7 +118,11 @@ const Page = () => {
                 <h2 className={`flex justify-center ${outfit.className}`}>
                   Account
                 </h2>
-                <Coins isLoading={coinsLoading} coins={coins} />
+                <Coins
+                  isLoading={coinsLoading}
+                  connected={connected}
+                  coins={coins}
+                />
                 <div
                   style={{ width: "max-content" }}
                   className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]"

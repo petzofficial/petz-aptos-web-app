@@ -16,13 +16,32 @@ import Footer from "@/components/Footer";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { useEffect } from "react";
 import runOneSignal from "@/components/notification/notification";
+import {
+  fetchCoinsAction,
+  selectCoins,
+  selectIsCoinsLoading,
+  selectNewNetwork,
+} from "@/redux/app/reducers/AccountSlice";
+import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import Coins from "../components/coins/coin";
+
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
+  const dispatch = useAppDispatch();
+  const coins = useAppSelector(selectCoins);
+  const newNetwork = useAppSelector(selectNewNetwork);
+
+  const coinsLoading = useAppSelector(selectIsCoinsLoading);
+  const { connected, account, wallet } = useWallet();
   useEffect(() => {
     runOneSignal();
   }, []);
+  useEffect(() => {
+    dispatch(fetchCoinsAction(account?.address));
+  }, [dispatch, account, newNetwork]);
   return (
     <AppContext>
       <div>
@@ -31,14 +50,7 @@ const Page = () => {
         <section className="home-section">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="home-inner">
-              <div className="first-box flex justify-between items-center">
-                <Image src={img1} width={30} height={30} alt="PGT" />
-                <p className="max-[322px]:text-[12px]">100 PGT</p>
-                <Image src={img2} width={30} height={30} alt="PST" />
-                <p className="max-[322px]:text-[12px]">100 PST</p>
-                <Image src={img3} width={30} height={30} alt="100 APT" />
-                <p className="max-[322px]:text-[12px]">100 APT</p>
-              </div>
+              <Coins isLoading={coinsLoading} coins={coins} />
               <div className="first-box mt-5">
                 <div className="box-inner flex items-center mt-3">
                   <div className="skill flex-1">
