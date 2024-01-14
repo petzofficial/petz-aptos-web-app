@@ -67,6 +67,7 @@ const Page = () => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
   console.log(tokens);
+  console.log(transactions);
 
   useEffect(() => {
     if (tokens) {

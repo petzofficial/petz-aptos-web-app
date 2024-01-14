@@ -5,6 +5,8 @@ import { FaPercentage } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import Pagination from "../button/Pagination";
 import { useState } from "react";
+import { calculateGasFee } from "@/components/common/transaction";
+import { formatDateTime2 } from "@/components/common/dateTime2";
 import LoadingSkeleton from "../common/skeletonLoading";
 const items = [
   {
@@ -63,11 +65,11 @@ const Transactions = ({ transactions, isLoading }) => {
                 <FaPercentage />
               </div>
               <div className="net-fee">
-                <h4>{item.type}</h4>
-                <p>Confirmed. 2d</p>
+                <p>Network fee</p>
+                <h4> {formatDateTime2(item.timestamp)}</h4>
               </div>
-              <p>gas_unit_price</p>
               <p className="!text-[#191D31] font-medium">
+                {calculateGasFee(item?.gas_unit_price, item?.gas_used)}
                 {item.gas_unit_price}
               </p>
               <div className="icon-last text-[#FF6900]">

@@ -79,7 +79,9 @@ export const accountSlice = createSlice({
       state.balanceDetails = action.payload;
     },
     setSpecificTransaction: (state, action: PayloadAction<any>) => {
-      state.specificTransaction = action.payload;
+      state.isLoadingSingleTransaction = action.payload?.isLoading;
+      state.specificTransaction = action.payload?.data;
+      state.isLoadingSingleTransaction = action.payload?.isLoading;
     },
     setSpecificToken: (state, action: PayloadAction<any>) => {
       state.specificToken = action.payload;
@@ -149,6 +151,8 @@ export const selectIsCoinsLoading = (state: RootState) =>
   state.account.isLoadingCoins;
 export const selectIsTransactionLoading = (state: RootState) =>
   state.account.isLoadingTransactions;
+export const selectIsSingleTransactionLoading = (state: RootState) =>
+  state.account.isLoadingSingleTransaction;
 export const selectIsTokenLoading = (state: RootState) =>
   state.account.isLoadingTokens;
 // export const fetchSpecificTokenAction =
@@ -268,11 +272,19 @@ export const fetchSpecificTransactionAction =
       return;
     }
     try {
+      dispatch(setSpecificTransaction({ isLoading: true }));
       const specificTransactionResponse = transactions.find(
         (transaction: any) => transaction?.version === transactionVersion
       );
-      dispatch(setSpecificTransaction(specificTransactionResponse));
+      dispatch(
+        setSpecificTransaction({
+          isLoading: false,
+          data: specificTransactionResponse,
+        })
+      );
     } catch (e) {
+      dispatch(setSpecificTransaction({ isLoading: true }));
+
       console.log(e);
     }
   };
