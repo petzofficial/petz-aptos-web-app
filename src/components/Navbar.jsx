@@ -111,7 +111,7 @@ const Navbar = ({ method }) => {
               Account
             </button>
           </Link>
-
+          <NetworkSelector />
           <WalletConnector />
         </div>
       </nav>{" "}
