@@ -10,7 +10,6 @@ import { IoNotifications } from "react-icons/io5";
 import { Outfit } from "next/font/google";
 import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import OneSignal from "react-onesignal";
 
 const outfit = Outfit({ subsets: ["latin"] });
 

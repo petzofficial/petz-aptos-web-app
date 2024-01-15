@@ -39,11 +39,12 @@ const Page = () => {
   });
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
-
+  const [filterTaskData,setFilterTaskData] = useState("")
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
+    setFilterTaskData(filtered)
     if (filtered && filtered.cycleCount && filtered.cycleCount > 0) {
       tmpCycle = filtered.cycleCount;
     }
@@ -61,14 +62,14 @@ const Page = () => {
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     );
 
-    if (settingsLocalData) {
-      setSeconds(parseInt(settingsLocalData.focusTime) * 60);
+    if (filterTaskData) {
+      setSeconds(parseInt(filterTaskData.focusTime) * 60);
       setSettings({
-        focusDuration: parseInt(settingsLocalData.focusTime) * 60,
-        shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
-        longBreakDuration: parseInt(settingsLocalData.longBreak) * 60,
-        cycleCount: parseInt(settingsLocalData.cycleCount),
-        autoStart: settingsLocalData.check,
+        focusDuration: parseInt(filterTaskData.focusTime) * 60,
+        shortBreakDuration: parseInt(filterTaskData.shortBreak) * 60,
+        longBreakDuration: parseInt(filterTaskData.longBreak) * 60,
+        cycleCount: parseInt(filterTaskData.cycleCount),
+        autoStart: filterTaskData.check,
       });
     }
 
@@ -200,7 +201,7 @@ const Page = () => {
     } else if (currentState === "longBreak") {
       // cycle update
       //updateTask(selectedTaskId, { cycleCount: 1 });
-	  setSelectedTaskId('choose');
+	    setSelectedTaskId('choose');
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);

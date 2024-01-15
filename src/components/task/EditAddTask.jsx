@@ -20,7 +20,7 @@ const EditAddTask = ({ method }) => {
   useEffect(() => {
     const task = getTaskData().find((item) => item._id == existingTaskId);
     if(method === 'edit'){
-        setPriority(task.priority)
+      setPriority(task.priority)
     }
     setTask(task);
   },[])
@@ -34,7 +34,7 @@ const EditAddTask = ({ method }) => {
     const form = e.target;
     const workOut = form.workOut.value;
     const addDescription = form.addDescription.value;
-
+    const settings = JSON.parse(localStorage.getItem("settings"))
     // unique id
     const unique_id = method === "edit" ? existingTaskId : uuid();
 
@@ -54,6 +54,11 @@ const EditAddTask = ({ method }) => {
       status: "Pending",
       cycleCount: 1,
       _id: unique_id,
+      check: settings?.check,
+      focusTime: settings?.focusTime || 25 ,
+      shortBreak: settings?.shortBreak || 5,
+      longBreak: settings?.longBreak || 15,
+      cycleCount: settings?.cycleCount || 4,
     };
 
     if (

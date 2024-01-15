@@ -27,7 +27,7 @@ const Page = () => {
     if (status === 'All') {
       setFilteredTasks(tasks);
     } else {
-      const filtered = tasks.filter(task => task.status === status);
+      const filtered = tasks.filter(task => task?.status === status);
       setFilteredTasks(filtered);
     }
   };
