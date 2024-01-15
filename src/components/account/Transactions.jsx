@@ -5,9 +5,9 @@ import { FaPercentage } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import Pagination from "../button/Pagination";
 import { useState } from "react";
-import { calculateGasFee } from "@/components/common/transaction";
+import { calculateInverseWithDecimals } from "@/components/common/transaction";
 import { formatDateTime2 } from "@/components/common/dateTime2";
-import LoadingSkeleton from "../common/skeletonLoading";
+import CircularIndeterminate from "@/components/common/loading";
 const items = [
   {
     id: 1,
@@ -48,7 +48,7 @@ const Transactions = ({ transactions, isLoading }) => {
   if (isLoading) {
     return (
       <div className="account-transactions py-12">
-        <LoadingSkeleton />
+        <CircularIndeterminate />
       </div>
     );
   } else {
@@ -69,8 +69,7 @@ const Transactions = ({ transactions, isLoading }) => {
                 <h4> {formatDateTime2(item.timestamp)}</h4>
               </div>
               <p className="!text-[#191D31] font-medium">
-                {calculateGasFee(item?.gas_unit_price, item?.gas_used)}
-                {item.gas_unit_price}
+                {calculateInverseWithDecimals(item.gas_used, 8)}
               </p>
               <div className="icon-last text-[#FF6900]">
                 <IoIosArrowForward />

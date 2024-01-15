@@ -1,19 +1,18 @@
-export function formatDateTime(timestamp) {
-  const timestampInMillis = parseInt(timestamp, 10);
-  const dateObject = new Date(timestampInMillis);
+export const formatTimestamp = (timestamp) => {
+  const microsecondsPerMillisecond = BigInt(1000);
+  const timestampAsBigInt = BigInt(timestamp);
+  const milliseconds = timestampAsBigInt / microsecondsPerMillisecond;
 
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: false,
-  };
+  const date = new Date(Number(milliseconds));
+  const formattedDate = `${date.getFullYear()}-${String(
+    date.getMonth() + 1
+  ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} 
+    ${String(date.getHours()).padStart(2, "0")}:${String(
+    date.getMinutes()
+  ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
-  return dateObject.toLocaleString("en-US", options);
-}
+  return formattedDate;
+};
 export function formatDateTime2(timestamp) {
   const timestampInMillis = parseInt(timestamp, 10);
   const dateObject = new Date(timestampInMillis);

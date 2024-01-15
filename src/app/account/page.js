@@ -124,10 +124,7 @@ const Page = () => {
                   connected={connected}
                   coins={coins}
                 />
-                <div
-                  style={{ width: "max-content" }}
-                  className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]"
-                >
+                <div className="first-box flex justify-between items-center mt-5 max-sm:!px-[5px]">
                   <p className="max-sm:text-[12px]">
                     {connected ? (
                       <>{truncateAddress(account?.address)}</>

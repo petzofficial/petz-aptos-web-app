@@ -50,7 +50,11 @@ const Page = () => {
         <section className="home-section">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="home-inner">
-              <Coins isLoading={coinsLoading} coins={coins} />
+              <Coins
+                isLoading={coinsLoading}
+                connected={connected}
+                coins={coins}
+              />
               <div className="first-box mt-5">
                 <div className="box-inner flex items-center mt-3">
                   <div className="skill flex-1">

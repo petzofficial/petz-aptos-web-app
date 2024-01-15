@@ -22,6 +22,7 @@ import {
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import { formatTimestamp } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
+import { calculateInverseWithDecimals } from "../../../components/common/transaction";
 
 const Page = () => {
   const newNetwork = useAppSelector(selectNewNetwork);
@@ -61,11 +62,17 @@ const Page = () => {
               <h3 className={outfit.className}>Transaction</h3>
               <div className="trans-body mb-10">
                 <div>
-                  <p>Version</p>
-                  <span>{specificTransaction?.version}</span>
+                  <p>Network fee</p>
+                  <span>
+                    {" "}
+                    {calculateInverseWithDecimals(
+                      specificTransaction?.gas_used,
+                      8
+                    )}
+                  </span>
                 </div>
                 <div>
-                  <p>Timestamp</p>
+                  <p>Date</p>
                   <p>{formatTimestamp(specificTransaction?.timestamp)}</p>
                 </div>
                 <div>
@@ -73,20 +80,8 @@ const Page = () => {
                   <span>Confirmed</span>
                 </div>
                 <div>
-                  <p>Gas Used</p>
-                  <span>{specificTransaction?.gas_used}</span>
-                </div>
-                <div>
                   <p>Gast Unit Price</p>
                   <span>{specificTransaction?.gas_unit_price}</span>
-                </div>
-                <div>
-                  <p>type</p>
-                  <span>{specificTransaction?.type}</span>
-                </div>
-                <div>
-                  <p>vm_status</p>
-                  <span>{specificTransaction?.vm_status}</span>
                 </div>
               </div>
             </div>

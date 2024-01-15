@@ -6,8 +6,7 @@ import image3 from "../../assets/nft/01.png";
 import image4 from "../../assets/nft/29.png";
 import Link from "next/link";
 import Pagination from "../button/Pagination";
-import LoadingSkeleton from "../common/skeletonLoading";
-
+import CircularIndeterminate from "@/components/common/loading";
 const items = [
   {
     id: 1,
@@ -63,7 +62,7 @@ const Token = ({ tokens, isLoading }) => {
   return (
     <div className="account-token max-md:pt-5 md:pt-10">
       {isLoading ? (
-        <LoadingSkeleton />
+        <CircularIndeterminate />
       ) : (
         <>
           {" "}

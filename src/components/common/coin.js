@@ -16,8 +16,10 @@ export const renderCoinImage = (symbol) => {
   }
 };
 export const calculateCoinAmount = (amount, decimals) => {
-  console.log(amount);
-  console.log(decimals);
-  const calculatedAmount = (amount / 10) ** decimals;
-  return calculatedAmount;
+  if (!Number.isInteger(decimals) || decimals < 0) {
+    throw new Error("Decimals must be a non-negative integer.");
+  }
+  const divisor = Math.pow(10, decimals);
+  const coinAmount = amount / divisor;
+  return coinAmount.toFixed(2);
 };

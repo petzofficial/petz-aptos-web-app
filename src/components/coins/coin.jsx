@@ -1,4 +1,5 @@
 import LoadingSkeleton from "@/components/common/skeletonLoading";
+import CircularIndeterminate from "@/components/common/loading";
 import { renderCoinImage, calculateCoinAmount } from "@/components/common/coin";
 const Coins = ({ coins, isLoading, connected }) => {
   if (!connected) {
@@ -9,12 +10,9 @@ const Coins = ({ coins, isLoading, connected }) => {
     );
   } else {
     return (
-      <div
-        style={{ minWidth: "max-content" }}
-        className="first-box flex justify-between flex-wrap items-center mt-8"
-      >
+      <div className="first-box flex justify-between flex-wrap items-center mt-8">
         {isLoading ? (
-          <LoadingSkeleton />
+          <CircularIndeterminate />
         ) : (
           coins?.map((x, index) => (
             <div key={index}>
