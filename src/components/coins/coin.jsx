@@ -12,11 +12,13 @@ const Coins = ({ coins, isLoading, connected }) => {
     return (
       <div className="first-box flex justify-between flex-wrap items-center mt-8">
         {isLoading ? (
-          <CircularIndeterminate />
+          <div className="flex items-center justify-center w-full">
+            <CircularIndeterminate />
+          </div>
         ) : (
           coins?.map((x, index) => (
             <div key={index}>
-              <div className="flex items-center flex-wrap  pr-8  space-x-1">
+              <div className="flex items-center flex-wrap   space-x-1">
                 {" "}
                 {renderCoinImage(x?.metadata?.symbol)}
                 {calculateCoinAmount(x?.amount, x?.metadata?.decimals)}{" "}

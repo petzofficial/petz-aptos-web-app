@@ -59,20 +59,26 @@ const Transactions = ({ transactions, isLoading }) => {
             <Link
               key={x}
               href={`/account/${item.version}`}
-              className="sm:px-5 md:px-10 max-sm:px-1 py-3 my-5"
+              className="sm:px-5 flex items-center justify-between md:px-10 max-sm:px-1 py-3 my-5"
             >
               <div className="icon">
                 <FaPercentage />
               </div>
-              <div className="net-fee">
+              <div className="net-fee  pl-8 flex-1 items-center justify-center gap-4">
                 <p>Network fee</p>
-                <h4> {formatDateTime2(item.timestamp)}</h4>
+                <span>
+                  {item?.success === true ? "Confirmed." : " Not confirmed."}{" "}
+                  {formatDateTime2(item.timestamp)}
+                </span>{" "}
               </div>
-              <p className="!text-[#191D31] font-medium">
-                {calculateInverseWithDecimals(item.gas_used, 8)}
-              </p>
-              <div className="icon-last text-[#FF6900]">
-                <IoIosArrowForward />
+
+              <div className="flex flex-1 items-end justify-end">
+                <span className="!text-[#191D31] ">
+                  {calculateInverseWithDecimals(item.gas_used, 8)} APT
+                </span>
+                <div className="icon-last text-[#FF6900]">
+                  <IoIosArrowForward />
+                </div>{" "}
               </div>
             </Link>
           );

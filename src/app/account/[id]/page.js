@@ -23,7 +23,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import { formatTimestamp } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
 import { calculateInverseWithDecimals } from "../../../components/common/transaction";
-
+import { formatDateTime2 } from "@/components/common/dateTime2";
 const Page = () => {
   const newNetwork = useAppSelector(selectNewNetwork);
   const account = useAppSelector(selectAccount);
@@ -68,20 +68,29 @@ const Page = () => {
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_used,
                       8
-                    )}
+                    )}{" "}
+                    APT
                   </span>
                 </div>
                 <div>
                   <p>Date</p>
-                  <p>{formatTimestamp(specificTransaction?.timestamp)}</p>
+                  <p>{formatDateTime2(specificTransaction?.timestamp)}</p>
                 </div>
                 <div>
                   <p>Status</p>
-                  <span>Confirmed</span>
+                  <span>
+                    {specificTransaction?.status
+                      ? "Confirmed"
+                      : " Not confirmed"}
+                  </span>
                 </div>
                 <div>
                   <p>Gast Unit Price</p>
-                  <span>{specificTransaction?.gas_unit_price}</span>
+                  {calculateInverseWithDecimals(
+                    specificTransaction?.gas_unit_price,
+                    8
+                  )}
+                  APT
                 </div>
               </div>
             </div>
