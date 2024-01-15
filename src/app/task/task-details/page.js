@@ -147,7 +147,7 @@ const Page = () => {
               </div>
               <div>
                 <p>Task Description</p>
-                <span>{task?.addDescription}</span>
+                <span>{task?.description}</span>
               </div>
               <div>
                 <p>Date</p>
@@ -160,9 +160,9 @@ const Page = () => {
               <div>
                 <p>Cycle count</p>
                 <span>
-                  {task?.cycleCount}/
-                  {settingsLocalData && settingsLocalData.cycleCount
-                    ? settingsLocalData.cycleCount
+                  {task?.currentCycleCount}/
+                  {settingsLocalData && settingsLocalData.currentCycleCount
+                    ? settingsLocalData.currentCycleCount
                     : "4"}
                 </span>
               </div>
