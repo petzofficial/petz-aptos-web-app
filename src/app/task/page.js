@@ -56,7 +56,7 @@ const Page = () => {
       return `${hours} hr ${mins} min ${secs} sec`;
     }
   };
-  const tasksPerPage = 5;
+  const tasksPerPage = 10;
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
