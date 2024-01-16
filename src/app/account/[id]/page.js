@@ -7,9 +7,8 @@ import React from "react";
 import "../../../style/account/transaction.scss";
 import { Outfit } from "next/font/google";
 import { useParams } from "next/navigation";
-import { getFormattedDateTime } from "@/components/common/datetime";
 const outfit = Outfit({ subsets: ["latin"] });
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   selectAccount,
   fetchTransactionsAction,
@@ -24,16 +23,31 @@ import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import { formatTimestamp } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
 import { calculateInverseWithDecimals } from "../../../components/common/transaction";
 import { formatDateTime2 } from "@/components/common/dateTime2";
+import { truncateAddress } from "@/components/aptosIntegrations/utils";
+import { Tooltip } from "@mui/material";
+import { IoCopy } from "react-icons/io5";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 const Page = () => {
+  const { connected } = useWallet();
   const newNetwork = useAppSelector(selectNewNetwork);
   const account = useAppSelector(selectAccount);
   console.log("this is account from select account");
   console.log(account);
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
   const specificTransaction = useAppSelector(selectSpecificTransaction);
   const transactions = useAppSelector(selectTransactions);
   const isLoading = useAppSelector(selectIsSingleTransactionLoading);
+  const copyAddress = async (e) => {
+    await navigator.clipboard.writeText(account?.address);
+    setTooltipOpen(true);
+
+    setTimeout(() => {
+      setTooltipOpen(false);
+    }, 2000);
+  };
   useEffect(() => {
     dispatch(fetchSpecificTransactionAction(id));
     if (account && !specificTransaction && id) {
@@ -63,22 +77,86 @@ const Page = () => {
               <div className="trans-body mb-10">
                 <div>
                   <p>Network fee</p>
-                  <span>
+                  <span className="flex  items-start justify-start">
                     {" "}
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_used,
                       8
-                    )}{" "}
+                    )}
                     APT
                   </span>
                 </div>
                 <div>
-                  <p>Date</p>
-                  <p>{formatDateTime2(specificTransaction?.timestamp)}</p>
+                  <p>version</p>
+                  <span className="flex items-start justify-start">
+                    {specificTransaction?.version}
+                  </span>
                 </div>
                 <div>
+                  <p>sequence number</p>
+                  <span className="flex items-start justify-start">
+                    {specificTransaction?.sequence_number}
+                  </span>
+                </div>
+                <div>
+                  <p>Date</p>
+                  <p className="flex items-start justify-start">
+                    {formatDateTime2(specificTransaction?.timestamp)}
+                  </p>
+                </div>
+                <div>
+                  <p>Gas used</p>
+                  <p className="flex items-start justify-start">
+                    {" "}
+                    {calculateInverseWithDecimals(
+                      specificTransaction?.gas_used,
+                      8
+                    )}
+                    APT
+                  </p>
+                </div>
+                <div>
+                  <p>Max gas amount</p>
+                  <p className="flex items-start justify-start">
+                    {" "}
+                    {calculateInverseWithDecimals(
+                      specificTransaction?.max_gas_amount,
+                      8
+                    )}
+                    APT
+                  </p>
+                </div>
+                <div>
+                  <p>sender</p>
+                  <div className="flex items-start justify-start">
+                    <p className="max-sm:text-[12px]">
+                      {connected ? (
+                        <>{truncateAddress(account?.address)}</>
+                      ) : (
+                        <>not connected</>
+                      )}
+                    </p>
+                    <Tooltip
+                      title="Copied"
+                      placement="bottom-end"
+                      open={tooltipOpen}
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                    >
+                      <button
+                        onClick={() => copyAddress()}
+                        className="text-[#FF6900]"
+                      >
+                        <IoCopy />
+                      </button>
+                    </Tooltip>
+                  </div>
+                </div>
+
+                <div>
                   <p>Status</p>
-                  <span>
+                  <span className="flex items-start justify-start">
                     {specificTransaction?.status
                       ? "Confirmed"
                       : " Not confirmed"}
@@ -86,11 +164,14 @@ const Page = () => {
                 </div>
                 <div>
                   <p>Gast Unit Price</p>
-                  {calculateInverseWithDecimals(
-                    specificTransaction?.gas_unit_price,
-                    8
-                  )}
-                  APT
+                  <p className="flex items-start justify-start">
+                    {" "}
+                    {calculateInverseWithDecimals(
+                      specificTransaction?.gas_unit_price,
+                      8
+                    )}
+                    APT{" "}
+                  </p>
                 </div>
               </div>
             </div>

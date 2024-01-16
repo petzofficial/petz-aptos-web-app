@@ -65,14 +65,14 @@ const Transactions = ({ transactions, isLoading }) => {
                 <FaPercentage />
               </div>
               <div className="net-fee  pl-8 flex-1 items-center justify-center gap-4">
-                <p>Network fee</p>
+                <p className="!text-[#191D31] ">Network fee</p>
                 <span>
                   {item?.success === true ? "Confirmed." : " Not confirmed."}{" "}
                   {formatDateTime2(item.timestamp)}
                 </span>{" "}
               </div>
 
-              <div className="flex flex-1 items-end justify-end">
+              <div className="flex flex-1 items-end font-bold justify-end">
                 <span className="!text-[#191D31] ">
                   {calculateInverseWithDecimals(item.gas_used, 8)} APT
                 </span>

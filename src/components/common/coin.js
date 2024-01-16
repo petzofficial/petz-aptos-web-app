@@ -7,7 +7,7 @@ export const renderCoinImage = (symbol) => {
   switch (symbol) {
     case "PGC":
       return <Image src={PGT} width={30} height={30} alt="PGT" />;
-    case "MOON-APTU":
+    case "PSC":
       return <Image src={PST} width={30} height={30} alt="PST" />;
     case "APT":
       return <Image src={APT} width={30} height={30} alt="APT" />;
