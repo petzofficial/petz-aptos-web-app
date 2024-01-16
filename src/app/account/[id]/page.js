@@ -87,13 +87,13 @@ const Page = () => {
                   </span>
                 </div>
                 <div>
-                  <p>version</p>
+                  <p>Version</p>
                   <span className="flex items-start justify-start">
                     {specificTransaction?.version}
                   </span>
                 </div>
                 <div>
-                  <p>sequence number</p>
+                  <p>Sequence number</p>
                   <span className="flex items-start justify-start">
                     {specificTransaction?.sequence_number}
                   </span>
@@ -127,13 +127,13 @@ const Page = () => {
                   </p>
                 </div>
                 <div>
-                  <p>sender</p>
+                  <p>Sender</p>
                   <div className="flex items-start justify-start">
                     <p className="max-sm:text-[12px]">
                       {connected ? (
                         <>{truncateAddress(account?.address)}</>
                       ) : (
-                        <>not connected</>
+                        <>Not connected</>
                       )}
                     </p>
                     <Tooltip
@@ -163,7 +163,7 @@ const Page = () => {
                   </span>
                 </div>
                 <div>
-                  <p>Gast Unit Price</p>
+                  <p>Gas Unit Price</p>
                   <p className="flex items-start justify-start">
                     {" "}
                     {calculateInverseWithDecimals(
