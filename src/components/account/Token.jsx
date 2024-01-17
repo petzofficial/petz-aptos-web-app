@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Pagination from "../button/Pagination";
 import CircularIndeterminate from "@/components/common/loading";
-
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import {
+  fetchTokensAction,
+  selectNewNetwork,
+} from "@/redux/app/reducers/AccountSlice";
+import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 const Token = ({ tokens, isLoading }) => {
   const itemsPerPage = 8; // Change this to the number of items you want to display per page
   const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useAppDispatch();
+  const { connected, account, wallet } = useWallet();
+  const newNetwork = useAppSelector(selectNewNetwork);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -15,6 +24,9 @@ const Token = ({ tokens, isLoading }) => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  useEffect(() => {
+    dispatch(fetchTokensAction(account?.address));
+  }, [dispatch, account, newNetwork]);
 
   return (
     <div className="account-token max-md:pt-5 md:pt-10">

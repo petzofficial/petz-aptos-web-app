@@ -1,6 +1,3 @@
-"use client";
-import { useParams } from "next/navigation";
-import { useQuery } from "react-query";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
@@ -11,96 +8,53 @@ import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
 import "@/style/nft/nft.scss";
 import { Outfit } from "next/font/google";
-import { useAppSelector } from "@/redux/app/hooks";
-import {
-  selectSpecificToken,
-  fetchNftImgAction,
-} from "@/redux/app/reducers/AccountSlice";
-import { getFormattedDateTime } from "@/components/common/datetime";
-import CircularIndeterminate from "@/components/common/loading";
+
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
-  const { id } = useParams();
-  const token = useAppSelector(selectSpecificToken(id));
-  const {
-    data: image,
-    isLoading,
-    isError,
-  } = useQuery(["nft", id], () =>
-    fetchNftImgAction(
-      token?.current_token_data?.token_uri,
-      token?.token_data_id
-    )
-  );
-  console.log(image);
-  console.log("this is id token");
-  console.log(token);
-
   return (
     <div>
       <Navbar />
-      {isLoading ? (
-        <CircularIndeterminate />
-      ) : (
-        <section className="nft">
-          <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-            <div className="back-button">
-              <Link href={"/home"} className="text-[30px] font-bold">
-                <GoBackBtn />
-              </Link>
-            </div>
 
-            <div className="nft-inner">
-              <h2 className={outfit.className}>NFT</h2>
-              <div className="image-box">
-                <div className="box m-auto my-[10px] shadow-md">
-                  <div className="image flex justify-center items-center p-5">
-                    <Image
-                      src={token.image}
-                      width={116}
-                      height={160}
-                      alt="petz"
-                    />
-                  </div>
-                  <div className="pitbull-footer">
-                    {token?.current_token_data?.token_name}
-                  </div>
+      <section className="nft">
+        <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
+          <div className="back-button">
+            <Link href={"/home"} className="text-[30px] font-bold">
+              <GoBackBtn />
+            </Link>
+          </div>
+
+          <div className="nft-inner">
+            <h2 className={outfit.className}>NFT</h2>
+            <div className="image-box">
+              <div className="box m-auto my-[10px] shadow-md">
+                <div className="image flex justify-center items-center p-5">
+                  <Image src={image1} width={116} height={160} alt="petz" />
+                </div>
+                <div className="pitbull-footer">
+                  <p>#1273</p>
+                  <p>Pitbull</p>
                 </div>
               </div>
-              <div className="star-icon space-x-1">
-                <IoIosStar />
-                <IoIosStar />
-                <IoIosStar />
-                <IoIosStar />
-                <IoIosStar />
+            </div>
+            <div className="star-icon space-x-1">
+              <IoIosStar />
+              <IoIosStar />
+              <IoIosStar />
+              <IoIosStar />
+              <IoIosStar />
+            </div>
+
+            <div className="progress-bar flex items-center">
+              <div className="skill flex-1">
+                <div className="skill-bar skill3 wow slideInLeft animated">
+                  <span className="skill-count2"></span>
+                </div>
               </div>
-              <div className=" justify-between flex items-center">
-                <p>token standard</p>
-                <p>{token?.current_token_data?.token_standard}</p>
-              </div>
-              <div className=" justify-between flex items-center">
-                <p>amount</p>
-                <p>{token?.amount}</p>
-              </div>
-              <div className=" justify-between flex items-center">
-                <p>is_fungible_v2</p>
-                <p>{token?.is_fungible_v2 ? "true" : "false"}</p>
-              </div>
-              <div className=" justify-between flex items-center">
-                <p>is_soulbound_v2</p>
-                <p>{token?.is_soulbound_v2 ? "true" : "false"}</p>
-              </div>
-              <div className=" justify-between flex items-center">
-                <p>last_transaction_version</p>
-                <p>
-                  {
-                    getFormattedDateTime(token?.last_transaction_version)
-                      .formattedDate
-                  }
-                </p>
-              </div>
-              {/* <div className="opportunities my-9">
+              <p>HP</p>
+            </div>
+
+            <div className="opportunities my-9">
               <div className="flex items-center my-2">
                 <p>Productivity</p>
                 <div className="skill w-[150px]">
@@ -137,16 +91,15 @@ const Page = () => {
                 </div>
                 <h5>4.5</h5>
               </div>
-            </div> */}
+            </div>
 
-              <div className="sell-select-btn">
-                <button>Sell</button>
-                <button>Select</button>
-              </div>
+            <div className="sell-select-btn">
+              <button>Sell</button>
+              <button>Select</button>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       <Footer />
     </div>

@@ -29,7 +29,6 @@ import { IoCopy } from "react-icons/io5";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 const Page = () => {
   const { connected } = useWallet();
-  const newNetwork = useAppSelector(selectNewNetwork);
   const account = useAppSelector(selectAccount);
   console.log("this is account from select account");
   console.log(account);
@@ -56,9 +55,6 @@ const Page = () => {
     dispatch(fetchTransactionsBlockAction(id));
   }, [account, transactions]);
 
-  console.log("specific transactions");
-  console.log(specificTransaction);
-
   return (
     <div>
       <Navbar method={"account"} />
@@ -74,11 +70,12 @@ const Page = () => {
 
             <div className="transaction-inner">
               <h3 className={outfit.className}>Transaction</h3>
-              <div className="trans-body mb-10">
-                <div>
-                  <p>Network fee</p>
-                  <span className="flex  items-start justify-start">
-                    {" "}
+              <div className="trans-body  mb-10">
+                <div className="flex items-center gap-28 justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Network fee
+                  </p>
+                  <span className="flex-1 flex items-start justify-start">
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_used,
                       8
@@ -86,27 +83,33 @@ const Page = () => {
                     APT
                   </span>
                 </div>
-                <div>
-                  <p>Version</p>
-                  <span className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Version
+                  </p>
+                  <span className="flex-1 flex items-start justify-start">
                     {specificTransaction?.version}
                   </span>
                 </div>
-                <div>
-                  <p>Sequence number</p>
-                  <span className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Sequence number
+                  </p>
+                  <span className="flex-1 flex items-start justify-start">
                     {specificTransaction?.sequence_number}
                   </span>
                 </div>
-                <div>
-                  <p>Date</p>
-                  <p className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">Date</p>
+                  <p className="flex-1 flex items-start justify-start">
                     {formatDateTime2(specificTransaction?.timestamp)}
                   </p>
                 </div>
-                <div>
-                  <p>Gas used</p>
-                  <p className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Gas used
+                  </p>
+                  <p className="flex-1 flex items-start justify-start">
                     {" "}
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_used,
@@ -115,10 +118,11 @@ const Page = () => {
                     APT
                   </p>
                 </div>
-                <div>
-                  <p>Max gas amount</p>
-                  <p className="flex items-start justify-start">
-                    {" "}
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Max gas amount
+                  </p>
+                  <p className="flex-1 flex items-start justify-start">
                     {calculateInverseWithDecimals(
                       specificTransaction?.max_gas_amount,
                       8
@@ -126,9 +130,11 @@ const Page = () => {
                     APT
                   </p>
                 </div>
-                <div>
-                  <p>Sender</p>
-                  <div className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Sender
+                  </p>
+                  <div className="flex flex-1 items-start justify-start">
                     <p className="max-sm:text-[12px]">
                       {connected ? (
                         <>{truncateAddress(account?.address)}</>
@@ -154,17 +160,21 @@ const Page = () => {
                   </div>
                 </div>
 
-                <div>
-                  <p>Status</p>
-                  <span className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Status
+                  </p>
+                  <span className="flex flex-1 items-start justify-start">
                     {specificTransaction?.status
                       ? "Confirmed"
                       : " Not confirmed"}
                   </span>
                 </div>
-                <div>
-                  <p>Gas Unit Price</p>
-                  <p className="flex items-start justify-start">
+                <div className="flex gap-28 items-center justify-between">
+                  <p className="flex-1 flex items-start justify-start">
+                    Gas Unit Price
+                  </p>
+                  <p className="flex flex-1 items-start justify-start">
                     {" "}
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_unit_price,

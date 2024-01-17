@@ -31,12 +31,12 @@ import {
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
-const outfit = Outfit({ subsets: ["latin"] });
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
-
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Tooltip } from "@mui/material";
 import { truncateAddress } from "@/components/aptosIntegrations/utils";
+
+const outfit = Outfit({ subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const Page = () => {
   const [slug, setSlug] = useState("token");
@@ -63,7 +63,6 @@ const Page = () => {
   };
   useEffect(() => {
     dispatch(fetchTransactionsAction(account?.address));
-    dispatch(fetchTokensAction(account?.address));
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
 
