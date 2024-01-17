@@ -24,3 +24,18 @@ export function formatDateTime2(timestamp) {
 
   return dateObject.toLocaleString("en-US", options);
 }
+export function formatDateTime3(timestamp) {
+  const timestampInMillis = parseInt(timestamp, 10);
+  const dateObject = new Date(timestampInMillis);
+
+  const options = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+
+  return dateObject.toLocaleString("en-US", options);
+}

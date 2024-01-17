@@ -67,10 +67,6 @@ const Page = () => {
   }, [dispatch, account, newNetwork]);
 
   useEffect(() => {
-    dispatch(fetchTokensAction(account?.address));
-  }, [dispatch, account, newNetwork]);
-
-  useEffect(() => {
     if (tokens) {
       tokens?.forEach((token) => {
         if (!token?.image) {

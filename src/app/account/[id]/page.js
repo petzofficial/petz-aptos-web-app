@@ -20,10 +20,9 @@ import {
   selectIsSingleTransactionLoading,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-import { formatTimestamp } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
 import { calculateInverseWithDecimals } from "../../../components/common/transaction";
-import { formatDateTime2 } from "@/components/common/dateTime2";
-import { truncateAddress } from "@/components/aptosIntegrations/utils";
+import { formatDateTime3 } from "@/components/common/dateTime2";
+import { truncateAddress2 } from "@/components/aptosIntegrations/utils";
 import { Tooltip } from "@mui/material";
 import { IoCopy } from "react-icons/io5";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
@@ -70,12 +69,15 @@ const Page = () => {
 
             <div className="transaction-inner">
               <h3 className={outfit.className}>Transaction</h3>
-              <div className="trans-body  mb-10">
-                <div className="flex items-center gap-28 justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Network fee
-                  </p>
-                  <span className="flex-1 flex items-start justify-start">
+
+              <div className="trans-body mb-10">
+                <div>
+                  <p>Version</p>
+                  <span>{specificTransaction?.version}</span>
+                </div>
+                <div>
+                  <p>Network fee</p>
+                  <span>
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_used,
                       8
@@ -83,65 +85,51 @@ const Page = () => {
                     APT
                   </span>
                 </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Version
-                  </p>
-                  <span className="flex-1 flex items-start justify-start">
-                    {specificTransaction?.version}
+                <div>
+                  <p>Sequence number</p>
+                  <span> {specificTransaction?.sequence_number}</span>
+                </div>
+                <div>
+                  <p>Date</p>
+                  <p>{formatDateTime3(specificTransaction?.timestamp)}</p>
+                </div>
+                <div>
+                  <p>Status</p>
+                  <span>
+                    {specificTransaction?.status
+                      ? "Confirmed"
+                      : " Not confirmed"}
                   </span>
                 </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Sequence number
-                  </p>
-                  <span className="flex-1 flex items-start justify-start">
-                    {specificTransaction?.sequence_number}
-                  </span>
-                </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">Date</p>
-                  <p className="flex-1 flex items-start justify-start">
-                    {formatDateTime2(specificTransaction?.timestamp)}
-                  </p>
-                </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Gas used
-                  </p>
-                  <p className="flex-1 flex items-start justify-start">
-                    {" "}
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.gas_used,
-                      8
-                    )}
-                    APT
-                  </p>
-                </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Max gas amount
-                  </p>
-                  <p className="flex-1 flex items-start justify-start">
+                <div>
+                  <p>Max gas amount</p>
+                  <span>
                     {calculateInverseWithDecimals(
                       specificTransaction?.max_gas_amount,
                       8
                     )}
                     APT
-                  </p>
+                  </span>
                 </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Sender
-                  </p>
-                  <div className="flex flex-1 items-start justify-start">
-                    <p className="max-sm:text-[12px]">
-                      {connected ? (
-                        <>{truncateAddress(account?.address)}</>
-                      ) : (
-                        <>Not connected</>
-                      )}
-                    </p>
+                <div>
+                  <p>Gas Unit Price</p>
+                  <span>
+                    {calculateInverseWithDecimals(
+                      specificTransaction?.gas_unit_price,
+                      8
+                    )}
+                    APT
+                  </span>
+                </div>
+
+                <div>
+                  <p>Sender</p>
+                  <div>
+                    <span className="max-sm:text-[12px]">
+                      {connected
+                        ? truncateAddress2(account?.address)
+                        : "Not connected"}
+                    </span>
                     <Tooltip
                       title="Copied"
                       placement="bottom-end"
@@ -158,30 +146,6 @@ const Page = () => {
                       </button>
                     </Tooltip>
                   </div>
-                </div>
-
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Status
-                  </p>
-                  <span className="flex flex-1 items-start justify-start">
-                    {specificTransaction?.status
-                      ? "Confirmed"
-                      : " Not confirmed"}
-                  </span>
-                </div>
-                <div className="flex gap-28 items-center justify-between">
-                  <p className="flex-1 flex items-start justify-start">
-                    Gas Unit Price
-                  </p>
-                  <p className="flex flex-1 items-start justify-start">
-                    {" "}
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.gas_unit_price,
-                      8
-                    )}
-                    APT{" "}
-                  </p>
                 </div>
               </div>
             </div>

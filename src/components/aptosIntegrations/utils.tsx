@@ -34,3 +34,6 @@ function truncate(
 export function truncateAddress(accountAddress: string) {
   return truncate(accountAddress, 14, 14, "…");
 }
+export function truncateAddress2(accountAddress: string) {
+  return truncate(accountAddress, 4, 4, "…");
+}

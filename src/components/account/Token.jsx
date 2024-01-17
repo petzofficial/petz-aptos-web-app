@@ -14,7 +14,7 @@ const Token = ({ tokens, isLoading }) => {
   const itemsPerPage = 8; // Change this to the number of items you want to display per page
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { connected, account, wallet } = useWallet();
+  const { account } = useWallet();
   const newNetwork = useAppSelector(selectNewNetwork);
 
   const indexOfLastItem = currentPage * itemsPerPage;
