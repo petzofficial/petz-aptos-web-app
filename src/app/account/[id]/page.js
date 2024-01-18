@@ -76,17 +76,17 @@ const Page = () => {
                   <span>{specificTransaction?.version}</span>
                 </div>
                 <div>
-                  <p>Network fee</p>
+                  <p>Network Fee</p>
                   <span>
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_used,
                       8
                     )}
-                    APT
+                    {" "}APT
                   </span>
                 </div>
                 <div>
-                  <p>Sequence number</p>
+                  <p>Sequence Number</p>
                   <span> {specificTransaction?.sequence_number}</span>
                 </div>
                 <div>
@@ -102,13 +102,13 @@ const Page = () => {
                   </span>
                 </div>
                 <div>
-                  <p>Max gas amount</p>
+                  <p>Max Gas Amount</p>
                   <span>
                     {calculateInverseWithDecimals(
                       specificTransaction?.max_gas_amount,
                       8
                     )}
-                    APT
+                    {" "}APT
                   </span>
                 </div>
                 <div>
@@ -118,7 +118,7 @@ const Page = () => {
                       specificTransaction?.gas_unit_price,
                       8
                     )}
-                    APT
+                    {" "}APT
                   </span>
                 </div>
 

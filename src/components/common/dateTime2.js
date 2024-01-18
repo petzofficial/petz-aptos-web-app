@@ -14,7 +14,7 @@ export const formatTimestamp = (timestamp) => {
   return formattedDate;
 };
 export function formatDateTime2(timestamp) {
-  const timestampInMillis = parseInt(timestamp, 10);
+  const timestampInMillis = timestamp / 1000;
   const dateObject = new Date(timestampInMillis);
 
   const options = {
@@ -25,7 +25,7 @@ export function formatDateTime2(timestamp) {
   return dateObject.toLocaleString("en-US", options);
 }
 export function formatDateTime3(timestamp) {
-  const timestampInMillis = parseInt(timestamp, 10);
+  const timestampInMillis = timestamp / 1000;
   const dateObject = new Date(timestampInMillis);
 
   const options = {
