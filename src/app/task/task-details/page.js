@@ -42,7 +42,7 @@ const Page = () => {
   };
 
   const handleStatus = (id) => {
-    const currentStatus = task?.status;
+    const currentStatus = task.status;
     const newStatus = "Completed";
     updateTask(id, { status: newStatus });
     const updatedTask = { ...task, status: newStatus };
@@ -51,7 +51,7 @@ const Page = () => {
   };
 
   const handleButtonClick = () => {
-    if (task?.status == "Completed") {
+    if (task.status == "Completed") {
       toast.error("Task is Completed");
     }
   };
@@ -98,16 +98,16 @@ const Page = () => {
               className="flex justify-between items-center status-bar"
             >
               <h3>Status</h3>
-              <h3 className="text-[#FF6900]">{task?.status}</h3>
+              <h3 className="text-[#FF6900]">{task.status}</h3>
             </div>
-            {task?.status === "Completed" ? (
+            {task.status === "Completed" ? (
               ""
             ) : (
               <div className="button-bar flex justify-center items-center space-x-4">
                 <Link
-                  key={task?._id}
+                  key={task._id}
                   href={
-                    task?.status === "Completed" ? "#" : `/home?id=${task?._id}`
+                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
                   }
                 >
                   <button onClick={handleButtonClick}>
@@ -115,9 +115,9 @@ const Page = () => {
                   </button>
                 </Link>
                 <Link
-                  key={task?._id}
+                  key={task._id}
                   href={
-                    task?.status === "Completed" ? "#" : `/home?id=${task?._id}`
+                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
                   }
                 >
                   <button
@@ -128,9 +128,9 @@ const Page = () => {
                   </button>
                 </Link>
                 <Link
-                  key={task?._id}
+                  key={task._id}
                   href={
-                    task?.status === "Completed" ? "#" : `/home?id=${task?._id}`
+                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
                   }
                 >
                   <button onClick={handleButtonClick}>
@@ -143,32 +143,32 @@ const Page = () => {
             <div className="info lg:p-8 p-1 shadow-md">
               <div>
                 <p>Task name</p>
-                <span>{task?.title}</span>
+                <span>{task.title}</span>
               </div>
               <div>
                 <p>Task Description</p>
-                <span>{task?.description}</span>
+                <span>{task.addDescription}</span>
               </div>
               <div>
                 <p>Date</p>
-                <span>{task?.date}</span>
+                <span>{task.date}</span>
               </div>
               <div>
                 <p>Task priority</p>
-                <span>{task?.priority}</span>
+                <span>{task.priority}</span>
               </div>
               <div>
                 <p>Cycle count</p>
                 <span>
-                  {task?.currentCycleCount}/
-                  {settingsLocalData && settingsLocalData.currentCycleCount
-                    ? settingsLocalData.currentCycleCount
+                  {task.cycleCount}/
+                  {settingsLocalData && settingsLocalData.cycleCount
+                    ? settingsLocalData.cycleCount
                     : "4"}
                 </span>
               </div>
               <div>
                 <p>Total time spent</p>
-                <span>{convertToHHMMSS(task?.time)}</span>
+                <span>{convertToHHMMSS(task.time)}</span>
               </div>
 
               <div>
@@ -193,35 +193,35 @@ const Page = () => {
                 </div>
               </div>
 
-              <div>
+            {/*   <div>
                 <p>Transaction</p>
                 <Link href={"/account/transaction-details"}>
                   <span className="text-[#FF6900]">View</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
 
             <div className="edit-delete-btn">
-              {task?.status === "Completed" ? (
+              {task.status === "Completed" ? (
                 ""
               ) : (
                 <button
                   onClick={() => {
-                    handleStatus(task?._id);
+                    handleStatus(task._id);
                   }}
                 >
                   Mark As{" "}
                   {task?.status === "In Progress" || "Pending" ? "Completed" : "Completed"}
                 </button>
               )}
-              {task?.status === "Completed" ? (
+              {task.status === "Completed" ? (
                 ""
               ) : (
-                <Link href={`/task/task-edit?id=${task?._id}`}>Edit Task</Link>
+                <Link href={`/task/task-edit?id=${task._id}`}>Edit Task</Link>
               )}
               <button
                 onClick={() => {
-                  handleDelete(task?._id);
+                  handleDelete(task._id);
                 }}
                 className="!text-[#B40000]"
               >
