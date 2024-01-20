@@ -41,15 +41,19 @@ const Page = () => {
   const [currentCycle, setCurrentCycle] = useState(1);
   const [filterTaskData,setFilterTaskData] = useState("");
   const handleSelectDataFunc = (id) => {
-    let tmpCycle = 1;
-    const tasks = getTaskData();
-    const filtered = tasks.find((task) => task._id === id);
-    setFilterTaskData(filtered)
-    if (filtered && filtered.currentCycleCount && filtered.currentCycleCount > 0) {
-      tmpCycle = filtered.currentCycleCount;
+
+    if (id !== "choose"){
+      let tmpCycle = 1;
+      const tasks = getTaskData();
+      const filtered = tasks.find((task) => task._id === id);
+      setFilterTaskData(filtered)
+      if (filtered && filtered.currentCycleCount && filtered.currentCycleCount > 0) {
+        tmpCycle = filtered.currentCycleCount;
+      }
+      setSelectedTaskId(id);
+      setCurrentCycle(tmpCycle);
     }
-    setSelectedTaskId(id);
-    setCurrentCycle(tmpCycle);
+    
   };
 
   const handleSelectData = (e) => {
