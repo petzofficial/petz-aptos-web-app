@@ -55,9 +55,9 @@ const Page = () => {
                 Recent<p>{total_count ? total_count : 0}</p>
               </div>
             </div>
-        {/*     <div className="clear-btn">
+            <div className="clear-btn" >
               <button>Clear All</button>
-            </div> */}
+            </div>
           </div>
           {isLoading ? (
             <div
