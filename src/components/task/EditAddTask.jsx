@@ -61,7 +61,7 @@ const EditAddTask = ({ method }) => {
       focusTime: settings?.focusTime || 25,
       shortBreak: settings?.shortBreak || 5,
       longBreak: settings?.longBreak || 15,
-      currentCycleCount: settings?.currentCycleCount || 1,
+      currentCycleCount: 1,
     };
 
     if (
