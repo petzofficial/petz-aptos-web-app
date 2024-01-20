@@ -96,12 +96,12 @@ const Page = () => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <p>Transaction</p>
                 <Link href={"/account/transaction-details"}>
                   <span className="text-[#FF6900]">View</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
 
             <div className="edit-delete-btn">
