@@ -12,17 +12,17 @@ const SettingMain = () => {
     const focusTime = form.focusTime.value;
     const shortBreak = form.shortBreak.value;
     const longBreak = form.longBreak.value;
-    const currentCycleCount = form.currentCycleCount.value;
+    const cycleCount = form.cycleCount.value;
 
     const settingsData = {
       check: check,
       focusTime: focusTime,
       shortBreak: shortBreak,
       longBreak: longBreak,
-      currentCycleCount: currentCycleCount,
+      cycleCount: cycleCount,
     };
 
-    if (currentCycleCount < 2) {
+    if (cycleCount < 2) {
       toast.error("Cycle Count must be at least 2");
     } else {
       localStorage.setItem("settings", JSON.stringify(settingsData));
@@ -93,7 +93,7 @@ const SettingMain = () => {
           <input
             type="number"
             name="cycleCount"
-            defaultValue={settingsLocalData ? settingsLocalData.currentCycleCount : '4'}
+            defaultValue={settingsLocalData ? settingsLocalData.cycleCount : '4'}
             className="w-9 h-5 text-right"
           />
         </div>

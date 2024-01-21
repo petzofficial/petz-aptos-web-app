@@ -115,7 +115,7 @@ const Page = () => {
                           <p>{convertToHHMMSS(item.time)}</p>
                         </div>
                         <div className="text-end">
-                          <p>{item.currentCycleCount}/{settingsLocalData && settingsLocalData.currentCycleCount ? settingsLocalData.currentCycleCount : '4'}</p>
+                          <p>{item.currentCycleCount}/{settingsLocalData && settingsLocalData.cycleCount ? settingsLocalData.cycleCount : '4'}</p>
                           <p>{settingsLocalData && settingsLocalData.shortBreak ? settingsLocalData.shortBreak : '5'} min</p>
                         </div>
                       </div>

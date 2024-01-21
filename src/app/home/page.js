@@ -34,7 +34,7 @@ const Page = () => {
     focusDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
     longBreakDuration: 15 * 60,
-    currentCycleCount: 4,
+    cycleCount: 4,
     autoStart: false,
   });
   const [currentState, setCurrentState] = useState("focus");
@@ -67,7 +67,7 @@ const Page = () => {
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
         shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
         longBreakDuration: parseInt(settingsLocalData.longBreak) * 60,
-        currentCycleCount: parseInt(settingsLocalData.currentCycleCount),
+        cycleCount: parseInt(settingsLocalData.cycleCount),
         autoStart: settingsLocalData.check,
       });
     }
@@ -184,7 +184,7 @@ const Page = () => {
     setIsRunning(false);
 
     if (currentState === "focus") {
-      if (currentCycle < settings.currentCycleCount) {
+      if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");
         setSeconds(settings.shortBreakDuration);
       } else {
@@ -299,7 +299,7 @@ const Page = () => {
                   <>
                     <span>Time to {currentState}</span>
                     <span>
-                      {currentCycle}/{settings.currentCycleCount}
+                      {currentCycle}/{settings.currentCycle}
                     </span>
                   </>
                 ) : (

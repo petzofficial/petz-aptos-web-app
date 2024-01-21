@@ -161,8 +161,8 @@ const Page = () => {
                 <p>Cycle count</p>
                 <span>
                   {task.currentCycleCount}/
-                  {settingsLocalData && settingsLocalData.currentCycleCount
-                    ? settingsLocalData.currentCycleCount
+                  {settingsLocalData && settingsLocalData.cycleCount
+                    ? settingsLocalData.cycleCount
                     : "4"}
                 </span>
               </div>
