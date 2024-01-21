@@ -299,7 +299,7 @@ const Page = () => {
                   <>
                     <span>Time to {currentState}</span>
                     <span>
-                      {currentCycle}/{settings.currentCycle}
+                      {currentCycle}/{settings.cycleCount}
                     </span>
                   </>
                 ) : (
