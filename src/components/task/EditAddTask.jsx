@@ -14,7 +14,7 @@ const EditAddTask = ({ method }) => {
   const router = useRouter()
   const searchParams = useSearchParams();
   const existingTaskId = searchParams.get("id");
-  const [task, setTask] = useState({ title: "", addDescription: "", priority: "" });
+  const [task, setTask] = useState({ title: "", description: "", priority: "" });
   const [priority, setPriority] = useState("");
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const EditAddTask = ({ method }) => {
     e.preventDefault();
     const form = e.target;
     const workOut = form.workOut.value;
-    const addDescription = form.addDescription.value;
+    const description = form.description.value;
 
     // unique id
     const unique_id = method === "edit" ? existingTaskId : uuid();
@@ -47,19 +47,19 @@ const EditAddTask = ({ method }) => {
     const addObj = {
       title: workOut,
       time: 0,
-      color: "#8B0000",
-      addDescription: addDescription,
+      statusColor: "#8B0000",
+      description: description,
       priority: priority,
       date: formattedDate,
       status: "Pending",
-      cycleCount: 1,
+      currentCycleCount: 1,
       _id: unique_id,
     };
 
     if (
       !addObj ||
       !addObj.title ||
-      !addObj.addDescription ||
+      !addObj.description ||
       !addObj.priority
     ) {
       return false;
@@ -80,7 +80,7 @@ const EditAddTask = ({ method }) => {
 
     // input field empty
     form.workOut.value = "";
-    form.addDescription.value = "";
+    form.description.value = "";
     setPriority("");
   };
 
@@ -138,10 +138,10 @@ const EditAddTask = ({ method }) => {
             <h4>Task Description</h4>
             <textarea
               className="h-[152px]"
-              name="addDescription"
+              name="description"
               rows="10"
               placeholder="Add Task Description"
-              defaultValue={task ? task.addDescription : ''}
+              defaultValue={task ? task.description : ''}
             ></textarea>
 
             <button type="submit" id="submitBtn" className="submit-btn">

@@ -34,7 +34,7 @@ const Page = () => {
     focusDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
     longBreakDuration: 15 * 60,
-    cycleCount: 4,
+    currentCycleCount: 4,
     autoStart: false,
   });
   const [currentState, setCurrentState] = useState("focus");
@@ -44,8 +44,8 @@ const Page = () => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    if (filtered && filtered.cycleCount && filtered.cycleCount > 0) {
-      tmpCycle = filtered.cycleCount;
+    if (filtered && filtered.currentCycleCount && filtered.currentCycleCount > 0) {
+      tmpCycle = filtered.currentCycleCount;
     }
     setSelectedTaskId(id);
     setCurrentCycle(tmpCycle);
@@ -67,7 +67,7 @@ const Page = () => {
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
         shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
         longBreakDuration: parseInt(settingsLocalData.longBreak) * 60,
-        cycleCount: parseInt(settingsLocalData.cycleCount),
+        currentCycleCount: parseInt(settingsLocalData.currentCycleCount),
         autoStart: settingsLocalData.check,
       });
     }
@@ -156,7 +156,7 @@ const Page = () => {
 
   const startTimer = () => {
     if (selectedTaskId && selectedTaskId !== "choose") {
-      updateTask(selectedTaskId, { status: "In Progress", color: "#FED000" });
+      updateTask(selectedTaskId, { status: "In Progress", statusColor: "#FED000" });
       setIsRunning(true);
     } else if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
@@ -184,7 +184,7 @@ const Page = () => {
     setIsRunning(false);
 
     if (currentState === "focus") {
-      if (currentCycle < settings.cycleCount) {
+      if (currentCycle < settings.currentCycleCount) {
         setCurrentState("shortBreak");
         setSeconds(settings.shortBreakDuration);
       } else {
@@ -193,18 +193,18 @@ const Page = () => {
       }
     } else if (currentState === "shortBreak") {
       // cycle update
-      updateTask(selectedTaskId, { cycleCount: currentCycle + 1 });
+      updateTask(selectedTaskId, { currentCycleCount: currentCycle + 1 });
       setCurrentCycle((prevCycle) => prevCycle + 1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
-      //updateTask(selectedTaskId, { cycleCount: 1 });
+      //updateTask(selectedTaskId, { currentCycleCount: 1 });
 	  setSelectedTaskId('choose');
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
-      updateTask(selectedTaskId, { status: "Completed", color: "#14985A" });
+      updateTask(selectedTaskId, { status: "Completed", statusColor: "#14985A" });
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
       const updatedFilteredTasks = updatedTasks.filter(
@@ -299,7 +299,7 @@ const Page = () => {
                   <>
                     <span>Time to {currentState}</span>
                     <span>
-                      {currentCycle}/{settings.cycleCount}
+                      {currentCycle}/{settings.currentCycleCount}
                     </span>
                   </>
                 ) : (
