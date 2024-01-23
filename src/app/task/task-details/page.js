@@ -17,8 +17,6 @@ const outfit = Outfit({ subsets: ["latin"] });
 const Page = () => {
   return (
     <div>
-      <Navbar method={"tasks"} />
-
       <section className="task-details">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="back-button">
@@ -65,10 +63,7 @@ const Page = () => {
                 <p>Cycle count</p>
                 <span>2</span>
               </div>
-              <div>
-                <p>Session</p>
-                <span>1/4</span>
-              </div>
+
               <div>
                 <p>Total time spent</p>
                 <span>30 minutes</span>
@@ -96,12 +91,12 @@ const Page = () => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <p>Transaction</p>
                 <Link href={"/account/transaction-details"}>
                   <span className="text-[#FF6900]">View</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
 
             <div className="edit-delete-btn">
@@ -112,8 +107,6 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -56,8 +56,6 @@ const Page = () => {
 
   return (
     <div>
-      <Navbar method={"account"} />
-
       <section className="transaction-details">
         {isLoading ? (
           <CircularIndeterminate />
@@ -75,20 +73,7 @@ const Page = () => {
                   <p>Version</p>
                   <span>{specificTransaction?.version}</span>
                 </div>
-                <div>
-                  <p>Network Fee</p>
-                  <span>
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.gas_used,
-                      8
-                    )}
-                    {" "}APT
-                  </span>
-                </div>
-                <div>
-                  <p>Sequence Number</p>
-                  <span> {specificTransaction?.sequence_number}</span>
-                </div>
+
                 <div>
                   <p>Date</p>
                   <p>{formatDateTime3(specificTransaction?.timestamp)}</p>
@@ -107,8 +92,8 @@ const Page = () => {
                     {calculateInverseWithDecimals(
                       specificTransaction?.max_gas_amount,
                       8
-                    )}
-                    {" "}APT
+                    )}{" "}
+                    APT
                   </span>
                 </div>
                 <div>
@@ -117,43 +102,21 @@ const Page = () => {
                     {calculateInverseWithDecimals(
                       specificTransaction?.gas_unit_price,
                       8
-                    )}
-                    {" "}APT
+                    )}{" "}
+                    APT
                   </span>
                 </div>
-
                 <div>
-                  <p>Sender</p>
-                  <div>
-                    <span className="max-sm:text-[12px]">
-                      {connected
-                        ? truncateAddress2(account?.address)
-                        : "Not connected"}
-                    </span>
-                    <Tooltip
-                      title="Copied"
-                      placement="bottom-end"
-                      open={tooltipOpen}
-                      disableFocusListener
-                      disableHoverListener
-                      disableTouchListener
-                    >
-                      <button
-                        onClick={() => copyAddress()}
-                        className="text-[#FF6900]"
-                      >
-                        <IoCopy />
-                      </button>
-                    </Tooltip>
-                  </div>
+                  <p>Balance Changes</p>
+                  <span>
+                    {`+  ${specificTransaction?.changes?.length} APT`}{" "}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         )}
       </section>
-
-      <Footer />
     </div>
   );
 };

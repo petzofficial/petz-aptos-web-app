@@ -45,8 +45,6 @@ const Page = () => {
   return (
     <AppContext>
       <div>
-        <Navbar />
-
         <section className="home-section">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="home-inner">
@@ -130,8 +128,6 @@ const Page = () => {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>{" "}
     </AppContext>
   );

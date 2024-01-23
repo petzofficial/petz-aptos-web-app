@@ -34,8 +34,6 @@ const items = [
 const Page = () => {
   return (
     <div>
-      <Navbar method={"tasks"} />
-
       <section className="tasks">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="tasks-inner lg:mb-16 max-lg:mb-8">
@@ -50,11 +48,11 @@ const Page = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   <IoMdDoneAll />
-                  <button>Complete</button>
+                  <button>Completed</button>
                 </div>
                 <div className="flex items-center space-x-4">
                   <CgTimelapse className="border rounded-full" />
-                  <button>In Progress</button>
+                  <button>Pending</button>
                 </div>
                 <div className="flex items-center space-x-4">
                   <IoMdTime />
@@ -101,8 +99,6 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

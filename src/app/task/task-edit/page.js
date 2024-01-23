@@ -7,11 +7,7 @@ import EditAddTask from "@/components/task/EditAddTask";
 const Page = () => {
   return (
     <div>
-      <Navbar method={"tasks"} />
-
       <EditAddTask method="edit" />
-
-      <Footer />
     </div>
   );
 };

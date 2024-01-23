@@ -48,6 +48,7 @@ const Page = () => {
   const transactionLoading = useAppSelector(selectIsTransactionLoading);
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
+  console.log(transactions);
   console.log("these are tokens");
   console.log(tokens);
   const { connected, account, wallet } = useWallet();
@@ -82,7 +83,6 @@ const Page = () => {
   return (
     <AppContext>
       <div>
-        <Navbar method={"account"} />
         <section className="account">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="account-top">
@@ -109,6 +109,16 @@ const Page = () => {
                     onClick={() => setSlug("transactions")}
                   >
                     <FaArrowRightArrowLeft /> <span>Transactions</span>
+                  </button>
+                  <button
+                    className={`${
+                      slug === "marketplace"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
+                    }`}
+                    onClick={() => setSlug("marketplace")}
+                  >
+                    <FaArrowRightArrowLeft /> <span>Market Place</span>
                   </button>
                 </div>
               </div>

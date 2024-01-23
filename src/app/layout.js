@@ -6,6 +6,8 @@ import {
   queryClient,
   QueryClientProvider,
 } from "@/components/common/react_query";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 const sans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata = {
@@ -19,7 +21,9 @@ export default function RootLayout({ children }) {
       <body className={sans.className}>
         <QueryClientProvider client={queryClient}>
           <ReduxAppProvider>
+            <Navbar />
             <AppContext>{children}</AppContext>
+            <Footer />
           </ReduxAppProvider>
         </QueryClientProvider>
       </body>
