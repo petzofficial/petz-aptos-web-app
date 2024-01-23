@@ -53,8 +53,13 @@ const Page = () => {
                 Recent<p>{total_count ? total_count : 0}</p>
               </div>
             </div>
+<<<<<<< HEAD
             <div className="clear-btn">
               <button></button>
+=======
+            <div className="clear-btn" >
+              <button>Clear All</button>
+>>>>>>> 0f8d226f419c728879c018bfb9af51a195db3e5e
             </div>
           </div>
           {isLoading ? (
