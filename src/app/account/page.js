@@ -1,5 +1,4 @@
 "use client";
-
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React, { use, useState } from "react";
@@ -61,7 +60,6 @@ const Page = () => {
   };
   useEffect(() => {
     dispatch(fetchTransactionsAction(account?.address));
-    dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
 
   useEffect(() => {
@@ -88,7 +86,7 @@ const Page = () => {
                   <GoBackBtn />
                 </Link>
 
-                <div className="token-trans-btn">
+                <div className="token-trans-btn flex flex-col gap-2">
                   <button
                     className={`${
                       slug === "token" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
@@ -97,26 +95,12 @@ const Page = () => {
                   >
                     <TbCircleLetterT /> <span>Token</span>
                   </button>
-                  <button
-                    className={`${
-                      slug === "transactions"
-                        ? "bg-[#FEE4D1] text-[#FF6900]"
-                        : ""
-                    }`}
-                    onClick={() => setSlug("transactions")}
-                  >
+                  <button onClick={() => setSlug("transactions")}>
                     <FaArrowRightArrowLeft /> <span>Transactions</span>
                   </button>
-                  <button
-                    className={`${
-                      slug === "marketplace"
-                        ? "bg-[#FEE4D1] text-[#FF6900]"
-                        : ""
-                    }`}
-                    onClick={() => setSlug("marketplace")}
-                  >
-                    <FaArrowRightArrowLeft /> <span>Market Place</span>
-                  </button>
+                  <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
+                    Market Place
+                  </span>
                 </div>
               </div>
               <div className="max-width m-auto lg:mt-[-214px]">

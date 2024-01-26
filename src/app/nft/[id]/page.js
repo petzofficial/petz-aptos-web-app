@@ -74,6 +74,61 @@ const Page = () => {
                   </div>
                 </div>
               </div>
+              <div className="star-icon space-x-1">
+                <IoIosStar />
+                <IoIosStar />
+                <IoIosStar />
+                <IoIosStar />
+                <IoIosStar />
+              </div>
+
+              <div className="progress-bar flex items-center">
+                <div className="skill flex-1">
+                  <div className="skill-bar skill3 wow slideInLeft animated">
+                    <span className="skill-count2"></span>
+                  </div>
+                </div>
+                <p>HP</p>
+              </div>
+
+              <div className="opportunities my-9">
+                <div className="flex items-center my-2">
+                  <p>Productivity</p>
+                  <div className="skill w-[150px]">
+                    <div className="skill-bar skill2 wow slideInLeft animated">
+                      <span className="skill-count2"></span>
+                    </div>
+                  </div>
+                  <h5>42.6</h5>
+                </div>
+                <div className="flex items-center my-2">
+                  <p>Concentrative </p>
+                  <div className="skill w-[150px]">
+                    <div className="skill-bar skill4 wow slideInLeft animated">
+                      <span className="skill-count2"></span>
+                    </div>
+                  </div>
+                  <h5>11.5</h5>
+                </div>
+                <div className="flex items-center my-2">
+                  <p>Fortune</p>
+                  <div className="skill w-[150px]">
+                    <div className="skill-bar skill5 wow slideInLeft animated">
+                      <span className="skill-count2"></span>
+                    </div>
+                  </div>
+                  <h5>5.9</h5>
+                </div>
+                <div className="flex items-center my-2">
+                  <p>Longevity</p>
+                  <div className="skill w-[150px]">
+                    <div className="skill-bar skill6 wow slideInLeft animated">
+                      <span className="skill-count2"></span>
+                    </div>
+                  </div>
+                  <h5>4.5</h5>
+                </div>
+              </div>
               <div className="nft_description flex flex-col">
                 <div className="nft_description_wrapper flex flex-col gap-1">
                   <span className="ntf_description_span mt-5  !text-[#191D31]   font-bold text-xl">
@@ -104,13 +159,7 @@ const Page = () => {
                   Details
                 </span>
                 <div className="flex left_nft_detail items-center justify-between gap-4">
-                  <div className="left_nft_detail">
-                    <Image
-                      className="h-12 w-12 rounded-lg"
-                      src={image3}
-                      alt=""
-                    />
-                  </div>
+                  <div className="left_nft_detail  h-12 w-12 rounded-lg bg-slate-100"></div>
                   <div className="right_neft_detail flex flex-col">
                     <span className="collection_nft_detail font-light">
                       Collection
@@ -149,6 +198,21 @@ const Page = () => {
                       view on storage provider <CiShare1 />
                     </span>
                   </div>
+                </div>
+              </div>
+              <div className="attributes flex flex-col gap-4">
+                <span className="mt-5  !text-[#191D31]   font-bold text-xl">
+                  Attributes
+                </span>
+                <div className="flex gap-4 flex-wrap">
+                  {token.attributes.map((x) => (
+                    <div className="bg-[#ADD8E6] flex p-2 rounded-lg  flex-col">
+                      <span>{x.trait_type}</span>
+                      <span className="!text-[#191D31]  font-bold">
+                        {x.value}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="sell-select-btn">

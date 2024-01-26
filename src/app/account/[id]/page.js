@@ -38,6 +38,7 @@ const Page = () => {
   const specificTransaction = useAppSelector(selectSpecificTransaction);
   const transactions = useAppSelector(selectTransactions);
   const isLoading = useAppSelector(selectIsSingleTransactionLoading);
+  console.log(specificTransaction);
   const copyAddress = async (e) => {
     await navigator.clipboard.writeText(account?.address);
     setTooltipOpen(true);
@@ -82,6 +83,10 @@ const Page = () => {
                 <div>
                   <p>Date</p>
                   <p>{formatDateTime3(specificTransaction?.timestamp)}</p>
+                </div>
+                <div>
+                  <p>Function</p>
+                  <span>{specificTransaction.payload.function}</span>
                 </div>
                 <div>
                   <p>Status</p>

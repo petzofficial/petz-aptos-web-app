@@ -1,6 +1,5 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+
 import GoBackBtn from "@/components/button/GoBackBtn";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -9,8 +8,8 @@ import Link from "next/link";
 import { TbMessage2Check } from "react-icons/tb";
 import { FiBox } from "react-icons/fi";
 import { LuBadgeInfo } from "react-icons/lu";
-import "../../style/notification/notification.scss";
-import { useNotifications } from "../../components/notification/getNotifications";
+import "@/style/notification/notification.scss";
+import { useNotifications } from "@/components/notification/getNotifications";
 import Pagination from "@/components/button/Pagination";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import { truncateString } from "@/components/common/truncate";
@@ -45,7 +44,7 @@ const Page = () => {
             <Link href={"/home"} className="text-[30px] font-bold ">
               <GoBackBtn />
             </Link>
-            <div className="not-box">
+            <div className="not-box mr-8 md:mr-24">
               <h3>Notification</h3>
               <div
                 className={`font-semibold text-center flex justify-center items-center ${outfit.className}`}
@@ -53,7 +52,7 @@ const Page = () => {
                 Recent<p>{total_count ? total_count : 0}</p>
               </div>
             </div>
-            <div className="clear-btn">
+            <div className="clear-btn ">
               <button></button>
             </div>
           </div>
