@@ -9,6 +9,7 @@ import {
   fetchTokensAction,
   selectNewNetwork,
 } from "@/redux/app/reducers/AccountSlice";
+import emptyImage from "@/assets/without/empty.png";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 const Token = ({ tokens, isLoading }) => {
   const itemsPerPage = 8; // Change this to the number of items you want to display per page
@@ -35,26 +36,40 @@ const Token = ({ tokens, isLoading }) => {
       ) : (
         <>
           <div className="pick-cards grid max-lg:grid-cols-2 lg:grid-cols-4 justify-between items-center">
-            {currentTokens.map((item, id) => {
-              return (
-                <Link key={id} href={`/nft/${item.last_transaction_version}`}>
-                  <div className="box shadow-md m-auto my-[10px]">
-                    <div className="image flex justify-center items-center">
-                      <Image
-                        src={item.image}
-                        width={86}
-                        height={117}
-                        alt="petz"
-                      />
+            {currentTokens?.length === 0 ? (
+              <div
+                style={{
+                  display: "flex",
+                  width: "100",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <Image height={240} src={emptyImage} alt="empty" />
+              </div>
+            ) : (
+              currentTokens.map((item, id) => {
+                return (
+                  <Link key={id} href={`/nft/${item.last_transaction_version}`}>
+                    <div className="box shadow-md m-auto my-[10px]">
+                      <div className="image flex justify-center items-center">
+                        <Image
+                          src={item.image}
+                          width={86}
+                          height={117}
+                          alt="petz"
+                        />
+                      </div>
+                      <div className="pitbull-footer">
+                        <p>#{item?.current_token_data?.token_name}</p>
+                        <p>{item.pick}</p>
+                      </div>
                     </div>
-                    <div className="pitbull-footer">
-                      <p>#{item?.current_token_data?.token_name}</p>
-                      <p>{item.pick}</p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
+                  </Link>
+                );
+              })
+            )}
           </div>
           <Pagination
             currentPage={currentPage}

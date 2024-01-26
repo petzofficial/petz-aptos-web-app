@@ -1,10 +1,10 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+
+import React from "react";
+import { CiShare1 } from "react-icons/ci";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import React from "react";
-import "../../../style/account/transaction.scss";
+import "@/style/account/transaction.scss";
 import { Outfit } from "next/font/google";
 import { useParams } from "next/navigation";
 const outfit = Outfit({ subsets: ["latin"] });
@@ -69,6 +69,11 @@ const Page = () => {
               <h3 className={outfit.className}>Transaction</h3>
 
               <div className="trans-body mb-10">
+                <div>
+                  <button className="flex items-center gap-2">
+                    View on Explorer <CiShare1 />{" "}
+                  </button>
+                </div>
                 <div>
                   <p>Version</p>
                   <span>{specificTransaction?.version}</span>

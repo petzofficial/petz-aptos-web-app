@@ -1,6 +1,5 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React, { use, useState } from "react";
@@ -8,12 +7,12 @@ import Image from "next/image";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
 import img3 from "@/assets/home/image 23.png";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
-import "../../style/account/account.scss";
+import "@/style/account/account.scss";
 import { TbCircleLetterT } from "react-icons/tb";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { IoCopy } from "react-icons/io5";
-import Token from "../../components/account/Token";
-import Transactions from "../../components/account/Transactions";
+import Token from "@/components/account/Token";
+import Transactions from "@/components/account/Transactions";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useEffect } from "react";
 import {
@@ -43,14 +42,12 @@ const Page = () => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const newNetwork = useAppSelector(selectNewNetwork);
   const transactions = useAppSelector(selectTransactions);
+
   const coins = useAppSelector(selectCoins);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const transactionLoading = useAppSelector(selectIsTransactionLoading);
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
-  console.log(transactions);
-  console.log("these are tokens");
-  console.log(tokens);
   const { connected, account, wallet } = useWallet();
   const dispatch = useAppDispatch();
   console.log(coins);
@@ -198,8 +195,6 @@ const Page = () => {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>{" "}
     </AppContext>
   );

@@ -71,7 +71,7 @@ const Navbar = ({ method }) => {
                 <IoNotifications />
               </button>
             </Link>
-            <div className="max-md:hidden lg:flex">
+            <div className="max-md:hidden lg:flex items-center justify-center gap-4">
               <NetworkSelector />
               <WalletConnector />
             </div>
@@ -111,8 +111,10 @@ const Navbar = ({ method }) => {
               Account
             </button>
           </Link>
-          <NetworkSelector />
-          <WalletConnector />
+          <div className="flex items-center justify-center gap-4">
+            <NetworkSelector />
+            <WalletConnector />
+          </div>
         </div>
       </nav>{" "}
     </AppContext>

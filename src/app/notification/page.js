@@ -15,7 +15,7 @@ import Pagination from "@/components/button/Pagination";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import { truncateString } from "@/components/common/truncate";
 import LoadingCircle from "@/components/common/loading";
-import imageNotification from "@/assets/notification/image.jpg";
+import emptyImage from "@/assets/without/empty.png";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
@@ -53,13 +53,8 @@ const Page = () => {
                 Recent<p>{total_count ? total_count : 0}</p>
               </div>
             </div>
-<<<<<<< HEAD
             <div className="clear-btn">
               <button></button>
-=======
-            <div className="clear-btn" >
-              <button>Clear All</button>
->>>>>>> 0f8d226f419c728879c018bfb9af51a195db3e5e
             </div>
           </div>
           {isLoading ? (
@@ -119,12 +114,13 @@ const Page = () => {
             <div
               style={{
                 display: "flex",
+                width: "100",
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: "10px",
               }}
             >
-              <Image height={240} src={imageNotification} alt="f" />
+              <Image height={240} src={emptyImage} alt="empty" />
             </div>
           )}
         </div>
