@@ -1,103 +1,85 @@
-import Navbar from '@/components/Navbar'
-import React from 'react'
-import Image from 'next/image'
-import img1 from '../../assets/home/pgt-removebg-preview 2.png'
-import img2 from '../../assets/home/pst-removebg-preview 2.png'
-import img3 from '../../assets/home/image 23.png'
-import group from '../../assets/home/Group 101.png'
-import '../../style/home/home.scss'
-import { Plus_Jakarta_Sans } from 'next/font/google'
-import { Barlow_Condensed } from 'next/font/google'
-import { FaPlay, FaSquare } from "react-icons/fa";
-import ReplayIcon from '@mui/icons-material/Replay';
-import Footer from '@/components/Footer'
+import logo from "@/../public/logo.png";
+import { Urbanist } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
+import trust from "@/assets/wallet/5947 1.png";
+import pantem from "@/assets/wallet/61681cca9e256-removebg-preview 1.png";
+import blocto from "@/assets/wallet/icon 1.png";
+import petro from "@/assets/wallet/image 22.svg";
+import martiam from "@/assets/wallet/unnamed 1.png";
+import "@/style/connect-wallet/connect-wallet.scss";
 
-
-
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'] })
-const barlow = Barlow_Condensed({ subsets: ['latin'], weight: "500" })
+const urban = Urbanist({ subsets: ["latin"] });
 
 const Page = () => {
   return (
-    <div>
-      <Navbar />
-
-      <section className='home-section'>
-        <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-          <div className="home-inner">
-            <div className="first-box flex justify-between items-center">
-              <Image src={img1} width={30} height={30} alt='PGT' />
-              <p className='max-[322px]:text-[12px]'>100 PGT</p>
-              <Image src={img2} width={30} height={30} alt='PST' />
-              <p className='max-[322px]:text-[12px]'>100 PST</p>
-              <Image src={img3} width={30} height={30} alt='100 APT' />
-              <p className='max-[322px]:text-[12px]'>100 APT</p>
-            </div>
-            <div className="first-box mt-5">
-              <div className="box-inner flex items-center mt-3">
-                <div className="skill flex-1">
-                  <p className=''>Level</p>
-                  <div className="skill-bar skill2 wow slideInLeft animated">
-                    <span className="skill-count2"></span>
-                  </div>
-                </div>
-                <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>60%</h4>
+    <section className="connect-wallet lg:h-[100vh] 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
+      <div className="addcontainer">
+        <div
+          className={`connect-wallet-inner md:flex justify-between items-center ${urban.className}`}
+        >
+          <div className="connect-wallet-left">
+            <Link href={"/"}>
+              <div className="logo py-16">
+                <Image src={logo} width={106} height={106} alt="logo" />
+                <h3>PetZ</h3>
               </div>
-              <div className="box-inner flex items-center">
-                <div className="skill flex-1">
-                  <p className=''>Energy</p>
-                  <div className="skill-bar skill3 wow slideInLeft animated">
-                    <span className="skill-count2"></span>
-                  </div>
-                </div>
-                <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>80%</h4>
-              </div>
-            </div>
+            </Link>
 
-            <div className="first-box mt-5">
-              {/* <Link href={'/task/task-add'}> */}
-              <select name="task" id="task" className='w-full outline-none'>
-                <option className='font-semibold' value="choose">Choose Task</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
-              {/* </Link> */}
-            </div>
-
-            <div className="first-box mt-5">
-
-              <div class="containerr">
-                <div class="progress">
-                  <div class="overlay"></div>
-                  <div class="left"></div>
-                  <div class="right"></div>
-                </div>
-                <div className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}>
-                  25:00
-                </div>
-              </div>
-              <div className="flex justify-center space-x-3">
-                <span>Time to focus</span>
-                <span>1/4</span>
-              </div>
-              <div className="play-move-btn space-x-2 mt-5">
-                <button><FaSquare /></button>
-                <button className='mid'><FaPlay /></button>
-                <button><ReplayIcon className='font-bold' /></button>
-              </div>
-            </div>
-
-            <div className="home-foot my-12">
-              <Image src={group} width={380} height={305} alt='group' />
+            <div className="text-box md:p-6 max-md:p-3">
+              <h2>CONNECT ACCOUNT</h2>
+              <p className="font-medium">
+                Start by connecting with one of the following wallet providers
+                or create a new wallet entirely
+              </p>
+              <p className="font-semibold">
+                By connecting to our platfom, I agree to the
+                <Link href={"/setting"}>terms and conditions</Link>
+                and
+                <Link href={"/setting"}>privacy policy</Link>
+              </p>
             </div>
           </div>
+          <div className="connect-wallet-right">
+            <Link href={"/select-nft"} className="lg:mt-20 max-lg:mt-7">
+              <button>
+                <Image src={petro} width={30} height={30} alt="petro" />
+                <span>Petro Wallet</span>
+              </button>
+            </Link>
+            <Link href={"/select-nft"}>
+              <button>
+                <Image src={pantem} width={23} height={23} alt="pantem" />
+                <span>Pontem Wallet</span>
+              </button>
+            </Link>
+            <Link href={"/select-nft"}>
+              <button>
+                <Image src={trust} width={27} height={24} alt="trust" />
+                <span>Trust Wallet</span>
+              </button>
+            </Link>
+            <Link href={"/select-nft"}>
+              <button>
+                <Image src={martiam} width={22} height={24} alt="martiam" />
+                <span>Martiam Wallet</span>
+              </button>
+            </Link>
+            <Link href={"/select-nft"}>
+              <button>
+                <Image src={blocto} width={30} height={27} alt="blocto" />
+                <span>Blocto Wallet</span>
+              </button>
+            </Link>
+          </div>
         </div>
-      </section>
+        <div className="connect-wallet-footer pb-3">
+          We do not own your private keys and cannot access your funds without
+          your confirmation
+        </div>
+      </div>
+    </section>
+  );
+};
 
-      <Footer />
-    </div>
-  )
-}
-
-export default Page
+export default Page;
