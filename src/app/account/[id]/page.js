@@ -87,7 +87,9 @@ const Page = () => {
                 </div>
                 <div>
                   <p>Function</p>
-                  <span>{specificTransaction?.payload?.function}</span>
+                  <span>
+                    {specificTransaction?.payload?.function?.split("::").pop()}
+                  </span>
                 </div>
                 <div>
                   <p>Status</p>
