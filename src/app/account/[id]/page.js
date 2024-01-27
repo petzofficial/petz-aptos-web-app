@@ -26,6 +26,7 @@ import { truncateAddress2 } from "@/components/aptosIntegrations/utils";
 import { Tooltip } from "@mui/material";
 import { IoCopy } from "react-icons/io5";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import CircularIndeterminate from "@/components/common/loading";
 const Page = () => {
   const { connected } = useWallet();
   const account = useAppSelector(selectAccount);
@@ -86,7 +87,7 @@ const Page = () => {
                 </div>
                 <div>
                   <p>Function</p>
-                  <span>{specificTransaction.payload.function}</span>
+                  <span>{specificTransaction?.payload?.function}</span>
                 </div>
                 <div>
                   <p>Status</p>

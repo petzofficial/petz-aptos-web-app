@@ -37,7 +37,7 @@ const Transactions = ({ transactions, isLoading }) => {
           <div
             style={{
               display: "flex",
-              width: "100",
+              width: "100%",
               alignItems: "center",
               justifyContent: "center",
               marginTop: "10px",

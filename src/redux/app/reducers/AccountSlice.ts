@@ -283,7 +283,7 @@ export const fetchSpecificTransactionAction =
         })
       );
     } catch (e) {
-      dispatch(setSpecificTransaction({ isLoading: true }));
+      dispatch(setSpecificTransaction({ isLoading: false }));
 
       console.log(e);
     }

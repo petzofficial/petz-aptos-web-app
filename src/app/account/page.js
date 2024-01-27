@@ -60,6 +60,7 @@ const Page = () => {
   };
   useEffect(() => {
     dispatch(fetchTransactionsAction(account?.address));
+    dispatch(fetchCoinsAction(account.address));
   }, [dispatch, account, newNetwork]);
 
   useEffect(() => {
