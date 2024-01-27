@@ -49,7 +49,7 @@ const Token = ({ tokens, isLoading }) => {
                 <Image height={240} src={emptyImage} alt="empty" />
               </div>
             ) : (
-              currentTokens.map((item, id) => {
+              currentTokens?.map((item, id) => {
                 return (
                   <Link key={id} href={`/nft/${item.last_transaction_version}`}>
                     <div className="box shadow-md m-auto my-[10px]">

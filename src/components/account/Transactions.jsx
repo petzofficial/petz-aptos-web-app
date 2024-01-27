@@ -23,10 +23,10 @@ const Transactions = ({ transactions, isLoading }) => {
     : [];
 
   const currentTransactions = sorted?.slice(indexOfFirstItem, indexOfLastItem);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  console.log(currentTransactions.length);
   if (isLoading) {
     return (
       <div className="account-transactions py-12">
@@ -43,7 +43,9 @@ const Transactions = ({ transactions, isLoading }) => {
           justifyContent: "center",
           marginTop: "10px",
         }}
-      ></div>
+      >
+        <Image height={240} src={emptyImage} alt="empty" />
+      </div>
     );
   } else {
     return (

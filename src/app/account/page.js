@@ -87,7 +87,7 @@ const Page = () => {
                   <GoBackBtn />
                 </Link>
 
-                <div className="token-trans-btn flex flex-col gap-2">
+                <div className="token-trans-btn ">
                   <button
                     className={`${
                       slug === "token" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
@@ -100,11 +100,11 @@ const Page = () => {
                     <FaArrowRightArrowLeft /> <span>Transactions</span>
                   </button>
                   <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
-                    Market Place
+                    NFT Marketplace
                   </span>
                 </div>
               </div>
-              <div className="max-width m-auto lg:mt-[-214px]">
+              <div className="max-width m-auto lg:mt-[-260px]">
                 <h2 className={`flex justify-center ${outfit.className}`}>
                   Account
                 </h2>
