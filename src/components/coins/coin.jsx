@@ -26,22 +26,21 @@ const Coins = ({ coins, isLoading, connected }) => {
             const coin = coins?.find((x) => x?.metadata?.symbol === symbol);
             return (
               <div key={index}>
-                <div className="flex gap-6 justify-center items-center space-x-1">
+                <div className="flex justify-between items-center space-x-1">
                   {coin ? (
                     <div
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "8px",
                       }}
                     >
                       {renderCoinImage(coin?.metadata?.symbol)}
-                      {"  "}
+
                       {calculateCoinAmount(
                         coin?.amount,
                         coin?.metadata?.decimals
                       )}
-                      {"  "}
+
                       {coin?.metadata?.symbol}
                     </div>
                   ) : (
