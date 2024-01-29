@@ -21,7 +21,14 @@ const outfit = Outfit({ subsets: ['latin'] })
 const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 const Page = () => {
-    const [slug, setSlug] = useState('token')
+    const [slug, setSlug] = useState('token');
+
+    const date = new Date();
+    const today = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
+    if (localStorage.getItem('energyGivenOn') !== today) {
+        localStorage.setItem('energyGivenOn', today);
+        localStorage.setItem('energy', 100);
+    }
 
     return (
         <div>
@@ -77,7 +84,7 @@ const Page = () => {
                                             <span className="skill-count2"></span>
                                         </div>
                                     </div>
-                                    <h4 className='ml-3 -mt-2 font-bold'>80%</h4>
+                                    <h4 className='ml-3 -mt-2 font-bold'>{ localStorage.getItem('energy') || 0 }%</h4>
                                 </div>
                             </div>
                         </div>
