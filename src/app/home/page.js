@@ -28,10 +28,7 @@ const Page = () => {
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const runningSeconds = 25 * 60;
-  const rewardPerMinute = 60;
-  const [seconds, setSeconds] = useState(runningSeconds);
-  const [reward, setReward] = useState(0);
+  const [seconds, setSeconds] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
@@ -43,18 +40,10 @@ const Page = () => {
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
 
-  const date = new Date();
-  const today = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
-  if (localStorage.getItem('energyGivenOn') !== today) {
-      localStorage.setItem('energyGivenOn', today);
-      localStorage.setItem('energy', 100);
-  }
-
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    
     if (filtered && filtered.currentCycleCount && filtered.currentCycleCount > 0) {
       tmpCycle = filtered.currentCycleCount;
     }
@@ -98,21 +87,7 @@ const Page = () => {
 
     if (isRunning) {
       interval = setInterval(() => {
-        setSeconds(prevSeconds => {
-          const newSeconds = prevSeconds - 1;
-          setReward(((runningSeconds - newSeconds) / 60) * rewardPerMinute);
-
-          const addEnergy = (((runningSeconds - newSeconds) / 60) % 5) === 0;
-          if (addEnergy)
-            localStorage.setItem('energy', +localStorage.getItem('energy') + 1);
-
-          const minusEnergy = (((runningSeconds - newSeconds) / 60) % 1) === 0;
-          if (minusEnergy)
-            localStorage.setItem('energy', +localStorage.getItem('energy') - 1);
-
-          return newSeconds;
-        });
-
+        setSeconds((prevSeconds) => prevSeconds - 1);
 
         // current date
         const currentDate = new Date();
@@ -224,7 +199,8 @@ const Page = () => {
       setSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
-      setSelectedTaskId("choose");
+      //updateTask(selectedTaskId, { currentCycleCount: 1 });
+	  setSelectedTaskId('choose');
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
@@ -247,8 +223,6 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-
-  localStorage.setItem('expectedPgcReward', (+localStorage.getItem('pgcReward') || 0) + reward);
 
   return (
     <div>
@@ -285,7 +259,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                { localStorage.getItem('energy') }%
+                  80%
                 </h4>
               </div>
             </div>
@@ -296,7 +270,8 @@ const Page = () => {
                 id="task"
                 className="w-full outline-none"
                 onChange={handleSelectData}
-                value={selectedTaskId}>
+                value={selectedTaskId}
+              >
                 <option className="font-semibold" value="choose">
                   Choose Task
                 </option>
@@ -314,7 +289,8 @@ const Page = () => {
                   <div className="right"></div>
                 </div>
                 <div
-                  className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}>
+                  className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}
+                >
                   {formatTime(seconds)}
                 </div>
               </div>
