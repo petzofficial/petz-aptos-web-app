@@ -28,34 +28,22 @@ const Page = () => {
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const runningSeconds = 25 * 60;
-  const rewardPerMinute = 60;
-  const [seconds, setSeconds] = useState(runningSeconds);
-  const [reward, setReward] = useState(0);
+  const [seconds, setSeconds] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
     longBreakDuration: 15 * 60,
-    currentCycleCount: 4,
+    cycleCount: 4,
     autoStart: false,
   });
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
-  const [filterTaskData,setFilterTaskData] = useState("");
-
-  const date = new Date();
-  const today = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
-  if (localStorage.getItem('energyGivenOn') !== today) {
-      localStorage.setItem('energyGivenOn', today);
-      localStorage.setItem('energy', 100);
-  }
 
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    setFilterTaskData(filtered)
     if (filtered && filtered.currentCycleCount && filtered.currentCycleCount > 0) {
       tmpCycle = filtered.currentCycleCount;
     }
@@ -66,28 +54,6 @@ const Page = () => {
   const handleSelectData = (e) => {
     handleSelectDataFunc(e.target.value);
   };
-
-  useEffect(() => {
-    if (filterTaskData) {
-      if (
-        filterTaskData?.time != 0 &&
-        filterTaskData?.time <= filterTaskData?.time
-      ) {
-        setSeconds(
-          () => parseInt(filterTaskData?.focusTime) * 60 - filterTaskData?.time
-        );
-      } else {
-        setSeconds(() => parseInt(filterTaskData?.focusTime) * 60);
-      }
-      setSettings({
-        focusDuration: parseInt(filterTaskData?.focusTime) * 60,
-        shortBreakDuration: parseInt(filterTaskData?.shortBreak) * 60,
-        longBreakDuration: parseInt(filterTaskData?.longBreak) * 60,
-        currentCycleCount: parseInt(filterTaskData?.currentCycleCount),
-        autoStart: filterTaskData?.check,
-      });
-    }
-  }, [filterTaskData.title]);
 
   // pomodoro timer
   useEffect(() => {
@@ -101,7 +67,7 @@ const Page = () => {
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
         shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
         longBreakDuration: parseInt(settingsLocalData.longBreak) * 60,
-        currentCycleCount: parseInt(settingsLocalData.currentCycleCount),
+        cycleCount: parseInt(settingsLocalData.cycleCount),
         autoStart: settingsLocalData.check,
       });
     }
@@ -121,21 +87,7 @@ const Page = () => {
 
     if (isRunning) {
       interval = setInterval(() => {
-        setSeconds(prevSeconds => {
-          const newSeconds = prevSeconds - 1;
-          setReward(((runningSeconds - newSeconds) / 60) * rewardPerMinute);
-
-          const addEnergy = (((runningSeconds - newSeconds) / 60) % 5) === 0;
-          if (addEnergy)
-            localStorage.setItem('energy', +localStorage.getItem('energy') + 1);
-
-          const minusEnergy = (((runningSeconds - newSeconds) / 60) % 1) === 0;
-          if (minusEnergy)
-            localStorage.setItem('energy', +localStorage.getItem('energy') - 1);
-
-          return newSeconds;
-        });
-
+        setSeconds((prevSeconds) => prevSeconds - 1);
 
         // current date
         const currentDate = new Date();
@@ -204,7 +156,7 @@ const Page = () => {
 
   const startTimer = () => {
     if (selectedTaskId && selectedTaskId !== "choose") {
-      updateTask(selectedTaskId, { status: "In Progress", color: "#FED000" });
+      updateTask(selectedTaskId, { status: "In Progress", statusColor: "#FED000" });
       setIsRunning(true);
     } else if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
@@ -232,7 +184,7 @@ const Page = () => {
     setIsRunning(false);
 
     if (currentState === "focus") {
-      if (currentCycle < settings.currentCycleCount) {
+      if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");
         setSeconds(settings.shortBreakDuration);
       } else {
@@ -247,11 +199,12 @@ const Page = () => {
       setSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
-      setSelectedTaskId("choose");
+      //updateTask(selectedTaskId, { currentCycleCount: 1 });
+	  setSelectedTaskId('choose');
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
-      updateTask(selectedTaskId, { status: "Completed", color: "#14985A" });
+      updateTask(selectedTaskId, { status: "Completed", statusColor: "#14985A" });
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
       const updatedFilteredTasks = updatedTasks.filter(
@@ -270,8 +223,6 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-
-  localStorage.setItem('expectedPgcReward', (+localStorage.getItem('pgcReward') || 0) + reward);
 
   return (
     <div>
@@ -308,7 +259,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                { localStorage.getItem('energy') }%
+                  80%
                 </h4>
               </div>
             </div>
@@ -319,7 +270,8 @@ const Page = () => {
                 id="task"
                 className="w-full outline-none"
                 onChange={handleSelectData}
-                value={selectedTaskId}>
+                value={selectedTaskId}
+              >
                 <option className="font-semibold" value="choose">
                   Choose Task
                 </option>
@@ -337,7 +289,8 @@ const Page = () => {
                   <div className="right"></div>
                 </div>
                 <div
-                  className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}>
+                  className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}
+                >
                   {formatTime(seconds)}
                 </div>
               </div>
@@ -346,7 +299,7 @@ const Page = () => {
                   <>
                     <span>Time to {currentState}</span>
                     <span>
-                      {currentCycle}/{settings.currentCycleCount}
+                      {currentCycle}/{settings.cycleCount}
                     </span>
                   </>
                 ) : (
