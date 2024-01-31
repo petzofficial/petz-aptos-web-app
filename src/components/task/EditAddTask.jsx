@@ -11,19 +11,23 @@ import toast from "react-hot-toast";
 const urban = Urbanist({ subsets: ["latin"] });
 
 const EditAddTask = ({ method }) => {
-  const router = useRouter()
+  const router = useRouter();
   const searchParams = useSearchParams();
   const existingTaskId = searchParams.get("id");
-  const [task, setTask] = useState({ title: "", description: "", priority: "" });
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    priority: "",
+  });
   const [priority, setPriority] = useState("");
 
   useEffect(() => {
     const task = getTaskData().find((item) => item._id == existingTaskId);
-    if(method === 'edit'){
-        setPriority(task.priority)
+    if (method === "edit") {
+      setPriority(task.priority);
     }
     setTask(task);
-  },[])
+  }, []);
 
   const handlePriority = (v) => {
     setPriority(v);
@@ -51,17 +55,13 @@ const EditAddTask = ({ method }) => {
       description: description,
       priority: priority,
       date: formattedDate,
+      reward_PGC: "",
       status: "Pending",
       currentCycleCount: 1,
       _id: unique_id,
     };
 
-    if (
-      !addObj ||
-      !addObj.title ||
-      !addObj.description ||
-      !addObj.priority
-    ) {
+    if (!addObj || !addObj.title || !addObj.description || !addObj.priority) {
       return false;
     }
 
@@ -69,13 +69,13 @@ const EditAddTask = ({ method }) => {
     if (method === "edit") {
       if (task) {
         updateTask(existingTaskId, addObj);
-        router.push('/task', { scroll: true })
-        toast.success('Task Updated');
+        router.push("/task", { scroll: true });
+        toast.success("Task Updated");
       }
     } else {
       addTask(addObj);
-      router.push('/task', { scroll: true })
-      toast.success('Task Added');
+      router.push("/task", { scroll: true });
+      toast.success("Task Added");
     }
 
     // input field empty
@@ -99,12 +99,17 @@ const EditAddTask = ({ method }) => {
           </h2>
           <form
             onSubmit={handleAddData}
-            className={typeof window !== 'undefined' && urban.className}
+            className={typeof window !== "undefined" && urban.className}
             action="#"
             method="post"
           >
             <h4>Task Name</h4>
-            <input type="text" name="workOut" placeholder="WorkOut" defaultValue={task ? task.title : ''}/>
+            <input
+              type="text"
+              name="workOut"
+              placeholder="WorkOut"
+              defaultValue={task ? task.title : ""}
+            />
             <p>Task Priority</p>
             <div className="task-lvl-btn">
               <button
@@ -112,7 +117,7 @@ const EditAddTask = ({ method }) => {
                 onClick={() => {
                   handlePriority("High");
                 }}
-                className={priority === "High" ? "selected" : "" }
+                className={priority === "High" ? "selected" : ""}
               >
                 High
               </button>
@@ -141,7 +146,7 @@ const EditAddTask = ({ method }) => {
               name="description"
               rows="10"
               placeholder="Add Task Description"
-              defaultValue={task ? task.description : ''}
+              defaultValue={task ? task.description : ""}
             ></textarea>
 
             <button type="submit" id="submitBtn" className="submit-btn">

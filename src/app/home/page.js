@@ -12,7 +12,13 @@ import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
-import { getTaskData, updateTask } from "@/utilities/localDB";
+import {
+  consumeEnergy,
+  getTaskData,
+  getUserData,
+  rechargeEnergy,
+  updateTask,
+} from "@/utilities/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -39,12 +45,16 @@ const Page = () => {
   });
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
-
+  const userData = getUserData();
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
     const filtered = tasks.find((task) => task._id === id);
-    if (filtered && filtered.currentCycleCount && filtered.currentCycleCount > 0) {
+    if (
+      filtered &&
+      filtered.currentCycleCount &&
+      filtered.currentCycleCount > 0
+    ) {
       tmpCycle = filtered.currentCycleCount;
     }
     setSelectedTaskId(id);
@@ -88,7 +98,7 @@ const Page = () => {
     if (isRunning) {
       interval = setInterval(() => {
         setSeconds((prevSeconds) => prevSeconds - 1);
-
+        console.log(interval);
         // current date
         const currentDate = new Date();
         const options = { day: "numeric", month: "numeric", year: "numeric" };
@@ -115,8 +125,23 @@ const Page = () => {
             let tempTotalTime = 0;
             if (findData && findData.time) {
               tempTotalTime = findData.time;
+
+              let minutes = tempTotalTime / 60;
+              console.log(minutes);
+              if (tempTotalTime % 60 === 0 && tempTotalTime !== 0) {
+                consumeEnergy();
+              }
+              console.log(tempTotalTime / 60);
+              if ((tempTotalTime / 60) % 5 === 0) {
+                rechargeEnergy();
+              }
+              console.log(Math.floor(minutes));
             }
-            updateTask(selectedTaskId, { time: tempTotalTime + 1 });
+
+            updateTask(selectedTaskId, {
+              time: tempTotalTime + 1,
+              reward_PGC: 60 * Math.floor(tempTotalTime / 60),
+            });
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
@@ -156,7 +181,10 @@ const Page = () => {
 
   const startTimer = () => {
     if (selectedTaskId && selectedTaskId !== "choose") {
-      updateTask(selectedTaskId, { status: "In Progress", statusColor: "#FED000" });
+      updateTask(selectedTaskId, {
+        status: "In Progress",
+        statusColor: "#FED000",
+      });
       setIsRunning(true);
     } else if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
@@ -200,11 +228,14 @@ const Page = () => {
     } else if (currentState === "longBreak") {
       // cycle update
       //updateTask(selectedTaskId, { currentCycleCount: 1 });
-	  setSelectedTaskId('choose');
+      setSelectedTaskId("choose");
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
-      updateTask(selectedTaskId, { status: "Completed", statusColor: "#14985A" });
+      updateTask(selectedTaskId, {
+        status: "Completed",
+        statusColor: "#14985A",
+      });
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
       const updatedFilteredTasks = updatedTasks.filter(
@@ -212,7 +243,10 @@ const Page = () => {
       );
       setFilteredTasks(updatedFilteredTasks);
       // Show success toast
-      toast.success(`Task is Completed`);
+      toast.success(`Task is Completed You earned ${25 * 60}PGC `);
+      updateTask(selectedTaskId, {
+        reward_PGC: 25 * 60,
+      });
     }
   };
 
@@ -259,7 +293,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  80%
+                  {userData.energy} %
                 </h4>
               </div>
             </div>
@@ -310,10 +344,7 @@ const Page = () => {
                 <button onClick={pauseTimer}>
                   <FaSquare />
                 </button>
-                <button
-                  onClick={startTimer}
-                  className="mid"
-                >
+                <button onClick={startTimer} className="mid">
                   {isRunning ? <FaPause /> : <FaPlay />}
                 </button>
                 <button onClick={resetTimer}>

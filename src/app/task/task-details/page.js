@@ -179,10 +179,10 @@ const Page = () => {
                 </div>
               </div>
               <div>
-                <p>PGT Reward</p>
+                <p>PGC Reward</p>
                 <div>
                   <Image src={img2} width={33} height={33} alt="coin" />
-                  <span>100 PGT</span>
+                  <span>{task.reward_PGC} PGC</span>
                 </div>
               </div>
               <div>
@@ -193,7 +193,7 @@ const Page = () => {
                 </div>
               </div>
 
-            {/*   <div>
+              {/*   <div>
                 <p>Transaction</p>
                 <Link href={"/account/transaction-details"}>
                   <span className="text-[#FF6900]">View</span>
@@ -211,7 +211,9 @@ const Page = () => {
                   }}
                 >
                   Mark As{" "}
-                  {task?.status === "In Progress" || "Pending" ? "Completed" : "Completed"}
+                  {task?.status === "In Progress" || "Pending"
+                    ? "Completed"
+                    : "Completed"}
                 </button>
               )}
               {task.status === "Completed" ? (
