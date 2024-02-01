@@ -105,16 +105,29 @@ const Page = () => {
                 </div>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  // marginTop: "10px",
-                }}
-              >
-                <Image height={240} src={emptyImage} alt="empty" />
+              <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
+                <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    // marginTop: "10px",
+                  }}
+                >
+                  <Image height={240} src={emptyImage} alt="empty" />
+                </div>
+                <Pagination
+                  pageNum={pageNum}
+                  totalPages={totalPages}
+                  setPageNum={setPageNum}
+                />
+                <div className="add-task-btn">
+                  <Link href={"/task/task-add"}>
+                    <button>Add New Task</button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

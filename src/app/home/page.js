@@ -12,7 +12,7 @@ import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
-import { getTaskData, updateTask } from "@/utilities/localDB";
+import { getTaskData, rechargeEnergy, updateTask } from "@/utilities/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -29,6 +29,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { consumeEnergy, getUserData } from "../../utilities/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -38,13 +39,12 @@ const Page = () => {
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const [seconds, setSeconds] = useState(1 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [settings, setSettings] = useState({
-    focusDuration: 1 * 5,
-    shortBreakDuration: 1 * 5,
-    longBreakDuration: 1 * 5,
-    cycleCount: 2,
+    focusDuration: 25 * 60,
+    shortBreakDuration: 5 * 60,
+    longBreakDuration: 15 * 60,
+    cycleCount: 4,
     autoStart: false,
   });
   const [currentState, setCurrentState] = useState("focus");
@@ -52,9 +52,23 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
-
+  console.log(filteredTasks);
+  const filtered = filteredTasks.find((task) => task._id === itemID);
+  let taskTime = (filtered?.time ?? 0) - 1500;
+  const [seconds, setSeconds] = useState(25 * 60);
+  console.log(seconds);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
+  const userData = getUserData();
+  console.log(currentState);
+  useEffect(() => {
+    const filteredTask = filteredTasks.find((task) => task._id === itemID);
+
+    if (filteredTask) {
+      const initialTaskTime = filteredTask?.time ?? 0;
+      setSeconds(1500 - initialTaskTime);
+    }
+  }, [filteredTasks, itemID]);
   useEffect(() => {
     runOneSignal();
   }, []);
@@ -141,13 +155,24 @@ const Page = () => {
             if (findData && findData.time) {
               tempTotalTime = findData.time;
               let minutes = tempTotalTime / 60;
+              console.log("this is minute");
               console.log(Math.floor(minutes));
             }
+            console.log("these are seconds ");
+            console.log(seconds);
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
               reward_PGC: 60 * Math.floor(tempTotalTime / 60),
             });
+            console.log(tempTotalTime);
+            if (tempTotalTime % 60 === 0) {
+              console.log(tempTotalTime % 60);
+              consumeEnergy();
+            }
+            if (tempTotalTime % 300 === 0) {
+              rechargeEnergy();
+            }
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
@@ -257,6 +282,8 @@ const Page = () => {
   };
 
   const formatTime = (seconds) => {
+    // let time = 2500 - (taskTime + seconds);
+
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${String(minutes).padStart(2, "0")}:${String(
@@ -294,7 +321,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  80%
+                  {userData?.energy}
                 </h4>
               </div>
             </div>
