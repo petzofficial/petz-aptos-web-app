@@ -81,8 +81,6 @@ const Page = () => {
 
   return (
     <div>
-      <Navbar method={"tasks"} />
-
       <section className="task-details">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="back-button">
@@ -233,8 +231,6 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

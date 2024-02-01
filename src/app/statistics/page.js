@@ -17,7 +17,9 @@ const urban = Urbanist({ subsets: ["latin"] });
 const Page = () => {
   const [timeRange, setTimeRange] = useState("Weekly");
   const [data, setData] = useState(
-    JSON.parse((typeof window !== 'undefined' ? localStorage.getItem("statistics") : null)) || {}
+    JSON.parse(
+      typeof window !== "undefined" ? localStorage.getItem("statistics") : null
+    ) || {}
   );
 
   const getFilteredData = () => {
@@ -139,10 +141,8 @@ const Page = () => {
     };
   };
 
-
   //   calculate weeklyData
   const totalSummary = calculateTotalAndAverageTime(getFilteredData());
-
 
   // chart Data
   const chartData = {
@@ -156,12 +156,16 @@ const Page = () => {
       {
         label: "Short Break (min)",
         backgroundColor: "#2596be",
-        data: Object.values(getFilteredData()).map((item) => item.shortBreak / 60),
+        data: Object.values(getFilteredData()).map(
+          (item) => item.shortBreak / 60
+        ),
       },
       {
         label: "Long Break (min)",
         backgroundColor: "#ffcc29",
-        data: Object.values(getFilteredData()).map((item) => item.longBreak / 60),
+        data: Object.values(getFilteredData()).map(
+          (item) => item.longBreak / 60
+        ),
       },
     ],
   };
@@ -179,8 +183,6 @@ const Page = () => {
 
   return (
     <div>
-      <Navbar method={"statistics"} />
-
       <section className="statistics">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="statistics-title">
@@ -242,8 +244,6 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

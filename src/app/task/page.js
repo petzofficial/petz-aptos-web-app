@@ -1,6 +1,5 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+
 import Link from "next/link";
 import "../../style/tasks/tasks.scss";
 import { MdOutlineSelectAll } from "react-icons/md";
@@ -9,7 +8,7 @@ import { FaCirclePlay } from "react-icons/fa6";
 import { IoMdTime, IoMdDoneAll } from "react-icons/io";
 import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
-import Pagination from "@/components/button/Pagination";
+import Pagination from "@/components/button/paginationTask";
 import { getTaskData } from "@/utilities/localDB";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
@@ -69,7 +68,8 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
-  if (filteredTasks.length === 0) {
+  console.log(filteredTasks.length);
+  if (tasksToDisplay.length === 0) {
     return (
       <div>
         <section className="tasks">
@@ -111,7 +111,7 @@ const Page = () => {
                   width: "100%",
                   alignItems: "center",
                   justifyContent: "center",
-                  marginTop: "10px",
+                  // marginTop: "10px",
                 }}
               >
                 <Image height={240} src={emptyImage} alt="empty" />
@@ -124,8 +124,6 @@ const Page = () => {
   }
   return (
     <div>
-      <Navbar method={"tasks"} />
-
       <section className="tasks">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="tasks-inner lg:mb-16 max-lg:mb-8">
@@ -215,8 +213,6 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

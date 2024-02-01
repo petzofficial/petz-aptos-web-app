@@ -2,6 +2,14 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
+import { AppContext } from "@/components/aptosIntegrations/AppContext";
+import { ReduxAppProvider } from "@/redux/provider";
+import {
+  queryClient,
+  QueryClientProvider,
+} from "@/components/common/react_query";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 const sans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata = {
@@ -10,12 +18,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
   return (
     <html lang="en">
       <body className={sans.className}>
-        <Toaster position="top-center " />
-        {children}
+        <QueryClientProvider client={queryClient}>
+          <ReduxAppProvider>
+            <Navbar />
+            <AppContext>
+              <Toaster position="top-center " />
+
+              {children}
+            </AppContext>
+            <Footer />
+          </ReduxAppProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

@@ -12,19 +12,23 @@ import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
-import {
-  consumeEnergy,
-  getTaskData,
-  getUserData,
-  rechargeEnergy,
-  updateTask,
-} from "@/utilities/localDB";
+import { getTaskData, updateTask } from "@/utilities/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { Refresh } from "@mui/icons-material";
+import runOneSignal from "@/components/notification/notification";
 
+import {
+  fetchCoinsAction,
+  selectCoins,
+  selectIsCoinsLoading,
+  selectNewNetwork,
+} from "@/redux/app/reducers/AccountSlice";
+import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
+import Coins from "@/components/coins/coin";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -34,18 +38,29 @@ const Page = () => {
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const [seconds, setSeconds] = useState(25 * 60);
+  const [seconds, setSeconds] = useState(1 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [settings, setSettings] = useState({
-    focusDuration: 25 * 60,
-    shortBreakDuration: 5 * 60,
-    longBreakDuration: 15 * 60,
-    cycleCount: 4,
+    focusDuration: 1 * 5,
+    shortBreakDuration: 1 * 5,
+    longBreakDuration: 1 * 5,
+    cycleCount: 2,
     autoStart: false,
   });
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
-  const userData = getUserData();
+  const dispatch = useAppDispatch();
+  const coins = useAppSelector(selectCoins);
+  const newNetwork = useAppSelector(selectNewNetwork);
+
+  const coinsLoading = useAppSelector(selectIsCoinsLoading);
+  const { connected, account, wallet } = useWallet();
+  useEffect(() => {
+    runOneSignal();
+  }, []);
+  useEffect(() => {
+    dispatch(fetchCoinsAction(account?.address));
+  }, [dispatch, account, newNetwork]);
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -125,16 +140,7 @@ const Page = () => {
             let tempTotalTime = 0;
             if (findData && findData.time) {
               tempTotalTime = findData.time;
-
               let minutes = tempTotalTime / 60;
-              console.log(minutes);
-              if (tempTotalTime % 60 === 0 && tempTotalTime !== 0) {
-                consumeEnergy();
-              }
-              console.log(tempTotalTime / 60);
-              if ((tempTotalTime / 60) % 5 === 0) {
-                rechargeEnergy();
-              }
               console.log(Math.floor(minutes));
             }
 
@@ -260,19 +266,14 @@ const Page = () => {
 
   return (
     <div>
-      <Navbar />
-
       <section className="home-section">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="home-inner">
-            <div className="first-box flex justify-between items-center">
-              <Image src={img1} width={30} height={30} alt="PGT" />
-              <p className="max-[322px]:text-[12px]">100 PGT</p>
-              <Image src={img2} width={30} height={30} alt="PST" />
-              <p className="max-[322px]:text-[12px]">100 PST</p>
-              <Image src={img3} width={30} height={30} alt="100 APT" />
-              <p className="max-[322px]:text-[12px]">100 APT</p>
-            </div>
+            <Coins
+              coins={coins}
+              isLoading={coinsLoading}
+              connected={connected}
+            />
             <div className="first-box mt-5">
               <div className="box-inner flex items-center mt-3">
                 <div className="skill flex-1">
@@ -293,7 +294,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {userData.energy} %
+                  80%
                 </h4>
               </div>
             </div>
@@ -359,8 +360,6 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
