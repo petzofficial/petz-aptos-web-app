@@ -1,5 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
+
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { ReduxAppProvider } from "@/redux/provider";
 import {
@@ -22,7 +24,11 @@ export default function RootLayout({ children }) {
         <QueryClientProvider client={queryClient}>
           <ReduxAppProvider>
             <Navbar />
-            <AppContext>{children}</AppContext>
+            <AppContext>
+              <Toaster position="top-center " />
+
+              {children}
+            </AppContext>
             <Footer />
           </ReduxAppProvider>
         </QueryClientProvider>

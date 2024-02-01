@@ -73,7 +73,7 @@ const Token = ({ tokens, isLoading }) => {
           </div>
           <Pagination
             currentPage={currentPage}
-            totalPages={Math.ceil(tokens.length / itemsPerPage)}
+            totalPages={Math.ceil(tokens?.length / itemsPerPage)}
             onPageChange={handlePageChange}
           />
         </>
