@@ -28,6 +28,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { getUserData } from "../utilities/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -37,13 +38,14 @@ const Page = () => {
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const [seconds, setSeconds] = useState(1 * 60);
   const [isRunning, setIsRunning] = useState(false);
+  const [seconds, setSeconds] = useState(25 * 60);
+
   const [settings, setSettings] = useState({
-    focusDuration: 1 * 5,
-    shortBreakDuration: 1 * 5,
-    longBreakDuration: 1 * 5,
-    cycleCount: 2,
+    focusDuration: 25 * 60,
+    shortBreakDuration: 5 * 60,
+    longBreakDuration: 15 * 60,
+    cycleCount: 4,
     autoStart: false,
   });
   const [currentState, setCurrentState] = useState("focus");
@@ -51,11 +53,19 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
+  const userData = getUserData();
 
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
   const tasks = getTaskData();
   const filtered = tasks.find((task) => task._id === itemID);
+  useEffect(() => {
+    const filteredTask = filteredTasks.find((task) => task._id === itemID);
+    if (filteredTask) {
+      const initialTaskTime = filteredTask?.time ?? 0;
+      setSeconds(1500 - initialTaskTime);
+    }
+  }, [filteredTasks, itemID]);
   useEffect(() => {
     runOneSignal();
   }, []);
@@ -80,7 +90,14 @@ const Page = () => {
   const handleSelectData = (e) => {
     handleSelectDataFunc(e.target.value);
   };
-
+  useEffect(() => {
+    let user = getUserData();
+    if (!user || Object.keys(user).length === 0) {
+      user = { energy: 100 };
+      localStorage.setItem("userData", JSON.stringify(user));
+    }
+    console.log(user);
+  }, []);
   // pomodoro timer
   useEffect(() => {
     const settingsLocalData = JSON.parse(
@@ -296,7 +313,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  80%
+                  {userData?.energy}%
                 </h4>
               </div>
             </div>
