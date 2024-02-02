@@ -16,6 +16,7 @@ import emptyImage from "@/assets/without/empty.png";
 const Page = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
+  const [slug, setSlug] = useState("");
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -28,13 +29,15 @@ const Page = () => {
 
   const handleFilter = (status) => {
     if (status === "All") {
+      setSlug("All");
       setFilteredTasks(tasks);
     } else {
       const filtered = tasks.filter((task) => task?.status === status);
       setFilteredTasks(filtered);
+      setSlug(status);
     }
   };
-
+  console.log(slug);
   // Convert total and average time to HH:mm format
   const convertToHHMMSS = (timeInSeconds) => {
     if (timeInSeconds < 60) {
@@ -80,25 +83,50 @@ const Page = () => {
               </Link>
               <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
                 <div className="tasks-navbar mt-10">
-                  <div className="flex items-center space-x-4">
+                  <div
+                    className={`flex items-center space-x-4 ${
+                      slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
                     <MdOutlineSelectAll />
                     <button onClick={() => handleFilter("All")}>All</button>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div
+                    className={`flex items-center space-x-4 ${
+                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
                     <IoMdTime />
                     <button onClick={() => handleFilter("Pending")}>
                       Pending
                     </button>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div
+                    className={`flex items-center space-x-4 ${
+                      slug === "In Progress"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
+                    }`}
+                  >
                     <CgTimelapse className="border rounded-full" />
                     <button onClick={() => handleFilter("In Progress")}>
                       In Progress
                     </button>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div
+                    className={`flex items-center space-x-4 ${
+                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
                     <IoMdDoneAll />
-                    <button onClick={() => handleFilter("Completed")}>
+                    <button
+                      className={`${
+                        slug === "Completed"
+                          ? "bg-[#FEE4D1] text-[#FF6900]"
+                          : ""
+                      }`}
+                      onClick={() => handleFilter("Completed")}
+                    >
                       Completed
                     </button>
                   </div>
@@ -145,23 +173,39 @@ const Page = () => {
             </Link>
             <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
               <div className="tasks-navbar mt-10">
-                <div className="flex items-center space-x-4">
+                <div
+                  className={`flex items-center space-x-4 ${
+                    slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  }`}
+                >
                   <MdOutlineSelectAll />
                   <button onClick={() => handleFilter("All")}>All</button>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div
+                  className={`flex items-center space-x-4 ${
+                    slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  }`}
+                >
                   <IoMdTime />
                   <button onClick={() => handleFilter("Pending")}>
                     Pending
                   </button>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div
+                  className={`flex items-center space-x-4 ${
+                    slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  }`}
+                >
                   <CgTimelapse className="border rounded-full" />
                   <button onClick={() => handleFilter("In Progress")}>
                     In Progress
                   </button>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div
+                  className={`flex items-center space-x-4 ${
+                    slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  }`}
+                >
                   <IoMdDoneAll />
                   <button onClick={() => handleFilter("Completed")}>
                     Completed
@@ -173,44 +217,39 @@ const Page = () => {
             <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
               <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
 
-              {tasksToDisplay.map((item) => {
-                return (
-                  <Link
-                    key={item._id}
-                    href={`/task/task-details?id=${item._id}`}
-                  >
-                    <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
-                      <div
-                        style={{ backgroundColor: item.statusColor }}
-                        className={`color`}
-                      ></div>
-                      <div className="middle flex justify-between">
-                        <div>
-                          <h1>{item.title}</h1>
-                          <p>{convertToHHMMSS(item.time)}</p>
-                        </div>
-                        <div className="text-end">
-                          <p>
-                            {item.currentCycleCount}/
-                            {settingsLocalData && settingsLocalData.cycleCount
-                              ? settingsLocalData.cycleCount
-                              : "4"}
-                          </p>
-                          <p>
-                            {settingsLocalData && settingsLocalData.shortBreak
-                              ? settingsLocalData.shortBreak
-                              : "5"}{" "}
-                            min
-                          </p>
-                        </div>
+              {tasksToDisplay.map((item) => (
+                <Link key={item._id} href={`/task/task-details?id=${item._id}`}>
+                  <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
+                    <div
+                      style={{ backgroundColor: item.statusColor }}
+                      className={`color`}
+                    ></div>
+                    <div className="middle flex justify-between">
+                      <div>
+                        <h1>{item.title}</h1>
+                        <p>{convertToHHMMSS(item.time)}</p>
                       </div>
-                      <div className="play">
-                        <FaCirclePlay />
+                      <div className="text-end">
+                        <p>
+                          {item.currentCycleCount}/
+                          {settingsLocalData && settingsLocalData.cycleCount
+                            ? settingsLocalData.cycleCount
+                            : "4"}
+                        </p>
+                        <p>
+                          {settingsLocalData && settingsLocalData.shortBreak
+                            ? settingsLocalData.shortBreak
+                            : "5"}{" "}
+                          min
+                        </p>
                       </div>
                     </div>
-                  </Link>
-                );
-              })}
+                    <div className="play">
+                      <FaCirclePlay />
+                    </div>
+                  </div>
+                </Link>
+              ))}
 
               <Pagination
                 pageNum={pageNum}
