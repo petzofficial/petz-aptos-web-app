@@ -99,7 +99,7 @@ const Page = () => {
                       <span className="skill-count2"></span>
                     </div>
                   </div>
-                  <h5>42.6</h5>
+                  <h5>0</h5>
                 </div>
                 <div className="flex items-center my-2">
                   <p>Concentrative </p>
@@ -108,7 +108,7 @@ const Page = () => {
                       <span className="skill-count2"></span>
                     </div>
                   </div>
-                  <h5>11.5</h5>
+                  <h5>0</h5>
                 </div>
                 <div className="flex items-center my-2">
                   <p>Fortune</p>
@@ -117,7 +117,7 @@ const Page = () => {
                       <span className="skill-count2"></span>
                     </div>
                   </div>
-                  <h5>5.9</h5>
+                  <h5>0</h5>
                 </div>
                 <div className="flex items-center my-2">
                   <p>Longevity</p>
@@ -126,7 +126,7 @@ const Page = () => {
                       <span className="skill-count2"></span>
                     </div>
                   </div>
-                  <h5>4.5</h5>
+                  <h5>0</h5>
                 </div>
               </div>
               <div className="nft_description flex flex-col">
@@ -206,7 +206,7 @@ const Page = () => {
                 </span>
                 <div className="flex gap-4 flex-wrap">
                   {token.attributes.map((x) => (
-                    <div className="bg-[#ADD8E6] flex p-2 rounded-lg  flex-col">
+                    <div className="bg-[#F09B68] flex p-2 rounded-lg  flex-col">
                       <span>{x.trait_type}</span>
                       <span className="!text-[#191D31]  font-bold">
                         {x.value}

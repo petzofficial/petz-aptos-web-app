@@ -302,7 +302,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  60%
+                  0
                 </h4>
               </div>
               <div className="box-inner flex items-center">
