@@ -22,7 +22,8 @@
       }
 
       .max-width {
-        max-width: 400px;
+        max-width: max-content;
+        min-width: 400px;
 
         @include tablet {
           max-width: 600px;

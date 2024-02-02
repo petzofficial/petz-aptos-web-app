@@ -53,8 +53,6 @@ const Page = () => {
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   console.log(filteredTasks);
-  const filtered = filteredTasks.find((task) => task._id === itemID);
-  let taskTime = (filtered?.time ?? 0) - 1500;
   const [seconds, setSeconds] = useState(25 * 60);
   console.log(seconds);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
@@ -163,11 +161,13 @@ const Page = () => {
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
-              reward_PGC: 60 * Math.floor(tempTotalTime / 60),
+              reward_PGC: tempTotalTime + 1,
             });
             console.log(tempTotalTime);
-            if (tempTotalTime % 60 === 0) {
-              console.log(tempTotalTime % 60);
+            if (
+              (tempTotalTime + 1) % 60 === 0 &&
+              (tempTotalTime + 1) % 300 !== 0
+            ) {
               consumeEnergy();
             }
             if (tempTotalTime % 300 === 0) {

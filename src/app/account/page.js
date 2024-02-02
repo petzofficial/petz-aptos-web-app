@@ -2,9 +2,7 @@
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React, { use, useState } from "react";
-import Image from "next/image";
-import img2 from "@/assets/home/pst-removebg-preview 2.png";
-import img3 from "@/assets/home/image 23.png";
+
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "@/style/account/account.scss";
 import { TbCircleLetterT } from "react-icons/tb";
@@ -154,7 +152,7 @@ const Page = () => {
                       </div>
                     </div>
                     <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                    0
+                      0
                     </h4>
                   </div>
                   <div className="box-inner flex items-center">
