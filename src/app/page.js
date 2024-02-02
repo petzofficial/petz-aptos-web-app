@@ -267,7 +267,7 @@ const Page = () => {
       );
       setFilteredTasks(updatedFilteredTasks);
       // Show success toast
-      const reward = 60 * Math.floor(filtered.time / 60);
+      const reward = 60 * Math.floor(filtered?.time / 60);
       toast.success(`Task is Completed You earned ${reward}PGC `);
       updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,

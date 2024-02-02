@@ -96,7 +96,14 @@ const Page = () => {
                   >
                     <TbCircleLetterT /> <span>Token</span>
                   </button>
-                  <button onClick={() => setSlug("transactions")}>
+                  <button
+                    className={`${
+                      slug === "transactions"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
+                    }`}
+                    onClick={() => setSlug("transactions")}
+                  >
                     <FaArrowRightArrowLeft /> <span>Transactions</span>
                   </button>
                   <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
