@@ -4,6 +4,7 @@ import APT from "@/assets/home/image 23.png";
 import Image from "next/image";
 
 export const renderCoinImage = (symbol) => {
+  console.log(symbol);
   switch (symbol) {
     case "PGC":
       return <Image src={PGT} width={30} height={30} alt="PGT" />;
