@@ -2,25 +2,13 @@
 
 // Function to get user data from localStorage
 const getUserData = () => {
-  // Check if localStorage is available
-  if (typeof window !== "undefined" && window.localStorage) {
-    const storedUserData = localStorage.getItem("userData");
-    return storedUserData ? JSON.parse(storedUserData) : {};
-  } else {
-    // Handle the case when localStorage is not available (e.g., server-side rendering)
-    console.warn("localStorage is not available.");
-    // You might want to implement an alternative mechanism or return default data
-    return {};
-  }
+  const storedUserData = localStorage.getItem("userData");
+  return storedUserData ? JSON.parse(storedUserData) : {};
 };
 
 // Function to save user data to localStorage
 const saveUserData = (userData) => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    localStorage.setItem("userData", JSON.stringify(userData));
-  } else {
-    console.warn("localStorage is not available.");
-  }
+  localStorage.setItem("userData", JSON.stringify(userData));
 };
 
 // User data (assuming it's stored somewhere)
@@ -47,13 +35,9 @@ const consumeEnergy = () => {
 console.log(`Current energy: ${userData.energy}`);
 // add task
 const addTask = (taskData) => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    let storedData = getTaskData();
-    storedData.push(taskData);
-    localStorage.setItem("tasks", JSON.stringify(storedData));
-  } else {
-    console.warn("localStorage is not available.");
-  }
+  let storedData = getTaskData();
+  storedData.push(taskData);
+  localStorage.setItem("tasks", JSON.stringify(storedData));
 };
 
 // update task
@@ -73,13 +57,9 @@ const updateTask = (id, updatedTask) => {
 
 // single remove
 const removeFromDB = (id) => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const taskData = getTaskData();
-    const updatedTasks = taskData.filter((task) => task._id !== id);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-  } else {
-    console.warn("localStorage is not available.");
-  }
+  const taskData = getTaskData();
+  const updatedTasks = taskData.filter((task) => task._id !== id);
+  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 };
 
 // get all task
