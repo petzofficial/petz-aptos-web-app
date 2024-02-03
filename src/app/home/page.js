@@ -128,7 +128,7 @@ const Page = () => {
 
         let statisticsData = JSON.parse(
           typeof window !== "undefined"
-            ? localStorage.getItem("statistics")
+            ? localStorage?.getItem("statistics")
             : null
         );
 
