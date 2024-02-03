@@ -33,11 +33,11 @@ const Coins = ({ coins, isLoading, connected }) => {
                 {coin ? (
                   <div style={{ display: "flex", alignItems: "center" }}>
                     {renderCoinImage(coin?.metadata?.symbol)}
-                    {calculateCoinAmount(
+                    {/* {calculateCoinAmount(
                       coin?.amount,
                       coin?.metadata?.decimals
-                    )}
-
+                    )} */}
+                    00000000000
                     {coin?.metadata?.symbol}
                   </div>
                 ) : (

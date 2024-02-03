@@ -22,11 +22,7 @@
       }
 
       .max-width {
-<<<<<<< HEAD
         width: fit-content;
-=======
-        max-width: max-content;
->>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
         min-width: 400px;
 
         @include tablet {
