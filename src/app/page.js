@@ -1,4 +1,5 @@
 "use client";
+import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import img1 from "@/assets/home/pgt-removebg-preview 2.png";
@@ -10,7 +11,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { getTaskData, updateTask } from "@/utilities/localDB";
+import Footer from "@/components/Footer";
+import { getTaskData, rechargeEnergy, updateTask } from "@/utilities/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -25,11 +27,9 @@ import {
   selectNewNetwork,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-import dynamic from "next/dynamic";
+import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { getUserData } from "../utilities/localDB";
-const Coins = dynamic(() => import("@/components/coins/coin"), { ssr: false });
-
+import { consumeEnergy, getUserData } from "../utilities/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -40,8 +40,6 @@ const Page = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
-  const [seconds, setSeconds] = useState(25 * 60);
-
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
@@ -54,29 +52,20 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
-  const userData = getUserData();
 
+  const [seconds, setSeconds] = useState(25 * 60);
+  console.log(seconds);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
-  const tasks = getTaskData();
-  const filtered = tasks.find((task) => task._id === itemID);
-  let energy = 0;
-  if (userData && userData.energy) {
-    energy = userData.energy;
-  }
-  /*   useEffect(() => {
-    const filteredTask = filteredTasks.find((task) => task._id === itemID);
-    if (filteredTask) {
-      const initialTaskTime = filteredTask?.time ?? 0;
-      setSeconds(1500 - initialTaskTime);
-    }
-  }, [filteredTasks, itemID]); */
+  const userData = getUserData();
+  let upatedSeconds;
   useEffect(() => {
     runOneSignal();
   }, []);
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
+
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -95,6 +84,7 @@ const Page = () => {
   const handleSelectData = (e) => {
     handleSelectDataFunc(e.target.value);
   };
+
   useEffect(() => {
     let user = getUserData();
     if (!user || Object.keys(user).length === 0) {
@@ -103,6 +93,7 @@ const Page = () => {
     }
     console.log(user);
   }, []);
+
   // pomodoro timer
   useEffect(() => {
     const settingsLocalData = JSON.parse(
@@ -130,21 +121,25 @@ const Page = () => {
     }
   }, []);
 
+  
+
   useEffect(() => {
     let interval;
 
     if (isRunning) {
       interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
-        console.log(interval);
-        // current date
+        setSeconds((prevSeconds) => {
+          upatedSeconds = prevSeconds - 1;
+          return prevSeconds - 1;
+        });
+
         const currentDate = new Date();
         const options = { day: "numeric", month: "numeric", year: "numeric" };
         const formattedDate = currentDate.toLocaleDateString("en-GB", options);
 
         let statisticsData = JSON.parse(
           typeof window !== "undefined"
-            ? localStorage.getItem("statistics")
+            ? localStorage?.getItem("statistics")
             : null
         );
 
@@ -157,21 +152,25 @@ const Page = () => {
           statisticsData[formattedDate][selectedTaskId]
         ) {
           if (currentState === "focus") {
+            console.log(seconds);
             statisticsData[formattedDate][selectedTaskId].focus++;
             const tasks = getTaskData();
             const findData = tasks.find((task) => task._id === selectedTaskId);
             let tempTotalTime = 0;
-            console.log(tempTotalTime);
             if (findData && findData.time) {
               tempTotalTime = findData.time;
-              let minutes = tempTotalTime / 60;
-              console.log(Math.floor(minutes));
             }
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
               reward_PGC: tempTotalTime + 1,
             });
+            if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
+              consumeEnergy();
+            }
+            if ((seconds - 1) % 300 === 0) {
+              rechargeEnergy();
+            }
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
@@ -195,7 +194,7 @@ const Page = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [isRunning]);
+  }, [isRunning, seconds]);
 
   useEffect(() => {
     if (seconds === 0) {
@@ -273,8 +272,7 @@ const Page = () => {
       );
       setFilteredTasks(updatedFilteredTasks);
       // Show success toast
-      const reward = 60 * Math.floor(filtered?.time / 60);
-      toast.success(`Task is Completed You earned ${reward}PGC `);
+      toast.success(`Task is Completed You earned ${25 * 60}PGC `);
       updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
       });
@@ -282,6 +280,8 @@ const Page = () => {
   };
 
   const formatTime = (seconds) => {
+    // let time = 2500 - (taskTime + seconds);
+
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${String(minutes).padStart(2, "0")}:${String(
@@ -319,8 +319,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {" "}
-                  {energy}
+                  {userData?.energy}
                 </h4>
               </div>
             </div>
