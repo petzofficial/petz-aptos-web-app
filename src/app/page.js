@@ -314,7 +314,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {userData?.energy}%
+                  {userData?.energy}
                 </h4>
               </div>
             </div>
