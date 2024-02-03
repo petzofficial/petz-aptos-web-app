@@ -32,6 +32,7 @@ import Coins from "@/components/coins/coin";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Tooltip } from "@mui/material";
 import { truncateAddress } from "@/components/aptosIntegrations/utils";
+import { getUserData } from "../../utilities/localDB";
 
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -48,6 +49,7 @@ const Page = () => {
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
   const { connected, account, wallet } = useWallet();
+  const userData = getUserData();
   const dispatch = useAppDispatch();
   console.log(coins);
   const copyAddress = async (e) => {
@@ -154,7 +156,7 @@ const Page = () => {
                       </div>
                     </div>
                     <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                    0
+                      0
                     </h4>
                   </div>
                   <div className="box-inner flex items-center">
@@ -164,7 +166,7 @@ const Page = () => {
                         <span className="skill-count2"></span>
                       </div>
                     </div>
-                    <h4 className="ml-3 -mt-2 font-bold">80%</h4>
+                    <h4 className="ml-3 -mt-2 font-bold">{userData.energy}%</h4>
                   </div>
                 </div>
               </div>

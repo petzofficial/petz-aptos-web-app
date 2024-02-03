@@ -16,7 +16,7 @@ import emptyImage from "@/assets/without/empty.png";
 const Page = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
-  const [slug, setSlug] = useState("");
+  const [slug, setSlug] = useState("All");
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null

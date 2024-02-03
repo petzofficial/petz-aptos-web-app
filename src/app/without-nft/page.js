@@ -1,6 +1,6 @@
 import Image from "next/image";
 import "../../style/without/without.scss";
-import header from "../../assets/without/No data-pana 1.png";
+import header from "../../assets/without/empty.png";
 import Link from "next/link";
 
 const Page = () => {
