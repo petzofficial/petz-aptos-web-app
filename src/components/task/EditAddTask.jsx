@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Urbanist } from "next/font/google";
 import { v4 as uuid } from "uuid";
-import { addTask, getTaskData, updateTask } from "../../utilities/localDB";
+import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 

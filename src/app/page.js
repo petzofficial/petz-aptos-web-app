@@ -12,7 +12,7 @@ import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
-import { getTaskData, rechargeEnergy, updateTask } from "@/utilities/localDB";
+import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -29,7 +29,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { consumeEnergy, getUserData } from "../utilities/localDB";
+import { consumeEnergy, getUserData } from "../utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 

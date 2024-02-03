@@ -12,7 +12,7 @@ import Image from "next/image";
 import img1 from "../../../assets/home/image 23.png";
 import img2 from "../../../assets/home/pgt-removebg-preview 2.png";
 import img3 from "../../../assets/home/pst-removebg-preview 2.png";
-import { getTaskData, removeFromDB, updateTask } from "@/utilities/localDB";
+import { getTaskData, removeFromDB, updateTask } from "@/utils/localDB";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

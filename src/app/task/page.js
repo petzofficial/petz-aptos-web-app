@@ -9,7 +9,7 @@ import { IoMdTime, IoMdDoneAll } from "react-icons/io";
 import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Pagination from "@/components/button/paginationTask";
-import { getTaskData } from "@/utilities/localDB";
+import { getTaskData } from "@/utils/localDB";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
 
