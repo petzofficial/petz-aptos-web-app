@@ -1,6 +1,5 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import img1 from "../../assets/home/pgt-removebg-preview 2.png";
 import img2 from "../../assets/home/pst-removebg-preview 2.png";
@@ -13,6 +12,7 @@ import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
 import { getTaskData, rechargeEnergy, updateTask } from "@/utilities/localDB";
+
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -29,7 +29,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { consumeEnergy, getUserData } from "../../utilities/localDB";
+import { getUserData, updateUserData } from "../../utilities/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -54,11 +54,14 @@ const Page = () => {
   const newNetwork = useAppSelector(selectNewNetwork);
 
   const [seconds, setSeconds] = useState(25 * 60);
-  console.log(seconds);
+  const secondsRef = useRef(seconds);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
   const userData = getUserData();
-  let upatedSeconds;
+  let energy = 0;
+  if (userData) {
+    energy = userData.energy;
+  }
   useEffect(() => {
     runOneSignal();
   }, []);
@@ -111,6 +114,12 @@ const Page = () => {
       handleSelectDataFunc(itemID);
     }
   }, []);
+  useEffect(() => {
+    setSeconds((prev) => prev);
+  }, []);
+  useEffect(() => {
+    secondsRef.current = seconds;
+  }, [seconds]);
 
   useEffect(() => {
     let interval;
@@ -118,7 +127,6 @@ const Page = () => {
     if (isRunning) {
       interval = setInterval(() => {
         setSeconds((prevSeconds) => {
-          upatedSeconds = prevSeconds - 1;
           return prevSeconds - 1;
         });
 
@@ -128,7 +136,7 @@ const Page = () => {
 
         let statisticsData = JSON.parse(
           typeof window !== "undefined"
-            ? localStorage?.getItem("statistics")
+            ? localStorage.getItem("statistics")
             : null
         );
 
@@ -154,12 +162,18 @@ const Page = () => {
               time: tempTotalTime + 1,
               reward_PGC: tempTotalTime + 1,
             });
+            let energy = 0;
+            if (userData.energy) {
+              energy = userData?.energy;
+            }
+
             if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
-              consumeEnergy();
+              energy = userData?.energy - 1;
             }
             if ((seconds - 1) % 300 === 0) {
-              rechargeEnergy();
+              energy = userData?.energy + 1;
             }
+            updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
@@ -279,7 +293,7 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <div suppressHydrationWarning={true}>
       <section className="home-section">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="home-inner">

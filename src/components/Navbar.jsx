@@ -20,7 +20,10 @@ const Navbar = ({ method }) => {
 
   return (
     <AppContext>
-      <nav className="w-full bg-white fixed z-20 shadow-md py-1">
+      <nav
+        suppressHydrationWarning={true}
+        className="w-full bg-white fixed z-20 shadow-md py-1"
+      >
         <div className="navbar 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <Link href={"/"}>
             <div className="logo flex items-center">

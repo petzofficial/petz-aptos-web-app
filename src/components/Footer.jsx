@@ -7,7 +7,7 @@ import "../style/footer.scss";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer suppressHydrationWarning={true}>
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="footer-inner">
           <div className="footer-container my-14 max-sm:flex-col">

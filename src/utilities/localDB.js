@@ -2,37 +2,49 @@
 
 // Function to get user data from localStorage
 const getUserData = () => {
-  const storedUserData = localStorage.getItem("userData");
-  return storedUserData ? JSON.parse(storedUserData) : {};
+  if (typeof window !== "undefined") {
+    // const storedUserData = localStorage.getItem("");
+    const storedUserData = localStorage.getItem("userData") || [];
+    return storedUserData ? JSON.parse(storedUserData) : {};
+  }
 };
 
-// Function to save user data to localStorage
 const saveUserData = (userData) => {
-  localStorage.setItem("userData", JSON.stringify(userData));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
+};
+let userData = getUserData();
+const updateUserData = (updates) => {
+  if (typeof window !== "undefined") {
+    let currentUserData = getUserData();
+    currentUserData = { ...currentUserData, ...updates };
+    saveUserData(currentUserData);
+  }
 };
 
-// User data (assuming it's stored somewhere)
-let userData = getUserData();
-
-// Function to handle energy recharge
 const rechargeEnergy = () => {
-  if (userData.energy < 100) {
-    userData.energy += 1;
-    saveUserData(userData); // Save updated user data
+  if (typeof window !== "undefined") {
+    if (userData.energy < 100) {
+      userData.energy += 1;
+      saveUserData(userData); // Save updated user data
+    }
   }
 };
 
 // Function to consume energy for a task
 const consumeEnergy = () => {
-  if (userData.energy > 0) {
-    userData.energy -= 1;
-    saveUserData(userData); // Save updated user data
-    return true; // Energy consumed successfully
+  if (typeof window !== "undefined") {
+    if (userData.energy > 0) {
+      userData.energy -= 1;
+      saveUserData(userData); // Save updated user data
+      return true; // Energy consumed successfully
+    }
+    return false; // Not enough energy
   }
-  return false; // Not enough energy
 };
 
-console.log(`Current energy: ${userData.energy}`);
+// console.log(`Current energy: ${userData.energy}`);
 // add task
 const addTask = (taskData) => {
   let storedData = getTaskData();
@@ -93,4 +105,5 @@ export {
   saveUserData,
   rechargeEnergy,
   consumeEnergy,
+  updateUserData,
 };

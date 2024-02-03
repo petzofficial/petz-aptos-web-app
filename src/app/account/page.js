@@ -49,9 +49,14 @@ const Page = () => {
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
   const { connected, account, wallet } = useWallet();
+
   const userData = getUserData();
+
   const dispatch = useAppDispatch();
-  console.log(coins);
+  let energy = 0;
+  if (userData) {
+    energy = userData.energy;
+  }
   const copyAddress = async (e) => {
     await navigator.clipboard.writeText(account?.address);
     setTooltipOpen(true);
@@ -166,7 +171,7 @@ const Page = () => {
                         <span className="skill-count2"></span>
                       </div>
                     </div>
-                    <h4 className="ml-3 -mt-2 font-bold">{userData.energy}</h4>
+                    <h4 className="ml-3 -mt-2 font-bold">{energy}</h4>
                   </div>
                 </div>
               </div>

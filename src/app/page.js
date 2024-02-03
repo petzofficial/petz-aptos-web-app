@@ -10,7 +10,6 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
-import Footer from "@/components/Footer";
 import { getTaskData, updateTask } from "@/utilities/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
@@ -26,9 +25,11 @@ import {
   selectNewNetwork,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-import Coins from "@/components/coins/coin";
+import dynamic from "next/dynamic";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { getUserData } from "../utilities/localDB";
+const Coins = dynamic(() => import("@/components/coins/coin"), { ssr: false });
+
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -59,7 +60,11 @@ const Page = () => {
   const { connected, account, wallet } = useWallet();
   const tasks = getTaskData();
   const filtered = tasks.find((task) => task._id === itemID);
-/*   useEffect(() => {
+  let energy = 0;
+  if (userData && userData.energy) {
+    energy = userData.energy;
+  }
+  /*   useEffect(() => {
     const filteredTask = filteredTasks.find((task) => task._id === itemID);
     if (filteredTask) {
       const initialTaskTime = filteredTask?.time ?? 0;
@@ -314,7 +319,8 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {userData?.energy}%
+                  {" "}
+                  {energy}
                 </h4>
               </div>
             </div>
