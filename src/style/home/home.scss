@@ -13,8 +13,7 @@
     }
 
     .home-inner {
-      width: fit-content;
-      min-width: 350px;
+      max-width: max-content;
       margin: auto;
 
       .first-box {

@@ -16,7 +16,7 @@ const Coins = ({ coins, isLoading, connected }) => {
     console.log(missingSymbols);
 
     return (
-      <div className="first-box flex justify-between flex-wrap gap-4 items-center mt-8">
+      <div className="first-box flex gap-4 justify-between flex-wrap items-center mt-8">
         {isLoading ? (
           <div className="flex items-center justify-center w-full">
             <CircularIndeterminate />
@@ -28,16 +28,16 @@ const Coins = ({ coins, isLoading, connected }) => {
             return (
               <div
                 key={index}
-                className="flex justify-between items-center  space-x-1"
+                className="flex justify-between items-center space-x-1"
               >
                 {coin ? (
                   <div style={{ display: "flex", alignItems: "center" }}>
                     {renderCoinImage(coin?.metadata?.symbol)}
-                    {/* {calculateCoinAmount(
+                    {calculateCoinAmount(
                       coin?.amount,
                       coin?.metadata?.decimals
-                    )} */}
-                    00000000000
+                    )}
+
                     {coin?.metadata?.symbol}
                   </div>
                 ) : (
