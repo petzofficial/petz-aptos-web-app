@@ -49,7 +49,7 @@ const Coins = ({ coins, isLoading, connected }) => {
                     }}
                   >
                     {renderCoinImage(symbol)}
-                    <span>0 {symbol}</span>
+                    <span>0{symbol}</span>
                   </div>
                 )}
               </div>
