@@ -175,7 +175,7 @@ const Page = () => {
                 <div
                   onClick={() => handleFilter("All")}
                   className={`flex items-center space-x-4 ${
-                    slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                   slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <MdOutlineSelectAll />

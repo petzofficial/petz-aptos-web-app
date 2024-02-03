@@ -38,7 +38,6 @@ const Coins = ({ coins, isLoading, connected }) => {
                       coin?.metadata?.decimals
                     )}
 
-                    {coin?.metadata?.symbol}
                   </div>
                 ) : (
                   <div
