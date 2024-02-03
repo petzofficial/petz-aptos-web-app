@@ -59,13 +59,13 @@ const Page = () => {
   const { connected, account, wallet } = useWallet();
   const tasks = getTaskData();
   const filtered = tasks.find((task) => task._id === itemID);
-  useEffect(() => {
+/*   useEffect(() => {
     const filteredTask = filteredTasks.find((task) => task._id === itemID);
     if (filteredTask) {
       const initialTaskTime = filteredTask?.time ?? 0;
       setSeconds(1500 - initialTaskTime);
     }
-  }, [filteredTasks, itemID]);
+  }, [filteredTasks, itemID]); */
   useEffect(() => {
     runOneSignal();
   }, []);
