@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import img1 from "@/assets/home/pgt-removebg-preview 2.png";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
@@ -12,7 +12,6 @@ import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Footer from "@/components/Footer";
 import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
-
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -40,6 +39,8 @@ const Page = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
+  const [seconds, setSeconds] = useState(25 * 60);
+
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
@@ -52,23 +53,25 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
+  const userData = getUserData();
 
-  const [seconds, setSeconds] = useState(25 * 60);
-  const secondsRef = useRef(seconds);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
-  const userData = getUserData();
-  let energy = 0;
-  if (userData) {
-    energy = userData.energy;
-  }
+  const tasks = getTaskData();
+  const filtered = tasks.find((task) => task._id === itemID);
+/*   useEffect(() => {
+    const filteredTask = filteredTasks.find((task) => task._id === itemID);
+    if (filteredTask) {
+      const initialTaskTime = filteredTask?.time ?? 0;
+      setSeconds(1500 - initialTaskTime);
+    }
+  }, [filteredTasks, itemID]); */
   useEffect(() => {
     runOneSignal();
   }, []);
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
-
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -87,7 +90,14 @@ const Page = () => {
   const handleSelectData = (e) => {
     handleSelectDataFunc(e.target.value);
   };
-
+  useEffect(() => {
+    let user = getUserData();
+    if (!user || Object.keys(user).length === 0) {
+      user = { energy: 100 };
+      localStorage.setItem("userData", JSON.stringify(user));
+    }
+    console.log(user);
+  }, []);
   // pomodoro timer
   useEffect(() => {
     const settingsLocalData = JSON.parse(
@@ -114,22 +124,15 @@ const Page = () => {
       handleSelectDataFunc(itemID);
     }
   }, []);
-  useEffect(() => {
-    setSeconds((prev) => prev);
-  }, []);
-  useEffect(() => {
-    secondsRef.current = seconds;
-  }, [seconds]);
 
   useEffect(() => {
     let interval;
 
     if (isRunning) {
       interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          return prevSeconds - 1;
-        });
-
+        setSeconds((prevSeconds) => prevSeconds - 1);
+        console.log(interval);
+        // current date
         const currentDate = new Date();
         const options = { day: "numeric", month: "numeric", year: "numeric" };
         const formattedDate = currentDate.toLocaleDateString("en-GB", options);
@@ -149,31 +152,21 @@ const Page = () => {
           statisticsData[formattedDate][selectedTaskId]
         ) {
           if (currentState === "focus") {
-            console.log(seconds);
             statisticsData[formattedDate][selectedTaskId].focus++;
             const tasks = getTaskData();
             const findData = tasks.find((task) => task._id === selectedTaskId);
             let tempTotalTime = 0;
+            console.log(tempTotalTime);
             if (findData && findData.time) {
               tempTotalTime = findData.time;
+              let minutes = tempTotalTime / 60;
+              console.log(Math.floor(minutes));
             }
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
               reward_PGC: tempTotalTime + 1,
             });
-            let energy = 0;
-            if (userData.energy) {
-              energy = userData?.energy;
-            }
-
-            if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
-              energy = userData?.energy - 1;
-            }
-            if ((seconds - 1) % 300 === 0) {
-              energy = userData?.energy + 1;
-            }
-            updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
@@ -197,7 +190,7 @@ const Page = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [isRunning, seconds]);
+  }, [isRunning]);
 
   useEffect(() => {
     if (seconds === 0) {
@@ -275,16 +268,15 @@ const Page = () => {
       );
       setFilteredTasks(updatedFilteredTasks);
       // Show success toast
-      toast.success(`Task is Completed You earned ${25 * 60}PGC `);
-      updateTask(selectedTaskId, {
+     // const reward = 60 * Math.floor(filtered?.time / 60);
+      toast.success(`Task is Completed`);
+     /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
-      });
+      }); */
     }
   };
 
   const formatTime = (seconds) => {
-    // let time = 2500 - (taskTime + seconds);
-
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${String(minutes).padStart(2, "0")}:${String(
@@ -293,7 +285,7 @@ const Page = () => {
   };
 
   return (
-    <div suppressHydrationWarning={true}>
+    <div>
       <section className="home-section">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="home-inner">
@@ -322,7 +314,7 @@ const Page = () => {
                   </div>
                 </div>
                 <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {userData?.energy}
+                  {userData?.energy}%
                 </h4>
               </div>
             </div>
