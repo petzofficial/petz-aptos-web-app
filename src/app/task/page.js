@@ -8,7 +8,7 @@ import { FaCirclePlay } from "react-icons/fa6";
 import { IoMdTime, IoMdDoneAll } from "react-icons/io";
 import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
-import Pagination from "@/components/button/paginationTask";
+import Pagination from "@/components/button/Pagination";
 import { getTaskData } from "@/utils/localDB";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
@@ -146,9 +146,9 @@ const Page = () => {
                   <Image height={240} src={emptyImage} alt="empty" />
                 </div>
                 <Pagination
-                  pageNum={pageNum}
+                  currentPage={pageNum}
                   totalPages={totalPages}
-                  setPageNum={setPageNum}
+                  onPageChange={setPageNum}
                 />
                 <div className="add-task-btn">
                   <Link href={"/task/task-add"}>
@@ -249,10 +249,10 @@ const Page = () => {
               ))}
 
               <Pagination
-                pageNum={pageNum}
-                totalPages={totalPages}
-                setPageNum={setPageNum}
-              />
+                  currentPage={pageNum}
+                  totalPages={totalPages}
+                  onPageChange={setPageNum}
+                />
               <div className="add-task-btn">
                 <Link href={"/task/task-add"}>
                   <button>Add New Task</button>
