@@ -9,7 +9,6 @@ const Coins = ({ coins, isLoading, connected }) => {
       </div>
     );
   } else {
-    // Define symbols to be displayed
     const displaySymbols = ["APT", "PGC", "PSC"];
     const missingSymbols = displaySymbols.filter(
       (symbol) => !coins?.find((coin) => coin?.metadata?.symbol === symbol)

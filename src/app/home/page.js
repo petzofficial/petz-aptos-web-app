@@ -52,27 +52,20 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
-  console.log(filteredTasks);
+
   const [seconds, setSeconds] = useState(25 * 60);
   console.log(seconds);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
   const userData = getUserData();
-  console.log(currentState);
-  useEffect(() => {
-    const filteredTask = filteredTasks.find((task) => task._id === itemID);
-
-    if (filteredTask) {
-      const initialTaskTime = filteredTask?.time ?? 0;
-      setSeconds(1500 - initialTaskTime);
-    }
-  }, [filteredTasks, itemID]);
+  let upatedSeconds;
   useEffect(() => {
     runOneSignal();
   }, []);
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
+
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -124,16 +117,18 @@ const Page = () => {
 
     if (isRunning) {
       interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
-        console.log(interval);
-        // current date
+        setSeconds((prevSeconds) => {
+          upatedSeconds = prevSeconds - 1;
+          return prevSeconds - 1;
+        });
+
         const currentDate = new Date();
         const options = { day: "numeric", month: "numeric", year: "numeric" };
         const formattedDate = currentDate.toLocaleDateString("en-GB", options);
 
         let statisticsData = JSON.parse(
           typeof window !== "undefined"
-            ? localStorage.getItem("statistics")
+            ? localStorage?.getItem("statistics")
             : null
         );
 
@@ -146,31 +141,23 @@ const Page = () => {
           statisticsData[formattedDate][selectedTaskId]
         ) {
           if (currentState === "focus") {
+            console.log(seconds);
             statisticsData[formattedDate][selectedTaskId].focus++;
             const tasks = getTaskData();
             const findData = tasks.find((task) => task._id === selectedTaskId);
             let tempTotalTime = 0;
             if (findData && findData.time) {
               tempTotalTime = findData.time;
-              let minutes = tempTotalTime / 60;
-              console.log("this is minute");
-              console.log(Math.floor(minutes));
             }
-            console.log("these are seconds ");
-            console.log(seconds);
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
               reward_PGC: tempTotalTime + 1,
             });
-            console.log(tempTotalTime);
-            if (
-              (tempTotalTime + 1) % 60 === 0 &&
-              (tempTotalTime + 1) % 300 !== 0
-            ) {
+            if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
               consumeEnergy();
             }
-            if (tempTotalTime % 300 === 0) {
+            if ((seconds - 1) % 300 === 0) {
               rechargeEnergy();
             }
           } else if (currentState === "shortBreak") {
@@ -196,7 +183,7 @@ const Page = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [isRunning]);
+  }, [isRunning, seconds]);
 
   useEffect(() => {
     if (seconds === 0) {
