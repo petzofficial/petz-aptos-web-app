@@ -105,7 +105,7 @@ const Page = () => {
                 <Link
                   key={task._id}
                   href={
-                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
+                    task.status === "Completed" ? "#" : `/?id=${task._id}`
                   }
                 >
                   <button onClick={handleButtonClick}>
@@ -115,7 +115,7 @@ const Page = () => {
                 <Link
                   key={task._id}
                   href={
-                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
+                    task.status === "Completed" ? "#" : `/?id=${task._id}`
                   }
                 >
                   <button
@@ -128,7 +128,7 @@ const Page = () => {
                 <Link
                   key={task._id}
                   href={
-                    task.status === "Completed" ? "#" : `/home?id=${task._id}`
+                    task.status === "Completed" ? "#" : `/?id=${task._id}`
                   }
                 >
                   <button onClick={handleButtonClick}>
