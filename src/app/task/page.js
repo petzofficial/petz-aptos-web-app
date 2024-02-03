@@ -84,36 +84,36 @@ const Page = () => {
               <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
                 <div className="tasks-navbar mt-10">
                   <div
-                    className={`flex items-center space-x-4 ${
+                    onClick={() => handleFilter("All")}
+                    className={`flex items-center space-x-4 cursor-pointer ${
                       slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <MdOutlineSelectAll />
-                    <button onClick={() => handleFilter("All")}>All</button>
+                    <button>All</button>
                   </div>
                   <div
-                    className={`flex items-center space-x-4 ${
+                    onClick={() => handleFilter("Pending")}
+                    className={`flex items-center space-x-4 cursor-pointer ${
                       slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdTime />
-                    <button onClick={() => handleFilter("Pending")}>
-                      Pending
-                    </button>
+                    <button>Pending</button>
                   </div>
                   <div
-                    className={`flex items-center space-x-4 ${
+                    onClick={() => handleFilter("In Progress")}
+                    className={`flex items-center space-x-4 cursor-pointer ${
                       slug === "In Progress"
                         ? "bg-[#FEE4D1] text-[#FF6900]"
                         : ""
                     }`}
                   >
                     <CgTimelapse className="border rounded-full" />
-                    <button onClick={() => handleFilter("In Progress")}>
-                      In Progress
-                    </button>
+                    <button>In Progress</button>
                   </div>
                   <div
+                    onClick={() => handleFilter("Completed")}
                     className={`flex items-center space-x-4 ${
                       slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
@@ -122,10 +122,9 @@ const Page = () => {
                     <button
                       className={`${
                         slug === "Completed"
-                          ? "bg-[#FEE4D1] text-[#FF6900]"
+                          ? "bg-[#FEE4D1] text-[#FF6900] cursor-pointer"
                           : ""
                       }`}
-                      onClick={() => handleFilter("Completed")}
                     >
                       Completed
                     </button>
@@ -174,42 +173,40 @@ const Page = () => {
             <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
               <div className="tasks-navbar mt-10">
                 <div
-                  className={`flex items-center space-x-4 ${
+                  onClick={() => handleFilter("All")}
+                  className={`flex items-center space-x-4 cursor-pointer ${
                     slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <MdOutlineSelectAll />
-                  <button onClick={() => handleFilter("All")}>All</button>
+                  <button>All</button>
                 </div>
                 <div
-                  className={`flex items-center space-x-4 ${
+                  onClick={() => handleFilter("Pending")}
+                  className={`flex items-center space-x-4 cursor-pointer ${
                     slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <IoMdTime />
-                  <button onClick={() => handleFilter("Pending")}>
-                    Pending
-                  </button>
+                  <button>Pending</button>
                 </div>
                 <div
-                  className={`flex items-center space-x-4 ${
+                  onClick={() => handleFilter("In Progress")}
+                  className={`flex items-center space-x-4 cursor-pointer ${
                     slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <CgTimelapse className="border rounded-full" />
-                  <button onClick={() => handleFilter("In Progress")}>
-                    In Progress
-                  </button>
+                  <button>In Progress</button>
                 </div>
                 <div
-                  className={`flex items-center space-x-4 ${
+                  onClick={() => handleFilter("Completed")}
+                  className={`flex items-center space-x-4 cursor-pointer ${
                     slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <IoMdDoneAll />
-                  <button onClick={() => handleFilter("Completed")}>
-                    Completed
-                  </button>
+                  <button>Completed</button>
                 </div>
               </div>
             </div>
