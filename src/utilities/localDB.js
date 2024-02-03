@@ -3,8 +3,7 @@
 // Function to get user data from localStorage
 const getUserData = () => {
   if (typeof window !== "undefined") {
-    // const storedUserData = localStorage.getItem("");
-    const storedUserData = localStorage.getItem("userData") || [];
+    const storedUserData = localStorage.getItem("userData");
     return storedUserData ? JSON.parse(storedUserData) : {};
   }
 };
