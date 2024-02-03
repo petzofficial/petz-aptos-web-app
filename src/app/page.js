@@ -150,6 +150,7 @@ const Page = () => {
             const tasks = getTaskData();
             const findData = tasks.find((task) => task._id === selectedTaskId);
             let tempTotalTime = 0;
+            console.log(tempTotalTime);
             if (findData && findData.time) {
               tempTotalTime = findData.time;
               let minutes = tempTotalTime / 60;
@@ -158,7 +159,7 @@ const Page = () => {
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
-              reward_PGC: 60 * Math.floor(tempTotalTime / 60),
+              reward_PGC: tempTotalTime + 1,
             });
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;

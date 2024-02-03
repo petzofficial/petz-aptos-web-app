@@ -9,7 +9,6 @@ const Coins = ({ coins, isLoading, connected }) => {
       </div>
     );
   } else {
-    // Define symbols to be displayed
     const displaySymbols = ["APT", "PGC", "PSC"];
     const missingSymbols = displaySymbols.filter(
       (symbol) => !coins?.find((coin) => coin?.metadata?.symbol === symbol)
@@ -17,7 +16,11 @@ const Coins = ({ coins, isLoading, connected }) => {
     console.log(missingSymbols);
 
     return (
+<<<<<<< HEAD
       <div className="first-box flex justify-between flex-wrap gap-4 items-center mt-8">
+=======
+      <div className="first-box flex gap-4 justify-between flex-wrap items-center mt-8">
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
         {isLoading ? (
           <div className="flex items-center justify-center w-full">
             <CircularIndeterminate />

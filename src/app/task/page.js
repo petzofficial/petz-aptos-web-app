@@ -85,7 +85,11 @@ const Page = () => {
                 <div className="tasks-navbar mt-10">
                   <div
                     onClick={() => handleFilter("All")}
+<<<<<<< HEAD
                     className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                    className={`flex  cursor-pointer items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                       slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
@@ -94,7 +98,11 @@ const Page = () => {
                   </div>
                   <div
                     onClick={() => handleFilter("Pending")}
+<<<<<<< HEAD
                     className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                    className={`flex cursor-pointer items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                       slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
@@ -103,7 +111,11 @@ const Page = () => {
                   </div>
                   <div
                     onClick={() => handleFilter("In Progress")}
+<<<<<<< HEAD
                     className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                    className={`flex cursor-pointer items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                       slug === "In Progress"
                         ? "bg-[#FEE4D1] text-[#FF6900]"
                         : ""
@@ -114,7 +126,11 @@ const Page = () => {
                   </div>
                   <div
                     onClick={() => handleFilter("Completed")}
+<<<<<<< HEAD
                     className={`flex items-center space-x-4 ${
+=======
+                    className={`flex cursor-pointer items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                       slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
@@ -174,7 +190,11 @@ const Page = () => {
               <div className="tasks-navbar mt-10">
                 <div
                   onClick={() => handleFilter("All")}
+<<<<<<< HEAD
                   className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                  className={`flex items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                     slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -183,7 +203,11 @@ const Page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("Pending")}
+<<<<<<< HEAD
                   className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                  className={`flex items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                     slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -192,7 +216,11 @@ const Page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("In Progress")}
+<<<<<<< HEAD
                   className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                  className={`flex items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                     slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -201,7 +229,11 @@ const Page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("Completed")}
+<<<<<<< HEAD
                   className={`flex items-center space-x-4 cursor-pointer ${
+=======
+                  className={`flex items-center space-x-4 ${
+>>>>>>> 37b80c8622c706473676a230eca6b5ba37518b0f
                     slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
