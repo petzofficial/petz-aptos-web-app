@@ -78,7 +78,7 @@ const Page = () => {
         <section className="tasks">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="tasks-inner lg:mb-16 max-lg:mb-8">
-              <Link href={"/home"} className="text-[30px] font-bold">
+              <Link href={"/"} className="text-[30px] font-bold">
                 <GoBackBtn />
               </Link>
               <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
@@ -167,7 +167,7 @@ const Page = () => {
       <section className="tasks">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="tasks-inner lg:mb-16 max-lg:mb-8">
-            <Link href={"/home"} className="text-[30px] font-bold">
+            <Link href={"/"} className="text-[30px] font-bold">
               <GoBackBtn />
             </Link>
             <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">

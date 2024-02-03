@@ -24,7 +24,7 @@ const Page = () => {
             <Link href={"https://nftrade.com"}>
               <button>Buy PetZ NFT</button>
             </Link>
-            <Link href={"/home"}>
+            <Link href={"/"}>
               <button>Continue without NFT</button>
             </Link>
           </div>

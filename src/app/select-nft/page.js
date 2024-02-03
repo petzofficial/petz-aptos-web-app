@@ -66,7 +66,7 @@ export default function page() {
           </div>
           <Pagination />
           <div className="selection-button">
-            <Link className="!mt-0" href={"/home"}>
+            <Link className="!mt-0" href={"/"}>
               <button>Continue</button>
             </Link>
             <Link href={"/without-nft"}>

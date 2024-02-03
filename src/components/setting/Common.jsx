@@ -52,7 +52,7 @@ const items = [
 const Common = ({ method }) => {
   return (
     <div className="setting-inner lg:mb-16 max-lg:mb-8">
-      <Link href={"/home"} className="text-[30px] font-bold">
+      <Link href={"/"} className="text-[30px] font-bold">
         <GoBackBtn />
       </Link>
       <div className="setting-left">
