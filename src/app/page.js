@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import img1 from "@/assets/home/pgt-removebg-preview 2.png";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
@@ -10,7 +10,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { getTaskData, updateTask } from "@/utilities/localDB";
+
+import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -25,10 +26,9 @@ import {
   selectNewNetwork,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-import dynamic from "next/dynamic";
+import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { getUserData } from "../utilities/localDB";
-
+import { getUserData, updateUserData } from "@/utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -40,7 +40,7 @@ const Page = () => {
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(25 * 60);
-
+  const secondsRef = useRef(seconds);
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
     shortBreakDuration: 5 * 60,
@@ -59,10 +59,7 @@ const Page = () => {
   const { connected, account, wallet } = useWallet();
   const tasks = getTaskData();
   const filtered = tasks.find((task) => task._id === itemID);
-  let energy = 0;
-  if (userData && userData.energy) {
-    energy = userData.energy;
-  }
+
   /*   useEffect(() => {
     const filteredTask = filteredTasks.find((task) => task._id === itemID);
     if (filteredTask) {
@@ -73,6 +70,9 @@ const Page = () => {
   useEffect(() => {
     runOneSignal();
   }, []);
+  useEffect(() => {
+    secondsRef.current = seconds;
+  }, [seconds]);
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
@@ -134,9 +134,10 @@ const Page = () => {
 
     if (isRunning) {
       interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
-        console.log(interval);
-        // current date
+        setSeconds((prevSeconds) => {
+          return prevSeconds - 1;
+        });
+
         const currentDate = new Date();
         const options = { day: "numeric", month: "numeric", year: "numeric" };
         const formattedDate = currentDate.toLocaleDateString("en-GB", options);
@@ -156,21 +157,31 @@ const Page = () => {
           statisticsData[formattedDate][selectedTaskId]
         ) {
           if (currentState === "focus") {
+            console.log(seconds);
             statisticsData[formattedDate][selectedTaskId].focus++;
             const tasks = getTaskData();
             const findData = tasks.find((task) => task._id === selectedTaskId);
             let tempTotalTime = 0;
-            console.log(tempTotalTime);
             if (findData && findData.time) {
               tempTotalTime = findData.time;
-              let minutes = tempTotalTime / 60;
-              console.log(Math.floor(minutes));
             }
 
             updateTask(selectedTaskId, {
               time: tempTotalTime + 1,
               reward_PGC: tempTotalTime + 1,
             });
+            let energy = 0;
+            if (userData.energy) {
+              energy = userData?.energy;
+            }
+
+            if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
+              energy = userData?.energy - 1;
+            }
+            if ((seconds - 1) % 300 === 0) {
+              energy = userData?.energy + 1;
+            }
+            updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
@@ -194,7 +205,7 @@ const Page = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [isRunning]);
+  }, [isRunning, seconds]);
 
   useEffect(() => {
     if (seconds === 0) {
@@ -272,11 +283,11 @@ const Page = () => {
       );
       setFilteredTasks(updatedFilteredTasks);
       // Show success toast
-      const reward = 60 * Math.floor(filtered?.time / 60);
-      toast.success(`Task is Completed You earned ${reward}PGC `);
-      updateTask(selectedTaskId, {
+      // const reward = 60 * Math.floor(filtered?.time / 60);
+      toast.success(`Task is Completed`);
+      /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
-      });
+      }); */
     }
   };
 
@@ -317,9 +328,11 @@ const Page = () => {
                     <span className="skill-count2"></span>
                   </div>
                 </div>
-                <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {" "}
-                  {energy}
+                <h4
+                  suppressHydrationWarning={true}
+                  className={`ml-3 -mt-2 font-bold ${jakarta.className}`}
+                >
+                  {userData?.energy}
                 </h4>
               </div>
             </div>
