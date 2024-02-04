@@ -28,7 +28,6 @@ import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import dynamic from "next/dynamic";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { getUserData } from "../utilities/localDB";
-const Coins = dynamic(() => import("@/components/coins/coin"), { ssr: false });
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
