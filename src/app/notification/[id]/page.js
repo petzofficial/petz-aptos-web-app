@@ -8,7 +8,7 @@ import { Outfit } from "next/font/google";
 import Link from "next/link";
 import "@/style/notification/notification.scss";
 import { useSingleNotification } from "@/components/notification/getNotifications";
-import { getFormattedDateTime } from "@/components/common/datetime";
+import { getFormattedDateTime } from "@/components/common/dateTime";
 import LoadingCircle from "@/components/common/loading";
 const outfit = Outfit({ subsets: ["latin"] });
 const Page = () => {
