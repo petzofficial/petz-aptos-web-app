@@ -37,6 +37,7 @@ const Page = () => {
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
+  const [energy, setEnergy] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(25 * 60);
@@ -54,7 +55,7 @@ const Page = () => {
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
-
+  console.log(userData);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, wallet } = useWallet();
   const tasks = getTaskData();
@@ -70,6 +71,12 @@ const Page = () => {
   useEffect(() => {
     runOneSignal();
   }, []);
+  useEffect(() => {
+    const userdata = getUserData();
+    setEnergy(userdata.energy);
+
+    console.log(userdata);
+  }, [energy]);
   useEffect(() => {
     secondsRef.current = seconds;
   }, [seconds]);
@@ -176,10 +183,12 @@ const Page = () => {
             }
 
             if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
+              setEnergy((prev) => prev - 1);
               energy = userData?.energy - 1;
             }
             if ((seconds - 1) % 300 === 0) {
               energy = userData?.energy + 1;
+              setEnergy((prev) => prev + 1);
             }
             updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
@@ -332,7 +341,7 @@ const Page = () => {
                   suppressHydrationWarning={true}
                   className={`ml-3 -mt-2 font-bold ${jakarta.className}`}
                 >
-                  {userData?.energy}
+                  {energy}
                 </h4>
               </div>
             </div>

@@ -175,7 +175,7 @@ const Page = () => {
                 <div
                   onClick={() => handleFilter("All")}
                   className={`flex items-center space-x-4 ${
-                   slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <MdOutlineSelectAll />
@@ -249,10 +249,10 @@ const Page = () => {
               ))}
 
               <Pagination
-                  currentPage={pageNum}
-                  totalPages={totalPages}
-                  onPageChange={setPageNum}
-                />
+                currentPage={pageNum}
+                totalPages={totalPages}
+                onPageChange={setPageNum}
+              />
               <div className="add-task-btn">
                 <Link href={"/task/task-add"}>
                   <button>Add New Task</button>
