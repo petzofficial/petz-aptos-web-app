@@ -8,7 +8,7 @@ import emptyImage from "@/assets/without/empty.png";
 import Image from "next/image";
 import { useState } from "react";
 import { calculateInverseWithDecimals } from "@/components/common/transaction";
-import { formatDateTime2 } from "@/components/common/dateTime2";
+import { formatDateTime2 } from "@/components/common/dateTime";
 import CircularIndeterminate from "@/components/common/loading";
 
 const Transactions = ({ transactions, isLoading }) => {

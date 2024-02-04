@@ -21,7 +21,7 @@ import {
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import { calculateInverseWithDecimals } from "../../../components/common/transaction";
-import { formatDateTime3 } from "@/components/common/dateTime2";
+import { formatDateTime3 } from "@/components/common/dateTime";
 import { truncateAddress2 } from "@/components/aptosIntegrations/utils";
 import { Tooltip } from "@mui/material";
 import { IoCopy } from "react-icons/io5";
