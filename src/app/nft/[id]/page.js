@@ -6,8 +6,6 @@ import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React, { useState } from "react";
 import { shortenString, showFirstTenWords } from "@/components/common/truncate";
-import image1 from "@/assets/nft/111.png";
-import image3 from "@/assets/nft/image.png";
 import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
 import "@/style/nft/nft.scss";
