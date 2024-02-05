@@ -10,6 +10,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
+import Link from "next/link";
 
 import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
 import toast from "react-hot-toast";
@@ -357,8 +358,8 @@ const Page = () => {
                 <option className="font-semibold" value="choose">
                   Choose Task
                 </option>
-                {filteredTasks.map((task) => {
-                  return <option value={task._id}>{task.title}</option>;
+                {filteredTasks.map((task, index) => {
+                  return <option value={task._id}>{index+1}. {task.title}</option>;
                 })}
               </select>
             </div>
@@ -402,7 +403,9 @@ const Page = () => {
             </div>
 
             <div className="home-foot my-12">
-              <Image src={group} width={380} height={305} alt="group" />
+            <Link href={"/account"}>
+              <Image src={group} width={380} height={305} alt="group"/>
+              </Link>
             </div>
           </div>
         </div>
