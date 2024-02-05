@@ -41,7 +41,7 @@ const Page = () => {
       <section className="notification">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="notification-title-bar flex justify-between items-start">
-            <Link href={"/home"} className="text-[30px] font-bold ">
+            <Link href={"/"} className="text-[30px] font-bold ">
               <GoBackBtn />
             </Link>
             <div className="not-box mr-8 md:mr-24">

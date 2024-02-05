@@ -63,7 +63,7 @@ const Page = () => {
           <CircularIndeterminate />
         ) : (
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-            <Link href={"/home"} className="text-[30px] font-bold">
+            <Link href={"/"} className="text-[30px] font-bold">
               <GoBackBtn />
             </Link>
 
