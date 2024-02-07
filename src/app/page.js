@@ -30,6 +30,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { getUserData, updateUserData } from "@/utils/localDB";
+import { saveUserData } from "../utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -55,27 +56,23 @@ const Page = () => {
   });
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
+  const [minutes, setMinutes] = useState("");
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account } = useWallet();
-  /*   useEffect(() => {
-    const filteredTask = filteredTasks.find((task) => task._id === itemID);
-    if (filteredTask) {
-      const initialTaskTime = filteredTask?.time ?? 0;
-      setSeconds(1500 - initialTaskTime);
-    }
-  }, [filteredTasks, itemID]); */
+
   useEffect(() => {
     runOneSignal();
   }, []);
   useEffect(() => {
-    const userdata = getUserData();
-    setEnergy(userdata.energy);
-
-    console.log(userdata);
+    const getUserDataAsyc = async () => {
+      const userdata = await getUserData();
+      setEnergy(userdata.energy);
+    };
+    getUserDataAsyc();
   }, [energy]);
   useEffect(() => {
     secondsRef.current = seconds;
@@ -135,6 +132,25 @@ const Page = () => {
       handleSelectDataFunc(itemID);
     }
   }, []);
+  useEffect(() => {
+    console.log("use effect is called");
+    console.log(minutes);
+    const intervalId = setInterval(() => {
+      const userData = getUserData();
+      const currentTime = new Date();
+      const minutes = currentTime.getMinutes();
+      setMinutes(minutes);
+      console.log(minutes);
+      // Check if it's a multiple of 5 minutes and energy is less than 100
+      if (minutes % 5 === 0 && userData?.energy < 100) {
+        setEnergy((prevEnergy) => prevEnergy + 1);
+        userData.energy += 1;
+        saveUserData(userData);
+      }
+    }, 100000); // 1 minutes in milliseconds
+
+    return () => clearInterval(intervalId);
+  }, [minutes]);
 
   useEffect(() => {
     let interval;
@@ -186,10 +202,7 @@ const Page = () => {
               setEnergy((prev) => prev - 1);
               energy = userData?.energy - 1;
             }
-            if ((seconds - 1) % 300 === 0) {
-              energy = userData?.energy + 1;
-              setEnergy((prev) => prev + 1);
-            }
+
             updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
@@ -342,16 +355,16 @@ const Page = () => {
               <div className="box-inner flex  justify-center items-center ">
                 <div
                   suppressHydrationWarning={true}
-                  className="  font-semibold flex-1 items-start gap-0 flex   flex-col"
+                  className=" mr-1  font-semibold flex-1 items-start gap-0 flex   flex-col"
                 >
                   <p className="">Energy</p>
                   <LinearProgressEnergy jakarta={jakarta} energy={energy} />
                 </div>
                 <h4
                   suppressHydrationWarning={true}
-                  className={`ml-2 mt-4  font-bold ${jakarta.className}`}
+                  className={` mt-4  font-bold ${jakarta.className}`}
                 >
-                  {energy}
+                  {energy ? energy : 0}
                 </h4>
               </div>
             </div>
