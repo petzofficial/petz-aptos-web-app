@@ -8,7 +8,7 @@ import "@/style/account/transaction.scss";
 import { Outfit } from "next/font/google";
 import { useParams } from "next/navigation";
 const outfit = Outfit({ subsets: ["latin"] });
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   selectAccount,
   fetchTransactionsAction,
@@ -22,32 +22,25 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import { calculateInverseWithDecimals } from "../../../components/common/transaction";
 import { formatDateTime3 } from "@/components/common/dateTime";
-import { truncateAddress2 } from "@/components/aptosIntegrations/utils";
-import { Tooltip } from "@mui/material";
-import { IoCopy } from "react-icons/io5";
+
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CircularIndeterminate from "@/components/common/loading";
 const Page = () => {
-  const { connected } = useWallet();
+  const { network } = useWallet();
+  console.log(network);
   const account = useAppSelector(selectAccount);
   console.log("this is account from select account");
   console.log(account);
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const newNetwork = useAppSelector(selectNewNetwork);
 
   const specificTransaction = useAppSelector(selectSpecificTransaction);
   const transactions = useAppSelector(selectTransactions);
   const isLoading = useAppSelector(selectIsSingleTransactionLoading);
+  console.log("this is specifi");
   console.log(specificTransaction);
-  const copyAddress = async (e) => {
-    await navigator.clipboard.writeText(account?.address);
-    setTooltipOpen(true);
 
-    setTimeout(() => {
-      setTooltipOpen(false);
-    }, 2000);
-  };
   useEffect(() => {
     dispatch(fetchSpecificTransactionAction(id));
     if (account && !specificTransaction && id) {
@@ -72,9 +65,14 @@ const Page = () => {
 
               <div className="trans-body mb-10">
                 <div>
-                  <button className="flex items-center gap-2">
-                    View on Explorer <CiShare1 />{" "}
-                  </button>
+                  <a
+                    href={`https://explorer.aptoslabs.com/txn/${specificTransaction?.version}?network=${newNetwork}`}
+                    target="_"
+                  >
+                    <button className="flex items-center gap-2">
+                      View on Explorer <CiShare1 />{" "}
+                    </button>
+                  </a>
                 </div>
                 <div>
                   <p>Version</p>

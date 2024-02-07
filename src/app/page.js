@@ -1,23 +1,23 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import img1 from "@/assets/home/pgt-removebg-preview 2.png";
-import img2 from "@/assets/home/pst-removebg-preview 2.png";
-import img3 from "@/assets/home/image 23.png";
 import group from "@/assets/home/Group 101.png";
 import "@/style/home/home.scss";
+import audio from "@/assets/audioClock/audio.wav";
+import click_sound from "@/assets/audioClock/click_sound.mp3";
+import finish_sound from "@/assets/audioClock/finish_sound.mp3";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
 import Link from "next/link";
-
+import useSound from "use-sound";
+import CircularClockProgress from "@/components/common/clock";
 import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-import { Refresh } from "@mui/icons-material";
+import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
 
 import {
@@ -34,7 +34,6 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -42,6 +41,10 @@ const Page = () => {
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(25 * 60);
+  const [play] = useSound(audio);
+  const [clickSound] = useSound(click_sound);
+  const finishSound = useSound(finish_sound);
+
   const secondsRef = useRef(seconds);
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
@@ -56,12 +59,8 @@ const Page = () => {
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
-  console.log(userData);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
-  const { connected, account, wallet } = useWallet();
-  const tasks = getTaskData();
-  const filtered = tasks.find((task) => task._id === itemID);
-
+  const { connected, account } = useWallet();
   /*   useEffect(() => {
     const filteredTask = filteredTasks.find((task) => task._id === itemID);
     if (filteredTask) {
@@ -220,6 +219,7 @@ const Page = () => {
   useEffect(() => {
     if (seconds === 0) {
       handleTimerEnd();
+      finishSound();
     }
   }, [seconds]);
 
@@ -236,6 +236,9 @@ const Page = () => {
         statusColor: "#FED000",
       });
       setIsRunning(true);
+      if (!isRunning) {
+        clickSound();
+      }
     } else if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     }
@@ -245,6 +248,10 @@ const Page = () => {
     setIsRunning(false);
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
+    } else if (selectedTaskId !== "choose") {
+    }
+    if (isRunning) {
+      clickSound();
     }
   };
 
@@ -253,6 +260,7 @@ const Page = () => {
     setSeconds(settings.focusDuration);
     setCurrentState("focus");
     setCurrentCycle(1);
+    clickSound();
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     }
@@ -331,16 +339,17 @@ const Page = () => {
                   0
                 </h4>
               </div>
-              <div className="box-inner flex items-center">
-                <div className="skill flex-1">
+              <div className="box-inner flex  justify-center items-center ">
+                <div
+                  suppressHydrationWarning={true}
+                  className="  font-semibold flex-1 items-start gap-0 flex   flex-col"
+                >
                   <p className="">Energy</p>
-                  <div className="skill-bar skill3 wow slideInLeft animated">
-                    <span className="skill-count2"></span>
-                  </div>
+                  <LinearProgressEnergy jakarta={jakarta} energy={energy} />
                 </div>
                 <h4
                   suppressHydrationWarning={true}
-                  className={`ml-3 -mt-2 font-bold ${jakarta.className}`}
+                  className={`ml-2 mt-4  font-bold ${jakarta.className}`}
                 >
                   {energy}
                 </h4>
@@ -359,14 +368,18 @@ const Page = () => {
                   Choose Task
                 </option>
                 {filteredTasks.map((task, index) => {
-                  return <option value={task._id}>{index+1}. {task.title}</option>;
+                  return (
+                    <option value={task._id}>
+                      {index + 1}. {task.title}
+                    </option>
+                  );
                 })}
               </select>
             </div>
 
             <div className="first-box mt-5">
               <div className="containerr">
-                <div className="progress">
+                {/* <div className="progress">
                   <div className="overlay"></div>
                   <div className="left"></div>
                   <div className="right"></div>
@@ -374,9 +387,16 @@ const Page = () => {
                 <div
                   className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}
                 >
-                  {formatTime(seconds)}
-                </div>
+                  
+                </div> */}
+                <CircularClockProgress
+                  seconds={seconds}
+                  barlow={barlow}
+                  totalseconds={1500}
+                  time={formatTime(seconds)}
+                />
               </div>
+
               <div className="flex justify-center space-x-3">
                 {selectedTaskId !== "choose" ? (
                   <>
@@ -403,8 +423,8 @@ const Page = () => {
             </div>
 
             <div className="home-foot my-12">
-            <Link href={"/account"}>
-              <Image src={group} width={380} height={305} alt="group"/>
+              <Link href={"/account"}>
+                <Image src={group} width={380} height={305} alt="group" />
               </Link>
             </div>
           </div>

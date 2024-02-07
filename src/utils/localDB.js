@@ -31,6 +31,8 @@ const updateUserData = (updates) => {
 };
 
 const rechargeEnergy = () => {
+  const userData = getUserData();
+
   if (typeof window !== "undefined") {
     if (userData.energy < 100) {
       userData.energy += 1;
@@ -39,6 +41,13 @@ const rechargeEnergy = () => {
   }
 };
 
+// Set interval to recharge energy every 5 minutes
+const rechargeInterval = setInterval(rechargeEnergy, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+// Clear the interval if energy reaches maximum
+if (userData.energy >= 100) {
+  clearInterval(rechargeInterval);
+}
 // Function to consume energy for a task
 const consumeEnergy = () => {
   if (typeof window !== "undefined") {

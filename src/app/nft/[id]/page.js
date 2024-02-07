@@ -192,9 +192,11 @@ const Page = () => {
                     <span className="collection_nft_detail font-light">
                       Metadata storage
                     </span>
-                    <span className="collection_nft_detail_petz cursor-pointer flex  items-center gap-2  ">
-                      view on storage provider <CiShare1 />
-                    </span>
+                    <a target="_" href={token?.current_token_data?.token_uri}>
+                      <span className="collection_nft_detail_petz cursor-pointer flex  items-center gap-2  ">
+                        view on storage provider <CiShare1 />
+                      </span>{" "}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -203,7 +205,7 @@ const Page = () => {
                   Attributes
                 </span>
                 <div className="flex gap-4 flex-wrap">
-                  {token.attributes.map((x) => (
+                  {token?.attributes?.map((x) => (
                     <div className="bg-[#F09B68] flex p-2 rounded-lg  flex-col">
                       <span>{x.trait_type}</span>
                       <span className="!text-[#191D31]  font-bold">
