@@ -44,7 +44,7 @@ const Page = () => {
   const [seconds, setSeconds] = useState(25 * 60);
   const [play] = useSound(audio);
   const [clickSound] = useSound(click_sound);
-  const finishSound = useSound(finish_sound);
+  const [finishSound] = useSound(finish_sound);
 
   const secondsRef = useRef(seconds);
   const [settings, setSettings] = useState({
