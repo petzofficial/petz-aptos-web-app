@@ -2,7 +2,6 @@ import * as React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Barlow_Condensed } from "next/font/google";
 
 const formatTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
@@ -14,6 +13,10 @@ const formatTime = (seconds) => {
 
 function CircularProgressWithLabel(props) {
   const { seconds, totalseconds } = props;
+  console.log("total seconds");
+  console.log(totalseconds);
+  console.log("seconds");
+  console.log(seconds);
   const progress = (seconds / totalseconds) * 100; // Calculate progress percentage
   console.log(progress);
   const formattedTime = formatTime(seconds);

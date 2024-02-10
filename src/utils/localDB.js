@@ -38,8 +38,19 @@ const rechargeEnergy = () => {
     }
   }
 };
+setInterval(() => {
+  const userData = getUserData();
+  const currentTime = new Date();
+  const minutes = currentTime.getMinutes();
 
-// Function to consume energy for a task
+  console.log(minutes);
+  // Check if it's a multiple of 5 minutes and energy is less than 100
+  if (minutes % 5 === 0 && userData?.energy < 100) {
+    userData.energy += 1;
+    saveUserData(userData);
+  }
+}, 100000); // 1 minutes in milliseconds
+
 const consumeEnergy = () => {
   if (typeof window !== "undefined") {
     if (userData.energy > 0) {

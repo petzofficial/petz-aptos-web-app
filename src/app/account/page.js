@@ -52,7 +52,6 @@ const Page = () => {
   const { connected, account, wallet } = useWallet();
 
   const userData = getUserData();
-
   const dispatch = useAppDispatch();
   let energy = 0;
   if (userData) {

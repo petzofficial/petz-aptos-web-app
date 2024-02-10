@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import group from "@/assets/home/Group 101.png";
 import "@/style/home/home.scss";
-import audio from "@/assets/audioClock/audio.wav";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
 import finish_sound from "@/assets/audioClock/finish_sound.mp3";
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -41,11 +40,11 @@ const Page = () => {
   const [energy, setEnergy] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
-  const [seconds, setSeconds] = useState(25 * 60);
-  const [play] = useSound(audio);
+  const [seconds, setSeconds] = useState("");
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
-
+  const [isEnergyRunning, setIsEnergyRunning] = useState(true);
+  const [totalSeconds, setTotalSeconds] = useState("");
   const secondsRef = useRef(seconds);
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
@@ -113,6 +112,8 @@ const Page = () => {
     );
 
     if (settingsLocalData) {
+      setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
+
       setSeconds(parseInt(settingsLocalData.focusTime) * 60);
       setSettings({
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
@@ -134,24 +135,19 @@ const Page = () => {
   }, []);
   useEffect(() => {
     console.log("use effect is called");
-    console.log(minutes);
     const intervalId = setInterval(() => {
-      const userData = getUserData();
       const currentTime = new Date();
-      const minutes = currentTime.getMinutes();
-      setMinutes(minutes);
+      const currentMinutes = currentTime.getMinutes();
+      setMinutes(currentMinutes);
+      const userData = getUserData();
       console.log(minutes);
-      // Check if it's a multiple of 5 minutes and energy is less than 100
-      if (minutes % 5 === 0 && userData?.energy < 100) {
-        setEnergy((prevEnergy) => prevEnergy + 1);
-        userData.energy += 1;
-        saveUserData(userData);
-      }
-    }, 100000); // 1 minutes in milliseconds
+      setEnergy(userData.energy);
+      console.log("this is called");
+      console.log(userData.energy);
+    }, 60000); // 1 minute in milliseconds
 
     return () => clearInterval(intervalId);
-  }, [minutes]);
-
+  }, [isEnergyRunning]);
   useEffect(() => {
     let interval;
 
@@ -223,11 +219,11 @@ const Page = () => {
         localStorage.setItem("statistics", JSON.stringify(statisticsData));
       }, 1000);
     }
-
     return () => {
       clearInterval(interval);
     };
   }, [isRunning, seconds]);
+  console.log(totalSeconds);
 
   useEffect(() => {
     if (seconds === 0) {
@@ -329,7 +325,8 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-
+  console.log("this is total secondssss");
+  console.log(totalSeconds);
   return (
     <div>
       <section className="home-section">
@@ -405,7 +402,7 @@ const Page = () => {
                 <CircularClockProgress
                   seconds={seconds}
                   barlow={barlow}
-                  totalseconds={1500}
+                  totalseconds={totalSeconds}
                   time={formatTime(seconds)}
                 />
               </div>
