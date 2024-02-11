@@ -44,7 +44,7 @@ const Page = () => {
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
   const [isEnergyRunning, setIsEnergyRunning] = useState(true);
-  const [totalSeconds, setTotalSeconds] = useState("");
+  const [totalSeconds, setTotalSeconds] = useState(25 * 60);
   const secondsRef = useRef(seconds);
   const [settings, setSettings] = useState({
     focusDuration: 25 * 60,
@@ -173,7 +173,6 @@ const Page = () => {
           statisticsData[formattedDate][selectedTaskId]
         ) {
           if (currentState === "focus") {
-            console.log(seconds);
             statisticsData[formattedDate][selectedTaskId].focus++;
             const tasks = getTaskData();
             const findData = tasks.find((task) => task._id === selectedTaskId);
