@@ -105,7 +105,7 @@ const Page = () => {
     }
     console.log(user);
   }, []);
-  // pomodoro timer
+
   useEffect(() => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -123,6 +123,7 @@ const Page = () => {
         autoStart: settingsLocalData.check,
       });
     }
+    console.log(totalSeconds);
 
     const tasks = getTaskData();
     const status = "Completed";
@@ -134,16 +135,12 @@ const Page = () => {
     }
   }, []);
   useEffect(() => {
-    console.log("use effect is called");
     const intervalId = setInterval(() => {
       const currentTime = new Date();
       const currentMinutes = currentTime.getMinutes();
       setMinutes(currentMinutes);
       const userData = getUserData();
-      console.log(minutes);
       setEnergy(userData.energy);
-      console.log("this is called");
-      console.log(userData.energy);
     }, 60000); // 1 minute in milliseconds
 
     return () => clearInterval(intervalId);
@@ -194,15 +191,21 @@ const Page = () => {
               energy = userData?.energy;
             }
 
-            if ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) {
+            if (
+              ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+              seconds - 1 === 0
+            ) {
               setEnergy((prev) => prev - 1);
               energy = userData?.energy - 1;
             }
 
             updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
+            setTotalSeconds(settings.shortBreakDuration);
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
           } else if (currentState === "longBreak") {
+            setTotalSeconds(settings.longBreakDuration);
+
             statisticsData[formattedDate][selectedTaskId].longBreak++;
           }
         } else {
@@ -231,7 +234,8 @@ const Page = () => {
       finishSound();
     }
   }, [seconds]);
-
+  console.log("these are seconds");
+  console.log(seconds);
   useEffect(() => {
     if (settings.autoStart && !isRunning) {
       startTimer();
@@ -325,8 +329,8 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-  console.log("this is total secondssss");
-  console.log(totalSeconds);
+  console.log("this is energy");
+  console.log(energy);
   return (
     <div>
       <section className="home-section">
