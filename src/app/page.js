@@ -223,7 +223,6 @@ const Page = () => {
       clearInterval(interval);
     };
   }, [isRunning, seconds]);
-  console.log(totalSeconds);
 
   useEffect(() => {
     if (seconds === 0) {
@@ -281,9 +280,11 @@ const Page = () => {
     if (currentState === "focus") {
       if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");
+        setTotalSeconds(settings.shortBreakDuration);
         setSeconds(settings.shortBreakDuration);
       } else {
         setCurrentState("longBreak");
+        setTotalSeconds(settings.longBreakDuration);
         setSeconds(settings.longBreakDuration);
       }
     } else if (currentState === "shortBreak") {

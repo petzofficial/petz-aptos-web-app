@@ -13,12 +13,8 @@ const formatTime = (seconds) => {
 
 function CircularProgressWithLabel(props) {
   const { seconds, totalseconds } = props;
-  console.log("total seconds");
-  console.log(totalseconds);
-  console.log("seconds");
-  console.log(seconds);
-  const progress = (seconds / totalseconds) * 100; // Calculate progress percentage
-  console.log(progress);
+
+  const progress = Number((seconds / totalseconds) * 100); // Calculate progress percentage
   const formattedTime = formatTime(seconds);
 
   return (

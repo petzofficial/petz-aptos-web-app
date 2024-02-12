@@ -39,9 +39,7 @@ const Page = () => {
       token?.token_data_id
     )
   );
-  console.log(image);
-  console.log("this is id token");
-  console.log(token);
+
   return (
     <div>
       {isLoadingToken ? (
@@ -143,7 +141,6 @@ const Page = () => {
                   <span
                     onClick={() => {
                       setShowMore(!showMore);
-                      console.log(showMore);
                     }}
                     className=" underline cursor-pointer"
                   >

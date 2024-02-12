@@ -27,10 +27,9 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CircularIndeterminate from "@/components/common/loading";
 const Page = () => {
   const { network } = useWallet();
-  console.log(network);
+
   const account = useAppSelector(selectAccount);
-  console.log("this is account from select account");
-  console.log(account);
+
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const newNetwork = useAppSelector(selectNewNetwork);
@@ -38,8 +37,6 @@ const Page = () => {
   const specificTransaction = useAppSelector(selectSpecificTransaction);
   const transactions = useAppSelector(selectTransactions);
   const isLoading = useAppSelector(selectIsSingleTransactionLoading);
-  console.log("this is specifi");
-  console.log(specificTransaction);
 
   useEffect(() => {
     dispatch(fetchSpecificTransactionAction(id));

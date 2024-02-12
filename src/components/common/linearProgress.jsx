@@ -10,7 +10,7 @@ function LinearProgressEnergy(props) {
           style={{ color: "#5c6cff", backgroundColor: "#959595" }}
           sx={{ color: "#5c6cff", height: "5px", backgroundColor: "#959595" }}
           variant="determinate"
-          value={props.energy}
+          value={Number(props.energy)}
           {...props}
         />
       </Box>

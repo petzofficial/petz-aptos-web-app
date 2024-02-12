@@ -15,4 +15,3 @@ export function calculateInverseWithDecimals(number, decimals) {
 const inputNumber = 10000;
 const numberOfDecimals = 8;
 const output = calculateInverseWithDecimals(inputNumber, numberOfDecimals);
-console.log(output); // Output: 0.0001

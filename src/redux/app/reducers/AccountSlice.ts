@@ -230,7 +230,6 @@ export const fetchTokensAction =
     const { account } = getState().account;
 
     if (!account || !account.address) {
-      console.log("Address Not Found.");
       return;
     }
 
@@ -259,9 +258,7 @@ export const fetchBalanceDetailsAction =
         `${moduleAddress}::coin::CoinStore<${moduleAddress}::aptos_coin::AptosCoin>`
       );
       dispatch(setBalanceDetails(coinResource));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
 export const fetchSpecificTransactionAction =
@@ -284,8 +281,6 @@ export const fetchSpecificTransactionAction =
       );
     } catch (e) {
       dispatch(setSpecificTransaction({ isLoading: false }));
-
-      console.log(e);
     }
   };
 
@@ -320,7 +315,5 @@ export const fetchTransactionsBlockAction =
         version
       );
       dispatch(setTransactionBlock(transactionBlockResponse));
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };

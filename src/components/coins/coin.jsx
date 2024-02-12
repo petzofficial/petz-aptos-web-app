@@ -13,7 +13,6 @@ const Coins = ({ coins, isLoading, connected }) => {
     const missingSymbols = displaySymbols.filter(
       (symbol) => !coins?.find((coin) => coin?.metadata?.symbol === symbol)
     );
-    console.log(missingSymbols);
 
     return (
       <div className="first-box flex gap-4 justify-between flex-wrap items-center mt-8">

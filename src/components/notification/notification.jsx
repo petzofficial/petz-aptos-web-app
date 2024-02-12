@@ -8,7 +8,5 @@ export default async function runOneSignal() {
       autoRegister: true,
       allowLocalhostAsSecureOrigin: true,
     });
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }

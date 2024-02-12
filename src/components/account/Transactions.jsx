@@ -26,7 +26,6 @@ const Transactions = ({ transactions, isLoading }) => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log(currentTransactions.length);
   if (isLoading) {
     return (
       <div className="account-transactions py-12">

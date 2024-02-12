@@ -37,7 +37,7 @@ const Page = () => {
       setSlug(status);
     }
   };
-  console.log(slug);
+
   // Convert total and average time to HH:mm format
   const convertToHHMMSS = (timeInSeconds) => {
     if (timeInSeconds < 60) {
@@ -71,7 +71,7 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
-  console.log(filteredTasks.length);
+
   if (tasksToDisplay.length === 0) {
     return (
       <div>
