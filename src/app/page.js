@@ -40,7 +40,7 @@ const Page = () => {
   const [energy, setEnergy] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
-  const [seconds, setSeconds] = useState("");
+  const [seconds, setSeconds] = useState(25 * 60);
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
   const [isEnergyRunning, setIsEnergyRunning] = useState(true);
@@ -103,7 +103,6 @@ const Page = () => {
       user = { energy: 100 };
       localStorage.setItem("userData", JSON.stringify(user));
     }
-    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -123,7 +122,6 @@ const Page = () => {
         autoStart: settingsLocalData.check,
       });
     }
-    console.log(totalSeconds);
 
     const tasks = getTaskData();
     const status = "Completed";
@@ -233,8 +231,7 @@ const Page = () => {
       finishSound();
     }
   }, [seconds]);
-  console.log("these are seconds");
-  console.log(seconds);
+
   useEffect(() => {
     if (settings.autoStart && !isRunning) {
       startTimer();
@@ -328,8 +325,6 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-  console.log("this is energy");
-  console.log(energy);
   return (
     <div>
       <section className="home-section">
