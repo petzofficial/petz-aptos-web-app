@@ -238,17 +238,21 @@ const Page = () => {
   }, [settings.autoStart, isRunning, selectedTaskId]);
 
   const startTimer = () => {
-    if (selectedTaskId && selectedTaskId !== "choose") {
-      updateTask(selectedTaskId, {
-        status: "In Progress",
-        statusColor: "#FED000",
-      });
-      setIsRunning(true);
-      if (!isRunning) {
-        clickSound();
+    if (energy <= 0) {
+      toast.error("Not enough energy");
+    } else {
+      if (selectedTaskId && selectedTaskId !== "choose") {
+        updateTask(selectedTaskId, {
+          status: "In Progress",
+          statusColor: "#FED000",
+        });
+        setIsRunning(true);
+        if (!isRunning) {
+          clickSound();
+        }
+      } else if (selectedTaskId === "choose") {
+        toast.error("Select the task or create new");
       }
-    } else if (selectedTaskId === "choose") {
-      toast.error("Select the task or create new");
     }
   };
 
