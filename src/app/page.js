@@ -198,9 +198,39 @@ const Page = () => {
 
             updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
+            const tasks = getTaskData();
+            const findData = tasks.find((task) => task._id === selectedTaskId);
             setTotalSeconds(settings.shortBreakDuration);
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
+            let energy = 0;
+            if (userData.energy) {
+              energy = userData?.energy;
+            }
+
+            if (
+              ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+              seconds - 1 === 0
+            ) {
+              setEnergy((prev) => prev - 1);
+              energy = userData?.energy - 1;
+            }
+
+            updateUserData({ energy: energy });
           } else if (currentState === "longBreak") {
+            let energy = 0;
+            if (userData.energy) {
+              energy = userData?.energy;
+            }
+
+            if (
+              ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+              seconds - 1 === 0
+            ) {
+              setEnergy((prev) => prev - 1);
+              energy = userData?.energy - 1;
+            }
+
+            updateUserData({ energy: energy });
             setTotalSeconds(settings.longBreakDuration);
 
             statisticsData[formattedDate][selectedTaskId].longBreak++;
@@ -297,6 +327,7 @@ const Page = () => {
       setCurrentCycle((prevCycle) => prevCycle + 1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
       //updateTask(selectedTaskId, { currentCycleCount: 1 });
@@ -304,6 +335,7 @@ const Page = () => {
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
       updateTask(selectedTaskId, {
         status: "Completed",
         statusColor: "#14985A",

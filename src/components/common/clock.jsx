@@ -14,7 +14,7 @@ const formatTime = (seconds) => {
 function CircularProgressWithLabel(props) {
   const { seconds, totalseconds } = props;
 
-  const progress = Number((seconds / totalseconds) * 100); // Calculate progress percentage
+  const progress = Number(((totalseconds - seconds) / totalseconds) * 100); // Calculate progress percentage (starting from full and decreasing)
   const formattedTime = formatTime(seconds);
 
   return (
@@ -24,7 +24,7 @@ function CircularProgressWithLabel(props) {
         variant="determinate"
         thickness={2}
         size={200}
-        value={progress} // Set the progress seconds
+        value={progress - 100} // Set the progress seconds
         {...props}
       />
       <Box
