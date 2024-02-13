@@ -270,8 +270,8 @@ const Page = () => {
   const resetTimer = () => {
     setIsRunning(false);
     setSeconds(settings.focusDuration);
-    setCurrentState("focus");
-    setCurrentCycle(1);
+    //setCurrentState("focus");
+    //setCurrentCycle(1);
     clickSound();
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
