@@ -173,21 +173,21 @@ const Page = () => {
                 <p>Fee (in APT)</p>
                 <div>
                   <Image src={img1} width={33} height={33} alt="coin" />
-                  <span>100 APT</span>
+                  <span>0</span>
                 </div>
               </div>
               <div>
-                <p>PGC Reward</p>
+                <p>Reward (in PGC)</p>
                 <div>
                   <Image src={img2} width={33} height={33} alt="coin" />
-                  <span>{task.reward_PGC} PGC</span>
+                  <span>{task.reward_PGC}</span>
                 </div>
               </div>
               <div>
-                <p>PST Reward</p>
+                <p>Reward (in PSC)</p>
                 <div>
                   <Image src={img3} width={33} height={33} alt="coin" />
-                  <span>100 PST</span>
+                  <span>0</span>
                 </div>
               </div>
 
