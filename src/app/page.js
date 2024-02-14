@@ -299,7 +299,14 @@ const Page = () => {
 
   const resetTimer = () => {
     setIsRunning(false);
-    setSeconds(settings.focusDuration);
+
+    if (currentState === "focus") {
+      setSeconds(settings.focusDuration);
+    } else if (currentState === "shortBreak") {
+      setSeconds(settings.shortBreakDuration);
+    } else if (currentState === "longBreak") {
+      setSeconds(settings.longBreakDuration);
+    }
     //setCurrentState("focus");
     //setCurrentCycle(1);
     clickSound();
