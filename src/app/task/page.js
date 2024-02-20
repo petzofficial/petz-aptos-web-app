@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import "../../style/tasks/tasks.scss";
 import { MdOutlineSelectAll } from "react-icons/md";
@@ -71,7 +70,7 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
-
+  console.log(tasksToDisplay);
   if (tasksToDisplay.length === 0) {
     return (
       <div>
@@ -241,9 +240,7 @@ const Page = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="play">
-                      <FaCirclePlay />
-                    </div>
+                    <div>{item.priority}</div>
                   </div>
                 </Link>
               ))}

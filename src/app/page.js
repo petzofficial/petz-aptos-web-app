@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Image from "next/image";
+import { TaskContext } from "./task/context/taskContext";
 import group from "@/assets/home/Group 101.png";
 import "@/style/home/home.scss";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
@@ -35,34 +36,63 @@ const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
   const searchParams = useSearchParams();
-  const itemID = searchParams.get("id");
-  const [filteredTasks, setFilteredTasks] = useState([]);
-  const [energy, setEnergy] = useState("");
-  const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const [isRunning, setIsRunning] = useState(false);
-  const [seconds, setSeconds] = useState(25 * 60);
+  const ItemId = searchParams.get("id");
+  const {
+    taskId,
+    setTaskId,
+    seconds,
+    setSeconds,
+    totalSeconds,
+    setTotalSeconds,
+    isRunning,
+    setIsRunning,
+    energy,
+    setEnergy,
+    selectedTaskId,
+    setSelectedTaskId,
+    settings,
+    setSettings,
+    isEnergyRunning,
+    setIsEnergyRunning,
+    filteredTasks,
+    setFilteredTasks,
+    secondsRef,
+    setCurrentCycle,
+    currentCycle,
+    setMinutes,
+    minutes,
+    currentState,
+    setCurrentState,
+  } = useContext(TaskContext);
+  // const [filteredTasks, setFilteredTasks] = useState([]);
+  // const [energy, setEnergy] = useState("");
+  // const [selectedTaskId, setSelectedTaskId] = useState("choose");
+  // const [isRunning, setIsRunning] = useState(false);
+  // const [seconds, setSeconds] = useState(25 * 60);
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
-  const [isEnergyRunning, setIsEnergyRunning] = useState(true);
-  const [totalSeconds, setTotalSeconds] = useState(25 * 60);
-  const secondsRef = useRef(seconds);
-  const [settings, setSettings] = useState({
-    focusDuration: 25 * 60,
-    shortBreakDuration: 5 * 60,
-    longBreakDuration: 15 * 60,
-    cycleCount: 4,
-    autoStart: false,
-  });
-  const [currentState, setCurrentState] = useState("focus");
-  const [currentCycle, setCurrentCycle] = useState(1);
-  const [minutes, setMinutes] = useState("");
+  // const [isEnergyRunning, setIsEnergyRunning] = useState(true);
+  // const [totalSeconds, setTotalSeconds] = useState(25 * 60);
+  // const secondsRef = useRef(seconds);
+  // const [settings, setSettings] = useState({
+  //   focusDuration: 25 * 60,
+  //   shortBreakDuration: 5 * 60,
+  //   longBreakDuration: 15 * 60,
+  //   cycleCount: 4,
+  //   autoStart: false,
+  // });
+  // const [currentState, setCurrentState] = useState("focus");
+  // const [currentCycle, setCurrentCycle] = useState(1);
+  // const [minutes, setMinutes] = useState("");
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account } = useWallet();
+  console.log("this is task id");
 
+  console.log(taskId);
   useEffect(() => {
     runOneSignal();
   }, []);
@@ -76,9 +106,11 @@ const Page = () => {
   useEffect(() => {
     secondsRef.current = seconds;
   }, [seconds]);
+
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
+
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -112,8 +144,8 @@ const Page = () => {
 
     if (settingsLocalData) {
       setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
-
       setSeconds(parseInt(settingsLocalData.focusTime) * 60);
+
       setSettings({
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
         shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
@@ -127,145 +159,145 @@ const Page = () => {
     const status = "Completed";
     const filtered = tasks.filter((task) => task.status != status);
     setFilteredTasks(filtered);
-    if (itemID) {
-      setSelectedTaskId(itemID);
-      handleSelectDataFunc(itemID);
+    if (taskId) {
+      setSelectedTaskId(taskId);
+      handleSelectDataFunc(taskId);
     }
   }, []);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date();
-      const currentMinutes = currentTime.getMinutes();
-      setMinutes(currentMinutes);
-      const userData = getUserData();
-      setEnergy(userData.energy);
-    }, 60000); // 1 minute in milliseconds
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const currentTime = new Date();
+  //     const currentMinutes = currentTime.getMinutes();
+  //     setMinutes(currentMinutes);
+  //     const userData = getUserData();
+  //     setEnergy(userData.energy);
+  //   }, 60000); // 1 minute in milliseconds
 
-    return () => clearInterval(intervalId);
-  }, [isEnergyRunning]);
-  useEffect(() => {
-    let interval;
+  //   return () => clearInterval(intervalId);
+  // }, [isEnergyRunning]);
+  // useEffect(() => {
+  //   let interval;
 
-    if (isRunning) {
-      interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          return prevSeconds - 1;
-        });
+  //   if (isRunning) {
+  //     interval = setInterval(() => {
+  //       setSeconds((prevSeconds) => {
+  //         return prevSeconds - 1;
+  //       });
 
-        const currentDate = new Date();
-        const options = { day: "numeric", month: "numeric", year: "numeric" };
-        const formattedDate = currentDate.toLocaleDateString("en-GB", options);
+  //       const currentDate = new Date();
+  //       const options = { day: "numeric", month: "numeric", year: "numeric" };
+  //       const formattedDate = currentDate.toLocaleDateString("en-GB", options);
 
-        let statisticsData = JSON.parse(
-          typeof window !== "undefined"
-            ? localStorage.getItem("statistics")
-            : null
-        );
+  //       let statisticsData = JSON.parse(
+  //         typeof window !== "undefined"
+  //           ? localStorage.getItem("statistics")
+  //           : null
+  //       );
 
-        if (!statisticsData) {
-          statisticsData = {};
-        }
+  //       if (!statisticsData) {
+  //         statisticsData = {};
+  //       }
 
-        if (
-          statisticsData[formattedDate] &&
-          statisticsData[formattedDate][selectedTaskId]
-        ) {
-          if (currentState === "focus") {
-            statisticsData[formattedDate][selectedTaskId].focus++;
-            const tasks = getTaskData();
-            const findData = tasks.find((task) => task._id === selectedTaskId);
-            let tempTotalTime = 0;
-            if (findData && findData.time) {
-              tempTotalTime = findData.time;
-            }
+  //       if (
+  //         statisticsData[formattedDate] &&
+  //         statisticsData[formattedDate][selectedTaskId]
+  //       ) {
+  //         if (currentState === "focus") {
+  //           statisticsData[formattedDate][selectedTaskId].focus++;
+  //           const tasks = getTaskData();
+  //           const findData = tasks.find((task) => task._id === selectedTaskId);
+  //           let tempTotalTime = 0;
+  //           if (findData && findData.time) {
+  //             tempTotalTime = findData.time;
+  //           }
 
-            updateTask(selectedTaskId, {
-              time: tempTotalTime + 1,
-              reward_PGC: tempTotalTime + 1,
-            });
-            let energy = 0;
-            if (userData.energy) {
-              energy = userData?.energy;
-            }
+  //           updateTask(selectedTaskId, {
+  //             time: tempTotalTime + 1,
+  //             reward_PGC: tempTotalTime + 1,
+  //           });
+  //           let energy = 0;
+  //           if (userData.energy) {
+  //             energy = userData?.energy;
+  //           }
 
-            if (
-              ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
-              seconds - 1 === 0
-            ) {
-              setEnergy((prev) => prev - 1);
-              energy = userData?.energy - 1;
-            }
+  //           if (
+  //             ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+  //             seconds - 1 === 0
+  //           ) {
+  //             setEnergy((prev) => prev - 1);
+  //             energy = userData?.energy - 1;
+  //           }
 
-            updateUserData({ energy: energy });
-          } else if (currentState === "shortBreak") {
-            const tasks = getTaskData();
-            const findData = tasks.find((task) => task._id === selectedTaskId);
-            setTotalSeconds(settings.shortBreakDuration);
-            statisticsData[formattedDate][selectedTaskId].shortBreak++;
-            let energy = 0;
-            if (userData.energy) {
-              energy = userData?.energy;
-            }
+  //           updateUserData({ energy: energy });
+  //         } else if (currentState === "shortBreak") {
+  //           const tasks = getTaskData();
+  //           const findData = tasks.find((task) => task._id === selectedTaskId);
+  //           setTotalSeconds(settings.shortBreakDuration);
+  //           statisticsData[formattedDate][selectedTaskId].shortBreak++;
+  //           let energy = 0;
+  //           if (userData.energy) {
+  //             energy = userData?.energy;
+  //           }
 
-            if (
-              ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
-              seconds - 1 === 0
-            ) {
-              setEnergy((prev) => prev - 1);
-              energy = userData?.energy - 1;
-            }
+  //           if (
+  //             ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+  //             seconds - 1 === 0
+  //           ) {
+  //             setEnergy((prev) => prev - 1);
+  //             energy = userData?.energy - 1;
+  //           }
 
-            updateUserData({ energy: energy });
-          } else if (currentState === "longBreak") {
-            let energy = 0;
-            if (userData.energy) {
-              energy = userData?.energy;
-            }
+  //           updateUserData({ energy: energy });
+  //         } else if (currentState === "longBreak") {
+  //           let energy = 0;
+  //           if (userData.energy) {
+  //             energy = userData?.energy;
+  //           }
 
-            if (
-              ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
-              seconds - 1 === 0
-            ) {
-              setEnergy((prev) => prev - 1);
-              energy = userData?.energy - 1;
-            }
+  //           if (
+  //             ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+  //             seconds - 1 === 0
+  //           ) {
+  //             setEnergy((prev) => prev - 1);
+  //             energy = userData?.energy - 1;
+  //           }
 
-            updateUserData({ energy: energy });
-            setTotalSeconds(settings.longBreakDuration);
+  //           updateUserData({ energy: energy });
+  //           setTotalSeconds(settings.longBreakDuration);
 
-            statisticsData[formattedDate][selectedTaskId].longBreak++;
-          }
-        } else {
-          statisticsData[formattedDate] = {
-            ...statisticsData[formattedDate],
-            [selectedTaskId]: {
-              focus: 0,
-              shortBreak: 0,
-              longBreak: 0,
-            },
-          };
-        }
+  //           statisticsData[formattedDate][selectedTaskId].longBreak++;
+  //         }
+  //       } else {
+  //         statisticsData[formattedDate] = {
+  //           ...statisticsData[formattedDate],
+  //           [selectedTaskId]: {
+  //             focus: 0,
+  //             shortBreak: 0,
+  //             longBreak: 0,
+  //           },
+  //         };
+  //       }
 
-        localStorage.setItem("statistics", JSON.stringify(statisticsData));
-      }, 1000);
-    }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [isRunning, seconds]);
+  //       localStorage.setItem("statistics", JSON.stringify(statisticsData));
+  //     }, 1000);
+  //   }
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [isRunning, seconds]);
 
-  useEffect(() => {
-    if (seconds === 0) {
-      handleTimerEnd();
-      finishSound();
-    }
-  }, [seconds]);
+  // useEffect(() => {
+  //   if (seconds === 0) {
+  //     handleTimerEnd();
+  //     finishSound();
+  //   }
+  // }, [seconds]);
 
-  useEffect(() => {
-    if (settings.autoStart && !isRunning) {
-      startTimer();
-    }
-  }, [settings.autoStart, isRunning, selectedTaskId]);
+  // useEffect(() => {
+  //   if (settings.autoStart && !isRunning) {
+  //     startTimer();
+  //   }
+  // }, [settings.autoStart, isRunning, selectedTaskId]);
 
   const startTimer = () => {
     if (energy <= 0) {
@@ -308,52 +340,52 @@ const Page = () => {
     }
   };
 
-  const handleTimerEnd = () => {
-    setIsRunning(false);
+  // const handleTimerEnd = () => {
+  //   setIsRunning(false);
 
-    if (currentState === "focus") {
-      if (currentCycle < settings.cycleCount) {
-        setCurrentState("shortBreak");
-        setTotalSeconds(settings.shortBreakDuration);
-        setSeconds(settings.shortBreakDuration);
-      } else {
-        setCurrentState("longBreak");
-        setTotalSeconds(settings.longBreakDuration);
-        setSeconds(settings.longBreakDuration);
-      }
-    } else if (currentState === "shortBreak") {
-      // cycle update
-      updateTask(selectedTaskId, { currentCycleCount: currentCycle + 1 });
-      setCurrentCycle((prevCycle) => prevCycle + 1);
-      setCurrentState("focus");
-      setSeconds(settings.focusDuration);
-      setTotalSeconds(settings.focusDuration);
-    } else if (currentState === "longBreak") {
-      // cycle update
-      //updateTask(selectedTaskId, { currentCycleCount: 1 });
-      setSelectedTaskId("choose");
-      setCurrentCycle(1);
-      setCurrentState("focus");
-      setSeconds(settings.focusDuration);
-      setTotalSeconds(settings.focusDuration);
-      updateTask(selectedTaskId, {
-        status: "Completed",
-        statusColor: "#14985A",
-      });
-      // Update filteredTasks after task completion
-      const updatedTasks = getTaskData();
-      const updatedFilteredTasks = updatedTasks.filter(
-        (task) => task.status !== "Completed"
-      );
-      setFilteredTasks(updatedFilteredTasks);
-      // Show success toast
-      // const reward = 60 * Math.floor(filtered?.time / 60);
-      toast.success(`Task is Completed`);
-      /*  updateTask(selectedTaskId, {
-        reward_PGC: 25 * 60,
-      }); */
-    }
-  };
+  //   if (currentState === "focus") {
+  //     if (currentCycle < settings.cycleCount) {
+  //       setCurrentState("shortBreak");
+  //       setTotalSeconds(settings.shortBreakDuration);
+  //       setSeconds(settings.shortBreakDuration);
+  //     } else {
+  //       setCurrentState("longBreak");
+  //       setTotalSeconds(settings.longBreakDuration);
+  //       setSeconds(settings.longBreakDuration);
+  //     }
+  //   } else if (currentState === "shortBreak") {
+  //     // cycle update
+  //     updateTask(selectedTaskId, { currentCycleCount: currentCycle + 1 });
+  //     setCurrentCycle((prevCycle) => prevCycle + 1);
+  //     setCurrentState("focus");
+  //     setSeconds(settings.focusDuration);
+  //     setTotalSeconds(settings.focusDuration);
+  //   } else if (currentState === "longBreak") {
+  //     // cycle update
+  //     //updateTask(selectedTaskId, { currentCycleCount: 1 });
+  //     setSelectedTaskId("choose");
+  //     setCurrentCycle(1);
+  //     setCurrentState("focus");
+  //     setSeconds(settings.focusDuration);
+  //     setTotalSeconds(settings.focusDuration);
+  //     updateTask(selectedTaskId, {
+  //       status: "Completed",
+  //       statusColor: "#14985A",
+  //     });
+  //     // Update filteredTasks after task completion
+  //     const updatedTasks = getTaskData();
+  //     const updatedFilteredTasks = updatedTasks.filter(
+  //       (task) => task.status !== "Completed"
+  //     );
+  //     setFilteredTasks(updatedFilteredTasks);
+  //     // Show success toast
+  //     // const reward = 60 * Math.floor(filtered?.time / 60);
+  //     toast.success(`Task is Completed`);
+  //     /*  updateTask(selectedTaskId, {
+  //       reward_PGC: 25 * 60,
+  //     }); */
+  //   }
+  // };
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

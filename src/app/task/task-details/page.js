@@ -1,17 +1,17 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import { useContext } from "react";
+import { TaskContext } from "../context/taskContext";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import "../../../style/tasks/task-details.scss";
+import React, { useState } from "react";
+import "@/style/tasks/task-details.scss";
 import { Outfit } from "next/font/google";
 import { FaSquare, FaPlay } from "react-icons/fa";
 import { IoIosRefresh } from "react-icons/io";
 import Image from "next/image";
-import img1 from "../../../assets/home/image 23.png";
-import img2 from "../../../assets/home/pgt-removebg-preview 2.png";
-import img3 from "../../../assets/home/pst-removebg-preview 2.png";
+import img1 from "@/assets/home/image 23.png";
+import img2 from "@/assets/home/pgt-removebg-preview 2.png";
+import img3 from "@/assets/home/pst-removebg-preview 2.png";
 import { getTaskData, removeFromDB, updateTask } from "@/utils/localDB";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -23,6 +23,7 @@ const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
+  const { taskId, setTaskId } = useContext(TaskContext);
   const [task, setTask] = useState(
     getTaskData()?.find((item) => item._id == itemID)
   );
@@ -104,9 +105,8 @@ const Page = () => {
               <div className="button-bar flex justify-center items-center space-x-4">
                 <Link
                   key={task._id}
-                  href={
-                    task.status === "Completed" ? "#" : `/?id=${task._id}`
-                  }
+                  onClick={setTaskId(task._id)}
+                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
                 >
                   <button onClick={handleButtonClick}>
                     <FaSquare />
@@ -114,9 +114,8 @@ const Page = () => {
                 </Link>
                 <Link
                   key={task._id}
-                  href={
-                    task.status === "Completed" ? "#" : `/?id=${task._id}`
-                  }
+                  onClick={setTaskId(task._id)}
+                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
                 >
                   <button
                     onClick={handleButtonClick}
@@ -127,9 +126,8 @@ const Page = () => {
                 </Link>
                 <Link
                   key={task._id}
-                  href={
-                    task.status === "Completed" ? "#" : `/?id=${task._id}`
-                  }
+                  onClick={setTaskId(task._id)}
+                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
                 >
                   <button onClick={handleButtonClick}>
                     <IoIosRefresh />

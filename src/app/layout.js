@@ -1,7 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-
+import { TaskContextProvider } from "@/app/task/context/taskContext";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { ReduxAppProvider } from "@/redux/provider";
 import {
@@ -22,15 +22,17 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={sans.className}>
         <QueryClientProvider client={queryClient}>
-          <ReduxAppProvider>
-            <Navbar />
-            <AppContext>
-              <Toaster position="top-center " />
+          <TaskContextProvider>
+            <ReduxAppProvider>
+              <Navbar />
+              <AppContext>
+                <Toaster position="top-center " />
 
-              {children}
-            </AppContext>
-            <Footer />
-          </ReduxAppProvider>
+                {children}
+              </AppContext>
+              <Footer />
+            </ReduxAppProvider>
+          </TaskContextProvider>
         </QueryClientProvider>
       </body>
     </html>
