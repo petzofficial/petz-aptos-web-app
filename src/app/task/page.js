@@ -240,7 +240,7 @@ const Page = () => {
                         </p>
                       </div>
                     </div>
-                    <div>{item.priority}</div>
+                    <div className="flex mt-7">{item.priority}</div>
                   </div>
                 </Link>
               ))}

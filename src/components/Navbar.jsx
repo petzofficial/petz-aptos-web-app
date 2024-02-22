@@ -55,9 +55,11 @@ const Navbar = ({ method }) => {
     setCurrentState,
     setTotalSeconds,
   } = useContext(TaskContext);
+  console.log(isRunning);
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
+
   useEffect(() => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -65,6 +67,7 @@ const Navbar = ({ method }) => {
 
     if (settingsLocalData) {
       setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
+      setSeconds(parseInt(settingsLocalData.focusTime) * 60);
       setSettings({
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
         shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
@@ -77,6 +80,7 @@ const Navbar = ({ method }) => {
       let tmpCycle = 1;
       const tasks = getTaskData();
       const filtered = tasks.find((task) => task._id === id);
+      console.log(filtered);
       if (
         filtered &&
         filtered.currentCycleCount &&
@@ -91,12 +95,15 @@ const Navbar = ({ method }) => {
     const tasks = getTaskData();
     const status = "Completed";
     const filtered = tasks.filter((task) => task.status != status);
+    console.log(taskId);
     setFilteredTasks(filtered);
     if (taskId) {
       setSelectedTaskId(taskId);
       handleSelectDataFunc(taskId);
     }
   }, []);
+  console.log("task id from navbar");
+  console.log(taskId);
   useEffect(() => {
     const intervalId = setInterval(() => {
       const currentTime = new Date();
@@ -167,6 +174,14 @@ const Navbar = ({ method }) => {
             const findData = tasks.find((task) => task._id === selectedTaskId);
             setTotalSeconds(settings.shortBreakDuration);
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
+            let tempTotalTime = 0;
+            if (findData && findData.time) {
+              tempTotalTime = findData.time;
+            }
+
+            updateTask(selectedTaskId, {
+              time: tempTotalTime + 1,
+            });
             let energy = 0;
             if (userData.energy) {
               energy = userData?.energy;
@@ -182,6 +197,8 @@ const Navbar = ({ method }) => {
 
             updateUserData({ energy: energy });
           } else if (currentState === "longBreak") {
+            const tasks = getTaskData();
+            const findData = tasks.find((task) => task._id === selectedTaskId);
             let energy = 0;
             if (userData.energy) {
               energy = userData?.energy;
@@ -194,7 +211,14 @@ const Navbar = ({ method }) => {
               setEnergy((prev) => prev - 1);
               energy = userData?.energy - 1;
             }
+            let tempTotalTime = 0;
+            if (findData && findData.time) {
+              tempTotalTime = findData.time;
+            }
 
+            updateTask(selectedTaskId, {
+              time: tempTotalTime + 1,
+            });
             updateUserData({ energy: energy });
             setTotalSeconds(settings.longBreakDuration);
 

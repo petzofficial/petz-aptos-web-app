@@ -143,8 +143,8 @@ const Page = () => {
     );
 
     if (settingsLocalData) {
-      setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
-      setSeconds(parseInt(settingsLocalData.focusTime) * 60);
+      // setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
+      // setSeconds(parseInt(settingsLocalData.focusTime) * 60);
 
       setSettings({
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
@@ -331,7 +331,6 @@ const Page = () => {
 
   const resetTimer = () => {
     setIsRunning(false);
-
     if (currentState === "focus") {
       setSeconds(settings.focusDuration);
     } else if (currentState === "shortBreak") {
@@ -347,52 +346,52 @@ const Page = () => {
     }
   };
 
-  // const handleTimerEnd = () => {
-  //   setIsRunning(false);
+  const handleTimerEnd = () => {
+    setIsRunning(false);
 
-  //   if (currentState === "focus") {
-  //     if (currentCycle < settings.cycleCount) {
-  //       setCurrentState("shortBreak");
-  //       setTotalSeconds(settings.shortBreakDuration);
-  //       setSeconds(settings.shortBreakDuration);
-  //     } else {
-  //       setCurrentState("longBreak");
-  //       setTotalSeconds(settings.longBreakDuration);
-  //       setSeconds(settings.longBreakDuration);
-  //     }
-  //   } else if (currentState === "shortBreak") {
-  //     // cycle update
-  //     updateTask(selectedTaskId, { currentCycleCount: currentCycle + 1 });
-  //     setCurrentCycle((prevCycle) => prevCycle + 1);
-  //     setCurrentState("focus");
-  //     setSeconds(settings.focusDuration);
-  //     setTotalSeconds(settings.focusDuration);
-  //   } else if (currentState === "longBreak") {
-  //     // cycle update
-  //     //updateTask(selectedTaskId, { currentCycleCount: 1 });
-  //     setSelectedTaskId("choose");
-  //     setCurrentCycle(1);
-  //     setCurrentState("focus");
-  //     setSeconds(settings.focusDuration);
-  //     setTotalSeconds(settings.focusDuration);
-  //     updateTask(selectedTaskId, {
-  //       status: "Completed",
-  //       statusColor: "#14985A",
-  //     });
-  //     // Update filteredTasks after task completion
-  //     const updatedTasks = getTaskData();
-  //     const updatedFilteredTasks = updatedTasks.filter(
-  //       (task) => task.status !== "Completed"
-  //     );
-  //     setFilteredTasks(updatedFilteredTasks);
-  //     // Show success toast
-  //     // const reward = 60 * Math.floor(filtered?.time / 60);
-  //     toast.success(`Task is Completed`);
-  //     /*  updateTask(selectedTaskId, {
-  //       reward_PGC: 25 * 60,
-  //     }); */
-  //   }
-  // };
+    if (currentState === "focus") {
+      if (currentCycle < settings.cycleCount) {
+        setCurrentState("shortBreak");
+        setTotalSeconds(settings.shortBreakDuration);
+        setSeconds(settings.shortBreakDuration);
+      } else {
+        setCurrentState("longBreak");
+        setTotalSeconds(settings.longBreakDuration);
+        setSeconds(settings.longBreakDuration);
+      }
+    } else if (currentState === "shortBreak") {
+      // cycle update
+      updateTask(selectedTaskId, { currentCycleCount: currentCycle + 1 });
+      setCurrentCycle((prevCycle) => prevCycle + 1);
+      setCurrentState("focus");
+      setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
+    } else if (currentState === "longBreak") {
+      // cycle update
+      //updateTask(selectedTaskId, { currentCycleCount: 1 });
+      setSelectedTaskId("choose");
+      setCurrentCycle(1);
+      setCurrentState("focus");
+      setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
+      updateTask(selectedTaskId, {
+        status: "Completed",
+        statusColor: "#14985A",
+      });
+      // Update filteredTasks after task completion
+      const updatedTasks = getTaskData();
+      const updatedFilteredTasks = updatedTasks.filter(
+        (task) => task.status !== "Completed"
+      );
+      setFilteredTasks(updatedFilteredTasks);
+      // Show success toast
+      // const reward = 60 * Math.floor(filtered?.time / 60);
+      toast.success(`Task is Completed`);
+      /*  updateTask(selectedTaskId, {
+        reward_PGC: 25 * 60,
+      }); */
+    }
+  };
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
