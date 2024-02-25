@@ -1,6 +1,9 @@
 "use client";
 
 import React from "react";
+import { FaRegTimesCircle } from "react-icons/fa";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+
 import { CiShare1 } from "react-icons/ci";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
@@ -45,7 +48,7 @@ const Page = () => {
     }
     dispatch(fetchTransactionsBlockAction(id));
   }, [account, transactions]);
-
+  console.log(specificTransaction);
   return (
     <div>
       <section className="transaction-details">
@@ -77,28 +80,25 @@ const Page = () => {
                 </div>
 
                 <div>
-                  <p>Date</p>
+                  <p>Timestamp</p>
                   <p>{formatDateTime3(specificTransaction?.timestamp)}</p>
                 </div>
-                <div>
-                  <p>Function</p>
-                  <span>
-                    {specificTransaction?.payload?.function?.split("::").pop()}
-                  </span>
-                </div>
+
                 <div>
                   <p>Status</p>
                   <span>
-                    {specificTransaction?.status
-                      ? "Confirmed"
-                      : " Not confirmed"}
+                    {specificTransaction?.success ? (
+                      <IoIosCheckmarkCircleOutline color="green" />
+                    ) : (
+                      <FaRegTimesCircle color="red" />
+                    )}
                   </span>
                 </div>
                 <div>
-                  <p>Max Gas Amount</p>
+                  <p>Gas used</p>
                   <span>
                     {calculateInverseWithDecimals(
-                      specificTransaction?.max_gas_amount,
+                      specificTransaction?.gas_used,
                       8
                     )}{" "}
                     APT
@@ -112,6 +112,12 @@ const Page = () => {
                       8
                     )}{" "}
                     APT
+                  </span>
+                </div>
+                <div>
+                  <p>Function</p>
+                  <span>
+                    {specificTransaction?.payload?.function?.split("::").pop()}
                   </span>
                 </div>
                 <div>

@@ -232,15 +232,10 @@ const Page = () => {
                             ? settingsLocalData.cycleCount
                             : "4"}
                         </p>
-                        <p>
-                          {settingsLocalData && settingsLocalData.shortBreak
-                            ? settingsLocalData.shortBreak
-                            : "5"}{" "}
-                          min
-                        </p>
+                        <p>{item.priority}</p>
                       </div>
                     </div>
-                    <div className="flex mt-7">{item.priority}</div>
+                    <div className="flex mt-7"></div>
                   </div>
                 </Link>
               ))}

@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React from "react";
 import { FaPercentage } from "react-icons/fa";
+import { AiOutlinePercentage } from "react-icons/ai";
+
 import { IoIosArrowForward } from "react-icons/io";
 import Pagination from "../button/Pagination";
 import emptyImage from "@/assets/without/empty.png";
@@ -57,12 +59,16 @@ const Transactions = ({ transactions, isLoading }) => {
               className="sm:px-5 flex items-center justify-between md:px-10 max-sm:px-1 py-3 my-5"
             >
               <div className="icon">
-                <FaPercentage />
+                <AiOutlinePercentage />
               </div>
               <div className="net-fee  pl-8 flex-1 items-center justify-center gap-4">
                 <p className="!text-[#191D31] ">Network fee</p>
                 <span>
-                  {item?.success === true ? "Confirmed." : " Not confirmed."}{" "}
+                  {item?.success === true ? (
+                    "Confirmed."
+                  ) : (
+                    <span className=" text-red-600">Failed. </span>
+                  )}{" "}
                   {formatDateTime2(item.timestamp)}
                 </span>{" "}
               </div>
