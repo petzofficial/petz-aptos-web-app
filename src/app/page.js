@@ -333,10 +333,13 @@ const Page = () => {
     setIsRunning(false);
     if (currentState === "focus") {
       setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
     } else if (currentState === "shortBreak") {
       setSeconds(settings.shortBreakDuration);
+      setTotalSeconds(settings.shortBreakDuration);
     } else if (currentState === "longBreak") {
       setSeconds(settings.longBreakDuration);
+      setTotalSeconds(settings.longBreakDuration);
     }
     //setCurrentState("focus");
     //setCurrentCycle(1);

@@ -28,6 +28,7 @@ import { formatDateTime3 } from "@/components/common/dateTime";
 
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CircularIndeterminate from "@/components/common/loading";
+import { convertToOctal } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
 const Page = () => {
   const { network } = useWallet();
 
@@ -97,22 +98,12 @@ const Page = () => {
                 <div>
                   <p>Gas used</p>
                   <span>
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.gas_used,
-                      8
-                    )}{" "}
-                    APT
+                    {convertToOctal(specificTransaction?.gas_used)} APT
                   </span>
                 </div>
                 <div>
                   <p>Gas Unit Price</p>
-                  <span>
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.gas_unit_price,
-                      8
-                    )}{" "}
-                    APT
-                  </span>
+                  <span>{specificTransaction?.gas_unit_price}</span>
                 </div>
                 <div>
                   <p>Function</p>
@@ -122,9 +113,7 @@ const Page = () => {
                 </div>
                 <div>
                   <p>Balance Changes</p>
-                  <span>
-                    {`+  ${specificTransaction?.changes?.length} APT`}{" "}
-                  </span>
+                  <span></span>
                 </div>
               </div>
             </div>
