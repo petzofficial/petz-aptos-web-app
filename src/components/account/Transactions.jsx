@@ -12,9 +12,17 @@ import { useState } from "react";
 import { calculateInverseWithDecimals } from "@/components/common/transaction";
 import { formatDateTime2 } from "@/components/common/dateTime";
 import CircularIndeterminate from "@/components/common/loading";
-
+import {
+  TransactionAmount,
+  TransactionAmountRow,
+  getTransactionAmount,
+} from "./utils";
+import { getCoinBalanceChangeForAccount } from "./utils";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 const Transactions = ({ transactions, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { account } = useWallet();
+
   const itemsPerPage = 8; // Change this value based on your requirement
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -49,6 +57,7 @@ const Transactions = ({ transactions, isLoading }) => {
       </div>
     );
   } else {
+    console.log(currentTransactions);
     return (
       <div className="account-transactions py-12">
         {currentTransactions?.map((item, x) => {
@@ -62,7 +71,9 @@ const Transactions = ({ transactions, isLoading }) => {
                 <AiOutlinePercentage />
               </div>
               <div className="net-fee  pl-8 flex-1 items-center justify-center gap-4">
-                <p className="!text-[#191D31] ">Network fee</p>
+                <p className="!text-[#191D31] ">
+                  {item.payload?.function?.split("::").pop()}
+                </p>
                 <span>
                   {item?.success === true ? (
                     "Confirmed."
@@ -75,7 +86,10 @@ const Transactions = ({ transactions, isLoading }) => {
 
               <div className="flex flex-1 items-end font-bold justify-end">
                 <span className="!text-[#191D31] ">
-                  {calculateInverseWithDecimals(item.gas_used, 8)} APT
+                  <TransactionAmount
+                    transaction={item}
+                    address={account?.address}
+                  />
                 </span>
                 <div className="icon-last text-[#FF6900]">
                   <IoIosArrowForward />

@@ -29,6 +29,7 @@ import { formatDateTime3 } from "@/components/common/dateTime";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CircularIndeterminate from "@/components/common/loading";
 import { convertToOctal } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
+import { TransactionAmount } from "@/components/account/utils";
 const Page = () => {
   const { network } = useWallet();
 
@@ -113,7 +114,10 @@ const Page = () => {
                 </div>
                 <div>
                   <p>Balance Changes</p>
-                  <span></span>
+                  <TransactionAmount
+                    transaction={specificTransaction}
+                    address={account?.address}
+                  />
                 </div>
               </div>
             </div>
