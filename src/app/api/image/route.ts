@@ -6,7 +6,7 @@ export const GET = async (request: Request) => {
   try {
     const { searchParams } = new URL(request.url);
     const tokenUrl = searchParams.get("tokenUrl");
-    console.log(tokenUrl);
+
     const { data } = await axios.get(tokenUrl as string);
     return new NextResponse(JSON.stringify(data), {
       status: 200,

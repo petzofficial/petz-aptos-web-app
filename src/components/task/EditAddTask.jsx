@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Urbanist } from "next/font/google";
 import { v4 as uuid } from "uuid";
-import { addTask, getTaskData, updateTask } from "../../utilities/localDB";
+import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -88,7 +88,7 @@ const EditAddTask = ({ method }) => {
     <section className="task-edit">
       <div className="addconatiner 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="back-button">
-          <Link href={"/home"} className="text-[30px] font-bold">
+          <Link href={"/"} className="text-[30px] font-bold">
             <GoBackBtn />
           </Link>
         </div>

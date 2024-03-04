@@ -15,4 +15,7 @@ export function calculateInverseWithDecimals(number, decimals) {
 const inputNumber = 10000;
 const numberOfDecimals = 8;
 const output = calculateInverseWithDecimals(inputNumber, numberOfDecimals);
-console.log(output); // Output: 0.0001
+export const convertToOctal = (value) => {
+  const convertedValue = value / 100000000;
+  return convertedValue;
+};

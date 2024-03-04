@@ -186,7 +186,7 @@ const Page = () => {
       <section className="statistics">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="statistics-title">
-            <Link href={"/home"}>
+            <Link href={"/"}>
               <GoBackBtn />
             </Link>
           </div>
@@ -221,17 +221,19 @@ const Page = () => {
             <div className="weekly-summ p-5 shadow-sm">
               <div className="summ-title flex items-center space-x-3 pb-3">
                 <IoMdEye className="text-[22px]" />
-                <h4 className="font-semibold">{timeRange} Summary</h4>
+                <h4 suppressHydrationWarning={true} className="font-semibold">
+                  {timeRange} Summary
+                </h4>
               </div>
               <div className="summ-body flex justify-between items-center pt-5">
                 <div className="first">
-                  <p className="font-semibold">
+                  <p suppressHydrationWarning={true} className="font-semibold">
                     {totalSummary?.total?.combined} min
                   </p>
                   <p className="text-[#969696]">Total</p>
                 </div>
                 <div className="first">
-                  <p className="font-semibold">
+                  <p suppressHydrationWarning={true} className="font-semibold">
                     {totalSummary?.average?.combined} min
                   </p>
                   <p className="text-[#969696]">Average</p>

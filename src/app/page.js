@@ -1,22 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Image from "next/image";
-import img1 from "@/assets/home/pgt-removebg-preview 2.png";
-import img2 from "@/assets/home/pst-removebg-preview 2.png";
-import img3 from "@/assets/home/image 23.png";
+import { TaskContext } from "./task/context/taskContext";
 import group from "@/assets/home/Group 101.png";
 import "@/style/home/home.scss";
+import click_sound from "@/assets/audioClock/click_sound.mp3";
+import finish_sound from "@/assets/audioClock/finish_sound.mp3";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
 import ReplayIcon from "@mui/icons-material/Replay";
-import Footer from "@/components/Footer";
-import { getTaskData, updateTask } from "@/utilities/localDB";
+import Link from "next/link";
+import useSound from "use-sound";
+import CircularClockProgress from "@/components/common/clock";
+import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-import { Refresh } from "@mui/icons-material";
+import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
 
 import {
@@ -28,50 +29,88 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { getUserData } from "../utilities/localDB";
+import { getUserData, updateUserData } from "@/utils/localDB";
+import { saveUserData } from "../utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const itemID = searchParams.get("id");
-  const [filteredTasks, setFilteredTasks] = useState([]);
-  const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  const [isRunning, setIsRunning] = useState(false);
-  const [seconds, setSeconds] = useState(25 * 60);
-
-  const [settings, setSettings] = useState({
-    focusDuration: 25 * 60,
-    shortBreakDuration: 5 * 60,
-    longBreakDuration: 15 * 60,
-    cycleCount: 4,
-    autoStart: false,
-  });
-  const [currentState, setCurrentState] = useState("focus");
-  const [currentCycle, setCurrentCycle] = useState(1);
+  const ItemId = searchParams.get("id");
+  const {
+    taskId,
+    setTaskId,
+    seconds,
+    setSeconds,
+    totalSeconds,
+    setTotalSeconds,
+    isRunning,
+    setIsRunning,
+    energy,
+    setEnergy,
+    selectedTaskId,
+    setSelectedTaskId,
+    settings,
+    setSettings,
+    isEnergyRunning,
+    setIsEnergyRunning,
+    filteredTasks,
+    setFilteredTasks,
+    secondsRef,
+    setCurrentCycle,
+    currentCycle,
+    setMinutes,
+    minutes,
+    currentState,
+    setCurrentState,
+  } = useContext(TaskContext);
+  // const [filteredTasks, setFilteredTasks] = useState([]);
+  // const [energy, setEnergy] = useState("");
+  // const [selectedTaskId, setSelectedTaskId] = useState("choose");
+  // const [isRunning, setIsRunning] = useState(false);
+  // const [seconds, setSeconds] = useState(25 * 60);
+  const [clickSound] = useSound(click_sound);
+  const [finishSound] = useSound(finish_sound);
+  // const [isEnergyRunning, setIsEnergyRunning] = useState(true);
+  // const [totalSeconds, setTotalSeconds] = useState(25 * 60);
+  // const secondsRef = useRef(seconds);
+  // const [settings, setSettings] = useState({
+  //   focusDuration: 25 * 60,
+  //   shortBreakDuration: 5 * 60,
+  //   longBreakDuration: 15 * 60,
+  //   cycleCount: 4,
+  //   autoStart: false,
+  // });
+  // const [currentState, setCurrentState] = useState("focus");
+  // const [currentCycle, setCurrentCycle] = useState(1);
+  // const [minutes, setMinutes] = useState("");
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
-
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
-  const { connected, account, wallet } = useWallet();
-  const tasks = getTaskData();
-  const filtered = tasks.find((task) => task._id === itemID);
-  useEffect(() => {
-    const filteredTask = filteredTasks.find((task) => task._id === itemID);
-    if (filteredTask) {
-      const initialTaskTime = filteredTask?.time ?? 0;
-      setSeconds(1500 - initialTaskTime);
-    }
-  }, [filteredTasks, itemID]);
+  const { connected, account } = useWallet();
+  console.log("this is task id");
+
+  console.log(taskId);
   useEffect(() => {
     runOneSignal();
   }, []);
   useEffect(() => {
+    const getUserDataAsyc = async () => {
+      const userdata = await getUserData();
+      setEnergy(userdata.energy);
+    };
+    getUserDataAsyc();
+  }, [energy]);
+  useEffect(() => {
+    secondsRef.current = seconds;
+  }, [seconds]);
+
+  useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
+
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -96,16 +135,17 @@ const Page = () => {
       user = { energy: 100 };
       localStorage.setItem("userData", JSON.stringify(user));
     }
-    console.log(user);
   }, []);
-  // pomodoro timer
+
   useEffect(() => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     );
 
     if (settingsLocalData) {
-      setSeconds(parseInt(settingsLocalData.focusTime) * 60);
+      // setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
+      // setSeconds(parseInt(settingsLocalData.focusTime) * 60);
+
       setSettings({
         focusDuration: parseInt(settingsLocalData.focusTime) * 60,
         shortBreakDuration: parseInt(settingsLocalData.shortBreak) * 60,
@@ -119,99 +159,162 @@ const Page = () => {
     const status = "Completed";
     const filtered = tasks.filter((task) => task.status != status);
     setFilteredTasks(filtered);
-    if (itemID) {
-      setSelectedTaskId(itemID);
-      handleSelectDataFunc(itemID);
+    if (taskId) {
+      setSelectedTaskId(taskId);
+      handleSelectDataFunc(taskId);
     }
   }, []);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     const currentTime = new Date();
+  //     const currentMinutes = currentTime.getMinutes();
+  //     setMinutes(currentMinutes);
+  //     const userData = getUserData();
+  //     setEnergy(userData.energy);
+  //   }, 60000); // 1 minute in milliseconds
 
-  useEffect(() => {
-    let interval;
+  //   return () => clearInterval(intervalId);
+  // }, [isEnergyRunning]);
+  // useEffect(() => {
+  //   let interval;
 
-    if (isRunning) {
-      interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
-        console.log(interval);
-        // current date
-        const currentDate = new Date();
-        const options = { day: "numeric", month: "numeric", year: "numeric" };
-        const formattedDate = currentDate.toLocaleDateString("en-GB", options);
+  //   if (isRunning) {
+  //     interval = setInterval(() => {
+  //       setSeconds((prevSeconds) => {
+  //         return prevSeconds - 1;
+  //       });
 
-        let statisticsData = JSON.parse(
-          typeof window !== "undefined"
-            ? localStorage.getItem("statistics")
-            : null
-        );
+  //       const currentDate = new Date();
+  //       const options = { day: "numeric", month: "numeric", year: "numeric" };
+  //       const formattedDate = currentDate.toLocaleDateString("en-GB", options);
 
-        if (!statisticsData) {
-          statisticsData = {};
-        }
+  //       let statisticsData = JSON.parse(
+  //         typeof window !== "undefined"
+  //           ? localStorage.getItem("statistics")
+  //           : null
+  //       );
 
-        if (
-          statisticsData[formattedDate] &&
-          statisticsData[formattedDate][selectedTaskId]
-        ) {
-          if (currentState === "focus") {
-            statisticsData[formattedDate][selectedTaskId].focus++;
-            const tasks = getTaskData();
-            const findData = tasks.find((task) => task._id === selectedTaskId);
-            let tempTotalTime = 0;
-            if (findData && findData.time) {
-              tempTotalTime = findData.time;
-              let minutes = tempTotalTime / 60;
-              console.log(Math.floor(minutes));
-            }
+  //       if (!statisticsData) {
+  //         statisticsData = {};
+  //       }
 
-            updateTask(selectedTaskId, {
-              time: tempTotalTime + 1,
-              reward_PGC: 60 * Math.floor(tempTotalTime / 60),
-            });
-          } else if (currentState === "shortBreak") {
-            statisticsData[formattedDate][selectedTaskId].shortBreak++;
-          } else if (currentState === "longBreak") {
-            statisticsData[formattedDate][selectedTaskId].longBreak++;
-          }
-        } else {
-          statisticsData[formattedDate] = {
-            ...statisticsData[formattedDate],
-            [selectedTaskId]: {
-              focus: 0,
-              shortBreak: 0,
-              longBreak: 0,
-            },
-          };
-        }
+  //       if (
+  //         statisticsData[formattedDate] &&
+  //         statisticsData[formattedDate][selectedTaskId]
+  //       ) {
+  //         if (currentState === "focus") {
+  //           statisticsData[formattedDate][selectedTaskId].focus++;
+  //           const tasks = getTaskData();
+  //           const findData = tasks.find((task) => task._id === selectedTaskId);
+  //           let tempTotalTime = 0;
+  //           if (findData && findData.time) {
+  //             tempTotalTime = findData.time;
+  //           }
 
-        localStorage.setItem("statistics", JSON.stringify(statisticsData));
-      }, 1000);
-    }
+  //           updateTask(selectedTaskId, {
+  //             time: tempTotalTime + 1,
+  //             reward_PGC: tempTotalTime + 1,
+  //           });
+  //           let energy = 0;
+  //           if (userData.energy) {
+  //             energy = userData?.energy;
+  //           }
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [isRunning]);
+  //           if (
+  //             ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+  //             seconds - 1 === 0
+  //           ) {
+  //             setEnergy((prev) => prev - 1);
+  //             energy = userData?.energy - 1;
+  //           }
 
-  useEffect(() => {
-    if (seconds === 0) {
-      handleTimerEnd();
-    }
-  }, [seconds]);
+  //           updateUserData({ energy: energy });
+  //         } else if (currentState === "shortBreak") {
+  //           const tasks = getTaskData();
+  //           const findData = tasks.find((task) => task._id === selectedTaskId);
+  //           setTotalSeconds(settings.shortBreakDuration);
+  //           statisticsData[formattedDate][selectedTaskId].shortBreak++;
+  //           let energy = 0;
+  //           if (userData.energy) {
+  //             energy = userData?.energy;
+  //           }
 
-  useEffect(() => {
-    if (settings.autoStart && !isRunning) {
-      startTimer();
-    }
-  }, [settings.autoStart, isRunning, selectedTaskId]);
+  //           if (
+  //             ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+  //             seconds - 1 === 0
+  //           ) {
+  //             setEnergy((prev) => prev - 1);
+  //             energy = userData?.energy - 1;
+  //           }
+
+  //           updateUserData({ energy: energy });
+  //         } else if (currentState === "longBreak") {
+  //           let energy = 0;
+  //           if (userData.energy) {
+  //             energy = userData?.energy;
+  //           }
+
+  //           if (
+  //             ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
+  //             seconds - 1 === 0
+  //           ) {
+  //             setEnergy((prev) => prev - 1);
+  //             energy = userData?.energy - 1;
+  //           }
+
+  //           updateUserData({ energy: energy });
+  //           setTotalSeconds(settings.longBreakDuration);
+
+  //           statisticsData[formattedDate][selectedTaskId].longBreak++;
+  //         }
+  //       } else {
+  //         statisticsData[formattedDate] = {
+  //           ...statisticsData[formattedDate],
+  //           [selectedTaskId]: {
+  //             focus: 0,
+  //             shortBreak: 0,
+  //             longBreak: 0,
+  //           },
+  //         };
+  //       }
+
+  //       localStorage.setItem("statistics", JSON.stringify(statisticsData));
+  //     }, 1000);
+  //   }
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [isRunning, seconds]);
+
+  // useEffect(() => {
+  //   if (seconds === 0) {
+  //     handleTimerEnd();
+  //     finishSound();
+  //   }
+  // }, [seconds]);
+
+  // useEffect(() => {
+  //   if (settings.autoStart && !isRunning) {
+  //     startTimer();
+  //   }
+  // }, [settings.autoStart, isRunning, selectedTaskId]);
 
   const startTimer = () => {
-    if (selectedTaskId && selectedTaskId !== "choose") {
-      updateTask(selectedTaskId, {
-        status: "In Progress",
-        statusColor: "#FED000",
-      });
-      setIsRunning(true);
-    } else if (selectedTaskId === "choose") {
-      toast.error("Select the task or create new");
+    if (energy <= 0) {
+      toast.error("Not enough energy");
+    } else {
+      if (selectedTaskId && selectedTaskId !== "choose") {
+        updateTask(selectedTaskId, {
+          status: "In Progress",
+          statusColor: "#FED000",
+        });
+        setIsRunning(true);
+        if (!isRunning) {
+          clickSound();
+        }
+      } else if (selectedTaskId === "choose") {
+        toast.error("Select the task or create new");
+      }
     }
   };
 
@@ -219,14 +322,28 @@ const Page = () => {
     setIsRunning(false);
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
+    } else if (selectedTaskId !== "choose") {
+    }
+    if (isRunning) {
+      clickSound();
     }
   };
 
   const resetTimer = () => {
     setIsRunning(false);
-    setSeconds(settings.focusDuration);
-    setCurrentState("focus");
-    setCurrentCycle(1);
+    if (currentState === "focus") {
+      setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
+    } else if (currentState === "shortBreak") {
+      setSeconds(settings.shortBreakDuration);
+      setTotalSeconds(settings.shortBreakDuration);
+    } else if (currentState === "longBreak") {
+      setSeconds(settings.longBreakDuration);
+      setTotalSeconds(settings.longBreakDuration);
+    }
+    //setCurrentState("focus");
+    //setCurrentCycle(1);
+    clickSound();
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     }
@@ -238,9 +355,11 @@ const Page = () => {
     if (currentState === "focus") {
       if (currentCycle < settings.cycleCount) {
         setCurrentState("shortBreak");
+        setTotalSeconds(settings.shortBreakDuration);
         setSeconds(settings.shortBreakDuration);
       } else {
         setCurrentState("longBreak");
+        setTotalSeconds(settings.longBreakDuration);
         setSeconds(settings.longBreakDuration);
       }
     } else if (currentState === "shortBreak") {
@@ -249,6 +368,7 @@ const Page = () => {
       setCurrentCycle((prevCycle) => prevCycle + 1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
       //updateTask(selectedTaskId, { currentCycleCount: 1 });
@@ -256,6 +376,7 @@ const Page = () => {
       setCurrentCycle(1);
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
+      setTotalSeconds(settings.focusDuration);
       updateTask(selectedTaskId, {
         status: "Completed",
         statusColor: "#14985A",
@@ -267,11 +388,11 @@ const Page = () => {
       );
       setFilteredTasks(updatedFilteredTasks);
       // Show success toast
-      const reward = 60 * Math.floor(filtered?.time / 60);
-      toast.success(`Task is Completed You earned ${reward}PGC `);
-      updateTask(selectedTaskId, {
+      // const reward = 60 * Math.floor(filtered?.time / 60);
+      toast.success(`Task is Completed`);
+      /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
-      });
+      }); */
     }
   };
 
@@ -282,7 +403,6 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-
   return (
     <div>
       <section className="home-section">
@@ -305,15 +425,19 @@ const Page = () => {
                   0
                 </h4>
               </div>
-              <div className="box-inner flex items-center">
-                <div className="skill flex-1">
+              <div className="box-inner flex  justify-center items-center ">
+                <div
+                  suppressHydrationWarning={true}
+                  className=" mr-1  font-semibold flex-1 items-start gap-0 flex   flex-col"
+                >
                   <p className="">Energy</p>
-                  <div className="skill-bar skill3 wow slideInLeft animated">
-                    <span className="skill-count2"></span>
-                  </div>
+                  <LinearProgressEnergy jakarta={jakarta} energy={energy} />
                 </div>
-                <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                  {userData?.energy}%
+                <h4
+                  suppressHydrationWarning={true}
+                  className={` mt-4  font-bold ${jakarta.className}`}
+                >
+                  {energy ? energy : 0}
                 </h4>
               </div>
             </div>
@@ -329,15 +453,19 @@ const Page = () => {
                 <option className="font-semibold" value="choose">
                   Choose Task
                 </option>
-                {filteredTasks.map((task) => {
-                  return <option value={task._id}>{task.title}</option>;
+                {filteredTasks.map((task, index) => {
+                  return (
+                    <option value={task._id}>
+                      {index + 1}. {task.title}
+                    </option>
+                  );
                 })}
               </select>
             </div>
 
             <div className="first-box mt-5">
               <div className="containerr">
-                <div className="progress">
+                {/* <div className="progress">
                   <div className="overlay"></div>
                   <div className="left"></div>
                   <div className="right"></div>
@@ -345,9 +473,16 @@ const Page = () => {
                 <div
                   className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${barlow.className}`}
                 >
-                  {formatTime(seconds)}
-                </div>
+                  
+                </div> */}
+                <CircularClockProgress
+                  seconds={seconds}
+                  barlow={barlow}
+                  totalseconds={totalSeconds}
+                  time={formatTime(seconds)}
+                />
               </div>
+
               <div className="flex justify-center space-x-3">
                 {selectedTaskId !== "choose" ? (
                   <>
@@ -374,7 +509,9 @@ const Page = () => {
             </div>
 
             <div className="home-foot my-12">
-              <Image src={group} width={380} height={305} alt="group" />
+              <Link href={"/account"}>
+                <Image src={group} width={380} height={305} alt="group" />
+              </Link>
             </div>
           </div>
         </div>

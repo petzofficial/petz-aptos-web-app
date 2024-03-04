@@ -11,7 +11,7 @@ import { LuBadgeInfo } from "react-icons/lu";
 import "@/style/notification/notification.scss";
 import { useNotifications } from "@/components/notification/getNotifications";
 import Pagination from "@/components/button/Pagination";
-import { getFormattedDateTime } from "@/components/common/datetime";
+import { getFormattedDateTime } from "@/components/common/dateTime";
 import { truncateString } from "@/components/common/truncate";
 import LoadingCircle from "@/components/common/loading";
 import emptyImage from "@/assets/without/empty.png";
@@ -41,7 +41,7 @@ const Page = () => {
       <section className="notification">
         <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
           <div className="notification-title-bar flex justify-between items-start">
-            <Link href={"/home"} className="text-[30px] font-bold ">
+            <Link href={"/"} className="text-[30px] font-bold ">
               <GoBackBtn />
             </Link>
             <div className="not-box mr-8 md:mr-24">

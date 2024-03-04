@@ -2,37 +2,63 @@
 
 // Function to get user data from localStorage
 const getUserData = () => {
-  const storedUserData = localStorage.getItem("userData");
-  return storedUserData ? JSON.parse(storedUserData) : {};
+  let userData = {};
+
+  if (typeof window !== "undefined") {
+    const storedUserData =
+      typeof window !== "undefined" ? localStorage.getItem("userData") : null;
+
+    if (storedUserData) {
+      userData = JSON.parse(storedUserData);
+    }
+  }
+  return userData;
 };
 
-// Function to save user data to localStorage
 const saveUserData = (userData) => {
-  localStorage.setItem("userData", JSON.stringify(userData));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
 };
-
-// User data (assuming it's stored somewhere)
 let userData = getUserData();
+const updateUserData = (updates) => {
+  if (typeof window !== "undefined") {
+    let currentUserData = getUserData();
+    currentUserData = { ...currentUserData, ...updates };
+    saveUserData(currentUserData);
+  }
+};
 
-// Function to handle energy recharge
 const rechargeEnergy = () => {
-  if (userData.energy < 100) {
+  if (typeof window !== "undefined") {
+    if (userData.energy < 100) {
+      userData.energy += 1;
+      saveUserData(userData); // Save updated user data
+    }
+  }
+};
+setInterval(() => {
+  const userData = getUserData();
+  const currentTime = new Date();
+  const minutes = currentTime.getMinutes();
+  // Check if it's a multiple of 5 minutes and energy is less than 100
+  if (minutes % 5 === 0 && userData?.energy < 100) {
     userData.energy += 1;
-    saveUserData(userData); // Save updated user data
+    saveUserData(userData);
   }
-};
+}, 100000); // 1 minutes in milliseconds
 
-// Function to consume energy for a task
 const consumeEnergy = () => {
-  if (userData.energy > 0) {
-    userData.energy -= 1;
-    saveUserData(userData); // Save updated user data
-    return true; // Energy consumed successfully
+  if (typeof window !== "undefined") {
+    if (userData.energy > 0) {
+      userData.energy -= 1;
+      saveUserData(userData); // Save updated user data
+      return true; // Energy consumed successfully
+    }
+    return false; // Not enough energy
   }
-  return false; // Not enough energy
 };
 
-console.log(`Current energy: ${userData.energy}`);
 // add task
 const addTask = (taskData) => {
   let storedData = getTaskData();
@@ -93,4 +119,5 @@ export {
   saveUserData,
   rechargeEnergy,
   consumeEnergy,
+  updateUserData,
 };

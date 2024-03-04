@@ -32,6 +32,8 @@ import Coins from "@/components/coins/coin";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Tooltip } from "@mui/material";
 import { truncateAddress } from "@/components/aptosIntegrations/utils";
+import { getUserData } from "../../utils/localDB";
+import LinearProgressEnergy from "@/components/common/linearProgress";
 
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -48,8 +50,13 @@ const Page = () => {
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
   const { connected, account, wallet } = useWallet();
+
+  const userData = getUserData();
   const dispatch = useAppDispatch();
-  console.log(coins);
+  let energy = 0;
+  if (userData) {
+    energy = userData.energy;
+  }
   const copyAddress = async (e) => {
     await navigator.clipboard.writeText(account?.address);
     setTooltipOpen(true);
@@ -154,17 +161,23 @@ const Page = () => {
                       </div>
                     </div>
                     <h4 className={`ml-3 -mt-2 font-bold ${jakarta.className}`}>
-                    0
+                      0
                     </h4>
                   </div>
-                  <div className="box-inner flex items-center">
-                    <div className="skill flex-1">
+                  <div className="box-inner flex  justify-center items-center ">
+                    <div
+                      suppressHydrationWarning={true}
+                      className=" mr-1  font-semibold flex-1 items-start gap-0 flex   flex-col"
+                    >
                       <p className="">Energy</p>
-                      <div className="skill-bar skill3 wow slideInLeft animated">
-                        <span className="skill-count2"></span>
-                      </div>
+                      <LinearProgressEnergy jakarta={jakarta} energy={energy} />
                     </div>
-                    <h4 className="ml-3 -mt-2 font-bold">80%</h4>
+                    <h4
+                      suppressHydrationWarning={true}
+                      className={` mt-4  font-bold ${jakarta.className}`}
+                    >
+                      {energy ? energy : 0}
+                    </h4>
                   </div>
                 </div>
               </div>

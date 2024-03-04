@@ -1,6 +1,9 @@
 "use client";
 
 import React from "react";
+import { FaRegTimesCircle } from "react-icons/fa";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+
 import { CiShare1 } from "react-icons/ci";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
@@ -8,7 +11,7 @@ import "@/style/account/transaction.scss";
 import { Outfit } from "next/font/google";
 import { useParams } from "next/navigation";
 const outfit = Outfit({ subsets: ["latin"] });
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   selectAccount,
   fetchTransactionsAction,
@@ -21,33 +24,25 @@ import {
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import { calculateInverseWithDecimals } from "../../../components/common/transaction";
-import { formatDateTime3 } from "@/components/common/dateTime2";
-import { truncateAddress2 } from "@/components/aptosIntegrations/utils";
-import { Tooltip } from "@mui/material";
-import { IoCopy } from "react-icons/io5";
+import { formatDateTime3 } from "@/components/common/dateTime";
+
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CircularIndeterminate from "@/components/common/loading";
+import { convertToOctal } from "@/utils/reUseAbleFunctions/reuseAbleFunctions";
+import { TransactionAmount } from "@/components/account/utils";
 const Page = () => {
-  const { connected } = useWallet();
+  const { network } = useWallet();
+
   const account = useAppSelector(selectAccount);
-  console.log("this is account from select account");
-  console.log(account);
+
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const newNetwork = useAppSelector(selectNewNetwork);
 
   const specificTransaction = useAppSelector(selectSpecificTransaction);
   const transactions = useAppSelector(selectTransactions);
   const isLoading = useAppSelector(selectIsSingleTransactionLoading);
-  console.log(specificTransaction);
-  const copyAddress = async (e) => {
-    await navigator.clipboard.writeText(account?.address);
-    setTooltipOpen(true);
 
-    setTimeout(() => {
-      setTooltipOpen(false);
-    }, 2000);
-  };
   useEffect(() => {
     dispatch(fetchSpecificTransactionAction(id));
     if (account && !specificTransaction && id) {
@@ -55,7 +50,7 @@ const Page = () => {
     }
     dispatch(fetchTransactionsBlockAction(id));
   }, [account, transactions]);
-
+  console.log(specificTransaction);
   return (
     <div>
       <section className="transaction-details">
@@ -63,7 +58,7 @@ const Page = () => {
           <CircularIndeterminate />
         ) : (
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-            <Link href={"/home"} className="text-[30px] font-bold">
+            <Link href={"/"} className="text-[30px] font-bold">
               <GoBackBtn />
             </Link>
 
@@ -72,9 +67,14 @@ const Page = () => {
 
               <div className="trans-body mb-10">
                 <div>
-                  <button className="flex items-center gap-2">
-                    View on Explorer <CiShare1 />{" "}
-                  </button>
+                  <a
+                    href={`https://explorer.aptoslabs.com/txn/${specificTransaction?.version}?network=${newNetwork}`}
+                    target="_"
+                  >
+                    <button className="flex items-center gap-2">
+                      View on Explorer <CiShare1 />{" "}
+                    </button>
+                  </a>
                 </div>
                 <div>
                   <p>Version</p>
@@ -82,8 +82,29 @@ const Page = () => {
                 </div>
 
                 <div>
-                  <p>Date</p>
+                  <p>Timestamp</p>
                   <p>{formatDateTime3(specificTransaction?.timestamp)}</p>
+                </div>
+
+                <div>
+                  <p>Status</p>
+                  <span>
+                    {specificTransaction?.success ? (
+                      <IoIosCheckmarkCircleOutline color="green" />
+                    ) : (
+                      <FaRegTimesCircle color="red" />
+                    )}
+                  </span>
+                </div>
+                <div>
+                  <p>Gas used</p>
+                  <span>
+                    {convertToOctal(specificTransaction?.gas_used)} APT
+                  </span>
+                </div>
+                <div>
+                  <p>Gas Unit Price</p>
+                  <span>{specificTransaction?.gas_unit_price}</span>
                 </div>
                 <div>
                   <p>Function</p>
@@ -92,38 +113,11 @@ const Page = () => {
                   </span>
                 </div>
                 <div>
-                  <p>Status</p>
-                  <span>
-                    {specificTransaction?.status
-                      ? "Confirmed"
-                      : " Not confirmed"}
-                  </span>
-                </div>
-                <div>
-                  <p>Max Gas Amount</p>
-                  <span>
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.max_gas_amount,
-                      8
-                    )}{" "}
-                    APT
-                  </span>
-                </div>
-                <div>
-                  <p>Gas Unit Price</p>
-                  <span>
-                    {calculateInverseWithDecimals(
-                      specificTransaction?.gas_unit_price,
-                      8
-                    )}{" "}
-                    APT
-                  </span>
-                </div>
-                <div>
                   <p>Balance Changes</p>
-                  <span>
-                    {`+  ${specificTransaction?.changes?.length} APT`}{" "}
-                  </span>
+                  <TransactionAmount
+                    transaction={specificTransaction}
+                    address={account?.address}
+                  />
                 </div>
               </div>
             </div>

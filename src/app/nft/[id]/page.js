@@ -6,8 +6,6 @@ import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
 import React, { useState } from "react";
 import { shortenString, showFirstTenWords } from "@/components/common/truncate";
-import image1 from "@/assets/nft/111.png";
-import image3 from "@/assets/nft/image.png";
 import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
 import "@/style/nft/nft.scss";
@@ -41,9 +39,7 @@ const Page = () => {
       token?.token_data_id
     )
   );
-  console.log(image);
-  console.log("this is id token");
-  console.log(token);
+
   return (
     <div>
       {isLoadingToken ? (
@@ -52,7 +48,7 @@ const Page = () => {
         <section className="nft">
           <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
             <div className="back-button">
-              <Link href={"/home"} className="text-[30px] font-bold">
+              <Link href={"/"} className="text-[30px] font-bold">
                 <GoBackBtn />
               </Link>
             </div>
@@ -145,7 +141,6 @@ const Page = () => {
                   <span
                     onClick={() => {
                       setShowMore(!showMore);
-                      console.log(showMore);
                     }}
                     className=" underline cursor-pointer"
                   >
@@ -194,9 +189,11 @@ const Page = () => {
                     <span className="collection_nft_detail font-light">
                       Metadata storage
                     </span>
-                    <span className="collection_nft_detail_petz cursor-pointer flex  items-center gap-2  ">
-                      view on storage provider <CiShare1 />
-                    </span>
+                    <a target="_" href={token?.current_token_data?.token_uri}>
+                      <span className="collection_nft_detail_petz cursor-pointer flex  items-center gap-2  ">
+                        view on storage provider <CiShare1 />
+                      </span>{" "}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -205,7 +202,7 @@ const Page = () => {
                   Attributes
                 </span>
                 <div className="flex gap-4 flex-wrap">
-                  {token.attributes.map((x) => (
+                  {token?.attributes?.map((x) => (
                     <div className="bg-[#F09B68] flex p-2 rounded-lg  flex-col">
                       <span>{x.trait_type}</span>
                       <span className="!text-[#191D31]  font-bold">
