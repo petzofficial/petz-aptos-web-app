@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# petz-aptos-web-app-main
 
 ## Getting Started
 
@@ -20,17 +20,20 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+# Home
+![FireShot Capture 001 - PetZ Money - localhost](https://github.com/petzofficial/petz-aptos-web-app-main/assets/12860854/561fbae0-7d8c-4253-b173-0a1ce99ab7df)
 
-To learn more about Next.js, take a look at the following resources:
+# Tasks
+![FireShot Capture 002 - PetZ Money - localhost](https://github.com/petzofficial/petz-aptos-web-app-main/assets/12860854/b280cfdc-e049-424a-b1db-3537b4c2b728)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Statistics
+![FireShot Capture 003 - PetZ Money - localhost](https://github.com/petzofficial/petz-aptos-web-app-main/assets/12860854/d49cc892-e1ca-4486-acf3-639757f5e773)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Account
+![FireShot Capture 004 - PetZ Money - localhost](https://github.com/petzofficial/petz-aptos-web-app-main/assets/12860854/adb97d1a-e68b-45fa-bc06-2a28d00e7339)
 
-## Deploy on Vercel
+# Settings
+![FireShot Capture 005 - PetZ Money - localhost](https://github.com/petzofficial/petz-aptos-web-app-main/assets/12860854/7bb8ee8b-4779-404c-b038-a3e15cce218e)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Notification
+![FireShot Capture 006 - PetZ Money - localhost](https://github.com/petzofficial/petz-aptos-web-app-main/assets/12860854/ab7208c0-2ef4-4a78-bed4-58355ed57c69)
