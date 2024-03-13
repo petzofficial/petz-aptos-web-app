@@ -25,7 +25,7 @@ const urban = Urbanist({ subsets: ["latin"] });
 // }
 const EditAddTask = ({ method }) => {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState < string > "";
+  const [newTask, setNewTask] = useState("");
   const [accountHasList, setAccountHasList] = useState(false);
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const router = useRouter();
