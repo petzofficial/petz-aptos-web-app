@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import "../../style/tasks/tasks.scss";
+import "@/style/tasks/tasks.scss";
 import { MdOutlineSelectAll } from "react-icons/md";
 import React, { useEffect, useState } from "react";
-import { FaCirclePlay } from "react-icons/fa6";
 import { IoMdTime, IoMdDoneAll } from "react-icons/io";
 import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
@@ -11,11 +10,15 @@ import Pagination from "@/components/button/Pagination";
 import { getTaskData } from "@/utils/localDB";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
-
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { moduleAddress } from "../page";
 const Page = () => {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [slug, setSlug] = useState("All");
+  const { account, signAndSubmitTransaction, network } = useWallet();
+  const [accountHasList, setAccountHasList] = useState(false);
+
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -25,7 +28,9 @@ const Page = () => {
     setTasks(storedTasks);
     setFilteredTasks(storedTasks);
   }, []);
-
+  useEffect(() => {
+    fetchTasks();
+  }, []);
   const handleFilter = (status) => {
     if (status === "All") {
       setSlug("All");
@@ -71,6 +76,46 @@ const Page = () => {
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
   console.log(tasksToDisplay);
+
+  // aptos tasks
+  const fetchTasks = async () => {
+    console.log("fetch tasks is called");
+    if (!account) return [];
+    try {
+      console.log("this is fetch task");
+      const todoListResource = await client.getAccountResource(
+        account?.address,
+        `${moduleAddress}::task::TaskManager`
+      );
+      setAccountHasList(true);
+      console.log("these are the response");
+      console.log(todoListResource);
+      const tableHandle = todoListResource.data.tasks.handle;
+      const taskCounter = todoListResource.data.set_task_event.counter;
+
+      console.log(taskCounter);
+
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        console.log(counter);
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${moduleAddress}::task::Task`,
+          key: `${counter}`,
+        };
+        const task = await client.getTableItem(tableHandle, tableItem);
+        tasks.push(task);
+        console.log(task);
+        counter++;
+      }
+      // set tasks in local state
+      setTasks(tasks);
+    } catch (error) {
+      setAccountHasList(false);
+    }
+  };
+
   if (tasksToDisplay.length === 0) {
     return (
       <div>

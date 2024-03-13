@@ -17,7 +17,7 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "strict": true,
+    "strict": false,
     "isolatedModules": true,
     "resolveJsonModule": true,
     "incremental": true,

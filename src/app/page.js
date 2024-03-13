@@ -19,6 +19,7 @@ import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
 import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
+import { AptosClient } from "aptos";
 
 import {
   fetchCoinsAction,
@@ -33,6 +34,11 @@ import { getUserData, updateUserData } from "@/utils/localDB";
 import { saveUserData } from "../utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
+export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+export const client = new AptosClient(NODE_URL);
+// change this to be your module account address
+export const moduleAddress =
+  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -64,26 +70,8 @@ const Page = () => {
     currentState,
     setCurrentState,
   } = useContext(TaskContext);
-  // const [filteredTasks, setFilteredTasks] = useState([]);
-  // const [energy, setEnergy] = useState("");
-  // const [selectedTaskId, setSelectedTaskId] = useState("choose");
-  // const [isRunning, setIsRunning] = useState(false);
-  // const [seconds, setSeconds] = useState(25 * 60);
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
-  // const [isEnergyRunning, setIsEnergyRunning] = useState(true);
-  // const [totalSeconds, setTotalSeconds] = useState(25 * 60);
-  // const secondsRef = useRef(seconds);
-  // const [settings, setSettings] = useState({
-  //   focusDuration: 25 * 60,
-  //   shortBreakDuration: 5 * 60,
-  //   longBreakDuration: 15 * 60,
-  //   cycleCount: 4,
-  //   autoStart: false,
-  // });
-  // const [currentState, setCurrentState] = useState("focus");
-  // const [currentCycle, setCurrentCycle] = useState(1);
-  // const [minutes, setMinutes] = useState("");
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
@@ -300,6 +288,8 @@ const Page = () => {
   // }, [settings.autoStart, isRunning, selectedTaskId]);
 
   const startTimer = () => {
+    clickSound();
+
     if (energy <= 0) {
       toast.error("Not enough energy");
     } else {
@@ -309,9 +299,6 @@ const Page = () => {
           statusColor: "#FED000",
         });
         setIsRunning(true);
-        if (!isRunning) {
-          clickSound();
-        }
       } else if (selectedTaskId === "choose") {
         toast.error("Select the task or create new");
       }
@@ -319,13 +306,11 @@ const Page = () => {
   };
 
   const pauseTimer = () => {
+    clickSound();
     setIsRunning(false);
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     } else if (selectedTaskId !== "choose") {
-    }
-    if (isRunning) {
-      clickSound();
     }
   };
 
