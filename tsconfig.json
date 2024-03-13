@@ -17,7 +17,7 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "strict": false,
+    "strict": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
     "incremental": true,
@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/pages/account/[id]/index.js", "src/components/Navbar.jsx"  ],
+, "src/pages/account/[id]/index.js", "src/components/Navbar.jsx", "src/components/task/EditAddTask.jsx"  ],
   "exclude": [
     "node_modules"
   ],

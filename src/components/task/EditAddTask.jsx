@@ -7,30 +7,31 @@ import { Urbanist } from "next/font/google";
 import { v4 as uuid } from "uuid";
 import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
-import { client } from '@/app/page'
+import { client } from "@/app/page";
 import toast from "react-hot-toast";
-
+import { moduleAddress } from "@/app/page";
 const urban = Urbanist({ subsets: ["latin"] });
-type Task = {
-  address: string;
-  completed: boolean;
-  content: string;
-  task_id: string;
-};
-
+// type Task = {
+//   address: string;
+//   completed: boolean;
+//   content: string;
+//   task_id: string;
+// };
+// interface TransactionPayload {
+//   type: string;
+//   function: string;
+//   type_arguments: any[];
+//   arguments: any[];
+// }
 const EditAddTask = ({ method }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-
-  const [newTask, setNewTask] = useState<string>("");
-  const [accountHasList, setAccountHasList] = useState<boolean>(false);
-
-  const [transactionInProgress, setTransactionInProgress] =
-    useState<boolean>(false);
-
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState < string > "";
+  const [accountHasList, setAccountHasList] = useState(false);
+  const [transactionInProgress, setTransactionInProgress] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const existingTaskId = searchParams.get("id");
-  const { account, signAndSubmitTransaction, network } = useWallet()
+  const { account, signAndSubmitTransaction, network } = useWallet();
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -50,9 +51,8 @@ const EditAddTask = ({ method }) => {
   };
 
   const handleAddData = (e) => {
-
     e.preventDefault();
-    console.log(client)
+    console.log(client);
     const form = e.target;
     const workOut = form.workOut.value;
     const description = form.description.value;
@@ -102,7 +102,7 @@ const EditAddTask = ({ method }) => {
     setPriority("");
   };
   const addTask = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!account) return [];
     setTransactionInProgress(true);
     // build a transaction payload to be submited
@@ -114,24 +114,20 @@ const EditAddTask = ({ method }) => {
     };
     try {
       // sign and submit transaction to chain
-      console.log("before response")
+      console.log("before response");
       const response = await signAndSubmitTransaction(payload);
-      console.log("after response")
-      console.log(response)
+      console.log("after response");
+      console.log(response);
       // wait for transaction
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
-    } catch (error: any) {
+    } catch (error) {
       setAccountHasList(false);
     } finally {
       setTransactionInProgress(false);
     }
   };
-  // fetch tasks 
-
-  useEffect(() => {
-    fetchTasks();
-  }, [account?.address]);
+  // fetch tasks
 
   return (
     <section className="task-edit">
@@ -147,7 +143,6 @@ const EditAddTask = ({ method }) => {
             {method === "add" ? "New Task" : ""}
           </h2>
           <form
-
             className={typeof window !== "undefined" && urban.className}
             action="#"
             method="post"
@@ -198,7 +193,12 @@ const EditAddTask = ({ method }) => {
               defaultValue={task ? task.description : ""}
             ></textarea>
 
-            <button onClick={(e) => addTask(e)} type="submit" id="submitBtn" className="submit-btn">
+            <button
+              onClick={(e) => addTask(e)}
+              type="submit"
+              id="submitBtn"
+              className="submit-btn"
+            >
               {method === "edit" ? "Update Task" : ""}
               {method === "add" ? "Add New Task" : ""}
             </button>
