@@ -96,7 +96,7 @@ const Navbar = ({ method }) => {
     const status = "Completed";
     const filtered = tasks.filter((task) => task.status != status);
     console.log(taskId);
-    setFilteredTasks(filtered);
+    // setFilteredTasks(filtered);
     if (taskId) {
       setSelectedTaskId(taskId);
       handleSelectDataFunc(taskId);
@@ -280,7 +280,7 @@ const Navbar = ({ method }) => {
       const updatedFilteredTasks = updatedTasks.filter(
         (task) => task.status !== "Completed"
       );
-      setFilteredTasks(updatedFilteredTasks);
+      // setFilteredTasks(updatedFilteredTasks);
       // Show success toast
       // const reward = 60 * Math.floor(filtered?.time / 60);
       toast.success(`Task is Completed`);

@@ -44,6 +44,7 @@ export function formatDateTime2(timestamp) {
 
   return dateObject.toLocaleString("en-US", options);
 }
+
 export function formatDateTime3(timestamp) {
   const timestampInMillis = timestamp / 1000;
   const dateObject = new Date(timestampInMillis);

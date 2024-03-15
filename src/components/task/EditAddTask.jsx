@@ -119,7 +119,8 @@ const EditAddTask = ({ method }) => {
       console.log("after response");
       console.log(response);
       // wait for transaction
-      await client.waitForTransaction(response.hash);
+      const transaction = await client.waitForTransaction(response.hash);
+      console.log(transaction);
       setAccountHasList(true);
     } catch (error) {
       setAccountHasList(false);

@@ -2,33 +2,93 @@
 import Link from "next/link";
 import "@/style/tasks/tasks.scss";
 import { MdOutlineSelectAll } from "react-icons/md";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdTime, IoMdDoneAll } from "react-icons/io";
 import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Pagination from "@/components/button/Pagination";
-import { getTaskData } from "@/utils/localDB";
+// import { getTaskData } from "@/utils/localDB";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { moduleAddress } from "../page";
+import { AptosClient } from "aptos";
+import { TaskContext } from "./context/taskContext";
+
+export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+export const client = new AptosClient(NODE_URL);
+// change this to be your module account address
+export const moduleAddress =
+  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
+
 const Page = () => {
-  const [tasks, setTasks] = useState([]);
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const { filteredTasks, setFilteredTasks, tasks, setTasks } =
+    useContext(TaskContext);
   const [slug, setSlug] = useState("All");
+  const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [accountHasList, setAccountHasList] = useState(false);
 
+  const fetchTasks = async () => {
+    if (!account) return [];
+    try {
+      setTransactionInProgress(true);
+
+      const todoListResource = await client.getAccountResource(
+        account?.address,
+        `${moduleAddress}::task3::TaskManager`
+      );
+      setAccountHasList(true);
+      console.log(todoListResource);
+      // tasks table handle
+      const tableHandle = todoListResource.data.tasks.handle;
+      // tasks table counter
+      const taskCounter = todoListResource.data.set_task_event.counter;
+
+      //const eventResource = await client.getEventsByEventHandle(tableHandle);
+
+      console.log(taskCounter);
+      /*   const tableItem = {
+                key_type: "u64",
+                value_type: `${moduleAddress}::todolist::Task`,
+                key: "0x49d2b46aeb9d79937334cbd5c8c3847c1aa0a11a7a4d74a82a12b94661dc2a4c",
+              };
+              const taskResource = await client.getTableItem(tableHandle, tableItem);
+              console.log(taskResource) */
+
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        console.log(counter);
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${moduleAddress}::task3::Task`,
+          key: `${counter}`,
+        };
+        // console.log(tableHandle,"task tableHandle")
+        // console.log(tableItem,"task item")
+        const task = await client.getTableItem(tableHandle, tableItem);
+        console.log(task, "task");
+        tasks.push(task);
+        setFilteredTasks(tasks);
+        console.log("these are tasks");
+        console.log(tasks);
+        counter++;
+      }
+      setTransactionInProgress(false);
+      // set tasks in local state
+      setTasks(tasks);
+    } catch (e) {
+      setAccountHasList(false);
+      setTransactionInProgress(false);
+    }
+  };
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     ) || false;
+
   useEffect(() => {
-    const storedTasks = getTaskData();
-    setTasks(storedTasks);
-    setFilteredTasks(storedTasks);
-  }, []);
-  useEffect(() => {
+    console.log("use effect is called");
     fetchTasks();
   }, []);
   const handleFilter = (status) => {
@@ -78,43 +138,8 @@ const Page = () => {
   console.log(tasksToDisplay);
 
   // aptos tasks
-  const fetchTasks = async () => {
-    console.log("fetch tasks is called");
-    if (!account) return [];
-    try {
-      console.log("this is fetch task");
-      const todoListResource = await client.getAccountResource(
-        account?.address,
-        `${moduleAddress}::task::TaskManager`
-      );
-      setAccountHasList(true);
-      console.log("these are the response");
-      console.log(todoListResource);
-      const tableHandle = todoListResource.data.tasks.handle;
-      const taskCounter = todoListResource.data.set_task_event.counter;
 
-      console.log(taskCounter);
-
-      let tasks = [];
-      let counter = 1;
-      while (counter <= taskCounter) {
-        console.log(counter);
-        const tableItem = {
-          key_type: "u64",
-          value_type: `${moduleAddress}::task::Task`,
-          key: `${counter}`,
-        };
-        const task = await client.getTableItem(tableHandle, tableItem);
-        tasks.push(task);
-        console.log(task);
-        counter++;
-      }
-      // set tasks in local state
-      setTasks(tasks);
-    } catch (error) {
-      setAccountHasList(false);
-    }
-  };
+  // aptos tasks integrations
 
   if (tasksToDisplay.length === 0) {
     return (
@@ -259,7 +284,10 @@ const Page = () => {
               <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
 
               {tasksToDisplay.map((item) => (
-                <Link key={item._id} href={`/task/task-details?id=${item._id}`}>
+                <Link
+                  key={item.task_id}
+                  href={`/task/task-details?id=${item.task_id}`}
+                >
                   <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
                     <div
                       style={{ backgroundColor: item.statusColor }}
@@ -267,8 +295,8 @@ const Page = () => {
                     ></div>
                     <div className="middle flex justify-between">
                       <div>
-                        <h1>{item.title}</h1>
-                        <p>{convertToHHMMSS(item.time)}</p>
+                        <h1>{item.task_name}</h1>
+                        <p>{convertToHHMMSS(item.total_time_spent)}</p>
                       </div>
                       <div className="text-end">
                         <p>

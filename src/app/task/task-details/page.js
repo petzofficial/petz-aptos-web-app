@@ -16,17 +16,17 @@ import { getTaskData, removeFromDB, updateTask } from "@/utils/localDB";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
+import { formatDateTime3 } from "@/components/common/datetime";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
-  const { taskId, setTaskId } = useContext(TaskContext);
-  const [task, setTask] = useState(
-    getTaskData()?.find((item) => item._id == itemID)
-  );
+  const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
+  console.log(tasks);
+  const task = tasks.find((task) => task.taskId === taskId);
+  console.log(task);
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -97,25 +97,29 @@ const Page = () => {
               className="flex justify-between items-center status-bar"
             >
               <h3>Status</h3>
-              <h3 className="text-[#FF6900]">{task.status}</h3>
+              <h3 className="text-[#FF6900]">{task?.status}</h3>
             </div>
-            {task.status === "Completed" ? (
+            {task?.status === "Completed" ? (
               ""
             ) : (
               <div className="button-bar flex justify-center items-center space-x-4">
                 <Link
-                  key={task._id}
-                  onClick={setTaskId(task._id)}
-                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
+                  key={task?.taskId}
+                  onClick={setTaskId(task?.task_id)}
+                  href={
+                    task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`
+                  }
                 >
                   <button onClick={handleButtonClick}>
                     <FaSquare />
                   </button>
                 </Link>
                 <Link
-                  key={task._id}
-                  onClick={setTaskId(task._id)}
-                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
+                  key={task?.taskId}
+                  onClick={setTaskId(task?.task_id)}
+                  href={
+                    task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`
+                  }
                 >
                   <button
                     onClick={handleButtonClick}
@@ -125,9 +129,11 @@ const Page = () => {
                   </button>
                 </Link>
                 <Link
-                  key={task._id}
-                  onClick={setTaskId(task._id)}
-                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
+                  key={task?.taskId}
+                  onClick={setTaskId(task?.taskId)}
+                  href={
+                    task?.status === "Completed" ? "#" : `/?id=${task?.taskId}`
+                  }
                 >
                   <button onClick={handleButtonClick}>
                     <IoIosRefresh />
@@ -139,32 +145,27 @@ const Page = () => {
             <div className="info lg:p-8 p-1 shadow-md">
               <div>
                 <p>Task name</p>
-                <span>{task.title}</span>
+                <span>{task?.task_name}</span>
               </div>
               <div>
                 <p>Task Description</p>
-                <span>{task.description}</span>
+                <span>{task?.description}</span>
               </div>
               <div>
-                <p>Date</p>
-                <span>{task.date}</span>
+                <p>Create Date </p>
+                <span>{formatDateTime3(task?.create_date)}</span>
               </div>
               <div>
                 <p>Task priority</p>
-                <span>{task.priority}</span>
+                <span>{task?.priority}</span>
               </div>
               <div>
                 <p>Cycle count</p>
-                <span>
-                  {task.currentCycleCount}/
-                  {settingsLocalData && settingsLocalData.cycleCount
-                    ? settingsLocalData.cycleCount
-                    : "4"}
-                </span>
+                <span>{task?.cycle_count}/4</span>
               </div>
               <div>
                 <p>Total time spent</p>
-                <span>{convertToHHMMSS(task.time)}</span>
+                <span>{convertToHHMMSS(task?.total_time_spent)}</span>
               </div>
 
               <div>
@@ -178,7 +179,7 @@ const Page = () => {
                 <p>Reward (in PGC)</p>
                 <div>
                   <Image src={img2} width={33} height={33} alt="coin" />
-                  <span>{task.reward_PGC}</span>
+                  <span>{task?.psc_reward}</span>
                 </div>
               </div>
               <div>
@@ -198,7 +199,7 @@ const Page = () => {
             </div>
 
             <div className="edit-delete-btn">
-              {task.status === "Completed" ? (
+              {task?.status === "Completed" ? (
                 ""
               ) : (
                 <button
@@ -215,11 +216,13 @@ const Page = () => {
               {task.status === "Completed" ? (
                 ""
               ) : (
-                <Link href={`/task/task-edit?id=${task._id}`}>Edit Task</Link>
+                <Link href={`/task/task-edit?id=${task?.taskId}`}>
+                  Edit Task
+                </Link>
               )}
               <button
                 onClick={() => {
-                  handleDelete(task._id);
+                  handleDelete(task?.taskId);
                 }}
                 className="!text-[#B40000]"
               >
