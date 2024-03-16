@@ -90,7 +90,7 @@ const Page = () => {
   useEffect(() => {
     console.log("use effect is called");
     fetchTasks();
-  }, []);
+  }, [account?.address]);
   const handleFilter = (status) => {
     if (status === "All") {
       setSlug("All");
@@ -300,7 +300,7 @@ const Page = () => {
                       </div>
                       <div className="text-end">
                         <p>
-                          {item.currentCycleCount}/
+                          {item.cycle_count}/
                           {settingsLocalData && settingsLocalData.cycleCount
                             ? settingsLocalData.cycleCount
                             : "4"}

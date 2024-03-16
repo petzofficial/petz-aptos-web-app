@@ -1,6 +1,8 @@
 "use client";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
+import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
+
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useEffect, useState } from "react";
 import { Urbanist } from "next/font/google";
@@ -108,19 +110,15 @@ const EditAddTask = ({ method }) => {
     // build a transaction payload to be submited
     const payload = {
       type: "entry_function_payload",
-      function: `${moduleAddress}::task::add_task`,
+      function: `${moduleAddress}::task3::add_task`,
       type_arguments: [],
-      arguments: [task],
+      arguments: ["hello", "world from akhtar ali khan", 1, 1],
     };
     try {
       // sign and submit transaction to chain
-      console.log("before response");
       const response = await signAndSubmitTransaction(payload);
-      console.log("after response");
-      console.log(response);
       // wait for transaction
-      const transaction = await client.waitForTransaction(response.hash);
-      console.log(transaction);
+      await client.waitForTransaction(response.hash);
       setAccountHasList(true);
     } catch (error) {
       setAccountHasList(false);
@@ -137,6 +135,7 @@ const EditAddTask = ({ method }) => {
           <Link href={"/"} className="text-[30px] font-bold">
             <GoBackBtn />
           </Link>
+          <WalletSelector />
         </div>
         <div className="task-edit-inner mt-[-40px]">
           <h2>

@@ -213,7 +213,7 @@ const Page = () => {
                     : "Completed"}
                 </button>
               )}
-              {task.status === "Completed" ? (
+              {task?.status === "Completed" ? (
                 ""
               ) : (
                 <Link href={`/task/task-edit?id=${task?.taskId}`}>

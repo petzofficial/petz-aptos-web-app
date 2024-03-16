@@ -143,10 +143,10 @@ const Page = () => {
       });
     }
 
-    const tasks = getTaskData();
-    const status = "Completed";
-    const filtered = tasks.filter((task) => task.status != status);
-    setFilteredTasks(filtered);
+    // const tasks = getTaskData();
+    // const status = "Completed";
+    // const filtered = tasks.filter((task) => task.status != status);
+    // setFilteredTasks(filtered);
     if (taskId) {
       setSelectedTaskId(taskId);
       handleSelectDataFunc(taskId);
