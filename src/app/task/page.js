@@ -31,21 +31,25 @@ const Page = () => {
   const fetchTasks = async () => {
     if (!account) return [];
     try {
+      console.log("fetch tasks is called");
       setTransactionInProgress(true);
 
       const todoListResource = await client.getAccountResource(
         account?.address,
         `${moduleAddress}::task3::TaskManager`
       );
+      console.log("this is a todo list resource");
       setAccountHasList(true);
       console.log(todoListResource);
       // tasks table handle
       const tableHandle = todoListResource.data.tasks.handle;
       // tasks table counter
+      console.log("this is table handle");
+      console.log(tableHandle);
       const taskCounter = todoListResource.data.set_task_event.counter;
 
       //const eventResource = await client.getEventsByEventHandle(tableHandle);
-
+      console.log("this is task counter");
       console.log(taskCounter);
       /*   const tableItem = {
                 key_type: "u64",
@@ -64,20 +68,25 @@ const Page = () => {
           value_type: `${moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
+        console.log("this is table item");
+        console.log(tableItem);
         // console.log(tableHandle,"task tableHandle")
         // console.log(tableItem,"task item")
         const task = await client.getTableItem(tableHandle, tableItem);
+        console.log("this is task ero");
         console.log(task, "task");
         tasks.push(task);
-        setFilteredTasks(tasks);
+
         console.log("these are tasks");
         console.log(tasks);
         counter++;
       }
+      setFilteredTasks(tasks);
       setTransactionInProgress(false);
       // set tasks in local state
       setTasks(tasks);
     } catch (e) {
+      console.log(e);
       setAccountHasList(false);
       setTransactionInProgress(false);
     }

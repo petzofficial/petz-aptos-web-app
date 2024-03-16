@@ -8,6 +8,8 @@ import "@/style/tasks/task-details.scss";
 import { Outfit } from "next/font/google";
 import { FaSquare, FaPlay } from "react-icons/fa";
 import { IoIosRefresh } from "react-icons/io";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+
 import Image from "next/image";
 import img1 from "@/assets/home/image 23.png";
 import img2 from "@/assets/home/pgt-removebg-preview 2.png";
@@ -16,25 +18,39 @@ import { getTaskData, removeFromDB, updateTask } from "@/utils/localDB";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { AptosClient } from "aptos";
+
 import { formatDateTime3 } from "@/components/common/datetime";
 const outfit = Outfit({ subsets: ["latin"] });
+
+export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+export const client = new AptosClient(NODE_URL);
+// change this to be your module account address
+export const moduleAddress =
+  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
+  const [transactionInProgress, setTransactionInProgress] = useState(false);
+  const { account, signAndSubmitTransaction, network } = useWallet();
+  const [accountHasList, setAccountHasList] = useState(false);
+
+  console.log("this is item id");
+  console.log(itemID);
   const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
-  console.log(tasks);
-  const task = tasks.find((task) => task.taskId === taskId);
+  console.log();
+  const task = tasks.find((task) => task?.task_id === itemID);
   console.log(task);
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     ) || false;
 
-  if (!task) {
-    router.push("/task", { scroll: true });
-  }
+  // if (!task) {
+  //   router.push("/task", { scroll: true });
+  // }
 
   const handleDelete = (id) => {
     removeFromDB(id);
@@ -80,6 +96,56 @@ const Page = () => {
     }
   };
 
+  const deleteTask = async () => {
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const transactionPayload = {
+      data: {
+        function: `${moduleAddress}::task3::delete_task`,
+        functionArguments: [itemID],
+      },
+    };
+
+    try {
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(transactionPayload);
+      // wait for transaction
+      await client.waitForTransaction(response.hash);
+      setAccountHasList(true);
+    } catch (error) {
+      setAccountHasList(false);
+    } finally {
+      setTransactionInProgress(false);
+      router.push("/task", { scroll: true });
+      toast.success("Task deleted");
+    }
+  };
+  const completeTask = async () => {
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const transactionPayload = {
+      data: {
+        function: `${moduleAddress}::task3::complete_task`,
+        functionArguments: [itemID],
+      },
+    };
+
+    try {
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(transactionPayload);
+      // wait for transaction
+      await client.waitForTransaction(response.hash);
+      setAccountHasList(true);
+    } catch (error) {
+      setAccountHasList(false);
+    } finally {
+      router.push("/task", { scroll: true });
+      toast.success("Task mark completed");
+      setTransactionInProgress(false);
+    }
+  };
   return (
     <div>
       <section className="task-details">
@@ -216,13 +282,13 @@ const Page = () => {
               {task?.status === "Completed" ? (
                 ""
               ) : (
-                <Link href={`/task/task-edit?id=${task?.taskId}`}>
+                <Link href={`/task/task-edit?id=${task?.task_id}`}>
                   Edit Task
                 </Link>
               )}
               <button
                 onClick={() => {
-                  handleDelete(task?.taskId);
+                  deleteTask();
                 }}
                 className="!text-[#B40000]"
               >

@@ -4,34 +4,25 @@ import Link from "next/link";
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Urbanist } from "next/font/google";
 import { v4 as uuid } from "uuid";
+import { TaskContext } from "@/app/task/context/taskContext";
 import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
 import { client } from "@/app/page";
 import toast from "react-hot-toast";
 import { moduleAddress } from "@/app/page";
 const urban = Urbanist({ subsets: ["latin"] });
-// type Task = {
-//   address: string;
-//   completed: boolean;
-//   content: string;
-//   task_id: string;
-// };
-// interface TransactionPayload {
-//   type: string;
-//   function: string;
-//   type_arguments: any[];
-//   arguments: any[];
-// }
+
 const EditAddTask = ({ method }) => {
-  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [accountHasList, setAccountHasList] = useState(false);
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
+
   const existingTaskId = searchParams.get("id");
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [task, setTask] = useState({
@@ -40,83 +31,82 @@ const EditAddTask = ({ method }) => {
     priority: "",
   });
   const [priority, setPriority] = useState("");
+  console.log("these are tasks");
+  console.log(tasks);
+  const editTask = tasks.find((task) => task?.task_id === existingTaskId);
+  console.log("this is edited task");
+  console.log(editTask);
   useEffect(() => {
-    const task = getTaskData().find((item) => item._id == existingTaskId);
-    if (method === "edit") {
-      setPriority(task.priority);
+    if (method === "edit" && editTask) {
+      setTask({
+        title: editTask.task_name,
+        description: editTask.description,
+        priority: editTask.priority,
+      });
+      setPriority(editTask.priority);
     }
-    setTask(task);
-  }, []);
+  }, [editTask]);
 
+  const handleTaskChange = (event) => {
+    const { name, value } = event.target;
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
   const handlePriority = (v) => {
     setPriority(v);
   };
-
-  const handleAddData = (e) => {
-    e.preventDefault();
-    console.log(client);
-    const form = e.target;
-    const workOut = form.workOut.value;
-    const description = form.description.value;
-
-    // unique id
-    const unique_id = method === "edit" ? existingTaskId : uuid();
-
-    // date
-    const currentDate = new Date();
-    const options = { day: "numeric", month: "short", year: "numeric" };
-    const formattedDate = currentDate.toLocaleDateString("en-GB", options);
-
-    // create object
-    const addObj = {
-      title: workOut,
-      time: 0,
-      statusColor: "#8B0000",
-      description: description,
-      priority: priority,
-      date: formattedDate,
-      reward_PGC: "",
-      status: "Pending",
-      currentCycleCount: 1,
-      _id: unique_id,
-    };
-
-    if (!addObj || !addObj.title || !addObj.description || !addObj.priority) {
-      return false;
-    }
-
-    //local storage logic...
-    if (method === "edit") {
-      if (task) {
-        updateTask(existingTaskId, addObj);
-        router.push("/task", { scroll: true });
-        toast.success("Task Updated");
-      }
-    } else {
-      addTask(addObj);
-      router.push("/task", { scroll: true });
-      toast.success("Task Added");
-    }
-
-    // input field empty
-    form.workOut.value = "";
-    form.description.value = "";
-    setPriority("");
-  };
+  // add task apos integration
   const addTask = async (e) => {
     e.preventDefault();
+    if (!account) return [];
+    setTransactionInProgress(true);
+    const transactionPayload = {
+      data: {
+        function: `${moduleAddress}::task3::add_task`,
+        functionArguments: [task?.title, task?.description, 1, 1],
+      },
+    };
+    try {
+      const response = await signAndSubmitTransaction(transactionPayload);
+      await client.waitForTransaction(response.hash);
+
+      setAccountHasList(true);
+    } catch (error) {
+      setAccountHasList(false);
+    } finally {
+      setTransactionInProgress(false);
+      router.push("/task", { scroll: true });
+      toast.success("Task added");
+    }
+  };
+  // edit task
+  const editingTask = async () => {
     if (!account) return [];
     setTransactionInProgress(true);
     // build a transaction payload to be submited
     const payload = {
       type: "entry_function_payload",
-      function: `${moduleAddress}::task3::add_task`,
+      function: `${moduleAddress}::task3::update_task`,
       type_arguments: [],
-      arguments: ["hello", "world from akhtar ali khan", 1, 1],
+      arguments: [1, "test", "test", 1, 1],
+    };
+    const transactionPayload = {
+      data: {
+        function: `${moduleAddress}::task3::add_task`,
+        functionArguments: [
+          existingTaskId,
+          task?.title,
+          task?.description,
+          task.priority,
+          1,
+        ],
+      },
     };
     try {
       // sign and submit transaction to chain
-      const response = await signAndSubmitTransaction(payload);
+      const response = await signAndSubmitTransaction(transactionPayload);
       // wait for transaction
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
@@ -126,8 +116,6 @@ const EditAddTask = ({ method }) => {
       setTransactionInProgress(false);
     }
   };
-  // fetch tasks
-
   return (
     <section className="task-edit">
       <div className="addconatiner 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
@@ -135,7 +123,6 @@ const EditAddTask = ({ method }) => {
           <Link href={"/"} className="text-[30px] font-bold">
             <GoBackBtn />
           </Link>
-          <WalletSelector />
         </div>
         <div className="task-edit-inner mt-[-40px]">
           <h2>
@@ -150,9 +137,11 @@ const EditAddTask = ({ method }) => {
             <h4>Task Name</h4>
             <input
               type="text"
-              name="workOut"
-              placeholder="WorkOut"
-              defaultValue={task ? task.title : ""}
+              name="title"
+              value={task?.title}
+              onChange={(e) => handleTaskChange(e)}
+              placeholder="write task here"
+              // defaultValue={task ? task.title : ""}
             />
             <p>Task Priority</p>
             <div className="task-lvl-btn">
@@ -189,8 +178,10 @@ const EditAddTask = ({ method }) => {
               className="h-[152px]"
               name="description"
               rows="10"
+              value={task?.description}
+              onChange={(e) => handleTaskChange(e)}
               placeholder="Add Task Description"
-              defaultValue={task ? task.description : ""}
+              // defaultValue={task ? task.description : ""}
             ></textarea>
 
             <button
