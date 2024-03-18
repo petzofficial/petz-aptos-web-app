@@ -127,7 +127,7 @@ const Page = () => {
     // build a transaction payload to be submited
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::complete_task`,
+        function: `${moduleAddress}::task4::complete_task`,
         functionArguments: [itemID],
       },
     };
@@ -270,7 +270,8 @@ const Page = () => {
               ) : (
                 <button
                   onClick={() => {
-                    handleStatus(task._id);
+                    completeTask();
+                    // handleStatus(task._id);
                   }}
                 >
                   Mark As{" "}

@@ -27,7 +27,41 @@ const Page = () => {
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [accountHasList, setAccountHasList] = useState(false);
+  const fetchList = async () => {
+    if (!account) return [];
+    try {
+      const todoListResource = await aptos.getAccountResource({
+        accountAddress: account?.address,
+        resourceType: `${moduleAddress}::todolist::TodoList`,
+      });
+      setAccountHasList(true);
+      // tasks table handle
+      const tableHandle = todoListResource.tasks.handle;
+      // tasks table counter
+      const taskCounter = todoListResource.task_counter;
 
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${moduleAddress}::todolist::Task`,
+          key: `${counter}`,
+        };
+        const task =
+          (await aptos.getTableItem) <
+          Task >
+          { handle: tableHandle, data: tableItem };
+        tasks.push(task);
+        counter++;
+      }
+      // set tasks in local state
+      setTasks(tasks);
+    } catch (e) {
+      console.log(e);
+      setAccountHasList(false);
+    }
+  };
   const fetchTasks = async () => {
     if (!account) return [];
     try {
@@ -36,7 +70,7 @@ const Page = () => {
 
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${moduleAddress}::task3::TaskManager`
+        `${moduleAddress}::task4::TaskManager`
       );
       console.log("this is a todo list resource");
       setAccountHasList(true);

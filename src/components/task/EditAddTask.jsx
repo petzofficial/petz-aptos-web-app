@@ -64,7 +64,7 @@ const EditAddTask = ({ method }) => {
     setTransactionInProgress(true);
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::add_task`,
+        function: `${moduleAddress}::task4::add_task`,
         functionArguments: [task?.title, task?.description, 1, 1],
       },
     };
@@ -90,7 +90,7 @@ const EditAddTask = ({ method }) => {
       type: "entry_function_payload",
       function: `${moduleAddress}::task3::update_task`,
       type_arguments: [],
-      arguments: [1, "test", "test", 1, 1],
+      functionArguments: [task?.title, task?.description, 1, 1],
     };
     const transactionPayload = {
       data: {
