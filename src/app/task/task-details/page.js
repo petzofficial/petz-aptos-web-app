@@ -20,7 +20,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { AptosClient } from "aptos";
 
-import { formatDateTime3 } from "@/components/common/datetime";
+import { getFormattedDateTime } from "@/components/common/datetime";
+import PriorityComponent from "@/utils/aptostask/aptostask";
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
@@ -122,6 +123,8 @@ const Page = () => {
     }
   };
   const completeTask = async () => {
+    console.log("this is item id ");
+    console.log(itemID);
     if (!account) return [];
     setTransactionInProgress(true);
     // build a transaction payload to be submited
@@ -138,11 +141,14 @@ const Page = () => {
       // wait for transaction
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
+      toast.success("Task mark completed");
+      router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
+
+      console.log(error);
+      toast.success("error occured");
     } finally {
-      router.push("/task", { scroll: true });
-      toast.success("Task mark completed");
       setTransactionInProgress(false);
     }
   };
@@ -219,11 +225,16 @@ const Page = () => {
               </div>
               <div>
                 <p>Create Date </p>
-                <span>{formatDateTime3(task?.create_date)}</span>
+                <span>
+                  {getFormattedDateTime(task?.create_date).formattedDate +
+                    " " +
+                    getFormattedDateTime(task?.create_date).formattedTime}
+                </span>
               </div>
               <div>
                 <p>Task priority</p>
-                <span>{task?.priority}</span>
+                {PriorityComponent(task?.priority)}
+                {/* <span>{task?.priority}</span> */}
               </div>
               <div>
                 <p>Cycle count</p>
@@ -270,6 +281,8 @@ const Page = () => {
               ) : (
                 <button
                   onClick={() => {
+                    console.log("mark as completed is clicked");
+
                     completeTask();
                     // handleStatus(task._id);
                   }}

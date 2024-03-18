@@ -8,6 +8,7 @@ import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Pagination from "@/components/button/Pagination";
 // import { getTaskData } from "@/utils/localDB";
+import PriorityComponent from "@/utils/aptostask/aptostask";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
@@ -27,41 +28,7 @@ const Page = () => {
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [accountHasList, setAccountHasList] = useState(false);
-  const fetchList = async () => {
-    if (!account) return [];
-    try {
-      const todoListResource = await aptos.getAccountResource({
-        accountAddress: account?.address,
-        resourceType: `${moduleAddress}::todolist::TodoList`,
-      });
-      setAccountHasList(true);
-      // tasks table handle
-      const tableHandle = todoListResource.tasks.handle;
-      // tasks table counter
-      const taskCounter = todoListResource.task_counter;
 
-      let tasks = [];
-      let counter = 1;
-      while (counter <= taskCounter) {
-        const tableItem = {
-          key_type: "u64",
-          value_type: `${moduleAddress}::todolist::Task`,
-          key: `${counter}`,
-        };
-        const task =
-          (await aptos.getTableItem) <
-          Task >
-          { handle: tableHandle, data: tableItem };
-        tasks.push(task);
-        counter++;
-      }
-      // set tasks in local state
-      setTasks(tasks);
-    } catch (e) {
-      console.log(e);
-      setAccountHasList(false);
-    }
-  };
   const fetchTasks = async () => {
     if (!account) return [];
     try {
@@ -205,35 +172,33 @@ const Page = () => {
                     <button>All</button>
                   </div>
                   <div
-                    onClick={() => handleFilter("Pending")}
+                    onClick={() => handleFilter(0)}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === 0 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdTime />
                     <button>Pending</button>
                   </div>
                   <div
-                    onClick={() => handleFilter("In Progress")}
+                    onClick={() => handleFilter(1)}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === "In Progress"
-                        ? "bg-[#FEE4D1] text-[#FF6900]"
-                        : ""
+                      slug === 1 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <CgTimelapse className="border rounded-full" />
                     <button>In Progress</button>
                   </div>
                   <div
-                    onClick={() => handleFilter("Completed")}
+                    onClick={() => handleFilter(2)}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === 2 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdDoneAll />
                     <button
                       className={`${
-                        slug === "Completed"
+                        slug === 2
                           ? "bg-[#FEE4D1] text-[#FF6900] cursor-pointer"
                           : ""
                       }`}
@@ -274,6 +239,7 @@ const Page = () => {
       </div>
     );
   }
+
   return (
     <div>
       <section className="tasks">
@@ -294,27 +260,27 @@ const Page = () => {
                   <button>All</button>
                 </div>
                 <div
-                  onClick={() => handleFilter("Pending")}
+                  onClick={() => handleFilter(0)}
                   className={`flex items-center space-x-4 ${
-                    slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === 0 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <IoMdTime />
                   <button>Pending</button>
                 </div>
                 <div
-                  onClick={() => handleFilter("In Progress")}
+                  onClick={() => handleFilter(1)}
                   className={`flex items-center space-x-4 ${
-                    slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === 1 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <CgTimelapse className="border rounded-full" />
                   <button>In Progress</button>
                 </div>
                 <div
-                  onClick={() => handleFilter("Completed")}
+                  onClick={() => handleFilter(2)}
                   className={`flex items-center space-x-4 ${
-                    slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === 2 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <IoMdDoneAll />
@@ -348,7 +314,7 @@ const Page = () => {
                             ? settingsLocalData.cycleCount
                             : "4"}
                         </p>
-                        <p>{item.priority}</p>
+                        <p>{PriorityComponent(item.priority)}</p>
                       </div>
                     </div>
                     <div className="flex mt-7"></div>

@@ -31,11 +31,8 @@ const EditAddTask = ({ method }) => {
     priority: "",
   });
   const [priority, setPriority] = useState("");
-  console.log("these are tasks");
-  console.log(tasks);
   const editTask = tasks.find((task) => task?.task_id === existingTaskId);
-  console.log("this is edited task");
-  console.log(editTask);
+
   useEffect(() => {
     if (method === "edit" && editTask) {
       setTask({
@@ -73,28 +70,25 @@ const EditAddTask = ({ method }) => {
       await client.waitForTransaction(response.hash);
 
       setAccountHasList(true);
+      toast.success("Task added");
     } catch (error) {
+      toast.success("error occurred");
       setAccountHasList(false);
     } finally {
       setTransactionInProgress(false);
       router.push("/task", { scroll: true });
-      toast.success("Task added");
     }
   };
   // edit task
-  const editingTask = async () => {
+  const editingTask = async (e) => {
+    e.preventDefault();
     if (!account) return [];
     setTransactionInProgress(true);
     // build a transaction payload to be submited
-    const payload = {
-      type: "entry_function_payload",
-      function: `${moduleAddress}::task3::update_task`,
-      type_arguments: [],
-      functionArguments: [task?.title, task?.description, 1, 1],
-    };
+
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::add_task`,
+        function: `${moduleAddress}::task4::update_task`,
         functionArguments: [
           existingTaskId,
           task?.title,
@@ -110,6 +104,8 @@ const EditAddTask = ({ method }) => {
       // wait for transaction
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
+      toast.success("Task updated");
+      router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
     } finally {
@@ -185,7 +181,9 @@ const EditAddTask = ({ method }) => {
             ></textarea>
 
             <button
-              onClick={(e) => addTask(e)}
+              onClick={
+                method === "edit" ? (e) => editingTask(e) : (e) => addTask(e)
+              }
               type="submit"
               id="submitBtn"
               className="submit-btn"
