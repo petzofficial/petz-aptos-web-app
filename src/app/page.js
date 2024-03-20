@@ -19,7 +19,6 @@ import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
 import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
-import { AptosClient } from "aptos";
 
 import {
   fetchCoinsAction,
@@ -34,11 +33,6 @@ import { getUserData, updateUserData } from "@/utils/localDB";
 import { saveUserData } from "../utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
-export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-export const client = new AptosClient(NODE_URL);
-// change this to be your module account address
-export const moduleAddress =
-  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -315,6 +309,7 @@ const Page = () => {
   };
 
   const resetTimer = () => {
+    clickSound();
     setIsRunning(false);
     if (currentState === "focus") {
       setSeconds(settings.focusDuration);
@@ -328,7 +323,7 @@ const Page = () => {
     }
     //setCurrentState("focus");
     //setCurrentCycle(1);
-    clickSound();
+    
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     }
