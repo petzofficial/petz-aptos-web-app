@@ -289,7 +289,6 @@ const Page = () => {
 
   const startTimer = () => {
     clickSound();
-
     if (energy <= 0) {
       toast.error("Not enough energy");
     } else {
@@ -315,6 +314,7 @@ const Page = () => {
   };
 
   const resetTimer = () => {
+    clickSound();
     setIsRunning(false);
     if (currentState === "focus") {
       setSeconds(settings.focusDuration);
@@ -328,7 +328,6 @@ const Page = () => {
     }
     //setCurrentState("focus");
     //setCurrentCycle(1);
-    clickSound();
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     }
