@@ -103,7 +103,7 @@ const Page = () => {
     // build a transaction payload to be submited
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::delete_task`,
+        function: `${moduleAddress}::task4::delete_task`,
         functionArguments: [itemID],
       },
     };

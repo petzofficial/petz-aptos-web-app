@@ -62,7 +62,7 @@ const EditAddTask = ({ method }) => {
     const transactionPayload = {
       data: {
         function: `${moduleAddress}::task4::add_task`,
-        functionArguments: [task?.title, task?.description, 1, 1],
+        functionArguments: [task?.title, task?.description, 0, priority],
       },
     };
     try {
@@ -93,8 +93,9 @@ const EditAddTask = ({ method }) => {
           existingTaskId,
           task?.title,
           task?.description,
-          task.priority,
+
           1,
+          priority,
         ],
       },
     };
@@ -112,6 +113,8 @@ const EditAddTask = ({ method }) => {
       setTransactionInProgress(false);
     }
   };
+  console.log("this is priority");
+  console.log(priority);
   return (
     <section className="task-edit">
       <div className="addconatiner 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
@@ -144,27 +147,27 @@ const EditAddTask = ({ method }) => {
               <button
                 type="button"
                 onClick={() => {
-                  handlePriority("High");
+                  handlePriority(1);
                 }}
-                className={priority === "High" ? "selected" : ""}
+                className={priority === 1 ? "selected" : ""}
               >
                 High
               </button>
               <button
                 type="button"
                 onClick={() => {
-                  handlePriority("Medium");
+                  handlePriority(2);
                 }}
-                className={priority === "Medium" ? "selected" : ""}
+                className={priority === 2 ? "selected" : ""}
               >
                 Medium
               </button>
               <button
                 type="button"
                 onClick={() => {
-                  handlePriority("Low");
+                  handlePriority(3);
                 }}
-                className={priority === "Low" ? "selected" : ""}
+                className={priority === 3 ? "selected" : ""}
               >
                 Low
               </button>

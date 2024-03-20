@@ -32,14 +32,12 @@ const Page = () => {
   const fetchTasks = async () => {
     if (!account) return [];
     try {
-      console.log("fetch tasks is called");
       setTransactionInProgress(true);
 
       const todoListResource = await client.getAccountResource(
         account?.address,
         `${moduleAddress}::task4::TaskManager`
       );
-      console.log("this is a todo list resource");
       setAccountHasList(true);
       console.log(todoListResource);
       // tasks table handle
@@ -145,11 +143,6 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
-  console.log(tasksToDisplay);
-
-  // aptos tasks
-
-  // aptos tasks integrations
 
   if (tasksToDisplay.length === 0) {
     return (
