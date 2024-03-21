@@ -68,6 +68,7 @@ const Page = () => {
     setMinutes,
     minutes,
     currentState,
+    setTasks,
     setCurrentState,
   } = useContext(TaskContext);
   const [clickSound] = useSound(click_sound);
@@ -78,9 +79,66 @@ const Page = () => {
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account } = useWallet();
-  console.log("this is task id");
+  const fetchTasks = async () => {
+    if (!account) return [];
+    try {
+      // setTransactionInProgress(true);
 
-  console.log(taskId);
+      const todoListResource = await client.getAccountResource(
+        account?.address,
+        `${moduleAddress}::task4::TaskManager`
+      );
+      console.log(todoListResource);
+      // tasks table handle
+      const tableHandle = todoListResource.data.tasks.handle;
+      // tasks table counter
+      console.log("this is table handle");
+      console.log(tableHandle);
+      const taskCounter = todoListResource.data.set_task_event.counter;
+
+      //const eventResource = await client.getEventsByEventHandle(tableHandle);
+      console.log("this is task counter");
+      console.log(taskCounter);
+      /*   const tableItem = {
+                key_type: "u64",
+                value_type: `${moduleAddress}::todolist::Task`,
+                key: "0x49d2b46aeb9d79937334cbd5c8c3847c1aa0a11a7a4d74a82a12b94661dc2a4c",
+              };
+              const taskResource = await client.getTableItem(tableHandle, tableItem);
+              console.log(taskResource) */
+
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        console.log(counter);
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${moduleAddress}::task3::Task`,
+          key: `${counter}`,
+        };
+        console.log("this is table item");
+        console.log(tableItem);
+        // console.log(tableHandle,"task tableHandle")
+        // console.log(tableItem,"task item")
+        const task = await client.getTableItem(tableHandle, tableItem);
+        console.log("this is task ero");
+        console.log(task, "task");
+        tasks.push(task);
+
+        console.log("these are tasks");
+        console.log(tasks);
+        counter++;
+      }
+      setFilteredTasks(tasks);
+      // setTransactionInProgress(false);
+      // set tasks in local state
+      setTasks(tasks);
+    } catch (e) {
+      console.log(e);
+      // setAccountHasList(false);
+      // setTransactionInProgress(false);
+    }
+  };
   useEffect(() => {
     runOneSignal();
   }, []);
@@ -98,7 +156,9 @@ const Page = () => {
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
-
+  useEffect(() => {
+    fetchTasks();
+  }, account?.address);
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
@@ -113,7 +173,7 @@ const Page = () => {
     setSelectedTaskId(id);
     setCurrentCycle(tmpCycle);
   };
-
+  console.log(filteredTasks);
   const handleSelectData = (e) => {
     handleSelectDataFunc(e.target.value);
   };
@@ -387,6 +447,7 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
+
   return (
     <div>
       <section className="home-section">
@@ -440,7 +501,7 @@ const Page = () => {
                 {filteredTasks.map((task, index) => {
                   return (
                     <option value={task._id}>
-                      {index + 1}. {task.title}
+                      {index + 1}. {task.task_name}
                     </option>
                   );
                 })}
