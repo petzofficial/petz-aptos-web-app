@@ -14,7 +14,7 @@ import emptyImage from "@/assets/without/empty.png";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { AptosClient } from "aptos";
 import { TaskContext } from "./context/taskContext";
-
+import { setTasksAndStoreStatus } from "@/utils/localDB.js";
 export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 export const client = new AptosClient(NODE_URL);
 // change this to be your module account address
@@ -82,8 +82,8 @@ const Page = () => {
       }
       setFilteredTasks(tasks);
       setTransactionInProgress(false);
-      // set tasks in local state
       setTasks(tasks);
+      setTasksAndStoreStatus(tasks, "pending");
     } catch (e) {
       console.log(e);
       setAccountHasList(false);

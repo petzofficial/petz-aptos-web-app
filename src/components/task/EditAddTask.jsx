@@ -67,7 +67,11 @@ const EditAddTask = ({ method }) => {
     };
     try {
       const response = await signAndSubmitTransaction(transactionPayload);
-      await client.waitForTransaction(response.hash);
+      console.log("this is response");
+      console.log(response);
+      const transaction = await client.waitForTransaction(response.hash);
+      console.log("this is transaction");
+      console.log(transaction);
 
       setAccountHasList(true);
       toast.success("Task added");
@@ -76,7 +80,7 @@ const EditAddTask = ({ method }) => {
       setAccountHasList(false);
     } finally {
       setTransactionInProgress(false);
-      router.push("/task", { scroll: true });
+      // router.push("/task", { scroll: true });
     }
   };
   // edit task
@@ -103,10 +107,14 @@ const EditAddTask = ({ method }) => {
       // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(transactionPayload);
       // wait for transaction
-      await client.waitForTransaction(response.hash);
+      console.log("this is response");
+      console.log(response);
+      const transaction = await client.waitForTransaction(response.hash);
+      console.log("this is transaction");
+      console.log(transaction);
       setAccountHasList(true);
       toast.success("Task updated");
-      router.push("/task", { scroll: true });
+      // router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
     } finally {

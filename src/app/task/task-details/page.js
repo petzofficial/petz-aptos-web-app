@@ -14,7 +14,12 @@ import Image from "next/image";
 import img1 from "@/assets/home/image 23.png";
 import img2 from "@/assets/home/pgt-removebg-preview 2.png";
 import img3 from "@/assets/home/pst-removebg-preview 2.png";
-import { getTaskData, removeFromDB, updateTask } from "@/utils/localDB";
+import {
+  getTaskData,
+  removeFromDB,
+  updateTask,
+  getTaskFromLocalStorage,
+} from "@/utils/localDB";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -23,7 +28,7 @@ import { AptosClient } from "aptos";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import PriorityComponent from "@/utils/aptostask/aptostask";
 const outfit = Outfit({ subsets: ["latin"] });
-
+import StatusComponent from "@/utils/aptostask/taskStatus";
 export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 export const client = new AptosClient(NODE_URL);
 // change this to be your module account address
@@ -41,7 +46,7 @@ const Page = () => {
   console.log("this is item id");
   console.log(itemID);
   const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
-  console.log();
+  const taskStatus = getTaskFromLocalStorage(itemID);
   const task = tasks.find((task) => task?.task_id === itemID);
   console.log(task);
   const settingsLocalData =
@@ -169,7 +174,7 @@ const Page = () => {
               className="flex justify-between items-center status-bar"
             >
               <h3>Status</h3>
-              <h3 className="text-[#FF6900]">{task?.status}</h3>
+              <h3 className="text-[#FF6900]">{taskStatus?.status}</h3>
             </div>
             {task?.status === "Completed" ? (
               ""
