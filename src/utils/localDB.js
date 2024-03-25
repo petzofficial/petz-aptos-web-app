@@ -40,6 +40,25 @@ export const getTaskFromLocalStorage = (task_id) => {
     return foundTask || null;
   }
 };
+export const updateTaskStatusInLocalStorage = (task_id, newStatus) => {
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const taskIndex = existingTasks.findIndex(
+      (task) => task.task_id === task_id
+    );
+    if (taskIndex !== -1) {
+      existingTasks[taskIndex].status = newStatus;
+      const updated = localStorage.setItem(
+        "tasks",
+        JSON.stringify(existingTasks)
+      );
+      console.log(updated);
+      return existingTasks[taskIndex];
+    } else {
+      return null;
+    }
+  }
+};
 
 const saveUserData = (userData) => {
   if (typeof window !== "undefined") {

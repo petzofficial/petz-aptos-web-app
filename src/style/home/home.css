@@ -1,0 +1,186 @@
+.home-section .addcontainer {
+  padding-top: 90px;
+  /* SKILL 2 */
+  /* SKILL 3 */
+}
+@media (max-width: 768px) {
+  .home-section .addcontainer {
+    padding-top: 80px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .home-section .addcontainer {
+    padding-top: 80px;
+  }
+}
+.home-section .addcontainer .home-inner {
+  max-width: -moz-max-content;
+  max-width: max-content;
+  margin: auto;
+}
+.home-section .addcontainer .home-inner .first-box {
+  padding: 13px;
+  border-radius: 16px;
+  border: 1.5px solid rgb(164, 164, 164);
+}
+.home-section .addcontainer .home-inner .first-box .skill p {
+  font-weight: 600;
+}
+.home-section .addcontainer .home-inner .first-box p {
+  color: #ff6900;
+}
+.home-section .addcontainer .home-inner .first-box h4 {
+  font-size: 20px;
+  font-weight: 500;
+}
+.home-section .addcontainer .home-inner .first-box .containerr {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.home-section .addcontainer .home-inner .first-box .containerr .progress {
+  width: 200px;
+  height: 200px;
+  font-size: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  line-height: 200px;
+  transform: rotate(272deg);
+  margin: 20px;
+  box-shadow: 2px 2px 2px 2px white;
+}
+@media (max-width: 768px) {
+  .home-section .addcontainer .home-inner .first-box .containerr .progress {
+    width: 120px;
+    height: 120px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .home-section .addcontainer .home-inner .first-box .containerr .progress {
+    width: 170px;
+    height: 170px;
+  }
+}
+.home-section .addcontainer .home-inner .first-box .containerr .progress .title {
+  position: relative;
+  z-index: 12;
+}
+.home-section .addcontainer .home-inner .first-box .containerr .progress .overlay {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.home-section .addcontainer .home-inner .first-box .containerr .progress .left,
+.home-section .addcontainer .home-inner .first-box .containerr .progress .right {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 10px solid #ff6900;
+  border-radius: 100px 0px 0px 100px;
+  border-right: 0;
+  transform-origin: right;
+}
+.home-section .addcontainer .home-inner .first-box .containerr .progress .left {
+  animation: load1 0s linear forwards;
+}
+@keyframes load1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(175deg);
+  }
+}
+.home-section .addcontainer .home-inner .play-move-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-section .addcontainer .home-inner .play-move-btn .mid {
+  width: 50px;
+  height: 50px;
+}
+@media (max-width: 768px) {
+  .home-section .addcontainer .home-inner .play-move-btn .mid {
+    width: 40px;
+    height: 40px;
+  }
+}
+.home-section .addcontainer .home-inner .play-move-btn button {
+  border-radius: 10px;
+  background: #ff6900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.home-section .addcontainer .home-inner .play-move-btn button svg {
+  font-size: 23px;
+  color: white;
+}
+@media (max-width: 768px) {
+  .home-section .addcontainer .home-inner .play-move-btn button svg {
+    font-size: 17px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .home-section .addcontainer .home-inner .play-move-btn button svg {
+    font-size: 20px;
+  }
+}
+.home-section .addcontainer .skill {
+  margin-bottom: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+.home-section .addcontainer .skill:before {
+  width: 100%;
+  height: 5px;
+  content: "";
+  display: block;
+  position: absolute;
+  background: #959595;
+  bottom: 0;
+  border-radius: 5px;
+}
+.home-section .addcontainer .skill-bar {
+  width: 100%;
+  height: 5px;
+  background: #4cb54a;
+  display: block;
+  position: relative;
+  border-radius: 5px;
+}
+.home-section .addcontainer .skill-bar span {
+  position: absolute;
+  border-top: 5px solid #f4392f;
+  top: -30px;
+  padding: 0;
+  font-size: 18px;
+  padding: 3px 0;
+  font-weight: 500;
+}
+.home-section .addcontainer .skill-bar {
+  position: relative;
+}
+.home-section .addcontainer .skill1 .skill-count1 {
+  right: 0;
+}
+.home-section .addcontainer .skill2 {
+  width: 60%;
+}
+.home-section .addcontainer .skill2 .skill-count2 {
+  right: 0;
+}
+.home-section .addcontainer .skill3 {
+  width: 80%;
+  background: #5c6cff;
+}/*# sourceMappingURL=home.css.map */

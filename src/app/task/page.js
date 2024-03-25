@@ -83,7 +83,7 @@ const Page = () => {
       setFilteredTasks(tasks);
       setTransactionInProgress(false);
       setTasks(tasks);
-      setTasksAndStoreStatus(tasks, "pending");
+      setTasksAndStoreStatus(tasks, "Pending");
     } catch (e) {
       console.log(e);
       setAccountHasList(false);
@@ -165,27 +165,29 @@ const Page = () => {
                     <button>All</button>
                   </div>
                   <div
-                    onClick={() => handleFilter(0)}
+                    onClick={() => handleFilter("Pending")}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === 0 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdTime />
                     <button>Pending</button>
                   </div>
                   <div
-                    onClick={() => handleFilter(1)}
+                    onClick={() => handleFilter("In Progress")}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === 1 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === "In Progress"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
                     }`}
                   >
                     <CgTimelapse className="border rounded-full" />
                     <button>In Progress</button>
                   </div>
                   <div
-                    onClick={() => handleFilter(2)}
+                    onClick={() => handleFilter("Completed")}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === 2 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdDoneAll />
@@ -253,27 +255,27 @@ const Page = () => {
                   <button>All</button>
                 </div>
                 <div
-                  onClick={() => handleFilter(0)}
+                  onClick={() => handleFilter("Pending")}
                   className={`flex items-center space-x-4 ${
-                    slug === 0 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <IoMdTime />
                   <button>Pending</button>
                 </div>
                 <div
-                  onClick={() => handleFilter(1)}
+                  onClick={() => handleFilter("In Progress")}
                   className={`flex items-center space-x-4 ${
-                    slug === 1 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <CgTimelapse className="border rounded-full" />
                   <button>In Progress</button>
                 </div>
                 <div
-                  onClick={() => handleFilter(2)}
+                  onClick={() => handleFilter("Completed")}
                   className={`flex items-center space-x-4 ${
-                    slug === 2 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
                   <IoMdDoneAll />

@@ -9,7 +9,7 @@ import { Outfit } from "next/font/google";
 import { FaSquare, FaPlay } from "react-icons/fa";
 import { IoIosRefresh } from "react-icons/io";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-
+import { updateTaskStatusInLocalStorage } from "@/utils/localDB";
 import Image from "next/image";
 import img1 from "@/assets/home/image 23.png";
 import img2 from "@/assets/home/pgt-removebg-preview 2.png";
@@ -193,7 +193,13 @@ const Page = () => {
                 </Link>
                 <Link
                   key={task?.taskId}
-                  onClick={setTaskId(task?.task_id)}
+                  onClick={() => {
+                    setTaskId(task?.task_id);
+                    updateTaskStatusInLocalStorage(
+                      task?.task_id,
+                      "In Progress"
+                    );
+                  }}
                   href={
                     task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`
                   }

@@ -1,0 +1,78 @@
+.transaction-details {
+  padding-top: 90px;
+}
+@media (max-width: 768px) {
+  .transaction-details {
+    padding-top: 70px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .transaction-details {
+    padding-top: 80px;
+  }
+}
+.transaction-details .addcontainer {
+  max-width: 1280px;
+  margin: auto;
+}
+.transaction-details .addcontainer .transaction-inner {
+  max-width: 572px;
+  margin: -45px auto 0 auto;
+}
+@media (max-width: 768px) {
+  .transaction-details .addcontainer .transaction-inner {
+    margin-top: -32px;
+  }
+}
+.transaction-details .addcontainer .transaction-inner h3 {
+  font-size: 30px;
+  font-weight: 600;
+  color: #ff6900;
+  text-align: center;
+  padding-bottom: 35px;
+}
+@media (max-width: 768px) {
+  .transaction-details .addcontainer .transaction-inner h3 {
+    font-size: 22px;
+    padding-bottom: 2rem;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .transaction-details .addcontainer .transaction-inner h3 {
+    font-size: 26px;
+    padding-bottom: 25px;
+  }
+}
+.transaction-details .addcontainer .transaction-inner .trans-body div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+}
+@media (max-width: 768px) {
+  .transaction-details .addcontainer .transaction-inner .trans-body div {
+    margin: 6px 0;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .transaction-details .addcontainer .transaction-inner .trans-body div {
+    margin: 8px 0;
+  }
+}
+.transaction-details .addcontainer .transaction-inner .trans-body div p {
+  font-weight: 700;
+  font-size: 16px;
+}
+@media (max-width: 768px) {
+  .transaction-details .addcontainer .transaction-inner .trans-body div p {
+    font-size: 14px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .transaction-details .addcontainer .transaction-inner .trans-body div p {
+    font-size: 15px;
+  }
+}
+.transaction-details .addcontainer .transaction-inner .trans-body div span {
+  color: #999;
+}/*# sourceMappingURL=transaction.css.map */

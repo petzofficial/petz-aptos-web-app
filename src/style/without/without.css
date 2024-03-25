@@ -1,0 +1,94 @@
+.without-selection {
+  max-width: 466px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .without-selection .without-inner img {
+    width: 200px;
+    height: 100px;
+    margin: auto;
+  }
+}
+.without-selection .without-inner h3 {
+  color: #FF6900;
+  font-size: 30px;
+  font-weight: 800;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .without-selection .without-inner h3 {
+    font-size: 20px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .without-selection .without-inner h3 {
+    font-size: 25px;
+  }
+}
+.without-selection .without-inner p {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .without-selection .without-inner p {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .without-selection .without-inner p {
+    font-size: 15px;
+  }
+}
+.without-selection .selection-button {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 326px;
+}
+.without-selection .selection-button a {
+  margin: auto;
+  margin-top: 20px;
+  width: 100%;
+  padding: 17px 7px;
+  background-color: white;
+  color: #FF6900;
+  border-radius: 8px;
+  border: 1px solid #FF6900;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  transition: all ease 0.2s;
+}
+@media (max-width: 768px) {
+  .without-selection .selection-button a {
+    padding: 10px 5px;
+    font-size: 14px;
+  }
+}
+.without-selection .selection-button a:hover {
+  background: #FF6900;
+  border: 1px solid #fff;
+  color: #fff;
+}
+.without-selection .selection-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 16px;
+}
+@media (max-width: 768px) {
+  .without-selection .selection-footer {
+    font-size: 14px;
+    margin-top: 50px;
+  }
+}
+@media (max-width: 768px) {
+  .without-selection .selection-footer p {
+    font-size: 14px;
+  }
+}/*# sourceMappingURL=without.css.map */

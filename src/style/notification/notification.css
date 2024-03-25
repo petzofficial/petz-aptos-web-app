@@ -1,0 +1,232 @@
+.notification {
+  padding-top: 90px;
+  margin-bottom: 40px;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification {
+    padding-top: 80px;
+  }
+}
+@media (max-width: 768px) {
+  .notification {
+    padding-top: 70px;
+  }
+}
+.notification .addcontainer {
+  max-width: 1280px;
+  margin: auto;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-title-bar {
+    margin-bottom: -10px;
+  }
+}
+.notification .addcontainer .notification-title-bar .not-box {
+  padding-top: 3px;
+}
+.notification .addcontainer .notification-title-bar .not-box h3 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #ff6900;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-title-bar .not-box h3 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-title-bar .not-box h3 {
+    font-size: 25px;
+  }
+}
+.notification .addcontainer .notification-title-bar .not-box div p {
+  width: 26px;
+  height: 26px;
+  background: #e50000;
+  border-radius: 50%;
+  color: white;
+  margin-left: 3px;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-title-bar .not-box div p {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+}
+.notification .addcontainer .notification-title-bar .clear-btn {
+  padding-top: 4px;
+}
+.notification .addcontainer .notification-title-bar .clear-btn button {
+  font-size: 26px;
+  font-weight: 700;
+  color: #e50000;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-title-bar .clear-btn button {
+    font-size: 16px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-title-bar .clear-btn button {
+    font-size: 20px;
+  }
+}
+.notification .addcontainer .notification-inner {
+  max-width: 487px;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-inner {
+    padding-top: 10px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-inner {
+    padding-top: 40px;
+  }
+}
+.notification .addcontainer .notification-inner .message-box {
+  border-bottom: 1px solid #a8a8a8;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-inner .message-box {
+    margin: 10px 0;
+  }
+}
+.notification .addcontainer .notification-inner .message-box .icon svg {
+  font-size: 16px;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: #ff6900;
+  color: white;
+  border-radius: 50%;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-inner .message-box .icon svg {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-inner .message-box .icon svg {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 320px) {
+  .notification .addcontainer .notification-inner .message-box .icon svg {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
+}
+.notification .addcontainer .notification-inner .message-box .message {
+  line-height: 1.3rem;
+  margin-top: 5px;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-inner .message-box .message {
+    margin-top: 0;
+  }
+}
+.notification .addcontainer .notification-inner .message-box .message h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-inner .message-box .message h3 {
+    font-size: 14px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-inner .message-box .message h3 {
+    font-size: 16px;
+  }
+}
+@media (max-width: 320px) {
+  .notification .addcontainer .notification-inner .message-box .message h3 {
+    font-size: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .notification .addcontainer .notification-inner .message-box .message p {
+    font-size: 14px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .notification .addcontainer .notification-inner .message-box .message p {
+    font-size: 16px;
+  }
+}
+@media (max-width: 320px) {
+  .notification .addcontainer .notification-inner .message-box .message p {
+    font-size: 12px;
+  }
+}
+
+.info-inner {
+  max-width: 800px;
+  margin: auto;
+}
+.info-inner h3 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: -40px;
+  color: #ff6900;
+}
+@media (max-width: 768px) {
+  .info-inner h3 {
+    font-size: 18px;
+    margin-top: -28px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .info-inner h3 {
+    font-size: 25px;
+    margin-top: -34px;
+  }
+}
+@media (max-width: 768px) {
+  .info-inner .info {
+    margin-top: 2rem;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .info-inner .info {
+    margin-top: 50px;
+  }
+}
+.info-inner .info h4 {
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+  .info-inner .info h4 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .info-inner .info h4 {
+    font-size: 22px;
+  }
+}
+.info-inner .info p {
+  font-size: 18px;
+  line-height: 1.2rem;
+}
+@media (max-width: 768px) {
+  .info-inner .info p {
+    font-size: 14px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .info-inner .info p {
+    font-size: 16px;
+  }
+}/*# sourceMappingURL=notification.css.map */

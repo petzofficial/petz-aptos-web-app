@@ -1,0 +1,175 @@
+.selection-nft {
+  background: url("../../assets/nft/Rectangle 34626066.png") no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .selection-nft {
+    height: auto;
+  }
+}
+.selection-nft .addcontainer {
+  max-width: 1280px;
+  margin: auto;
+}
+.selection-nft .selection-title h2 {
+  color: #FF6900;
+  font-size: 40px;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-title h2 {
+    font-size: 25px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .selection-nft .selection-title h2 {
+    font-size: 30px;
+  }
+}
+.selection-nft .selection-title h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: -20px;
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-title h3 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .selection-nft .selection-title h3 {
+    font-size: 16px;
+  }
+}
+.selection-nft .selection-inner {
+  margin-top: 40px;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .selection-nft .selection-inner .pick-cards {
+    display: grid;
+    padding: 30px 0;
+  }
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-inner .pick-cards {
+    display: grid;
+  }
+}
+@media (max-width: 375px) {
+  .selection-nft .selection-inner .pick-cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+.selection-nft .selection-inner .pick-cards .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 200px;
+  height: 250px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 14px;
+  color: black;
+  transition: 0.3s;
+  border: 1px solid #898989;
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-inner .pick-cards .box {
+    width: 170px;
+    height: 200px;
+  }
+}
+.selection-nft .selection-inner .pick-cards .box .image {
+  width: 135px;
+  height: 134px;
+  background-color: rgba(255, 105, 0, 0.25);
+  backface-visibility: 25%;
+  border-radius: 13px;
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-inner .pick-cards .box .image {
+    width: 100px;
+    height: 99px;
+    padding: 20px;
+  }
+}
+.selection-nft .selection-inner .pick-cards .box .pitbull-footer {
+  width: 135px;
+  display: flex;
+  justify-content: space-between;
+}
+.selection-nft .selection-inner .pick-cards .box .pitbull-footer p {
+  font-size: 16px;
+}
+.selection-nft .selection-inner .pick-cards .box:hover {
+  background: #FF6900;
+}
+.selection-nft .selection-inner .pick-cards .box:hover .image {
+  background: white;
+}
+.selection-nft .selection-inner .pick-cards .box:hover .pitbull-footer {
+  font-size: 16px;
+  color: #fff;
+}
+.selection-nft .selection-button {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+.selection-nft .selection-button a {
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
+  padding: 17px 7px;
+  border-radius: 8px;
+  border: 1px solid #FF6900;
+  color: #FF6900;
+  font-weight: 600;
+  background-color: white;
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-button a {
+    padding: 10px 5px;
+    font-size: 14px;
+  }
+}
+.selection-nft .selection-button a:hover {
+  background: #FF6900;
+  border: 1px solid white;
+  color: white;
+}
+.selection-nft .selection-footer {
+  padding-top: 20px;
+  font-size: 16px;
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-footer {
+    font-size: 14px;
+    padding-bottom: 10px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .selection-nft .selection-footer {
+    font-size: 15px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .selection-nft .selection-footer {
+    margin-top: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .selection-nft .selection-footer p {
+    font-size: 14px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .selection-nft .selection-footer p {
+    font-size: 15px;
+  }
+}/*# sourceMappingURL=selection.css.map */

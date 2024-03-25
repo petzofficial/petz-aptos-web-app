@@ -1,0 +1,185 @@
+.tasks {
+  padding-top: 90px;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks {
+    padding-top: 80px;
+  }
+}
+@media (max-width: 768px) {
+  .tasks {
+    padding-top: 70px;
+  }
+}
+.tasks .addcontainer {
+  max-width: 1280px;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-left {
+    max-width: 600px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-left {
+    max-width: 600px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar {
+  color: #898989;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar {
+    margin-top: 20px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex {
+  border: 1px solid #898989;
+  margin: 7px 0;
+  padding: 10px 7px;
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex svg {
+  font-size: 26px;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex svg {
+    font-size: 16px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex svg {
+    font-size: 24px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex button {
+  font-size: 24px;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex button {
+    font-size: 16px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex button {
+    font-size: 22px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex:hover {
+  background-color: #FEE4D1;
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex:hover button {
+  color: #FF6900;
+}
+.tasks .addcontainer .tasks-inner .tasks-left .tasks-navbar .flex:hover svg {
+  color: #FF6900;
+}
+.tasks .addcontainer .tasks-inner .tasks-right {
+  max-width: 466px;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-right {
+    max-width: 600px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-right {
+    max-width: 600px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-right h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 20px;
+  color: #FF6900;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-right h2 {
+    font-size: 25px;
+  }
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-right h2 {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 2rem;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-right .box {
+  border: 1px solid #9C9C9C;
+  border-radius: 16px;
+  margin-bottom: 15px;
+}
+.tasks .addcontainer .tasks-inner .tasks-right .box svg {
+  font-size: 20px;
+}
+.tasks .addcontainer .tasks-inner .tasks-right .box h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-right .box h1 {
+    font-size: 16px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-right .box p {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(88, 85, 85, 0.6);
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-right .box p {
+    font-size: 16px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-right .box .color {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-right .box .color {
+    width: 25px;
+    height: 25px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .tasks .addcontainer .tasks-inner .tasks-right .box .color {
+    width: 30px;
+    height: 30px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-right .box .middle {
+  justify-content: space-between;
+  width: 70%;
+}
+.tasks .addcontainer .tasks-inner .tasks-right .add-task-btn a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px 20px;
+  border: 1px solid #FF6900;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  color: #FF6900;
+  transition: all ease 0.2s;
+}
+@media (max-width: 768px) {
+  .tasks .addcontainer .tasks-inner .tasks-right .add-task-btn a {
+    font-size: 14px;
+  }
+}
+.tasks .addcontainer .tasks-inner .tasks-right .add-task-btn a:hover {
+  background: #FF6900;
+  color: #fff;
+}/*# sourceMappingURL=tasks.css.map */

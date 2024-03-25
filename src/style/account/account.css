@@ -1,0 +1,355 @@
+.account {
+  padding-top: 90px;
+}
+@media (max-width: 768px) {
+  .account {
+    padding-top: 70px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account {
+    padding-top: 80px;
+  }
+}
+.account .addcontainer {
+  max-width: 1280px;
+  margin: auto;
+}
+.account .addcontainer .account-top {
+  /* SKILL 2 */
+  /* SKILL 3 */
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top a {
+    margin-top: 30px;
+  }
+}
+.account .addcontainer .account-top .max-width {
+  max-width: -moz-max-content;
+  max-width: max-content;
+  min-width: 400px;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-top .max-width {
+    max-width: 600px;
+  }
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top .max-width {
+    max-width: 600px;
+  }
+}
+.account .addcontainer .account-top h2 {
+  font-size: 30px;
+  color: #ff6900;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-top h2 {
+    font-size: 25px;
+    text-align: center;
+  }
+}
+.account .addcontainer .account-top .token-trans-btn {
+  margin-top: 2.5rem;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top .token-trans-btn {
+    padding-top: 0px;
+    max-width: 600px;
+    display: grid;
+    margin: 16px auto 5px auto;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-top .token-trans-btn {
+    max-width: 600px;
+    display: grid;
+    margin: auto;
+    margin-top: 15px;
+  }
+}
+.account .addcontainer .account-top .token-trans-btn .marketPlace {
+  padding: 10px 30px;
+  border-radius: 8px;
+  background-color: #ff6900;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin: 2px 0;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top .token-trans-btn .marketPlace {
+    padding: 5px 20px;
+  }
+}
+.account .addcontainer .account-top .token-trans-btn button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 7px;
+  border: 1px solid #898989;
+  width: 100%;
+  margin: 7px 0;
+  font-weight: 700;
+  font-size: 24px;
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-top .token-trans-btn button {
+    font-size: 22px;
+    max-width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top .token-trans-btn button {
+    font-size: 16px;
+    max-width: 100%;
+    margin: 3.5px 0;
+  }
+}
+.account .addcontainer .account-top .token-trans-btn button svg {
+  font-size: 22px;
+  color: #898989;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-top .token-trans-btn button svg {
+    font-size: 15px;
+  }
+}
+.account .addcontainer .account-top .first-box {
+  padding: 13px;
+  border-radius: 16px;
+  border: 1px solid rgb(164, 164, 164);
+  min-width: 300px;
+}
+.account .addcontainer .account-top .first-box .skill p {
+  font-weight: 600;
+}
+.account .addcontainer .account-top .first-box p {
+  color: #ff6900;
+}
+.account .addcontainer .account-top .first-box h4 {
+  font-size: 20px;
+  font-weight: 500;
+}
+.account .addcontainer .account-top .play-move-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.account .addcontainer .account-top .play-move-btn button {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: #ff6900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.account .addcontainer .account-top .play-move-btn button svg {
+  width: 23px;
+  height: 23px;
+  color: white;
+}
+.account .addcontainer .account-top .skill {
+  margin-bottom: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+.account .addcontainer .account-top .skill:before {
+  width: 100%;
+  height: 5px;
+  content: "";
+  display: block;
+  position: absolute;
+  background: #959595;
+  bottom: 0;
+  border-radius: 5px;
+}
+.account .addcontainer .account-top .skill-bar {
+  width: 100%;
+  height: 5px;
+  background: #4cb54a;
+  display: block;
+  position: relative;
+  border-radius: 5px;
+}
+.account .addcontainer .account-top .skill-bar span {
+  position: absolute;
+  border-top: 5px solid #f4392f;
+  top: -30px;
+  padding: 0;
+  font-size: 18px;
+  padding: 3px 0;
+  font-weight: 500;
+}
+.account .addcontainer .account-top .skill-bar {
+  position: relative;
+}
+.account .addcontainer .account-top .skill1 .skill-count1 {
+  right: 0;
+}
+.account .addcontainer .account-top .skill2 {
+  width: 60%;
+}
+.account .addcontainer .account-top .skill2 .skill-count2 {
+  right: 0;
+}
+.account .addcontainer .account-top .skill3 {
+  width: 80%;
+  background: #5c6cff;
+}
+.account .addcontainer .account-token {
+  max-width: 900px;
+  margin: auto;
+}
+@media (max-width: 375px) {
+  .account .addcontainer .account-token .pick-cards {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    justify-content: center;
+  }
+}
+.account .addcontainer .account-token .pick-cards .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 200px;
+  height: 250px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 14px;
+  color: black;
+  transition: 0.3s;
+  border: 1px solid #8b8b8b;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-token .pick-cards .box {
+    width: 170px;
+    height: 200px;
+  }
+}
+.account .addcontainer .account-token .pick-cards .box .image {
+  width: 135px;
+  height: 134px;
+  background-color: rgba(255, 105, 0, 0.25);
+  backface-visibility: 25%;
+  border-radius: 13px;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-token .pick-cards .box .image {
+    width: 100px;
+    height: 99px;
+    padding: 20px;
+  }
+}
+.account .addcontainer .account-token .pick-cards .box .pitbull-footer {
+  width: 135px;
+  display: flex;
+  justify-content: space-between;
+}
+.account .addcontainer .account-token .pick-cards .box .pitbull-footer p {
+  font-size: 16px;
+}
+.account .addcontainer .account-token .pick-cards .box:hover {
+  background: #ff6900;
+}
+.account .addcontainer .account-token .pick-cards .box:hover .image {
+  background: white;
+}
+.account .addcontainer .account-token .pick-cards .box:hover .pitbull-footer {
+  font-size: 16px;
+  color: #fff;
+}
+.account .addcontainer .account-transactions {
+  max-width: 660px;
+  margin: auto;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-transactions {
+    padding-top: 1rem;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-transactions {
+    padding-top: 2rem;
+    max-width: 900px;
+  }
+}
+.account .addcontainer .account-transactions a {
+  border: 1px solid #4a4a4a;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 12px;
+}
+.account .addcontainer .account-transactions a .icon {
+  font-size: 20px;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #191d31;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-transactions a .icon {
+    font-size: 16px;
+    width: 25px;
+    height: 25px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-transactions a .icon {
+    font-size: 18px;
+    width: 29px;
+    height: 29px;
+  }
+}
+.account .addcontainer .account-transactions a p {
+  color: #a7a9b7;
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-transactions a p {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-transactions a p {
+    font-size: 20px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .account .addcontainer .account-transactions a p {
+    font-size: 25px;
+  }
+}
+.account .addcontainer .account-transactions a h4 {
+  font-weight: 600;
+  color: #191d31;
+}
+@media (max-width: 768px) {
+  .account .addcontainer .account-transactions a h4 {
+    font-size: 16px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .account .addcontainer .account-transactions a h4 {
+    font-size: 20px;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .account .addcontainer .account-transactions a h4 {
+    font-size: 22px;
+  }
+}/*# sourceMappingURL=account.css.map */
