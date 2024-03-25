@@ -15,26 +15,30 @@ const getUserData = () => {
   return userData;
 };
 export const setTasksAndStoreStatus = (tasks, status) => {
-  let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks.forEach((task) => {
-    const existingTaskIndex = existingTasks.findIndex(
-      (t) => t.task_id === task.task_id
-    );
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach((task) => {
+      const existingTaskIndex = existingTasks.findIndex(
+        (t) => t.task_id === task.task_id
+      );
 
-    if (existingTaskIndex === -1) {
-      existingTasks.push({ task_id: task.task_id, status: status });
-    } else {
-      existingTasks[existingTaskIndex].status = status;
-    }
-  });
+      if (existingTaskIndex === -1) {
+        existingTasks.push({ task_id: task.task_id, status: status });
+      } else {
+        existingTasks[existingTaskIndex].status = status;
+      }
+    });
 
-  // Store the updated array back to local storage
-  localStorage.setItem("tasks", JSON.stringify(existingTasks));
+    // Store the updated array back to local storage
+    localStorage.setItem("tasks", JSON.stringify(existingTasks));
+  }
 };
 export const getTaskFromLocalStorage = (task_id) => {
-  let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  const foundTask = existingTasks.find((task) => task.task_id === task_id);
-  return foundTask || null;
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const foundTask = existingTasks.find((task) => task.task_id === task_id);
+    return foundTask || null;
+  }
 };
 
 const saveUserData = (userData) => {
