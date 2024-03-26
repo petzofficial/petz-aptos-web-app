@@ -7,6 +7,7 @@ import {
   getTaskData,
   getUserData,
   updateTask,
+  updateTaskStatusInLocalStorage,
   updateUserData,
 } from "@/utils/localDB";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
@@ -283,6 +284,7 @@ const Navbar = ({ method }) => {
       // setFilteredTasks(updatedFilteredTasks);
       // Show success toast
       // const reward = 60 * Math.floor(filtered?.time / 60);
+      updateTaskStatusInLocalStorage(taskId, "Completed");
       toast.success(`Task is Completed`);
       /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
