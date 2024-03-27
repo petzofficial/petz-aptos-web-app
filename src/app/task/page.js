@@ -15,7 +15,10 @@ import emptyImage from "@/assets/without/empty.png";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { AptosClient } from "aptos";
 import { TaskContext } from "./context/taskContext";
-import { setTasksAndStoreStatus } from "@/utils/localDB.js";
+import {
+  setTasksAndStoreStatus,
+  getAllTasksFromLocalStorage,
+} from "@/utils/localDB.js";
 export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 export const client = new AptosClient(NODE_URL);
 // change this to be your module account address
@@ -29,7 +32,8 @@ const Page = () => {
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [accountHasList, setAccountHasList] = useState(false);
-
+  const localStorageTasks = getAllTasksFromLocalStorage();
+  console.log(localStorageTasks);
   const fetchTasks = async () => {
     if (!account) return [];
     try {
@@ -41,23 +45,13 @@ const Page = () => {
       );
       setAccountHasList(true);
       console.log(todoListResource);
-      // tasks table handle
+
       const tableHandle = todoListResource.data.tasks.handle;
-      // tasks table counter
       console.log("this is table handle");
       console.log(tableHandle);
       const taskCounter = todoListResource.data.set_task_event.counter;
-
-      //const eventResource = await client.getEventsByEventHandle(tableHandle);
       console.log("this is task counter");
       console.log(taskCounter);
-      /*   const tableItem = {
-                key_type: "u64",
-                value_type: `${moduleAddress}::todolist::Task`,
-                key: "0x49d2b46aeb9d79937334cbd5c8c3847c1aa0a11a7a4d74a82a12b94661dc2a4c",
-              };
-              const taskResource = await client.getTableItem(tableHandle, tableItem);
-              console.log(taskResource) */
 
       let tasks = [];
       let counter = 1;
@@ -70,17 +64,22 @@ const Page = () => {
         };
         console.log("this is table item");
         console.log(tableItem);
-        // console.log(tableHandle,"task tableHandle")
-        // console.log(tableItem,"task item")
+
         const task = await client.getTableItem(tableHandle, tableItem);
         console.log("this is task ero");
         console.log(task, "task");
-        tasks.push(task);
+
+        // Retrieve task status from local storage using task ID
+        const taskStatus = localStorageTasks.find(
+          (localStorageTask) => localStorageTask.task_id === task.task_id
+        )?.status;
+        tasks.push({ ...task, taskStatus: taskStatus });
 
         console.log("these are tasks");
         console.log(tasks);
         counter++;
       }
+
       setFilteredTasks(tasks);
       setTransactionInProgress(false);
       setTasks(tasks);
@@ -91,6 +90,7 @@ const Page = () => {
       setTransactionInProgress(false);
     }
   };
+
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -105,7 +105,8 @@ const Page = () => {
       setSlug("All");
       setFilteredTasks(tasks);
     } else {
-      const filtered = tasks.filter((task) => task?.status === status);
+      console.log(status);
+      const filtered = tasks.filter((task) => task?.taskStatus === status);
       setFilteredTasks(filtered);
       setSlug(status);
     }
@@ -166,29 +167,27 @@ const Page = () => {
                     <button>All</button>
                   </div>
                   <div
-                    onClick={() => handleFilter("Pending")}
+                    onClick={() => handleFilter(0)}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === 0 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdTime />
                     <button>Pending</button>
                   </div>
                   <div
-                    onClick={() => handleFilter("In Progress")}
+                    onClick={() => handleFilter(1)}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === "In Progress"
-                        ? "bg-[#FEE4D1] text-[#FF6900]"
-                        : ""
+                      slug === 1 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <CgTimelapse className="border rounded-full" />
                     <button>In Progress</button>
                   </div>
                   <div
-                    onClick={() => handleFilter("Completed")}
+                    onClick={() => handleFilter(2)}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === 2 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdDoneAll />

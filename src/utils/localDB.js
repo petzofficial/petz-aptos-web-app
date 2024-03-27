@@ -33,6 +33,14 @@ export const setTasksAndStoreStatus = (tasks, status) => {
     localStorage.setItem("tasks", JSON.stringify(existingTasks));
   }
 };
+export const getAllTasksFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    return existingTasks;
+  }
+  return [];
+};
+
 export const getTaskFromLocalStorage = (task_id) => {
   if (typeof window !== "undefined") {
     let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
