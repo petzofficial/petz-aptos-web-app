@@ -45,7 +45,14 @@ const Page = () => {
 
   console.log("this is item id");
   console.log(itemID);
-  const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
+  const {
+    taskId,
+    setTaskId,
+    filteredTasks,
+    tasks,
+    selectedTaskId,
+    setSelectedTaskId,
+  } = useContext(TaskContext);
   const taskStatus = getTaskFromLocalStorage(itemID);
   const task = tasks.find((task) => task?.task_id === itemID);
   console.log(task);
@@ -63,7 +70,6 @@ const Page = () => {
     router.push("/task", { scroll: true });
     toast.success("Task deleted");
   };
-
   const handleStatus = (id) => {
     const currentStatus = task.status;
     const newStatus = "Completed";
@@ -76,6 +82,10 @@ const Page = () => {
   const handleButtonClick = () => {
     if (task.status == "Completed") {
       toast.error("Task is Completed");
+    } else {
+      console.log(task?.task_id);
+      setTaskId(task?.task_id);
+      setSelectedTaskId(task?.task_id);
     }
   };
 
@@ -182,7 +192,7 @@ const Page = () => {
               <div className="button-bar flex justify-center items-center space-x-4">
                 <Link
                   key={task?.taskId}
-                  onClick={setTaskId(task?.task_id)}
+                  onClick={() => {}}
                   href={
                     task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`
                   }
@@ -195,10 +205,6 @@ const Page = () => {
                   key={task?.taskId}
                   onClick={() => {
                     setTaskId(task?.task_id);
-                    updateTaskStatusInLocalStorage(
-                      task?.task_id,
-                      "In Progress"
-                    );
                   }}
                   href={
                     task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`

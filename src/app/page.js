@@ -13,7 +13,12 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import Link from "next/link";
 import useSound from "use-sound";
 import CircularClockProgress from "@/components/common/clock";
-import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
+import {
+  getTaskData,
+  rechargeEnergy,
+  updateTask,
+  updateTaskStatusInLocalStorage,
+} from "@/utils/localDB";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
@@ -79,6 +84,8 @@ const Page = () => {
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account } = useWallet();
+  console.log("selected id");
+  console.log(selectedTaskId);
   const fetchTasks = async () => {
     if (!account) return [];
     try {
@@ -349,6 +356,7 @@ const Page = () => {
 
   const startTimer = () => {
     clickSound();
+    updateTaskStatusInLocalStorage(selectedTaskId, "In Progress");
     if (energy <= 0) {
       toast.error("Not enough energy");
     } else {
