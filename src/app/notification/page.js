@@ -11,7 +11,7 @@ import { LuBadgeInfo } from "react-icons/lu";
 import "@/style/notification/notification.scss";
 import { useNotifications } from "@/components/notification/getNotifications";
 import Pagination from "@/components/button/Pagination";
-import { getFormattedDateTime } from "@/components/common/dateTime";
+import { getFormattedDateTime } from "@/components/common/datetime";
 import { truncateString } from "@/components/common/truncate";
 import LoadingCircle from "@/components/common/loading";
 import emptyImage from "@/assets/without/empty.png";

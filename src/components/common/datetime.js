@@ -18,30 +18,18 @@ export const getFormattedDateTime = (timestamp) => {
   return { formattedDate, formattedTime };
 };
 
-export function formatDateTime2(timestamp) {
-  const timestampInMillis = timestamp / 1000;
-  const dateObject = new Date(timestampInMillis);
+// export function formatDateTime3(timestamp) {
+//   const timestampInMillis = timestamp / 1000;
+//   const dateObject = new Date(timestampInMillis);
 
-  const options = {
-    month: "short",
-    day: "numeric",
-  };
+//   const options = {
+//     month: "short",
+//     day: "numeric",
+//     year: "numeric",
+//     hour: "numeric",
+//     minute: "numeric",
+//     hour12: true,
+//   };
 
-  return dateObject.toLocaleString("en-US", options);
-}
-
-export function formatDateTime3(timestamp) {
-  const timestampInMillis = timestamp / 1000;
-  const dateObject = new Date(timestampInMillis);
-
-  const options = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-
-  return dateObject.toLocaleString("en-US", options);
-}
+//   return dateObject.toLocaleString("en-US", options);
+// }

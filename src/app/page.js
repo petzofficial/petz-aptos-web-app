@@ -34,10 +34,10 @@ import { getUserData, updateUserData } from "@/utils/localDB";
 import { saveUserData } from "../utils/localDB";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
-export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-export const client = new AptosClient(NODE_URL);
+const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+const client = new AptosClient(NODE_URL);
 // change this to be your module account address
-export const moduleAddress =
+const moduleAddress =
   "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {

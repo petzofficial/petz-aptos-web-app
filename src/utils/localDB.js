@@ -15,17 +15,20 @@ const getUserData = () => {
   return userData;
 };
 export const setTasksAndStoreStatus = (tasks, status) => {
+  console.log("these are tasks ok done");
+  console.log(tasks);
   if (typeof window !== "undefined") {
     let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.forEach((task) => {
       const existingTaskIndex = existingTasks.findIndex(
         (t) => t.task_id === task.task_id
       );
-
+      console.log("this is existing task");
+      console.log(existingTaskIndex);
       if (existingTaskIndex === -1) {
         existingTasks.push({ task_id: task.task_id, status: status });
       } else {
-        existingTasks[existingTaskIndex].status = status;
+        // existingTasks[existingTaskIndex].status = status;
       }
     });
 

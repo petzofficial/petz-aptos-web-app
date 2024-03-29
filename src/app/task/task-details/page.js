@@ -29,10 +29,10 @@ import { getFormattedDateTime } from "@/components/common/datetime";
 import PriorityComponent from "@/utils/aptostask/aptostask";
 const outfit = Outfit({ subsets: ["latin"] });
 import StatusComponent from "@/utils/aptostask/taskStatus";
-export const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-export const client = new AptosClient(NODE_URL);
+const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+const client = new AptosClient(NODE_URL);
 // change this to be your module account address
-export const moduleAddress =
+const moduleAddress =
   "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {
