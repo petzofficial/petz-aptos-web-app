@@ -93,7 +93,6 @@ const Page = () => {
         account?.address,
         `${moduleAddress}::task4::TaskManager`
       );
-      setAccountHasList(true);
       console.log(todoListResource);
 
       const tableHandle = todoListResource.data.tasks.handle;
