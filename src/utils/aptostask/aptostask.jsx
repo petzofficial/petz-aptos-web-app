@@ -3,8 +3,6 @@
 function PriorityComponent(priority) {
   //   console.log(item);
   let priorityText;
-  console.log(priority);
-
   if (priority === 1) {
     priorityText = "High";
   } else if (priority === 2) {

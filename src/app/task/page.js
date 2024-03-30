@@ -97,7 +97,6 @@ const Page = () => {
     ) || false;
 
   useEffect(() => {
-    console.log("use effect is called");
     fetchTasks();
   }, [account?.address]);
   const handleFilter = (status) => {
@@ -105,13 +104,15 @@ const Page = () => {
       setSlug("All");
       setFilteredTasks(tasks);
     } else {
-      console.log(status);
       const filtered = tasks.filter((task) => task?.taskStatus === status);
       setFilteredTasks(filtered);
       setSlug(status);
     }
   };
 
+  console.log("these are tasks");
+
+  console.log(tasks);
   // Convert total and average time to HH:mm format
   const convertToHHMMSS = (timeInSeconds) => {
     if (timeInSeconds < 60) {
@@ -167,27 +168,29 @@ const Page = () => {
                     <button>All</button>
                   </div>
                   <div
-                    onClick={() => handleFilter(0)}
+                    onClick={() => handleFilter("Pending")}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === 0 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdTime />
                     <button>Pending</button>
                   </div>
                   <div
-                    onClick={() => handleFilter(1)}
+                    onClick={() => handleFilter("In Progress")}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === 1 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === "In Progress"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
                     }`}
                   >
                     <CgTimelapse className="border rounded-full" />
                     <button>In Progress</button>
                   </div>
                   <div
-                    onClick={() => handleFilter(2)}
+                    onClick={() => handleFilter("Completed")}
                     className={`flex cursor-pointer items-center space-x-4 ${
-                      slug === 2 ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                     }`}
                   >
                     <IoMdDoneAll />

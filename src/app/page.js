@@ -84,35 +84,24 @@ const Page = () => {
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account } = useWallet();
-  console.log("selected id");
-  console.log(selectedTaskId);
   const fetchTasks = async () => {
     if (!account) return [];
     try {
-      // setTransactionInProgress(true);
+      setTransactionInProgress(true);
 
       const todoListResource = await client.getAccountResource(
         account?.address,
         `${moduleAddress}::task4::TaskManager`
       );
+      setAccountHasList(true);
       console.log(todoListResource);
-      // tasks table handle
+
       const tableHandle = todoListResource.data.tasks.handle;
-      // tasks table counter
       console.log("this is table handle");
       console.log(tableHandle);
       const taskCounter = todoListResource.data.set_task_event.counter;
-
-      //const eventResource = await client.getEventsByEventHandle(tableHandle);
       console.log("this is task counter");
       console.log(taskCounter);
-      /*   const tableItem = {
-                key_type: "u64",
-                value_type: `${moduleAddress}::todolist::Task`,
-                key: "0x49d2b46aeb9d79937334cbd5c8c3847c1aa0a11a7a4d74a82a12b94661dc2a4c",
-              };
-              const taskResource = await client.getTableItem(tableHandle, tableItem);
-              console.log(taskResource) */
 
       let tasks = [];
       let counter = 1;
@@ -123,27 +112,28 @@ const Page = () => {
           value_type: `${moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
-        console.log("this is table item");
-        console.log(tableItem);
-        // console.log(tableHandle,"task tableHandle")
-        // console.log(tableItem,"task item")
+
         const task = await client.getTableItem(tableHandle, tableItem);
-        console.log("this is task ero");
-        console.log(task, "task");
-        tasks.push(task);
+
+        // Retrieve task status from local storage using task ID
+        const taskStatus = localStorageTasks.find(
+          (localStorageTask) => localStorageTask.task_id === task.task_id
+        )?.status;
+        tasks.push({ ...task, taskStatus: taskStatus });
 
         console.log("these are tasks");
         console.log(tasks);
         counter++;
       }
+
       setFilteredTasks(tasks);
-      // setTransactionInProgress(false);
-      // set tasks in local state
+      setTransactionInProgress(false);
       setTasks(tasks);
+      setTasksAndStoreStatus(tasks, "Pending");
     } catch (e) {
       console.log(e);
-      // setAccountHasList(false);
-      // setTransactionInProgress(false);
+      setAccountHasList(false);
+      setTransactionInProgress(false);
     }
   };
   useEffect(() => {
