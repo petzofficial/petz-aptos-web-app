@@ -126,13 +126,13 @@ const Page = () => {
       }
 
       setFilteredTasks(tasks);
-      setTransactionInProgress(false);
+      // setTransactionInProgress(false);
       setTasks(tasks);
       setTasksAndStoreStatus(tasks, "Pending");
     } catch (e) {
       console.log(e);
-      setAccountHasList(false);
-      setTransactionInProgress(false);
+      // setAccountHasList(false);
+      // setTransactionInProgress(false);
     }
   };
   useEffect(() => {
