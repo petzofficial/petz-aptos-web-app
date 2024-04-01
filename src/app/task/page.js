@@ -19,6 +19,7 @@ import {
   setTasksAndStoreStatus,
   getAllTasksFromLocalStorage,
 } from "@/utils/localDB.js";
+import CircularIndeterminate from "@/components/common/loading";
 const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
 // change this to be your module account address
@@ -29,16 +30,15 @@ const Page = () => {
   const { filteredTasks, setFilteredTasks, tasks, setTasks } =
     useContext(TaskContext);
   const [slug, setSlug] = useState("All");
-  const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [accountHasList, setAccountHasList] = useState(false);
   const localStorageTasks = getAllTasksFromLocalStorage();
+  const [isLoading, setIsLoading] = useState(false);
   console.log(localStorageTasks);
   const fetchTasks = async () => {
     if (!account) return [];
     try {
-      setTransactionInProgress(true);
-
+      setIsLoading(true);
       const todoListResource = await client.getAccountResource(
         account?.address,
         `${moduleAddress}::task4::TaskManager`
@@ -81,13 +81,13 @@ const Page = () => {
       }
 
       setFilteredTasks(tasks);
-      setTransactionInProgress(false);
       setTasks(tasks);
       setTasksAndStoreStatus(tasks, "Pending");
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
       setAccountHasList(false);
-      setTransactionInProgress(false);
+      setIsLoading(false);
     }
   };
 
@@ -146,8 +146,7 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
-
-  if (tasksToDisplay.length === 0) {
+  if (!isLoading && tasksToDisplay.length === 0) {
     return (
       <div>
         <section className="tasks">
@@ -286,51 +285,60 @@ const Page = () => {
                 </div>
               </div>
             </div>
-
-            <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
-              <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
-
-              {tasksToDisplay.map((item) => (
-                <Link
-                  key={item.task_id}
-                  href={`/task/task-details?id=${item.task_id}`}
-                >
-                  <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
-                    <div
-                      style={{ backgroundColor: PriorityColor(item.priority) }}
-                      className={`color`}
-                    ></div>
-                    <div className="middle flex justify-between">
-                      <div>
-                        <h1>{item.task_name}</h1>
-                        <p>{convertToHHMMSS(item.total_time_spent)}</p>
-                      </div>
-                      <div className="text-end">
-                        <p>
-                          {item.cycle_count}/
-                          {settingsLocalData && settingsLocalData.cycleCount
-                            ? settingsLocalData.cycleCount
-                            : "4"}
-                        </p>
-                        <p>{PriorityComponent(item.priority)}</p>
-                      </div>
-                    </div>
-                    <div className="flex mt-7"></div>
-                  </div>
-                </Link>
-              ))}
-
-              <Pagination
-                currentPage={pageNum}
-                totalPages={totalPages}
-                onPageChange={setPageNum}
-              />
-              <div className="add-task-btn">
-                <Link href={"/task/task-add"}>
-                  <button>Add New Task</button>
-                </Link>
+            {isLoading ? (
+              <div className="account-transactions">
+                <CircularIndeterminate />
               </div>
-            </div>
+            ) : (
+              <div>
+                <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
+                  <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
+
+                  {tasksToDisplay.map((item) => (
+                    <Link
+                      key={item.task_id}
+                      href={`/task/task-details?id=${item.task_id}`}
+                    >
+                      <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
+                        <div
+                          style={{
+                            backgroundColor: PriorityColor(item.priority),
+                          }}
+                          className={`color`}
+                        ></div>
+                        <div className="middle flex justify-between">
+                          <div>
+                            <h1>{item.task_name}</h1>
+                            <p>{convertToHHMMSS(item.total_time_spent)}</p>
+                          </div>
+                          <div className="text-end">
+                            <p>
+                              {item.cycle_count}/
+                              {settingsLocalData && settingsLocalData.cycleCount
+                                ? settingsLocalData.cycleCount
+                                : "4"}
+                            </p>
+                            <p>{PriorityComponent(item.priority)}</p>
+                          </div>
+                        </div>
+                        <div className="flex mt-7"></div>
+                      </div>
+                    </Link>
+                  ))}
+
+                  <Pagination
+                    currentPage={pageNum}
+                    totalPages={totalPages}
+                    onPageChange={setPageNum}
+                  />
+                  <div className="add-task-btn">
+                    <Link href={"/task/task-add"}>
+                      <button>Add New Task</button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

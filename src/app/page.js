@@ -153,8 +153,9 @@ const Page = () => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
   useEffect(() => {
+    console.log("use effect is called");
     fetchTasks();
-  }, account?.address);
+  }, [account]);
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();

@@ -162,7 +162,6 @@ const Page = () => {
       setAccountHasList(false);
 
       console.log(error);
-      toast.success("error occured");
     } finally {
       setTransactionInProgress(false);
     }
