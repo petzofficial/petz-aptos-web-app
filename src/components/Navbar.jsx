@@ -1,5 +1,6 @@
 "use client";
 import useSound from "use-sound";
+import toast from "react-hot-toast";
 
 import React, { useState, useEffect } from "react";
 import "../style/nav.scss";
