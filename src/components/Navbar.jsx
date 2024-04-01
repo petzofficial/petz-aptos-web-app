@@ -285,7 +285,7 @@ const Navbar = ({ method }) => {
       // setFilteredTasks(updatedFilteredTasks);
       // Show success toast
       // const reward = 60 * Math.floor(filtered?.time / 60);
-      updateTaskStatusInLocalStorage(taskId, "Completed");
+      updateTaskStatusInLocalStorage(selectedTaskId, "Completed");
       toast.success(`Task is Completed`);
       /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
