@@ -14,6 +14,7 @@ import Link from "next/link";
 import useSound from "use-sound";
 import CircularClockProgress from "@/components/common/clock";
 import {
+  getAllTasksFromLocalStorage,
   getTaskData,
   rechargeEnergy,
   updateTask,
@@ -47,6 +48,8 @@ const moduleAddress =
 
 const Page = () => {
   const searchParams = useSearchParams();
+  const localStorageTasks = getAllTasksFromLocalStorage();
+
   const ItemId = searchParams.get("id");
   const {
     taskId,
@@ -74,6 +77,7 @@ const Page = () => {
     minutes,
     currentState,
     setTasks,
+    tasks,
     setCurrentState,
   } = useContext(TaskContext);
   const [clickSound] = useSound(click_sound);
@@ -83,11 +87,12 @@ const Page = () => {
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
+
   const { connected, account } = useWallet();
   const fetchTasks = async () => {
     if (!account) return [];
     try {
-      setTransactionInProgress(true);
+      // setTransactionInProgress(true);
 
       const todoListResource = await client.getAccountResource(
         account?.address,
@@ -120,11 +125,10 @@ const Page = () => {
         )?.status;
         tasks.push({ ...task, taskStatus: taskStatus });
 
-        console.log("these are tasks");
-        console.log(tasks);
         counter++;
       }
-
+      console.log("these are tasks");
+      console.log(tasks);
       setFilteredTasks(tasks);
       // setTransactionInProgress(false);
       setTasks(tasks);
@@ -153,13 +157,15 @@ const Page = () => {
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
   useEffect(() => {
-    console.log("use effect is called");
     fetchTasks();
-  }, [account]);
+  }, [account?.address]);
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
-    const tasks = getTaskData();
-    const filtered = tasks.find((task) => task._id === id);
+    // const tasks = getTaskData();
+    console.log(tasks);
+    const filtered = tasks.find((task) => task.task_id === id);
+    console.log("this is task filtered");
+    console.log(filtered);
     if (
       filtered &&
       filtered.currentCycleCount &&
@@ -172,6 +178,7 @@ const Page = () => {
   };
   console.log(filteredTasks);
   const handleSelectData = (e) => {
+    console.log(e.target.value);
     handleSelectDataFunc(e.target.value);
   };
   useEffect(() => {
@@ -498,7 +505,7 @@ const Page = () => {
                 </option>
                 {filteredTasks.map((task, index) => {
                   return (
-                    <option value={task._id}>
+                    <option value={task.task_id}>
                       {index + 1}. {task.task_name}
                     </option>
                   );
