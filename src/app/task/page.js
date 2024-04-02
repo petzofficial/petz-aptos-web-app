@@ -9,7 +9,7 @@ import GoBackBtn from "@/components/button/GoBackBtn";
 import Pagination from "@/components/button/Pagination";
 // import { getTaskData } from "@/utils/localDB";
 import PriorityComponent from "@/utils/aptostask/aptostask";
-import PriorityColor from "@/utils/aptostask/priorityColor";
+import StatusColor from "@/utils/aptostask/priorityColor";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
@@ -385,7 +385,7 @@ const Page = () => {
                   <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
                     <div
                       style={{
-                        backgroundColor: PriorityColor(item.priority),
+                        backgroundColor: StatusColor(item.taskStatus),
                       }}
                       className={`color`}
                     ></div>

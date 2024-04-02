@@ -1,14 +1,14 @@
-function PriorityColor(priority) {
-  let priorityText;
+function StatusColor(status) {
+  let statusText;
 
-  if (priority === 1) {
-    priorityText = "#FED000";
-  } else if (priority === 2) {
-    priorityText = "#8B0000";
-  } else if (priority === 3) {
-    priorityText = "#8B0000";
+  if (status === "Pending") {
+    statusText = "#FED000";
+  } else if (status === "In Progress") {
+    statusText = "#8B0000";
+  } else if (status === "Completed") {
+    statusText = "#14985A";
   }
-  return priorityText;
+  return statusText;
 }
 
-export default PriorityColor;
+export default StatusColor;
