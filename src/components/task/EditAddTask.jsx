@@ -67,16 +67,12 @@ const EditAddTask = ({ method }) => {
     };
     try {
       const response = await signAndSubmitTransaction(transactionPayload);
-      console.log("this is response");
-      console.log(response);
+
       const transaction = await client.waitForTransaction(response.hash);
-      console.log("this is transaction");
-      console.log(transaction);
 
       setAccountHasList(true);
       toast.success("Task added");
     } catch (error) {
-      toast.success("error occurred");
       setAccountHasList(false);
     } finally {
       setTransactionInProgress(false);

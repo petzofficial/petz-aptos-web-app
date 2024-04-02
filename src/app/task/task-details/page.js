@@ -80,7 +80,7 @@ const Page = () => {
   };
 
   const handleButtonClick = () => {
-    if (task.status == "Completed") {
+    if (task.taskStatus == "Completed") {
       toast.error("Task is Completed");
     } else {
       console.log(task?.task_id);
