@@ -235,8 +235,96 @@ const Page = () => {
         </section>
       </div>
     );
-  }
+  } else if (isLoading) {
+    return (
+      <div>
+        <section className="tasks">
+          <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
+            <div className="tasks-inner lg:mb-16 max-lg:mb-8">
+              <Link href={"/"} className="text-[30px] font-bold">
+                <GoBackBtn />
+              </Link>
+              <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
+                <div className="tasks-navbar mt-10">
+                  <div
+                    onClick={() => handleFilter("All")}
+                    className={`flex  cursor-pointer items-center space-x-4 ${
+                      slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
+                    <MdOutlineSelectAll />
+                    <button>All</button>
+                  </div>
+                  <div
+                    onClick={() => handleFilter("Pending")}
+                    className={`flex cursor-pointer items-center space-x-4 ${
+                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
+                    <IoMdTime />
+                    <button>Pending</button>
+                  </div>
+                  <div
+                    onClick={() => handleFilter("In Progress")}
+                    className={`flex cursor-pointer items-center space-x-4 ${
+                      slug === "In Progress"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
+                    }`}
+                  >
+                    <CgTimelapse className="border rounded-full" />
+                    <button>In Progress</button>
+                  </div>
+                  <div
+                    onClick={() => handleFilter("Completed")}
+                    className={`flex cursor-pointer items-center space-x-4 ${
+                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
+                    <IoMdDoneAll />
+                    <button
+                      className={`${
+                        slug === 2
+                          ? "bg-[#FEE4D1] text-[#FF6900] cursor-pointer"
+                          : ""
+                      }`}
+                    >
+                      Completed
+                    </button>
+                  </div>
+                </div>
+              </div>
 
+              <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
+                <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    // marginTop: "10px",
+                  }}
+                >
+                  <CircularIndeterminate />
+                </div>
+                <Pagination
+                  currentPage={pageNum}
+                  totalPages={totalPages}
+                  onPageChange={setPageNum}
+                />
+                <div className="add-task-btn">
+                  <Link href={"/task/task-add"}>
+                    <button>Add New Task</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
   return (
     <div>
       <section className="tasks">
@@ -249,7 +337,7 @@ const Page = () => {
               <div className="tasks-navbar mt-10">
                 <div
                   onClick={() => handleFilter("All")}
-                  className={`flex items-center space-x-4 ${
+                  className={`flex  cursor-pointer items-center space-x-4 ${
                     slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -267,7 +355,7 @@ const Page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("In Progress")}
-                  className={`flex items-center space-x-4 ${
+                  className={`flex items-center cursor-pointer space-x-4 ${
                     slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -285,60 +373,53 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            {isLoading ? (
-              <div className="account-transactions">
-                <CircularIndeterminate />
-              </div>
-            ) : (
-              <div>
-                <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
-                  <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
 
-                  {tasksToDisplay.map((item) => (
-                    <Link
-                      key={item.task_id}
-                      href={`/task/task-details?id=${item.task_id}`}
-                    >
-                      <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
-                        <div
-                          style={{
-                            backgroundColor: PriorityColor(item.priority),
-                          }}
-                          className={`color`}
-                        ></div>
-                        <div className="middle flex justify-between">
-                          <div>
-                            <h1>{item.task_name}</h1>
-                            <p>{convertToHHMMSS(item.total_time_spent)}</p>
-                          </div>
-                          <div className="text-end">
-                            <p>
-                              {item.cycle_count}/
-                              {settingsLocalData && settingsLocalData.cycleCount
-                                ? settingsLocalData.cycleCount
-                                : "4"}
-                            </p>
-                            <p>{PriorityComponent(item.priority)}</p>
-                          </div>
-                        </div>
-                        <div className="flex mt-7"></div>
+            <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
+              <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
+
+              {tasksToDisplay.map((item) => (
+                <Link
+                  key={item.task_id}
+                  href={`/task/task-details?id=${item.task_id}`}
+                >
+                  <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
+                    <div
+                      style={{
+                        backgroundColor: PriorityColor(item.priority),
+                      }}
+                      className={`color`}
+                    ></div>
+                    <div className="middle flex justify-between">
+                      <div>
+                        <h1>{item.task_name}</h1>
+                        <p>{convertToHHMMSS(item.total_time_spent)}</p>
                       </div>
-                    </Link>
-                  ))}
-
-                  <Pagination
-                    currentPage={pageNum}
-                    totalPages={totalPages}
-                    onPageChange={setPageNum}
-                  />
-                  <div className="add-task-btn">
-                    <Link href={"/task/task-add"}>
-                      <button>Add New Task</button>
-                    </Link>
+                      <div className="text-end">
+                        <p>
+                          {item.cycle_count}/
+                          {settingsLocalData && settingsLocalData.cycleCount
+                            ? settingsLocalData.cycleCount
+                            : "4"}
+                        </p>
+                        <p>{PriorityComponent(item.priority)}</p>
+                      </div>
+                    </div>
+                    <div className="flex mt-7"></div>
                   </div>
-                </div>
+                </Link>
+              ))}
+
+              <Pagination
+                currentPage={pageNum}
+                totalPages={totalPages}
+                onPageChange={setPageNum}
+              />
+              <div className="add-task-btn">
+                <Link href={"/task/task-add"}>
+                  <button>Add New Task</button>
+                </Link>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </section>
