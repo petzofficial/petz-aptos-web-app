@@ -148,7 +148,7 @@ export default function WalletsModal({
   const onWalletSelect = async (walletName: WalletName) => {
     handleClose();
     await connect(walletName)
-    // window.location.reload()
+    window.location.reload()
 
   };
 
