@@ -43,7 +43,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <AptosWalletAdapterProvider
             plugins={wallets}
-            autoConnect={true}
+        // autoConnect={true}
 
         >
             {children}
