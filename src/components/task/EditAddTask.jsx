@@ -72,11 +72,11 @@ const EditAddTask = ({ method }) => {
 
       setAccountHasList(true);
       toast.success("Task added");
+      router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
     } finally {
       setTransactionInProgress(false);
-      // router.push("/task", { scroll: true });
     }
   };
   // edit task
@@ -106,11 +106,10 @@ const EditAddTask = ({ method }) => {
       console.log("this is response");
       console.log(response);
       const transaction = await client.waitForTransaction(response.hash);
-      console.log("this is transaction");
-      console.log(transaction);
+
       setAccountHasList(true);
       toast.success("Task updated");
-      // router.push("/task", { scroll: true });
+      router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
     } finally {
