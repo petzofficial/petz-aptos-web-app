@@ -98,14 +98,10 @@ const Page = () => {
         account?.address,
         `${moduleAddress}::task4::TaskManager`
       );
-      console.log(todoListResource);
 
       const tableHandle = todoListResource.data.tasks.handle;
-      console.log("this is table handle");
-      console.log(tableHandle);
+
       const taskCounter = todoListResource.data.set_task_event.counter;
-      console.log("this is task counter");
-      console.log(taskCounter);
 
       let tasks = [];
       let counter = 1;
@@ -127,8 +123,7 @@ const Page = () => {
 
         counter++;
       }
-      console.log("these are tasks");
-      console.log(tasks);
+
       setFilteredTasks(tasks);
       // setTransactionInProgress(false);
       setTasks(tasks);
@@ -161,11 +156,9 @@ const Page = () => {
   }, [account?.address]);
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
-    // const tasks = getTaskData();
-    console.log(tasks);
+
     const filtered = tasks.find((task) => task.task_id === id);
-    console.log("this is task filtered");
-    console.log(filtered);
+
     if (
       filtered &&
       filtered.currentCycleCount &&
@@ -176,7 +169,6 @@ const Page = () => {
     setSelectedTaskId(id);
     setCurrentCycle(tmpCycle);
   };
-  console.log(filteredTasks);
   const handleSelectData = (e) => {
     console.log(e.target.value);
     handleSelectDataFunc(e.target.value);

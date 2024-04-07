@@ -102,9 +102,7 @@ const EditAddTask = ({ method }) => {
     try {
       // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(transactionPayload);
-      // wait for transaction
-      console.log("this is response");
-      console.log(response);
+
       const transaction = await client.waitForTransaction(response.hash);
 
       setAccountHasList(true);

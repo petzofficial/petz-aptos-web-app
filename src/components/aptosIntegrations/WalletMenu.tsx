@@ -36,8 +36,8 @@ export default function WalletMenu({
     disconnect();
     handlePopoverClose();
     localStorage.removeItem("account")
+    localStorage.removeItem("AptosWalletName")
     window.location.reload();
-
   };
 
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
