@@ -1,12 +1,8 @@
 "use client";
 import React from "react";
-import { LuSettings2 } from "react-icons/lu";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+
 import Typography from "@mui/material/Typography";
-import { IoIosArrowDown } from "react-icons/io";
-import { FiSearch } from "react-icons/fi";
+
 import { termsAndConditions } from "@/utils/privacy/terms";
 const Terms = () => {
   const [open, setOpen] = React.useState(1);
