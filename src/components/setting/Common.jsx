@@ -43,7 +43,7 @@ const items = [
   },
   {
     id: 5,
-    name: "Change Account",
+    name: "Disconnect wallet",
     slug: "account",
     Icon: FaUserPen,
   },
