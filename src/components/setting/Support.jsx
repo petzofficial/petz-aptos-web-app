@@ -8,7 +8,6 @@ import { IoMailOutline } from "react-icons/io5";
 const Support = () => {
   const handleRedirect = (e) => {
     e.preventDefault();
-    // Replace 'email@example.com' with the desired email address
     const emailAddress = "petz.money@gmail.com";
     window.location.href = `mailto:${emailAddress}`;
   };
