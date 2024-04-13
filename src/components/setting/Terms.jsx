@@ -31,34 +31,27 @@ const Terms = () => {
 
         <div className="privacy-accordion">
           {termsAndConditions.map((section, index) => (
-            <Accordion key={index}>
-              <AccordionSummary
-                expandIcon={<IoIosArrowDown />}
-                aria-controls={`panel${index + 1}-content`}
-                id={`panel${index + 1}-header`}
-              >
-                {section.section && (
-                  <Typography className="!font-bold !py-1">
-                    {section.section}
-                  </Typography>
-                )}
-                {section.note && (
-                  <Typography className="!font-bold !py-1">Note</Typography>
-                )}
-                {section.effective_date && (
-                  <Typography className="!font-bold !py-1">
-                    Effective Date
-                  </Typography>
-                )}
-              </AccordionSummary>
-              <AccordionDetails>
-                <ul>
-                  {section.content && section.content}
-                  {section.note && <li>{section.note}</li>}
-                  {section.effective_date && <li>{section.effective_date}</li>}
-                </ul>
-              </AccordionDetails>
-            </Accordion>
+            <div>
+              {section.section && (
+                <Typography className="!font-bold !py-1">
+                  {section.section}
+                </Typography>
+              )}
+              {section.note && (
+                <Typography className="!font-bold !py-1">Note</Typography>
+              )}
+              {section.effective_date && (
+                <Typography className="!font-bold !py-1">
+                  Effective Date
+                </Typography>
+              )}
+
+              <ul>
+                {section.content && section.content}
+                {section.note && <li>{section.note}</li>}
+                {section.effective_date && <li>{section.effective_date}</li>}
+              </ul>
+            </div>
           ))}
         </div>
       </div>
