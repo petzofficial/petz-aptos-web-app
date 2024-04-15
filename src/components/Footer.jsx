@@ -2,7 +2,13 @@ import Image from "next/image";
 import React from "react";
 import logo from "../../public/logo.png";
 import Link from "next/link";
-import { FaFacebookSquare, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { GrDocument } from "react-icons/gr";
+import {
+  FaTwitterSquare,
+  FaDochub,
+  FaLinkedin,
+  FaGithubSquare,
+} from "react-icons/fa";
 import "../style/footer.scss";
 
 const Footer = () => {
@@ -31,19 +37,29 @@ const Footer = () => {
             </div>
             <div className="social max-md:space-y-2 space-y-3 w-[150px] sm:mx-auto">
               <h4>Social</h4>
-              <Link href={"https://instagram.com/"}>
+              {/* <Link href={"https://instagram.com/"}>
                 <button className="flex items-center">
                   <FaInstagram className="mr-1" /> Instagram
                 </button>
-              </Link>
-              <Link href={"https://facebook.com"}>
+              </Link> */}
+              <Link href={"https://twitter.com/PetzOfficial"}>
                 <button className="flex items-center">
-                  <FaFacebookSquare className="mr-1" /> Facebook
+                  <FaTwitterSquare className="mr-1" /> Twitter
                 </button>
               </Link>
-              <Link href={"https://linkedin.com"}>
+              <Link href={"https://www.linkedin.com/company/petz-money"}>
                 <button className="flex items-center">
                   <FaLinkedin className="mr-1" /> Linkedin
+                </button>
+              </Link>
+              <Link href={"https://github.com/petzofficial"}>
+                <button className="flex items-center">
+                  <FaGithubSquare className="mr-1" /> Github
+                </button>
+              </Link>
+              <Link href={"https://docs.petz.money/"}>
+                <button className="flex items-center">
+                  <GrDocument className="mr-1" /> Docs
                 </button>
               </Link>
             </div>
