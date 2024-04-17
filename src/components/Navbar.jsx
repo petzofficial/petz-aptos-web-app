@@ -61,7 +61,27 @@ const Navbar = ({ method }) => {
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
-
+  const completeCycle = async () => {
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const payload = {
+      type: "entry_function_payload",
+      function: `${moduleAddress}::task4::complete_cycle`,
+      functionArguments: [taskId, 1],
+    };
+    try {
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(payload);
+      // wait for transaction
+      await client.waitForTransaction(response.hash);
+      setAccountHasList(true);
+    } catch (error) {
+      setAccountHasList(false);
+    } finally {
+      setTransactionInProgress(false);
+    }
+  };
   useEffect(() => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -286,6 +306,7 @@ const Navbar = ({ method }) => {
       // Show success toast
       // const reward = 60 * Math.floor(filtered?.time / 60);
       updateTaskStatusInLocalStorage(selectedTaskId, "Completed");
+      completeCycle();
       toast.success(`Task is Completed`);
       /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
