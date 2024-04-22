@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import GoBackBtn from "../button/GoBackBtn";
@@ -13,7 +14,7 @@ import SettingAbout from "./SettingAbout";
 import Terms from "./Terms";
 import Privacy from "./Privacy";
 import Support from "./Support";
-
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const items = [
@@ -50,7 +51,15 @@ const items = [
 ];
 
 const Common = ({ method }) => {
+  const { account, disconnect } = useWallet();
+  const handleLogout = () => {
+    disconnect();
+
+    localStorage.removeItem("AptosWalletName");
+    window.location.reload();
+  };
   return (
+    // <AppContext>
     <div className="setting-inner lg:mb-16 max-lg:mb-8">
       <Link href={"/"} className="text-[30px] font-bold">
         <GoBackBtn />
@@ -66,15 +75,26 @@ const Common = ({ method }) => {
                   <item.Icon />
                 </div>
                 <div className="flex items-center flex-1">
-                  <Link href={`/setting/${item.slug}`}>
+                  {item.slug === "account" ? (
                     <h4
-                      className={`ml-3 cursor-pointer xl:!w-[200px] ${
+                      onClick={handleLogout}
+                      className={`ml-3 cursor-pointer xl:w-[200px] ${
                         item.slug === method ? "text-[#FF6900]" : ""
                       }`}
                     >
                       {item.name}
                     </h4>
-                  </Link>
+                  ) : (
+                    <Link href={`/setting/${item.slug}`}>
+                      <h4
+                        className={`ml-3 cursor-pointer xl:w-[200px] ${
+                          item.slug === method ? "text-[#FF6900]" : ""
+                        }`}
+                      >
+                        {item.name}
+                      </h4>
+                    </Link>
+                  )}
                   <IoIosArrowForward />
                 </div>
               </div>
@@ -91,6 +111,7 @@ const Common = ({ method }) => {
         {method === "help-support" ? <Support /> : ""}
       </div>
     </div>
+    // </AppContext>
   );
 };
 

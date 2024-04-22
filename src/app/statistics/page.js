@@ -7,6 +7,8 @@ import { Urbanist, Outfit } from "next/font/google";
 import { IoMdEye } from "react-icons/io";
 import "../../style/statistics/statistics.scss";
 import GoBackBtn from "@/components/button/GoBackBtn";
+import { AppContext } from "../../components/aptosIntegrations/AppContext";
+
 import Chart from "chart.js/auto";
 import moment from "moment";
 import { Bar } from "react-chartjs-2";
@@ -182,71 +184,79 @@ const Page = () => {
   };
 
   return (
-    <div>
-      <section className="statistics">
-        <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
-          <div className="statistics-title">
-            <Link href={"/"}>
-              <GoBackBtn />
-            </Link>
-          </div>
-          <div className="statistics-inner">
-            <h2 className={`${outfit.className}`}>Statistics</h2>
-            <div className={`week-month-year-btn pb-5 ${urban.className}`}>
-              <button
-                onClick={() => setTimeRange("Weekly")}
-                className={
-                  timeRange === "Weekly" ? "bg-orange-500 text-white" : ""
-                }
-              >
-                Week
-              </button>
-              <button
-                onClick={() => setTimeRange("Monthly")}
-                className={
-                  timeRange === "Monthly" ? "bg-orange-500 text-white" : ""
-                }
-              >
-                Month
-              </button>
-              <button
-                onClick={() => setTimeRange("Yearly")}
-                className={
-                  timeRange === "Yearly" ? "bg-orange-500 text-white" : ""
-                }
-              >
-                Year
-              </button>
+    <AppContext>
+      <div>
+        <section className="statistics">
+          <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
+            <div className="statistics-title">
+              <Link href={"/"}>
+                <GoBackBtn />
+              </Link>
             </div>
-            <div className="weekly-summ p-5 shadow-sm">
-              <div className="summ-title flex items-center space-x-3 pb-3">
-                <IoMdEye className="text-[22px]" />
-                <h4 suppressHydrationWarning={true} className="font-semibold">
-                  {timeRange} Summary
-                </h4>
+            <div className="statistics-inner">
+              <h2 className={`${outfit.className}`}>Statistics</h2>
+              <div className={`week-month-year-btn pb-5 ${urban.className}`}>
+                <button
+                  onClick={() => setTimeRange("Weekly")}
+                  className={
+                    timeRange === "Weekly" ? "bg-orange-500 text-white" : ""
+                  }
+                >
+                  Week
+                </button>
+                <button
+                  onClick={() => setTimeRange("Monthly")}
+                  className={
+                    timeRange === "Monthly" ? "bg-orange-500 text-white" : ""
+                  }
+                >
+                  Month
+                </button>
+                <button
+                  onClick={() => setTimeRange("Yearly")}
+                  className={
+                    timeRange === "Yearly" ? "bg-orange-500 text-white" : ""
+                  }
+                >
+                  Year
+                </button>
               </div>
-              <div className="summ-body flex justify-between items-center pt-5">
-                <div className="first">
-                  <p suppressHydrationWarning={true} className="font-semibold">
-                    {totalSummary?.total?.combined} min
-                  </p>
-                  <p className="text-[#969696]">Total</p>
+              <div className="weekly-summ p-5 shadow-sm">
+                <div className="summ-title flex items-center space-x-3 pb-3">
+                  <IoMdEye className="text-[22px]" />
+                  <h4 suppressHydrationWarning={true} className="font-semibold">
+                    {timeRange} Summary
+                  </h4>
                 </div>
-                <div className="first">
-                  <p suppressHydrationWarning={true} className="font-semibold">
-                    {totalSummary?.average?.combined} min
-                  </p>
-                  <p className="text-[#969696]">Average</p>
+                <div className="summ-body flex justify-between items-center pt-5">
+                  <div className="first">
+                    <p
+                      suppressHydrationWarning={true}
+                      className="font-semibold"
+                    >
+                      {totalSummary?.total?.combined} min
+                    </p>
+                    <p className="text-[#969696]">Total</p>
+                  </div>
+                  <div className="first">
+                    <p
+                      suppressHydrationWarning={true}
+                      className="font-semibold"
+                    >
+                      {totalSummary?.average?.combined} min
+                    </p>
+                    <p className="text-[#969696]">Average</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="statistics-bar shadow-sm">
-              <Bar data={chartData} options={options} />
+              <div className="statistics-bar shadow-sm">
+                <Bar data={chartData} options={options} />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </AppContext>
   );
 };
 
