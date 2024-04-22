@@ -42,22 +42,25 @@ const Footer = () => {
                   <FaInstagram className="mr-1" /> Instagram
                 </button>
               </Link> */}
-              <Link href={"https://twitter.com/PetzOfficial"}>
+              <Link target="_blank" href={"https://twitter.com/PetzOfficial"}>
                 <button className="flex items-center">
                   <FaTwitterSquare className="mr-1" /> Twitter
                 </button>
               </Link>
-              <Link href={"https://www.linkedin.com/company/petz-money"}>
+              <Link
+                target="_blank"
+                href={"https://www.linkedin.com/company/petz-money"}
+              >
                 <button className="flex items-center">
                   <FaLinkedin className="mr-1" /> Linkedin
                 </button>
               </Link>
-              <Link href={"https://github.com/petzofficial"}>
+              <Link target="_blank" href={"https://github.com/petzofficial"}>
                 <button className="flex items-center">
                   <FaGithubSquare className="mr-1" /> Github
                 </button>
               </Link>
-              <Link href={"https://docs.petz.money/"}>
+              <Link target="_blank" href={"https://docs.petz.money/"}>
                 <button className="flex items-center">
                   <GrDocument className="mr-1" /> Docs
                 </button>
