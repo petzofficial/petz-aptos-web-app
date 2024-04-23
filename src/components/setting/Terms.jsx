@@ -13,11 +13,7 @@ const Terms = () => {
       <h2 className="text-[#FF6900] mb-10 max-md:mb-8 max-lg:text-center">
         Terms & Conditions
       </h2>
-      <p>
-        Welcome to Petz Money! By using our decentralized application (dApp) on
-        the Aptos blockchain, you agree to be bound by the following Terms and
-        Conditions ("Terms"). Please read them carefully.
-      </p>
+
       <div>
         <div>
           <h4>ACCEPTANCE OF TERMS</h4>
