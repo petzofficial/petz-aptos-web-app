@@ -15,12 +15,16 @@ const Terms = () => {
       </h2>
 
       <div>
+
+      <p>
+        Welcome to Petz Money! By using our decentralized application (dApp) on
+        the Aptos blockchain, you agree to be bound by the following Terms and
+        Conditions ("Terms"). Please read them carefully.
+      </p>
         <div>
-          <h4>ACCEPTANCE OF TERMS</h4>
+          <h4>1. ACCEPTANCE OF TERMS</h4>
           <p>
-            These Terms constitute a legally binding agreement between you and
-            Petz Money. By accessing or using our dApp, you acknowledge that you
-            have read, understood, and agreed to be bound by these Terms.
+          These Terms constitute a legally binding agreement between you and Petz Money. By accessing or using our dApp, you acknowledge that you have read, understood, and agreed to be bound by these Terms.
           </p>
 
           {/* <p className="md:mt-8 max-md:mt-5">
@@ -32,7 +36,7 @@ const Terms = () => {
         </div>
 
         <div className="md:mt-8 max-md:mt-5">
-          <h4>ELIGIBILITY</h4>
+          <h4>2. ELIGIBILITY</h4>
           <p>
             Our dApp is intended solely for users who are legally permitted to
             engage in decentralized finance (DeFi) activities and use
@@ -48,7 +52,7 @@ const Terms = () => {
           </p> */}
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>PLATFORM USAGE</h4>
+          <h4>3. PLATFORM USAGE</h4>
           <p>
             You agree to use our dApp solely for lawful purposes and in
             compliance with all applicable laws and regulations. You are solely
@@ -58,7 +62,7 @@ const Terms = () => {
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>RISK ACKNOWLEDGMENT</h4>
+          <h4>4. RISK ACKNOWLEDGMENT</h4>
           <p>
             You acknowledge and understand that the use of decentralized
             applications, smart contracts, and blockchain technology carries
@@ -68,19 +72,9 @@ const Terms = () => {
             of our dApp.
           </p>
         </div>
+       
         <div className="md:mt-8 max-md:mt-5">
-          <h4>RISK ACKNOWLEDGMENT</h4>
-          <p>
-            You acknowledge and understand that the use of decentralized
-            applications, smart contracts, and blockchain technology carries
-            inherent risks, including but not limited to technical risks,
-            regulatory risks, and financial risks. You are solely responsible
-            for evaluating and understanding the risks associated with your use
-            of our dApp.
-          </p>
-        </div>
-        <div className="md:mt-8 max-md:mt-5">
-          <h4>NO FINANCIAL ADVICE</h4>
+          <h4>5. NO FINANCIAL ADVICE</h4>
           <p>
             Our dApp and any associated materials are provided for informational
             purposes only and do not constitute financial advice. We do not
@@ -89,7 +83,7 @@ const Terms = () => {
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>INTELLECTUAL PROPERTY</h4>
+          <h4>6. INTELLECTUAL PROPERTY</h4>
           <p>
             All intellectual property rights, including but not limited to
             copyrights, trademarks, and trade secrets, related to our dApp and
@@ -100,7 +94,7 @@ const Terms = () => {
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>DISCLAIMER OF WARRANTIES</h4>
+          <h4>7. DISCLAIMER OF WARRANTIES</h4>
           <p>
             Our dApp is provided on an 'as is' and 'as available' basis, without
             any warranties of any kind, whether express or implied, including
@@ -109,7 +103,7 @@ const Terms = () => {
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>LIMITATION OF LIABILITY</h4>
+          <h4>8. LIMITATION OF LIABILITY</h4>
           <p>
             In no event shall Petz Money, its affiliates, or its partners be
             liable for any direct, indirect, incidental, special, consequential,
@@ -120,7 +114,7 @@ const Terms = () => {
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>INDEMNIFICATION</h4>
+          <h4>9. INDEMNIFICATION</h4>
           <p>
             You agree to indemnify, defend, and hold harmless Petz Money, its
             affiliates, and its partners from and against any and all claims,
@@ -130,7 +124,7 @@ const Terms = () => {
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>MODIFICATION OF TERMS</h4>
+          <h4>10. MODIFICATION OF TERMS</h4>
           <p>
             We reserve the right to modify or update these Terms at any time
             without prior notice. Your continued use of our dApp after any
@@ -138,14 +132,12 @@ const Terms = () => {
             Terms.
           </p>
         </div>
-        <div className="md:mt-8 max-md:mt-5">
-          <h4>Contact</h4>
-          <p>
+
+        <p>
             If you have any questions or concerns regarding these Terms and
-            Conditions, please contact us at petz.money@gmail.com. Effective
-            date 30/3/2024
+            Conditions, please contact us at petz.money@gmail.com.
           </p>
-        </div>
+        
       </div>
     </div>
   );
