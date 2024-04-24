@@ -14,12 +14,14 @@ const Terms = () => {
         Privacy Policy
       </h2>
       <div>
+
+      <p>
+      At Petz Money, we are committed to protecting your privacy and the confidentiality of your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard the information you provide when using our decentralized application (dApp) on the Aptos blockchain.
+      </p>
         <div>
           <h4>INFORMATION WE COLLECT</h4>
           <p className="md:mt-8 max-md:mt-5">
-            1. Personal Information: When you interact with our dApp, we may
-            collect personal information such as your Aptos wallet address and
-            any other information you voluntarily provide.,
+          1. Personal Information: When you interact with our dApp, we may collect personal information such as your Aptos wallet address and any other information you voluntarily provide.
           </p>
 
           <p className="md:mt-8 max-md:mt-5">
@@ -39,21 +41,14 @@ const Terms = () => {
         <div>
           <h4>USE OF INFORMATION</h4>
           <p className="md:mt-8 max-md:mt-5">
-            1. Personal Information: When you interact with our dApp, we may
-            collect personal information such as your Aptos wallet address and
-            any other information you voluntarily provide.,
+          1. Personal Information: We may use your personal information to facilitate transactions within our dApp, communicate with you, and provide you with customer support.
           </p>
           <p className="md:mt-8 max-md:mt-5">
-            2. Usage Data: We may collect non-identifying information about your
-            1. Personal Information: We may use your personal information to
-            facilitate transactions within our dApp, communicate with you, and
-            provide you with customer support.
+          2. Usage Data: We may use non-identifying usage data to analyze and improve our dApp's performance, functionality, and user experience.
           </p>
 
           <p className="md:mt-8 max-md:mt-5">
-            3. Blockchain Data: Information recorded on the Aptos blockchain is
-            transparent and cannot be modified or deleted. We do not control or
-            have any influence over the data stored on the blockchain.
+          3. Blockchain Data: Information recorded on the Aptos blockchain is transparent and cannot be modified or deleted. We do not control or have any influence over the data stored on the blockchain.
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
@@ -79,46 +74,32 @@ const Terms = () => {
         <div className="md:mt-8 max-md:mt-5">
           <h4>DATA SECURITY</h4>
           <p>
-            "1. We implement appropriate technical and organizational measures
-            to safeguard the personal information we collect from unauthorized
-            access, disclosure, alteration, or destruction. However, no method
-            of transmission over the internet or electronic storage is entirely
-            secure, and we cannot guarantee absolute security.",
+          We implement appropriate technical and organizational measures to safeguard the personal information we collect from unauthorized access, disclosure, alteration, or destruction. However, no method of transmission over the internet or electronic storage is entirely secure, and we cannot guarantee absolute security.
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
           <h4>THIRD-PARTY LINKS</h4>
           <p>
-            1. Our dApp may contain links to third-party websites or services.
-            We are not responsible for the privacy practices or content of those
-            third parties. We encourage you to review the privacy policies of
-            any third-party services you use.
+          Our dApp may contain links to third-party websites or services. We are not responsible for the privacy practices or content of those third parties. We encourage you to review the privacy policies of any third-party services you use.
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
           <h4>CHANGES TO THIS PRIVACY POLICY</h4>
           <p>
-            1. We may update this Privacy Policy from time to time to reflect
-            changes in our practices or for other operational, legal, or
-            regulatory reasons. We will post the updated Privacy Policy on our
-            website and encourage you to review it periodically.
+          We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will post the updated Privacy Policy on our website and encourage you to review it periodically.
           </p>
         </div>
         <div className="md:mt-8 max-md:mt-5">
-          <h4>CONTACT US"</h4>
+          <h4>CONTACT US</h4>
           <p>
-            1. If you have any questions or concerns about this Privacy Policy
-            or our data practices, please contact us at petz.money@gmail.com.
+          If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at petz.money@gmail.com.
           </p>
         </div>
-        <div className="md:mt-8 max-md:mt-5">
-          <h4>Note</h4>
-          <p>
+        <p>
             By using our Petz Money dApp on the Aptos blockchain, you
             acknowledge that you have read and understood this Privacy Policy
-            and agree to its terms. Effective Date: 30/3/2024
+            and agree to its terms.
           </p>
-        </div>
       </div>
     </div>
   );

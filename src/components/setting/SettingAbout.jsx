@@ -7,14 +7,15 @@ const SettingAbout = () => {
     <div className="lg:w-[603px] setting-about h-screen lg:ml-36">
       <h2 className="text-[#FF6900] mb-8 max-md:mb-8 max-lg:text-center relative">
         About
-        <Image
-          className="mt-[-10px] absolute top-0 left-28 max-lg:hidden"
+       
+      </h2>
+      <Image
+         
           src={logo}
-          width={70}
-          height={70}
+          width={250}
+          height={250}
           alt="PetZ"
         />
-      </h2>
       <div>
         <div>
           <p>
