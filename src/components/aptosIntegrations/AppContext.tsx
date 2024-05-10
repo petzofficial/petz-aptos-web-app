@@ -13,7 +13,7 @@ import { AutoConnectProvider, useAutoConnect } from "./AutoConnectProvider"
 import { FC, ReactNode } from "react";
 // import face from "./lib/faceInitialization";
 import { AlertProvider, useAlert } from "./AlertProvider";
-import { IdentityConnectWallet } from "@identity-connect/wallet-adapter-plugin";
+//import { IdentityConnectWallet } from "@identity-connect/wallet-adapter-plugin";
 
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const { autoConnect } = useAutoConnect();
