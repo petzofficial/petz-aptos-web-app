@@ -29,6 +29,7 @@ const Page = () => {
   const [showMore, setShowMore] = useState(false);
   const { isLoadingToken } = useAppSelector(selectIsTokenLoading);
   const token = useAppSelector(selectSpecificToken(id));
+  const [selectedToken, setSelectedToken] = useState("");
   const {
     data: image,
     isLoading,
@@ -39,7 +40,10 @@ const Page = () => {
       token?.token_data_id
     )
   );
-
+  const handleSelectToken = () => {
+    setSelectedToken(token);
+  };
+  console.log(selectedToken);
   return (
     <div>
       {isLoadingToken ? (
@@ -214,7 +218,7 @@ const Page = () => {
               </div>
               <div className="sell-select-btn">
                 <button>Sell</button>
-                <button>Select</button>
+                <button onClick={handleSelectToken}>Select</button>
               </div>
             </div>
           </div>

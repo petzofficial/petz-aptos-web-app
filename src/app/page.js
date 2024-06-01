@@ -31,6 +31,7 @@ import Coins from "@/components/coins/coin";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { getUserData, updateUserData } from "@/utils/localDB";
 import { saveUserData } from "../utils/localDB";
+import { getWalletNetwork } from "@/utils/aptosNetWorks/AptosNetworks";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -71,12 +72,26 @@ const Page = () => {
   const newNetwork = useAppSelector(selectNewNetwork);
   const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
-  const { connected, account } = useWallet();
-  console.log("this is task id");
+  const { connected, account, network } = useWallet();
+  const provider = getWalletNetwork(network);
 
+  const fetchUserInfo = async () => {
+    const moduleAddress = "0x1";
+    if (!account) return [];
+    try {
+      const resp = await provider.getAccountResource(
+        account?.address,
+        `${moduleAddress}::coin::CoinStore<${moduleAddress}::aptos_coin::AptosCoin>`
+      );
+      console.log(resp);
+    } catch (e) {}
+  };
   console.log(taskId);
   useEffect(() => {
     runOneSignal();
+  }, []);
+  useEffect(() => {
+    fetchUserInfo();
   }, []);
   useEffect(() => {
     const getUserDataAsyc = async () => {
@@ -137,10 +152,10 @@ const Page = () => {
       });
     }
 
-     const tasks = getTaskData();
-     const status = "Completed";
-     const filtered = tasks.filter((task) => task.status != status);
-     setFilteredTasks(filtered);
+    const tasks = getTaskData();
+    const status = "Completed";
+    const filtered = tasks.filter((task) => task.status != status);
+    setFilteredTasks(filtered);
     if (taskId) {
       setSelectedTaskId(taskId);
       handleSelectDataFunc(taskId);
@@ -323,7 +338,7 @@ const Page = () => {
     }
     //setCurrentState("focus");
     //setCurrentCycle(1);
-    
+
     if (selectedTaskId === "choose") {
       toast.error("Select the task or create new");
     }
@@ -501,4 +516,3 @@ const Page = () => {
 };
 
 export default Page;
-
