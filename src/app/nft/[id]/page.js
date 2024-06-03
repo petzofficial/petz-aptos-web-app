@@ -3,8 +3,10 @@ import Footer from "@/components/Footer";
 import { CiShare1 } from "react-icons/ci";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
+import { useRouter } from "next/navigation";
+
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { shortenString, showFirstTenWords } from "@/components/common/truncate";
 import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
@@ -21,15 +23,16 @@ import {
   fetchNftImgAction,
 } from "@/redux/app/reducers/AccountSlice";
 import CircularIndeterminate from "@/components/common/loading";
-
+import { TaskContext } from "../../task/context/taskContext";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Page = () => {
   const { id } = useParams();
+  const router = useRouter();
   const [showMore, setShowMore] = useState(false);
   const { isLoadingToken } = useAppSelector(selectIsTokenLoading);
   const token = useAppSelector(selectSpecificToken(id));
-  const [selectedToken, setSelectedToken] = useState("");
+  const { selectedToken, setSelectedToken } = useContext(TaskContext);
   const {
     data: image,
     isLoading,
@@ -42,6 +45,7 @@ const Page = () => {
   );
   const handleSelectToken = () => {
     setSelectedToken(token);
+    router.push("/");
   };
   console.log(selectedToken);
   return (

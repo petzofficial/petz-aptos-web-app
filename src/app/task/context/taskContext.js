@@ -9,7 +9,7 @@ export const TaskContextProvider = ({ children }) => {
   const [selectedTaskId, setSelectedTaskId] = useState("choose");
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(25 * 60);
-
+  const [selectedToken, setSelectedToken] = useState("");
   const [isEnergyRunning, setIsEnergyRunning] = useState(true);
   const [totalSeconds, setTotalSeconds] = useState(25 * 60);
   const secondsRef = useRef(seconds);
@@ -52,6 +52,8 @@ export const TaskContextProvider = ({ children }) => {
         secondsRef,
         setEnergy,
         setTotalSeconds,
+        selectedToken,
+        setSelectedToken,
       }}
     >
       {children}

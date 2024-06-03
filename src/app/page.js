@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import Image from "next/image";
 import { TaskContext } from "./task/context/taskContext";
 import group from "@/assets/home/Group 101.png";
+import empty from "@/assets/home/empty.png";
 import "@/style/home/home.scss";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
 import finish_sound from "@/assets/audioClock/finish_sound.mp3";
@@ -37,6 +38,7 @@ const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
   const searchParams = useSearchParams();
+  const { selectedToken, setSelectedToken } = useContext(TaskContext);
   const ItemId = searchParams.get("id");
   const {
     taskId,
@@ -65,6 +67,8 @@ const Page = () => {
     currentState,
     setCurrentState,
   } = useContext(TaskContext);
+  console.log("this is a selcted token from home page");
+  console.log(selectedToken);
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
   const dispatch = useAppDispatch();
@@ -505,7 +509,16 @@ const Page = () => {
 
             <div className="home-foot my-12">
               <Link href={"/account"}>
-                <Image src={group} width={380} height={305} alt="group" />
+                {selectedToken ? (
+                  <Image
+                    src={selectedToken.image}
+                    width={380}
+                    height={305}
+                    alt="group"
+                  />
+                ) : (
+                  <Image src={empty} width={380} height={305} alt="group" />
+                )}
               </Link>
             </div>
           </div>
