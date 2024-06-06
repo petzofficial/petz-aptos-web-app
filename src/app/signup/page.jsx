@@ -55,10 +55,12 @@ const Page = () => {
     if (!account) return;
     setTransactionInProgress(true);
     const payload = {
-      type: "entry_function_payload",
-      function: `${moduleAddress}::user::signup`,
-      arguments: [data.username, data.email, data.name],
-      type_arguments: [],
+      data: {
+        type: "entry_function_payload",
+        function: `${moduleAddress}::user::signup`,
+        type_arguments: [],
+        functionArguments: [data.username, data.email, data.name],
+      },
     };
     try {
       const response = await signAndSubmitTransaction(payload);
