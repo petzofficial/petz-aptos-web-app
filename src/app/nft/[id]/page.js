@@ -4,13 +4,15 @@ import { CiShare1 } from "react-icons/ci";
 import Navbar from "@/components/Navbar";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import { useRouter } from "next/navigation";
-
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { shortenString, showFirstTenWords } from "@/components/common/truncate";
 import Image from "next/image";
 import { IoIosStar } from "react-icons/io";
 import "@/style/nft/nft.scss";
+import { AptosClient } from "aptos";
+
 import { Outfit } from "next/font/google";
 import "./nft.css";
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -32,22 +34,62 @@ const Page = () => {
   const [showMore, setShowMore] = useState(false);
   const { isLoadingToken } = useAppSelector(selectIsTokenLoading);
   const token = useAppSelector(selectSpecificToken(id));
+  const { account, signAndSubmitTransaction } = useWallet();
+  const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { selectedToken, setSelectedToken } = useContext(TaskContext);
-  const {
-    data: image,
-    isLoading,
-    isError,
-  } = useQuery(["nft", id], () =>
-    fetchNftImgAction(
-      token?.current_token_data?.token_uri,
-      token?.token_data_id
-    )
-  );
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
+  const moduleAddress =
+    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+  // const {
+  //   data: image,
+  //   isLoading,
+  //   isError,
+  // } = useQuery(["nft", id], () =>
+  //   fetchNftImgAction(
+  //     token?.current_token_data?.token_uri,
+  //     token?.token_data_id
+  //   )
+  // );
   const handleSelectToken = () => {
     setSelectedToken(token);
     router.push("/");
   };
   console.log(selectedToken);
+  console.log(token);
+  const selectNFT = async (collection_id, token_id) => {
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    // const payload = {
+    //   type: "entry_function_payload",
+    //   function: `${moduleAddress}::user::select_nft`,
+    //   type_arguments: [],
+    //   arguments: [collection_id, token_id], //collection_id, token_id
+    // };
+
+    try {
+      const transactionPayload = {
+        data: {
+          type: "entry_function_payload",
+          function: `${moduleAddress}::user::select_nft`,
+          type_arguments: [],
+          functionArguments: [collection_id, token_id], //collection_id, token_id
+        },
+      };
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(transactionPayload);
+      const resp = await client.waitForTransaction(response.hash);
+      console.log(response);
+      console.log(resp);
+      router.push("/");
+      console.log(resp);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setTransactionInProgress(false);
+    }
+  };
   return (
     <div>
       {isLoadingToken ? (
@@ -222,7 +264,18 @@ const Page = () => {
               </div>
               <div className="sell-select-btn">
                 <button>Sell</button>
-                <button onClick={handleSelectToken}>Select</button>
+                <button
+                  onClick={() => {
+                    // selectNFT(
+                    //   token?.current_token_data?.collection_id,
+                    //   token?.token_data_id
+                    // );
+                    setSelectedToken(token);
+                    router.push("/");
+                  }}
+                >
+                  Select
+                </button>
               </div>
             </div>
           </div>

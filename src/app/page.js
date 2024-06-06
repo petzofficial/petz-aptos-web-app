@@ -20,6 +20,7 @@ import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
 import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
+import { AptosClient } from "aptos";
 
 import {
   fetchCoinsAction,
@@ -66,21 +67,61 @@ const Page = () => {
     minutes,
     currentState,
     setCurrentState,
+    userEnergy,
+    setUserEnergy,
   } = useContext(TaskContext);
-  console.log("this is a selcted token from home page");
   console.log(selectedToken);
   const [clickSound] = useSound(click_sound);
-  const [finishSound] = useSound(finish_sound);
   const dispatch = useAppDispatch();
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
-  const userData = getUserData();
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, network } = useWallet();
   const provider = getWalletNetwork(network);
 
+  const moduleAddress =
+    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+  const getProfile = async () => {
+    if (!account) return [];
+    console.log("after returned statement");
+    try {
+      const payload = {
+        function: `${moduleAddress}::user::get_profile`,
+        type_arguments: [],
+        arguments: [account.address],
+      };
+      const response = await client.view(payload);
+      // setEnergy(response[0]);
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  console.log(energy);
+  const getSelectedNFT = async () => {
+    if (!account) return [];
+    try {
+      // Fetch the account resource
+      const payload = {
+        data: {
+          function: `${moduleAddress}::user::get_selected_nft`,
+          type_arguments: [],
+          functionArguments: [account.address],
+        },
+      };
+      // Execute the view function
+      const response = await client.view(payload);
+
+      // Use the profile data as needed
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchUserInfo = async () => {
-    const moduleAddress = "0x1";
     if (!account) return [];
     try {
       const resp = await provider.getAccountResource(
@@ -96,20 +137,28 @@ const Page = () => {
   }, []);
   useEffect(() => {
     fetchUserInfo();
-  }, []);
+    getProfile();
+  }, [account?.address]);
+  useEffect(() => {
+    fetchUserInfo();
+    getProfile();
+  }, [account?.address]);
+
   useEffect(() => {
     const getUserDataAsyc = async () => {
       const userdata = await getUserData();
-      setEnergy(userdata.energy);
     };
     getUserDataAsyc();
+    console.log("this is called fetch coins actions");
   }, [energy]);
   useEffect(() => {
     secondsRef.current = seconds;
+    console.log("this is called fetch coins actions");
   }, [seconds]);
 
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
+    console.log("this is called fetch coins actions");
   }, [dispatch, account, newNetwork]);
 
   const handleSelectDataFunc = (id) => {
@@ -132,7 +181,7 @@ const Page = () => {
   };
   useEffect(() => {
     let user = getUserData();
-    if (!user || Object.keys(user).length === 0) {
+    if (!user || Object.keys(user)?.length === 0) {
       user = { energy: 100 };
       localStorage.setItem("userData", JSON.stringify(user));
     }
@@ -303,7 +352,7 @@ const Page = () => {
   const startTimer = () => {
     clickSound();
 
-    if (energy <= 0) {
+    if (userEnergy <= 0) {
       toast.error("Not enough energy");
     } else {
       if (selectedTaskId && selectedTaskId !== "choose") {
@@ -402,6 +451,8 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
+  // select nft
+  console.log(selectedToken);
   return (
     <div>
       <section className="home-section">
@@ -430,13 +481,13 @@ const Page = () => {
                   className=" mr-1  font-semibold flex-1 items-start gap-0 flex   flex-col"
                 >
                   <p className="">Energy</p>
-                  <LinearProgressEnergy jakarta={jakarta} energy={energy} />
+                  <LinearProgressEnergy jakarta={jakarta} energy={userEnergy} />
                 </div>
                 <h4
                   suppressHydrationWarning={true}
                   className={` mt-4  font-bold ${jakarta.className}`}
                 >
-                  {energy ? energy : 0}
+                  {userEnergy ? userEnergy : 0}
                 </h4>
               </div>
             </div>

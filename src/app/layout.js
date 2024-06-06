@@ -24,8 +24,9 @@ export default function RootLayout({ children }) {
         <QueryClientProvider client={queryClient}>
           <TaskContextProvider>
             <ReduxAppProvider>
-              <Navbar />
               <AppContext>
+                <Navbar />
+
                 <Toaster position="top-center " />
 
                 {children}

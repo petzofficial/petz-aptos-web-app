@@ -23,6 +23,7 @@ export const TaskContextProvider = ({ children }) => {
   const [currentState, setCurrentState] = useState("focus");
   const [currentCycle, setCurrentCycle] = useState(1);
   const [minutes, setMinutes] = useState("");
+  const [userEnergy, setUserEnergy] = useState("");
   return (
     <TaskContext.Provider
       value={{
@@ -54,6 +55,8 @@ export const TaskContextProvider = ({ children }) => {
         setTotalSeconds,
         selectedToken,
         setSelectedToken,
+        userEnergy,
+        setUserEnergy,
       }}
     >
       {children}

@@ -1,11 +1,12 @@
 "use client";
 import useSound from "use-sound";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../style/nav.scss";
 import {
   getTaskData,
   getUserData,
+  saveUserData,
   updateTask,
   updateUserData,
 } from "@/utils/localDB";
@@ -24,9 +25,13 @@ import { AppContext } from "./aptosIntegrations/AppContext";
 import { NetworkSelector } from "./aptosIntegrations/networkSelector";
 import { useContext } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { AptosClient } from "aptos";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
+  const intervalRef = useRef(null);
+
   const [responsive, setResponsive] = useState(false);
   const {
     taskId,
@@ -54,11 +59,84 @@ const Navbar = ({ method }) => {
     currentState,
     setCurrentState,
     setTotalSeconds,
+    userEnergy,
+    setUserEnergy,
   } = useContext(TaskContext);
   console.log(isRunning);
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
+  const { account, signAndSubmitTransaction } = useWallet();
+
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
+  const moduleAddress =
+    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+  const getEnergy = async () => {
+    if (!account) return [];
+    try {
+      const payload = {
+        function: `${moduleAddress}::user::get_energy`,
+        type_arguments: [],
+        arguments: [account.address],
+      };
+      const response = await client.view(payload);
+      setUserEnergy(response[0]);
+    } catch (error) {
+      console.log("error occured");
+      console.log(error);
+    }
+  };
+  console.log("this is user energy");
+  console.log(userEnergy);
+  const claimEnergy = async () => {
+    console.log(account);
+    if (!account) return [];
+    // setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const payload = {
+      data: {
+        type: "entry_function_payload",
+        function: `${moduleAddress}::user::claim_energy`,
+        type_arguments: [],
+        functionArguments: [],
+      },
+    };
+    try {
+      const response = await signAndSubmitTransaction(payload);
+      console.log(response);
+      await client.waitForTransaction(response.hash);
+      // setAccountHasList(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+  const reduceEnergyByTime = async () => {
+    if (!account) return [];
+    // setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const payload = {
+      data: {
+        type: "entry_function_payload",
+        function: `${moduleAddress}::user::reduce_energy_by_time`,
+        type_arguments: [],
+        functionArguments: [60], //duration in seconds
+      },
+    };
+    try {
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(payload);
+      console.log(response);
+      await client.waitForTransaction(response.hash);
+      getEnergy();
+    } catch (error) {
+      console.log(error);
+      // setAccountHasList(false);
+    } finally {
+      // setTransactionInProgress(false);
+    }
+  };
 
   useEffect(() => {
     const settingsLocalData = JSON.parse(
@@ -102,15 +180,15 @@ const Navbar = ({ method }) => {
       handleSelectDataFunc(taskId);
     }
   }, []);
-  console.log("task id from navbar");
-  console.log(taskId);
+  useEffect(() => {
+    getEnergy();
+  }, [account?.address]);
   useEffect(() => {
     const intervalId = setInterval(() => {
       const currentTime = new Date();
       const currentMinutes = currentTime.getMinutes();
       setMinutes(currentMinutes);
       const userData = getUserData();
-      setEnergy(userData.energy);
     }, 60000); // 1 minute in milliseconds
 
     return () => clearInterval(intervalId);
@@ -164,8 +242,7 @@ const Navbar = ({ method }) => {
               ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
               seconds - 1 === 0
             ) {
-              setEnergy((prev) => prev - 1);
-              energy = userData?.energy - 1;
+              reduceEnergyByTime();
             }
 
             updateUserData({ energy: energy });
@@ -191,8 +268,8 @@ const Navbar = ({ method }) => {
               ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
               seconds - 1 === 0
             ) {
-              setEnergy((prev) => prev - 1);
               energy = userData?.energy - 1;
+              reduceEnergyByTime();
             }
 
             updateUserData({ energy: energy });
@@ -208,8 +285,8 @@ const Navbar = ({ method }) => {
               ((seconds - 1) % 60 === 0 && (seconds - 1) % 300 !== 0) ||
               seconds - 1 === 0
             ) {
-              setEnergy((prev) => prev - 1);
               energy = userData?.energy - 1;
+              reduceEnergyByTime();
             }
             let tempTotalTime = 0;
             if (findData && findData.time) {
@@ -301,7 +378,39 @@ const Navbar = ({ method }) => {
       startTimer();
     }
   }, [settings?.autoStart, isRunning, selectedTaskId]);
+  useEffect(() => {
+    // getEnergy();
+  }, [account]);
+  setInterval(() => {
+    const userData = getUserData();
+    const currentTime = new Date();
+    const minutes = currentTime.getMinutes();
+    console.log(minutes);
+    // Check if it's a multiple of 5 minutes and energy is less than 100
+    if (minutes % 5 === 0 && userData?.energy < 100) {
+      userData.energy += 1;
+      saveUserData(userData);
+      claimEnergy();
+    }
+  }, 100000);
+  useEffect(() => {
+    const updateEnergy = () => {
+      const userData = getUserData();
+      const currentTime = new Date();
+      const minutes = currentTime.getMinutes();
+      console.log(minutes);
+      // Check if it's a multiple of 5 minutes and energy is less than 100
+      if (minutes % 5 === 0 && userData?.energy < 100) {
+        userData.energy += 1;
+        saveUserData(userData);
+        claimEnergy();
+      }
+    };
 
+    intervalRef.current = setInterval(updateEnergy, 100000); //100000
+
+    return () => clearInterval(intervalRef.current);
+  }, []);
   return (
     <AppContext>
       <nav

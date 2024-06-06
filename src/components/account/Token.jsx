@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Pagination from "../button/Pagination";
 import CircularIndeterminate from "@/components/common/loading";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
@@ -18,6 +18,7 @@ const Token = ({ tokens, isLoading }) => {
   const dispatch = useAppDispatch();
   const { account } = useWallet();
   const newNetwork = useAppSelector(selectNewNetwork);
+  const router = useRouter();
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -57,22 +58,21 @@ const Token = ({ tokens, isLoading }) => {
         <div className="pick-cards grid max-lg:grid-cols-2 lg:grid-cols-4 justify-between items-center">
           {currentTokens?.map((item, id) => {
             return (
-              <Link key={id} href={`/nft/${item.last_transaction_version}`}>
-                <div className="box shadow-md m-auto my-[10px]">
-                  <div className="image flex justify-center items-center">
-                    <Image
-                      src={item.image}
-                      width={86}
-                      height={117}
-                      alt="petz"
-                    />
-                  </div>
-                  <div className="pitbull-footer">
-                    <p>#{item?.current_token_data?.token_name}</p>
-                    <p>{item.pick}</p>
-                  </div>
+              <div
+                key={id}
+                className="box shadow-md m-auto my-[10px]"
+                onClick={() =>
+                  router.push(`/nft/${item.last_transaction_version}`)
+                }
+              >
+                <div className="image flex justify-center items-center">
+                  <Image src={item.image} width={86} height={117} alt="petz" />
                 </div>
-              </Link>
+                <div className="pitbull-footer">
+                  <p>#{item?.current_token_data?.token_name}</p>
+                  <p>{item.pick}</p>
+                </div>
+              </div>
             );
           })}
         </div>
