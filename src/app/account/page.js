@@ -1,7 +1,7 @@
 "use client";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import React, { use, useState } from "react";
+import React, { use, useMemo, useState } from "react";
 import Image from "next/image";
 import img2 from "@/assets/home/pst-removebg-preview 2.png";
 import img3 from "@/assets/home/image 23.png";
@@ -66,13 +66,19 @@ const Page = () => {
     }, 2000);
   };
   useEffect(() => {
+    console.log("use effect called ");
     dispatch(fetchTransactionsAction(account?.address));
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
 
+  const tokensNeedImages = useMemo(() => {
+    return tokens?.some((token) => !token?.image);
+  }, [tokens]);
+
   useEffect(() => {
-    if (tokens) {
-      tokens?.forEach((token) => {
+    if (tokensNeedImages) {
+      console.log("useEffect is called 2");
+      tokens.forEach((token) => {
         if (!token?.image) {
           const tokenURI = token?.current_token_data?.token_uri;
           dispatch(
@@ -81,7 +87,7 @@ const Page = () => {
         }
       });
     }
-  }, [dispatch, tokens]);
+  }, [dispatch, tokensNeedImages]);
 
   return (
     <AppContext>

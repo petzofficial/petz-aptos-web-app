@@ -30,6 +30,7 @@ const Token = ({ tokens, isLoading }) => {
 
   useEffect(() => {
     dispatch(fetchTokensAction(account?.address));
+    console.log("use effect 3 is called");
   }, [dispatch, account, newNetwork]);
 
   if (isLoading) {
@@ -38,7 +39,7 @@ const Token = ({ tokens, isLoading }) => {
         <CircularIndeterminate />
       </div>
     );
-  } else if (!isLoading && tokens.length === 0) {
+  } else if (!isLoading && tokens?.length === 0) {
     return (
       <div
         style={{
