@@ -142,7 +142,6 @@ const Navbar = ({ method }) => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     );
-
     if (settingsLocalData) {
       setTotalSeconds(parseInt(settingsLocalData.focusTime) * 60);
       setSeconds(parseInt(settingsLocalData.focusTime) * 60);

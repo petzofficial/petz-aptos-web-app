@@ -66,7 +66,6 @@ const Page = () => {
     }, 2000);
   };
   useEffect(() => {
-    console.log("use effect called ");
     dispatch(fetchTransactionsAction(account?.address));
     dispatch(fetchCoinsAction(account?.address));
   }, [dispatch, account, newNetwork]);
