@@ -40,18 +40,17 @@ function CircularProgressWithLabel(props) {
           justifyContent: "center",
         }}
       >
-        <Typography
+        <span
           className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${props.barlow.className}`}
           variant="caption"
+          style={{ color: "#959595" }}
           component="div"
-          color="text.secondary"
         >
           {formattedTime}
-        </Typography>
+        </span>
       </Box>
     </Box>
   );
 }
 
 export default CircularProgressWithLabel;
-
