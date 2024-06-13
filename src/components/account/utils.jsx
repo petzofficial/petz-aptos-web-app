@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { negativeColor } from "./colors";
 import APTCurrencyValue from "./currentValue";
+import { aptosColor } from "./colors";
 function getAptChangeData(change) {
   console.log("this is change");
   console.log(change);
