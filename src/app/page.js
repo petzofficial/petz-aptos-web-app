@@ -34,6 +34,7 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { getUserData, updateUserData } from "@/utils/localDB";
 import { saveUserData } from "../utils/localDB";
 import { getWalletNetwork } from "@/utils/aptosNetWorks/AptosNetworks";
+import { CircularProgress } from "@mui/material";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
@@ -80,7 +81,8 @@ const Page = () => {
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
   const { connected, account, network } = useWallet();
   const provider = getWalletNetwork(network);
-
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const moduleAddress =
     "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
   const getProfile = async () => {
@@ -451,7 +453,15 @@ const Page = () => {
       remainingSeconds
     ).padStart(2, "0")}`;
   };
-  // select nft
+  const handleLoad = () => {
+    setIsLoaded(true);
+    setHasError(false);
+  };
+
+  const handleError = () => {
+    setIsLoaded(true);
+    setHasError(true);
+  };
   console.log(selectedToken);
   return (
     <div>
@@ -561,12 +571,21 @@ const Page = () => {
             <div className="home-foot my-12">
               <Link href={"/account"}>
                 {selectedToken ? (
-                  <Image
-                    src={selectedToken.image}
-                    width={380}
-                    height={305}
-                    alt="group"
-                  />
+                  <>
+                    {!isLoaded && (
+                      <div className="h-full flex items-center justify-center">
+                        <CircularProgress />
+                      </div>
+                    )}
+                    <Image
+                      src={selectedToken.image}
+                      width={380}
+                      height={305}
+                      alt="group"
+                      onLoad={handleLoad}
+                      onError={handleError}
+                    />
+                  </>
                 ) : (
                   <Image src={empty} width={380} height={305} alt="group" />
                 )}
