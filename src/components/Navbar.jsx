@@ -24,6 +24,7 @@ import { AppContext } from "./aptosIntegrations/AppContext";
 import { NetworkSelector } from "./aptosIntegrations/networkSelector";
 import { useContext } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
+import toast from "react-hot-toast";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
