@@ -3,6 +3,7 @@ import React, { createContext, useState, useRef } from "react";
 export const TaskContext = createContext({});
 
 export const TaskContextProvider = ({ children }) => {
+  const [tasks, setTasks] = useState([]);
   const [taskId, setTaskId] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [energy, setEnergy] = useState("");
@@ -53,10 +54,15 @@ export const TaskContextProvider = ({ children }) => {
         secondsRef,
         setEnergy,
         setTotalSeconds,
+<<<<<<< HEAD
         selectedToken,
         setSelectedToken,
         userEnergy,
         setUserEnergy,
+=======
+        tasks,
+        setTasks,
+>>>>>>> 9aacb56ec6fa842411a7193cc50ba517cc2eadbd
       }}
     >
       {children}

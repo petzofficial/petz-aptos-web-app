@@ -23,8 +23,7 @@ import {
   selectIsSingleTransactionLoading,
 } from "@/redux/app/reducers/AccountSlice";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-import { calculateInverseWithDecimals } from "../../../components/common/transaction";
-import { formatDateTime3 } from "@/components/common/dateTime";
+// import { calculateInverseWithDecimals } from "@/components/common/transaction";
 
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CircularIndeterminate from "@/components/common/loading";
@@ -51,6 +50,23 @@ const Page = () => {
     dispatch(fetchTransactionsBlockAction(id));
   }, [account, transactions]);
   console.log(specificTransaction);
+
+  function formatDateTime3(timestamp) {
+    const timestampInMillis = timestamp / 1000;
+    const dateObject = new Date(timestampInMillis);
+
+    const options = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    return dateObject.toLocaleString("en-US", options);
+  }
+
   return (
     <div>
       <section className="transaction-details">

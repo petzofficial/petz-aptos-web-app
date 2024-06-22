@@ -1,42 +1,118 @@
 "use client";
 import Link from "next/link";
-import "../../style/tasks/tasks.scss";
+import "@/style/tasks/tasks.scss";
 import { MdOutlineSelectAll } from "react-icons/md";
-import React, { useEffect, useState } from "react";
-import { FaCirclePlay } from "react-icons/fa6";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdTime, IoMdDoneAll } from "react-icons/io";
 import { CgTimelapse } from "react-icons/cg";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Pagination from "@/components/button/Pagination";
-import { getTaskData } from "@/utils/localDB";
+// import { getTaskData } from "@/utils/localDB";
+import PriorityComponent from "@/utils/aptostask/aptostask";
+import StatusColor from "@/utils/aptostask/priorityColor";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { AptosClient } from "aptos";
+import { TaskContext } from "./context/taskContext";
+import {
+  setTasksAndStoreStatus,
+  getAllTasksFromLocalStorage,
+} from "@/utils/localDB.js";
+import CircularIndeterminate from "@/components/common/loading";
+const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+const client = new AptosClient(NODE_URL);
+// change this to be your module account address
+const moduleAddress =
+  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {
-  const [tasks, setTasks] = useState([]);
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const { filteredTasks, setFilteredTasks, tasks, setTasks } =
+    useContext(TaskContext);
   const [slug, setSlug] = useState("All");
+  const { account, signAndSubmitTransaction, network } = useWallet();
+  const [accountHasList, setAccountHasList] = useState(false);
+  const localStorageTasks = getAllTasksFromLocalStorage();
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(localStorageTasks);
+  const fetchTasks = async () => {
+    if (!account) return [];
+    try {
+      setIsLoading(true);
+      const todoListResource = await client.getAccountResource(
+        account?.address,
+        `${moduleAddress}::task4::TaskManager`
+      );
+      setAccountHasList(true);
+      console.log(todoListResource);
+
+      const tableHandle = todoListResource.data.tasks.handle;
+      console.log("this is table handle");
+      console.log(tableHandle);
+      const taskCounter = todoListResource.data.set_task_event.counter;
+      console.log("this is task counter");
+      console.log(taskCounter);
+
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        console.log(counter);
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${moduleAddress}::task3::Task`,
+          key: `${counter}`,
+        };
+        console.log("this is table item");
+        console.log(tableItem);
+
+        const task = await client.getTableItem(tableHandle, tableItem);
+        console.log("this is task ero");
+        console.log(task, "task");
+
+        // Retrieve task status from local storage using task ID
+        const taskStatus = localStorageTasks.find(
+          (localStorageTask) => localStorageTask.task_id === task.task_id
+        )?.status;
+        tasks.push({ ...task, taskStatus: taskStatus });
+
+        console.log("these are tasks");
+        console.log(tasks);
+        counter++;
+      }
+
+      setFilteredTasks(tasks);
+      setTasks(tasks);
+      setTasksAndStoreStatus(tasks, "Pending");
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+      setAccountHasList(false);
+      setIsLoading(false);
+    }
+  };
+
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     ) || false;
-  useEffect(() => {
-    const storedTasks = getTaskData();
-    setTasks(storedTasks);
-    setFilteredTasks(storedTasks);
-  }, []);
 
+  useEffect(() => {
+    fetchTasks();
+  }, [account?.address]);
   const handleFilter = (status) => {
     if (status === "All") {
       setSlug("All");
       setFilteredTasks(tasks);
     } else {
-      const filtered = tasks.filter((task) => task?.status === status);
+      const filtered = tasks.filter((task) => task?.taskStatus === status);
       setFilteredTasks(filtered);
       setSlug(status);
     }
   };
 
+  console.log("these are tasks");
+
+  console.log(tasks);
   // Convert total and average time to HH:mm format
   const convertToHHMMSS = (timeInSeconds) => {
     if (timeInSeconds < 60) {
@@ -70,8 +146,7 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
-  console.log(tasksToDisplay);
-  if (tasksToDisplay.length === 0) {
+  if (!isLoading && tasksToDisplay.length === 0) {
     return (
       <div>
         <section className="tasks">
@@ -120,7 +195,7 @@ const Page = () => {
                     <IoMdDoneAll />
                     <button
                       className={`${
-                        slug === "Completed"
+                        slug === 2
                           ? "bg-[#FEE4D1] text-[#FF6900] cursor-pointer"
                           : ""
                       }`}
@@ -160,6 +235,95 @@ const Page = () => {
         </section>
       </div>
     );
+  } else if (isLoading) {
+    return (
+      <div>
+        <section className="tasks">
+          <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
+            <div className="tasks-inner lg:mb-16 max-lg:mb-8">
+              <Link href={"/"} className="text-[30px] font-bold">
+                <GoBackBtn />
+              </Link>
+              <div className="tasks-left xl:w-[250px] lg:w-[200px] max-lg:m-auto mt-5">
+                <div className="tasks-navbar mt-10">
+                  <div
+                    onClick={() => handleFilter("All")}
+                    className={`flex  cursor-pointer items-center space-x-4 ${
+                      slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
+                    <MdOutlineSelectAll />
+                    <button>All</button>
+                  </div>
+                  <div
+                    onClick={() => handleFilter("Pending")}
+                    className={`flex cursor-pointer items-center space-x-4 ${
+                      slug === "Pending" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
+                    <IoMdTime />
+                    <button>Pending</button>
+                  </div>
+                  <div
+                    onClick={() => handleFilter("In Progress")}
+                    className={`flex cursor-pointer items-center space-x-4 ${
+                      slug === "In Progress"
+                        ? "bg-[#FEE4D1] text-[#FF6900]"
+                        : ""
+                    }`}
+                  >
+                    <CgTimelapse className="border rounded-full" />
+                    <button>In Progress</button>
+                  </div>
+                  <div
+                    onClick={() => handleFilter("Completed")}
+                    className={`flex cursor-pointer items-center space-x-4 ${
+                      slug === "Completed" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                  >
+                    <IoMdDoneAll />
+                    <button
+                      className={`${
+                        slug === 2
+                          ? "bg-[#FEE4D1] text-[#FF6900] cursor-pointer"
+                          : ""
+                      }`}
+                    >
+                      Completed
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="tasks-right flex-1 lg:w-[466px] m-auto lg:mt-[-356px]">
+                <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    // marginTop: "10px",
+                  }}
+                >
+                  <CircularIndeterminate />
+                </div>
+                <Pagination
+                  currentPage={pageNum}
+                  totalPages={totalPages}
+                  onPageChange={setPageNum}
+                />
+                <div className="add-task-btn">
+                  <Link href={"/task/task-add"}>
+                    <button>Add New Task</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
   }
   return (
     <div>
@@ -173,7 +337,7 @@ const Page = () => {
               <div className="tasks-navbar mt-10">
                 <div
                   onClick={() => handleFilter("All")}
-                  className={`flex items-center space-x-4 ${
+                  className={`flex  cursor-pointer items-center space-x-4 ${
                     slug === "All" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -191,7 +355,7 @@ const Page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("In Progress")}
-                  className={`flex items-center space-x-4 ${
+                  className={`flex items-center cursor-pointer space-x-4 ${
                     slug === "In Progress" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                   }`}
                 >
@@ -214,25 +378,30 @@ const Page = () => {
               <h2 className="mb-9 max-md:mt-8 text-center">Today</h2>
 
               {tasksToDisplay.map((item) => (
-                <Link key={item._id} href={`/task/task-details?id=${item._id}`}>
+                <Link
+                  key={item.task_id}
+                  href={`/task/task-details?id=${item.task_id}`}
+                >
                   <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
                     <div
-                      style={{ backgroundColor: item.statusColor }}
+                      style={{
+                        backgroundColor: StatusColor(item.taskStatus),
+                      }}
                       className={`color`}
                     ></div>
                     <div className="middle flex justify-between">
                       <div>
-                        <h1>{item.title}</h1>
-                        <p>{convertToHHMMSS(item.time)}</p>
+                        <h1>{item.task_name}</h1>
+                        <p>{convertToHHMMSS(item.total_time_spent)}</p>
                       </div>
                       <div className="text-end">
                         <p>
-                          {item.currentCycleCount}/
+                          {item.cycle_count}/
                           {settingsLocalData && settingsLocalData.cycleCount
                             ? settingsLocalData.cycleCount
                             : "4"}
                         </p>
-                        <p>{item.priority}</p>
+                        <p>{PriorityComponent(item.priority)}</p>
                       </div>
                     </div>
                     <div className="flex mt-7"></div>

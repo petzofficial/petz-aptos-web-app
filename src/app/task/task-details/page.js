@@ -8,40 +8,68 @@ import "@/style/tasks/task-details.scss";
 import { Outfit } from "next/font/google";
 import { FaSquare, FaPlay } from "react-icons/fa";
 import { IoIosRefresh } from "react-icons/io";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { updateTaskStatusInLocalStorage } from "@/utils/localDB";
 import Image from "next/image";
 import img1 from "@/assets/home/image 23.png";
 import img2 from "@/assets/home/pgt-removebg-preview 2.png";
 import img3 from "@/assets/home/pst-removebg-preview 2.png";
-import { getTaskData, removeFromDB, updateTask } from "@/utils/localDB";
+import {
+  getTaskData,
+  removeFromDB,
+  updateTask,
+  getTaskFromLocalStorage,
+} from "@/utils/localDB";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { AptosClient } from "aptos";
 
+import { getFormattedDateTime } from "@/components/common/datetime";
+import PriorityComponent from "@/utils/aptostask/aptostask";
 const outfit = Outfit({ subsets: ["latin"] });
+import StatusComponent from "@/utils/aptostask/taskStatus";
+const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+const client = new AptosClient(NODE_URL);
+// change this to be your module account address
+const moduleAddress =
+  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
 
 const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const itemID = searchParams.get("id");
-  const { taskId, setTaskId } = useContext(TaskContext);
-  const [task, setTask] = useState(
-    getTaskData()?.find((item) => item._id == itemID)
-  );
+  const [transactionInProgress, setTransactionInProgress] = useState(false);
+  const { account, signAndSubmitTransaction, network } = useWallet();
+  const [accountHasList, setAccountHasList] = useState(false);
+
+  console.log("this is item id");
+  console.log(itemID);
+  const {
+    taskId,
+    setTaskId,
+    filteredTasks,
+    tasks,
+    selectedTaskId,
+    setSelectedTaskId,
+  } = useContext(TaskContext);
+  const taskStatus = getTaskFromLocalStorage(itemID);
+  const task = tasks.find((task) => task?.task_id === itemID);
+  console.log(task);
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
     ) || false;
 
-  if (!task) {
-    router.push("/task", { scroll: true });
-  }
+  // if (!task) {
+  //   router.push("/task", { scroll: true });
+  // }
 
   const handleDelete = (id) => {
     removeFromDB(id);
     router.push("/task", { scroll: true });
     toast.success("Task deleted");
   };
-
   const handleStatus = (id) => {
     const currentStatus = task.status;
     const newStatus = "Completed";
@@ -52,8 +80,12 @@ const Page = () => {
   };
 
   const handleButtonClick = () => {
-    if (task.status == "Completed") {
+    if (task.taskStatus == "Completed") {
       toast.error("Task is Completed");
+    } else {
+      console.log(task?.task_id);
+      setTaskId(task?.task_id);
+      setSelectedTaskId(task?.task_id);
     }
   };
 
@@ -80,6 +112,60 @@ const Page = () => {
     }
   };
 
+  const deleteTask = async () => {
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const transactionPayload = {
+      data: {
+        function: `${moduleAddress}::task4::delete_task`,
+        functionArguments: [itemID],
+      },
+    };
+
+    try {
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(transactionPayload);
+      // wait for transaction
+      await client.waitForTransaction(response.hash);
+      setAccountHasList(true);
+    } catch (error) {
+      setAccountHasList(false);
+    } finally {
+      setTransactionInProgress(false);
+      router.push("/task", { scroll: true });
+      toast.success("Task deleted");
+    }
+  };
+  const completeTask = async () => {
+    console.log("this is item id ");
+    console.log(itemID);
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const transactionPayload = {
+      data: {
+        function: `${moduleAddress}::task4::complete_task`,
+        functionArguments: [itemID],
+      },
+    };
+
+    try {
+      // sign and submit transaction to chain
+      const response = await signAndSubmitTransaction(transactionPayload);
+      // wait for transaction
+      await client.waitForTransaction(response.hash);
+      setAccountHasList(true);
+      toast.success("Task mark completed");
+      router.push("/task", { scroll: true });
+    } catch (error) {
+      setAccountHasList(false);
+
+      console.log(error);
+    } finally {
+      setTransactionInProgress(false);
+    }
+  };
   return (
     <div>
       <section className="task-details">
@@ -97,25 +183,31 @@ const Page = () => {
               className="flex justify-between items-center status-bar"
             >
               <h3>Status</h3>
-              <h3 className="text-[#FF6900]">{task.status}</h3>
+              <h3 className="text-[#FF6900]">{taskStatus?.status}</h3>
             </div>
-            {task.status === "Completed" ? (
+            {task?.status === "Completed" ? (
               ""
             ) : (
               <div className="button-bar flex justify-center items-center space-x-4">
                 <Link
-                  key={task._id}
-                  onClick={setTaskId(task._id)}
-                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
+                  key={task?.taskId}
+                  onClick={() => {}}
+                  href={
+                    task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`
+                  }
                 >
                   <button onClick={handleButtonClick}>
                     <FaSquare />
                   </button>
                 </Link>
                 <Link
-                  key={task._id}
-                  onClick={setTaskId(task._id)}
-                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
+                  key={task?.taskId}
+                  onClick={() => {
+                    setTaskId(task?.task_id);
+                  }}
+                  href={
+                    task?.status === "Completed" ? "#" : `/?id=${task?.task_id}`
+                  }
                 >
                   <button
                     onClick={handleButtonClick}
@@ -125,9 +217,11 @@ const Page = () => {
                   </button>
                 </Link>
                 <Link
-                  key={task._id}
-                  onClick={setTaskId(task._id)}
-                  href={task.status === "Completed" ? "#" : `/?id=${task._id}`}
+                  key={task?.taskId}
+                  onClick={setTaskId(task?.taskId)}
+                  href={
+                    task?.status === "Completed" ? "#" : `/?id=${task?.taskId}`
+                  }
                 >
                   <button onClick={handleButtonClick}>
                     <IoIosRefresh />
@@ -139,32 +233,32 @@ const Page = () => {
             <div className="info lg:p-8 p-1 shadow-md">
               <div>
                 <p>Task name</p>
-                <span>{task.title}</span>
+                <span>{task?.task_name}</span>
               </div>
               <div>
                 <p>Task Description</p>
-                <span>{task.description}</span>
+                <span>{task?.description}</span>
               </div>
               <div>
-                <p>Date</p>
-                <span>{task.date}</span>
-              </div>
-              <div>
-                <p>Task priority</p>
-                <span>{task.priority}</span>
-              </div>
-              <div>
-                <p>Cycle count</p>
+                <p>Create Date </p>
                 <span>
-                  {task.currentCycleCount}/
-                  {settingsLocalData && settingsLocalData.cycleCount
-                    ? settingsLocalData.cycleCount
-                    : "4"}
+                  {getFormattedDateTime(task?.create_date).formattedDate +
+                    " " +
+                    getFormattedDateTime(task?.create_date).formattedTime}
                 </span>
               </div>
               <div>
+                <p>Task priority</p>
+                {PriorityComponent(task?.priority)}
+                {/* <span>{task?.priority}</span> */}
+              </div>
+              <div>
+                <p>Cycle count</p>
+                <span>{task?.cycle_count}/4</span>
+              </div>
+              <div>
                 <p>Total time spent</p>
-                <span>{convertToHHMMSS(task.time)}</span>
+                <span>{convertToHHMMSS(task?.total_time_spent)}</span>
               </div>
 
               <div>
@@ -178,7 +272,7 @@ const Page = () => {
                 <p>Reward (in PGC)</p>
                 <div>
                   <Image src={img2} width={33} height={33} alt="coin" />
-                  <span>{task.reward_PGC}</span>
+                  <span>{task?.psc_reward}</span>
                 </div>
               </div>
               <div>
@@ -198,12 +292,15 @@ const Page = () => {
             </div>
 
             <div className="edit-delete-btn">
-              {task.status === "Completed" ? (
+              {task?.status === "Completed" ? (
                 ""
               ) : (
                 <button
                   onClick={() => {
-                    handleStatus(task._id);
+                    console.log("mark as completed is clicked");
+
+                    completeTask();
+                    // handleStatus(task._id);
                   }}
                 >
                   Mark As{" "}
@@ -212,14 +309,16 @@ const Page = () => {
                     : "Completed"}
                 </button>
               )}
-              {task.status === "Completed" ? (
+              {task?.status === "Completed" ? (
                 ""
               ) : (
-                <Link href={`/task/task-edit?id=${task._id}`}>Edit Task</Link>
+                <Link href={`/task/task-edit?id=${task?.task_id}`}>
+                  Edit Task
+                </Link>
               )}
               <button
                 onClick={() => {
-                  handleDelete(task._id);
+                  deleteTask();
                 }}
                 className="!text-[#B40000]"
               >

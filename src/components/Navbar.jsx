@@ -1,5 +1,6 @@
 "use client";
 import useSound from "use-sound";
+import toast from "react-hot-toast";
 
 import React, { useState, useEffect, useRef } from "react";
 import "../style/nav.scss";
@@ -8,6 +9,7 @@ import {
   getUserData,
   saveUserData,
   updateTask,
+  updateTaskStatusInLocalStorage,
   updateUserData,
 } from "@/utils/localDB";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
@@ -66,6 +68,7 @@ const Navbar = ({ method }) => {
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
+<<<<<<< HEAD
   const { account, signAndSubmitTransaction } = useWallet();
 
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
@@ -123,10 +126,21 @@ const Navbar = ({ method }) => {
         type_arguments: [],
         functionArguments: [60], //duration in seconds
       },
+=======
+  const completeCycle = async () => {
+    if (!account) return [];
+    setTransactionInProgress(true);
+    // build a transaction payload to be submited
+    const payload = {
+      type: "entry_function_payload",
+      function: `${moduleAddress}::task4::complete_cycle`,
+      functionArguments: [taskId, 1],
+>>>>>>> 9aacb56ec6fa842411a7193cc50ba517cc2eadbd
     };
     try {
       // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(payload);
+<<<<<<< HEAD
       console.log(response);
       await client.waitForTransaction(response.hash);
       getEnergy();
@@ -138,6 +152,17 @@ const Navbar = ({ method }) => {
     }
   };
 
+=======
+      // wait for transaction
+      await client.waitForTransaction(response.hash);
+      setAccountHasList(true);
+    } catch (error) {
+      setAccountHasList(false);
+    } finally {
+      setTransactionInProgress(false);
+    }
+  };
+>>>>>>> 9aacb56ec6fa842411a7193cc50ba517cc2eadbd
   useEffect(() => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -173,7 +198,7 @@ const Navbar = ({ method }) => {
     const status = "Completed";
     const filtered = tasks.filter((task) => task.status != status);
     console.log(taskId);
-    setFilteredTasks(filtered);
+    // setFilteredTasks(filtered);
     if (taskId) {
       setSelectedTaskId(taskId);
       handleSelectDataFunc(taskId);
@@ -356,9 +381,11 @@ const Navbar = ({ method }) => {
       const updatedFilteredTasks = updatedTasks.filter(
         (task) => task.status !== "Completed"
       );
-      setFilteredTasks(updatedFilteredTasks);
+      // setFilteredTasks(updatedFilteredTasks);
       // Show success toast
       // const reward = 60 * Math.floor(filtered?.time / 60);
+      updateTaskStatusInLocalStorage(selectedTaskId, "Completed");
+      completeCycle();
       toast.success(`Task is Completed`);
       /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,

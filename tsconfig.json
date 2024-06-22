@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/pages/account/[id]/index.js", "src/components/Navbar.jsx"  ],
+, "src/pages/account/[id]/index.js", "src/components/Navbar.jsx", "src/components/task/EditAddTask.jsx"  ],
   "exclude": [
     "node_modules"
   ],

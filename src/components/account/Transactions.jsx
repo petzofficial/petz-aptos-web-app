@@ -10,7 +10,6 @@ import emptyImage from "@/assets/without/empty.png";
 import Image from "next/image";
 import { useState } from "react";
 import { calculateInverseWithDecimals } from "@/components/common/transaction";
-import { formatDateTime2 } from "@/components/common/dateTime";
 import CircularIndeterminate from "@/components/common/loading";
 import {
   TransactionAmount,
@@ -24,6 +23,17 @@ const Transactions = ({ transactions, isLoading }) => {
   const { account } = useWallet();
 
   const itemsPerPage = 8; // Change this value based on your requirement
+  function formatDateTime2(timestamp) {
+    const timestampInMillis = timestamp / 1000;
+    const dateObject = new Date(timestampInMillis);
+
+    const options = {
+      month: "short",
+      day: "numeric",
+    };
+
+    return dateObject.toLocaleString("en-US", options);
+  }
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

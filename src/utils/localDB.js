@@ -14,6 +14,62 @@ const getUserData = () => {
   }
   return userData;
 };
+export const setTasksAndStoreStatus = (tasks, status) => {
+  console.log("these are tasks ok done");
+  console.log(tasks);
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach((task) => {
+      const existingTaskIndex = existingTasks.findIndex(
+        (t) => t.task_id === task.task_id
+      );
+      console.log("this is existing task");
+      console.log(existingTaskIndex);
+      if (existingTaskIndex === -1) {
+        existingTasks.push({ task_id: task.task_id, status: status });
+      } else {
+        // existingTasks[existingTaskIndex].status = status;
+      }
+    });
+
+    // Store the updated array back to local storage
+    localStorage.setItem("tasks", JSON.stringify(existingTasks));
+  }
+};
+export const getAllTasksFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    return existingTasks;
+  }
+  return [];
+};
+
+export const getTaskFromLocalStorage = (task_id) => {
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const foundTask = existingTasks.find((task) => task.task_id === task_id);
+    return foundTask || null;
+  }
+};
+export const updateTaskStatusInLocalStorage = (task_id, newStatus) => {
+  if (typeof window !== "undefined") {
+    let existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const taskIndex = existingTasks.findIndex(
+      (task) => task.task_id === task_id
+    );
+    if (taskIndex !== -1) {
+      existingTasks[taskIndex].status = newStatus;
+      const updated = localStorage.setItem(
+        "tasks",
+        JSON.stringify(existingTasks)
+      );
+      console.log(updated);
+      return existingTasks[taskIndex];
+    } else {
+      return null;
+    }
+  }
+};
 
 const saveUserData = (userData) => {
   if (typeof window !== "undefined") {
