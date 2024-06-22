@@ -54,15 +54,10 @@ export const TaskContextProvider = ({ children }) => {
         secondsRef,
         setEnergy,
         setTotalSeconds,
-<<<<<<< HEAD
         selectedToken,
         setSelectedToken,
         userEnergy,
         setUserEnergy,
-=======
-        tasks,
-        setTasks,
->>>>>>> 9aacb56ec6fa842411a7193cc50ba517cc2eadbd
       }}
     >
       {children}

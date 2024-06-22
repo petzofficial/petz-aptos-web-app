@@ -68,7 +68,6 @@ const Navbar = ({ method }) => {
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
-<<<<<<< HEAD
   const { account, signAndSubmitTransaction } = useWallet();
 
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
@@ -126,21 +125,10 @@ const Navbar = ({ method }) => {
         type_arguments: [],
         functionArguments: [60], //duration in seconds
       },
-=======
-  const completeCycle = async () => {
-    if (!account) return [];
-    setTransactionInProgress(true);
-    // build a transaction payload to be submited
-    const payload = {
-      type: "entry_function_payload",
-      function: `${moduleAddress}::task4::complete_cycle`,
-      functionArguments: [taskId, 1],
->>>>>>> 9aacb56ec6fa842411a7193cc50ba517cc2eadbd
     };
     try {
       // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(payload);
-<<<<<<< HEAD
       console.log(response);
       await client.waitForTransaction(response.hash);
       getEnergy();
@@ -152,17 +140,6 @@ const Navbar = ({ method }) => {
     }
   };
 
-=======
-      // wait for transaction
-      await client.waitForTransaction(response.hash);
-      setAccountHasList(true);
-    } catch (error) {
-      setAccountHasList(false);
-    } finally {
-      setTransactionInProgress(false);
-    }
-  };
->>>>>>> 9aacb56ec6fa842411a7193cc50ba517cc2eadbd
   useEffect(() => {
     const settingsLocalData = JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
