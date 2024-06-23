@@ -31,7 +31,7 @@ const EditAddTask = ({ method }) => {
     priority: "",
   });
   const [priority, setPriority] = useState("");
-  const editTask = tasks.find((task) => task?.task_id === existingTaskId);
+  const editTask = tasks?.find((task) => task?.task_id === existingTaskId);
 
   useEffect(() => {
     if (method === "edit" && editTask) {
