@@ -173,7 +173,7 @@ const Navbar = ({ method }) => {
 
     const tasks = getTaskData();
     const status = "Completed";
-    const filtered = tasks.filter((task) => task.status != status);
+    const filtered = tasks?.filter((task) => task.status != status);
     console.log(taskId);
     // setFilteredTasks(filtered);
     if (taskId) {
@@ -355,7 +355,7 @@ const Navbar = ({ method }) => {
       });
       // Update filteredTasks after task completion
       const updatedTasks = getTaskData();
-      const updatedFilteredTasks = updatedTasks.filter(
+      const updatedFilteredTasks = updatedTasks?.filter(
         (task) => task.status !== "Completed"
       );
       // setFilteredTasks(updatedFilteredTasks);

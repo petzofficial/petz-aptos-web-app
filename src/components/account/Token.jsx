@@ -55,7 +55,7 @@ const Token = ({ tokens, isLoading }) => {
     );
   } else {
     return (
-      <div className="account-token max-md:pt-5 md:pt-10">
+      <div className="account-token  max-md:pt-5 md:pt-10">
         <div className="pick-cards grid max-lg:grid-cols-2 lg:grid-cols-4 justify-between items-center">
           {currentTokens?.map((item, id) => {
             return (

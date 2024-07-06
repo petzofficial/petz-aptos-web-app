@@ -1,0 +1,77 @@
+@import "../responsive.scss";
+
+.profile {
+  width: 100%;
+  .profile-edit-upload-button {
+    background: #ff6900;
+    font-family: Urbanist;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .profile-edit-lable {
+    //styleName: Text;
+    font-family: Urbanist;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    color: #808080;
+    @include mobile {
+      font-size: 20px;
+    }
+  }
+  .profile-edit-input {
+    box-shadow: 0px 1px 0px 0px #00000040;
+    border: 3px solid #2f2f2f59;
+    background: #f9f9f9;
+    //styleName: Text;
+    font-family: Urbanist;
+    font-size: 26px;
+    width: 400px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+    @include mobile {
+      font-size: 18px;
+      font-weight: 550;
+    }
+  }
+  .profile-edit-button-submit {
+    width: 400px;
+    top: 1705px;
+    left: 380px;
+    gap: 10px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    background: #ff6900;
+  }
+}
+
+.max-width1 {
+  max-width: max-content;
+  margin-left: 300px;
+  min-width: 700px;
+
+  @include tablet {
+    max-width: 100%;
+    margin-left: 2px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @include mobile {
+    max-width: 600px;
+    max-width: 100%;
+
+    margin-left: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

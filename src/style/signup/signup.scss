@@ -1,0 +1,66 @@
+@import "../responsive.scss";
+
+.signup {
+  width: 100%;
+  .signup-label {
+    //styleName: Text;
+    font-family: Urbanist;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    color: #ff6900;
+  }
+  .signup-input {
+    width: 350px;
+
+    gap: 10px;
+    border: 3px 0px 0px 0px;
+    opacity: 0px;
+    background: #f9f9f9;
+    box-shadow: 0px 1px 0px 0px #00000040;
+    // On click
+    // Navigate to: "None";
+    // Animate: Move in Right;
+    animation-timing-function: ease-in;
+    animation-duration: 300ms;
+  }
+  .signup-submit {
+    // width: Fill (550px) px;
+    // height: Fixed (68px) px;
+    // padding: 16px 40px 16px 40px;
+    gap: 10px;
+    // border-radius: 8px 0px 0px 0px;
+    // border: 1px 0px 0px 0px;
+    opacity: 0px;
+    width: 350px;
+
+    background: #ff6900;
+  }
+}
+
+.max-width1 {
+  max-width: max-content;
+  margin-left: 400px;
+  min-width: 700px;
+
+  @include tablet {
+    max-width: 100%;
+    margin-left: 2px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @include mobile {
+    max-width: 600px;
+    max-width: 100%;
+
+    margin-left: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

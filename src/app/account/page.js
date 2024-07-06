@@ -1,14 +1,16 @@
 "use client";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import React, { use, useMemo, useState } from "react";
-import Image from "next/image";
-import img2 from "@/assets/home/pst-removebg-preview 2.png";
-import img3 from "@/assets/home/image 23.png";
+import React, { useContext, useMemo, useState } from "react";
+import CreateIcon from "@mui/icons-material/Create";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "@/style/account/account.scss";
+import "@/style/profile/profile.scss";
+
 import { TbCircleLetterT } from "react-icons/tb";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import HistoryIcon from "@mui/icons-material/History";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { IoCopy } from "react-icons/io5";
 import Token from "@/components/account/Token";
 import Transactions from "@/components/account/Transactions";
@@ -30,16 +32,21 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
-import { Tooltip } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import { truncateAddress } from "@/components/aptosIntegrations/utils";
 import { getUserData } from "../../utils/localDB";
 import LinearProgressEnergy from "@/components/common/linearProgress";
-
+import ProfileComp from "@/components/profile/profile";
+import SignupComp from "@/components/signup/signup";
+import EditProfileComp from "@/components/EditProfile/editProfile";
+import ActivityComp from "@/components/activity/activity";
+import RefferalComp from "@/components/refferal/refferal";
+import { TaskContext } from "../task/context/taskContext";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const Page = () => {
-  const [slug, setSlug] = useState("token");
+  const { slug, setSlug } = useContext(TaskContext);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const newNetwork = useAppSelector(selectNewNetwork);
   const transactions = useAppSelector(selectTransactions);
@@ -76,7 +83,6 @@ const Page = () => {
 
   useEffect(() => {
     if (tokensNeedImages) {
-      console.log("useEffect is called 2");
       tokens.forEach((token) => {
         if (!token?.image) {
           const tokenURI = token?.current_token_data?.token_uri;
@@ -87,7 +93,18 @@ const Page = () => {
       });
     }
   }, [dispatch, tokensNeedImages]);
+  if (slug === "profile") {
+    return <EditProfileComp />;
+    // return <SignupComp />;
 
+    // return <ProfileComp />;
+  } else if (slug === "signup") {
+  } else if (slug === "activity") {
+    return <ActivityComp />;
+  } else if (slug === "refferal") {
+    return <RefferalComp />;
+  }
+  console.log(slug);
   return (
     <AppContext>
       <div>
@@ -118,12 +135,39 @@ const Page = () => {
                   >
                     <FaArrowRightArrowLeft /> <span>Transactions</span>
                   </button>
-                  <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
+                  <button
+                    className={`${
+                      slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                    onClick={() => setSlug("profile")}
+                  >
+                    <Avatar style={{ height: "25px", width: "25px" }} />{" "}
+                    <span>Profile</span>
+                  </button>
+                  <button
+                    className={`${
+                      slug === "activity" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                    onClick={() => setSlug("activity")}
+                  >
+                    <HistoryIcon />
+                    <span>Activity</span>
+                  </button>
+                  <button
+                    className={`${
+                      slug === "refferal" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                    }`}
+                    onClick={() => setSlug("refferal")}
+                  >
+                    <ThumbUpOffAltIcon />
+                    <span>Referral</span>
+                  </button>
+                  {/* <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
                     NFT Marketplace
-                  </span>
+                  </span> */}
                 </div>
               </div>
-              <div className="max-width m-auto lg:mt-[-260px]">
+              <div className="max-width m-auto lg:mt-[-400px]">
                 <h2 className={`flex justify-center ${outfit.className}`}>
                   Account
                 </h2>

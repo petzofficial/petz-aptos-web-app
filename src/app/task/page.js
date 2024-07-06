@@ -104,7 +104,7 @@ const Page = () => {
       setSlug("All");
       setFilteredTasks(tasks);
     } else {
-      const filtered = tasks.filter((task) => task?.taskStatus === status);
+      const filtered = tasks?.filter((task) => task?.taskStatus === status);
       setFilteredTasks(filtered);
       setSlug(status);
     }

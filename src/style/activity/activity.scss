@@ -1,0 +1,80 @@
+@import "../responsive.scss";
+.activity {
+  width: 100%;
+  .activity-header {
+    width: Fixed (795px) px;
+    height: Hug (64px) px;
+    padding: 10px 0px 10px 0px;
+    gap: 120px;
+    border: 0px 0px 1.5px 0px;
+    opacity: 0px;
+    background: #ffd9bf;
+    border-bottom: 1.5px solid #ff6900;
+  }
+  .timestamp {
+    font-family: Urbanist;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+    color: #2f2f2f;
+    @include mobile {
+      font-size: 17px;
+    }
+  }
+  .activity-body {
+    width: Fixed (801px) px;
+    height: Hug (54px) px;
+    padding: 10px 0px 0px 0px;
+    gap: 110px;
+    border: 0px 0px 1.5px 0px;
+    opacity: 0px;
+  }
+  .activity-body-span {
+    font-family: Urbanist;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: left;
+    color: #2f2f2f;
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+  .activity-line {
+    width: Fixed (801px) px;
+    height: Hug (54px) px;
+    padding: 10px 0px 0px 0px;
+    gap: 110px;
+    border: 0px 0px 1.5px 0px;
+    opacity: 0px;
+    border-bottom: 1.5px solid #2f2f2f59;
+  }
+}
+
+.max-width1 {
+  max-width: max-content;
+  margin-left: 300px;
+  min-width: 700px;
+
+  @include tablet {
+    max-width: 100%;
+    margin-left: 2px;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @include mobile {
+    max-width: 600px;
+    max-width: 100%;
+
+    margin-left: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
