@@ -120,126 +120,128 @@ const ProfileComp = () => {
             <h2 className={`flex justify-center ${outfit.className}`}>
               Profile
             </h2>
-            {accountHasProfile ? (
-              <div className="profile flex flex-col items-start mt-8 gap-6">
-                <div className="avatar  rounded-full flex-col items-center flex gap-5">
-                  <img
-                    src="/profile.jpg"
-                    alt="image"
-                    className="profile-img h-32 object-cover w-32 rounded-full"
-                  />
-                  <div className="flex flex-col gap-1 ">
-                    <span className={`profile-username ${urbanist.className}`}>
-                      John David Doe
-                    </span>
-                    <span className={` ${urbanist.className} profile-about`}>
-                      UI Designer
-                    </span>
-                  </div>
+
+            <div className="profile flex flex-col items-start mt-8 gap-6">
+              <div className="avatar  rounded-full flex-col items-center flex gap-5">
+                <img
+                  src="/profile.jpg"
+                  alt="image"
+                  className="profile-img h-32 object-cover w-32 rounded-full"
+                />
+                <div className="flex flex-col gap-1 ">
+                  <span className={`profile-username ${urbanist.className}`}>
+                    John David Doe
+                  </span>
+                  <span className={` ${urbanist.className} profile-about`}>
+                    UI Designer
+                  </span>
                 </div>
-                <div className="profile-account-details flex h-full w-full flex-col gap-8">
-                  <div className="profile-account-detail-header  items-center  flex justify-between">
+              </div>
+              <div className="profile-account-details flex h-full w-full flex-col gap-8">
+                <div className="profile-account-detail-header  items-center  flex justify-between">
+                  <span
+                    className={` ${urbanist.className} profile-account-detail-header-text`}
+                  >
+                    Account Details
+                  </span>
+                  <button
+                    className={`profile-edit-button rounded-lg flex items-center justify-center gap-1 ${urbanist.className}`}
+                  >
+                    <CreateIcon />
+                    Edit
+                  </button>
+                </div>
+                <div className="flex flex-col profile-items-detail  md:gap-7 gap-3  ">
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col ">
                     <span
-                      className={` ${urbanist.className} profile-account-detail-header-text`}
+                      className={`${urbanist.className} profile-item-label`}
                     >
-                      Account Details
+                      Username
                     </span>
-                    <button
-                      className={`profile-edit-button rounded-lg flex items-center justify-center gap-1 ${urbanist.className}`}
+                    <span
+                      className={`profile-item-value ${urbanist.className}`}
                     >
-                      <CreateIcon />
-                      Edit
-                    </button>
+                      {/* {data.username} */}
+                      abc
+                    </span>
                   </div>
-                  <div className="flex flex-col profile-items-detail   ">
-                    <div className="profile-account-details-item gap-1 md:gap-3 flex flex-col ">
-                      <span
-                        className={`${urbanist.className} profile-item-label`}
-                      >
-                        Username
-                      </span>
-                      <span
-                        className={`profile-item-value ${urbanist.className}`}
-                      >
-                        {data.username}
-                      </span>
-                      <span
-                        className={`${urbanist.className} profile-item-label`}
-                      >
-                        Name
-                      </span>
-                      <span
-                        className={`profile-item-value ${urbanist.className}`}
-                      >
-                        {data.name}
-                      </span>
-                    </div>
-                    <div className="profile-account-details-item gap-1 md:gap-3 flex flex-col">
-                      <span
-                        className={`profile-item-label ${urbanist.className}`}
-                      >
-                        {data.email}
-                      </span>
-                      <span
-                        className={`profile-item-value ${urbanist.className}`}
-                      >
-                        johndoe@gmail.com
-                      </span>
-                    </div>
-                    <div className="profile-account-details-item gap-1 md:gap-3 flex flex-col">
-                      <span
-                        className={`${urbanist.className} profile-item-label`}
-                      >
-                        Gender
-                      </span>
-                      <span
-                        className={`profile-item-value ${urbanist.className}`}
-                      >
-                        Male
-                      </span>
-                    </div>
-                    <div className="profile-account-details-item gap-1 md:gap-3 flex flex-col">
-                      <span
-                        className={`profile-item-label ${urbanist.className}`}
-                      >
-                        Phone
-                      </span>
-                      <span
-                        className={`profile-item-value ${urbanist.className}`}
-                      >
-                        +09 876543211
-                      </span>
-                    </div>
-                    <div className="profile-account-details-item gap-1 md:gap-3 flex flex-col ">
-                      <span
-                        className={`${urbanist.className} profile-item-label`}
-                      >
-                        Birthday
-                      </span>
-                      <span
-                        className={`${urbanist.className} profile-item-value`}
-                      >
-                        03-12-2000
-                      </span>
-                    </div>
-                    <div className="profile-account-details-item gap-1 md:gap-3 flex flex-col">
-                      <span
-                        className={`profile-item-label ${urbanist.className}`}
-                      >
-                        Location
-                      </span>
-                      <span
-                        className={`${urbanist.className} profile-item-value`}
-                      >
-                        Canada
-                      </span>
-                    </div>
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col ">
+                    <span
+                      className={`${urbanist.className} profile-item-label`}
+                    >
+                      Name
+                    </span>
+                    <span
+                      className={`profile-item-value ${urbanist.className}`}
+                    >
+                      {/* {data.username} */}
+                      xyz
+                    </span>
+                  </div>
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
+                    <span
+                      className={`profile-item-label ${urbanist.className}`}
+                    >
+                      {/* {data.email} */}
+                      xyz@gmail.com
+                    </span>
+                    <span
+                      className={`profile-item-value ${urbanist.className}`}
+                    >
+                      johndoe@gmail.com
+                    </span>
+                  </div>
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
+                    <span
+                      className={`${urbanist.className} profile-item-label`}
+                    >
+                      Gender
+                    </span>
+                    <span
+                      className={`profile-item-value ${urbanist.className}`}
+                    >
+                      Male
+                    </span>
+                  </div>
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
+                    <span
+                      className={`profile-item-label ${urbanist.className}`}
+                    >
+                      Phone
+                    </span>
+                    <span
+                      className={`profile-item-value ${urbanist.className}`}
+                    >
+                      +09 876543211
+                    </span>
+                  </div>
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col ">
+                    <span
+                      className={`${urbanist.className} profile-item-label`}
+                    >
+                      Birthday
+                    </span>
+                    <span
+                      className={`${urbanist.className} profile-item-value`}
+                    >
+                      03-12-2000
+                    </span>
+                  </div>
+                  <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
+                    <span
+                      className={`profile-item-label ${urbanist.className}`}
+                    >
+                      Location
+                    </span>
+                    <span
+                      className={`${urbanist.className} profile-item-value`}
+                    >
+                      Canada
+                    </span>
                   </div>
                 </div>
               </div>
-            ) : (
-              <span>create profile</span>
-            )}
+            </div>
           </div>
         </div>
       </div>

@@ -101,9 +101,9 @@ const Page = () => {
   }, [dispatch, tokensNeedImages]);
   if (slug === "profile") {
     // return <EditProfileComp />;
-    return <SignupComp />;
+    // return <SignupComp />;
 
-    // return <ProfileComp />;
+    return <ProfileComp />;
   } else if (slug === "signup") {
   } else if (slug === "activity") {
     return <ActivityComp />;
