@@ -11,7 +11,7 @@ import {
 } from "@/redux/app/reducers/AccountSlice";
 import emptyImage from "@/assets/without/empty.png";
 import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
-
+import "@/style/account/token.scss";
 const Token = ({ tokens, isLoading }) => {
   const itemsPerPage = 8; // Change this to the number of items you want to display per page
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,6 +76,11 @@ const Token = ({ tokens, isLoading }) => {
               </div>
             );
           })}
+        </div>
+        <div className="marketplace_button  mt-8 mb-8 flex items-center justify-center">
+          <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
+            NFT Marketplace
+          </span>
         </div>
         <Pagination
           currentPage={currentPage}

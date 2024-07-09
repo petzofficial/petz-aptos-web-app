@@ -33,8 +33,7 @@ const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
 // change this to be your module account address
 const moduleAddress =
-  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
-
+  "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
 const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -54,8 +53,7 @@ const Page = () => {
     setSelectedTaskId,
   } = useContext(TaskContext);
   const taskStatus = getTaskFromLocalStorage(itemID);
-  const task = tasks.find((task) => task?.task_id === itemID);
-  console.log(task);
+  const task = tasks?.find((task) => task?.task_id === itemID);
   const settingsLocalData =
     JSON.parse(
       typeof window !== "undefined" ? localStorage.getItem("settings") : null
@@ -83,16 +81,13 @@ const Page = () => {
     if (task.taskStatus == "Completed") {
       toast.error("Task is Completed");
     } else {
-      console.log(task?.task_id);
       setTaskId(task?.task_id);
       setSelectedTaskId(task?.task_id);
     }
   };
 
-  // Convert total and average time to HH:mm format
   const convertToHHMMSS = (timeInSeconds) => {
     if (timeInSeconds < 60) {
-      // Display seconds
       if (timeInSeconds == 0) {
         return `${timeInSeconds} min`;
       }
@@ -115,10 +110,9 @@ const Page = () => {
   const deleteTask = async () => {
     if (!account) return [];
     setTransactionInProgress(true);
-    // build a transaction payload to be submited
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task4::delete_task`,
+        function: `${moduleAddress}::task3::delete_task`,
         functionArguments: [itemID],
       },
     };
@@ -143,9 +137,11 @@ const Page = () => {
     if (!account) return [];
     setTransactionInProgress(true);
     // build a transaction payload to be submited
+
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task4::complete_task`,
+        function: `${moduleAddress}::task3::complete_task`,
+        type_arguments: [],
         functionArguments: [itemID],
       },
     };
@@ -153,7 +149,6 @@ const Page = () => {
     try {
       // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(transactionPayload);
-      // wait for transaction
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
       toast.success("Task mark completed");

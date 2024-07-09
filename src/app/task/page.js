@@ -24,7 +24,7 @@ const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
 // change this to be your module account address
 const moduleAddress =
-  "0x8cb5e9980ab5dc8abc45edcfac0e46cdcbead3e7ec9661a4a464fa7091c5f77a";
+  "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
 
 const Page = () => {
   const { filteredTasks, setFilteredTasks, tasks, setTasks } =
@@ -41,7 +41,7 @@ const Page = () => {
       setIsLoading(true);
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${moduleAddress}::task4::TaskManager`
+        `${moduleAddress}::task3::TaskManager`
       );
       setAccountHasList(true);
       console.log(todoListResource);

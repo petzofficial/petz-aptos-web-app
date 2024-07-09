@@ -266,10 +266,10 @@ const Page = () => {
                 <button>Sell</button>
                 <button
                   onClick={() => {
-                    // selectNFT(
-                    //   token?.current_token_data?.collection_id,
-                    //   token?.token_data_id
-                    // );
+                    selectNFT(
+                      token?.current_token_data?.collection_id,
+                      token?.token_data_id
+                    );
                     setSelectedToken(token);
                     router.push("/");
                   }}

@@ -83,77 +83,176 @@ const ActivityComp = () => {
             </h2>
             <div className="activity overscroll-auto mt-8">
               <div className="activity-header flex items-center  justify-around">
-                <span className="timestamp">Timestamp</span>
-                <span className="timestamp">Action</span>
-                <span className="timestamp">IP Address</span>
+                <span className={`${urbanist.className} timestamp`}>
+                  Timestamp
+                </span>
+                <span className={`${urbanist.className} timestamp`}>
+                  Action
+                </span>
+                <span className={`${urbanist.className} timestamp`}>
+                  IP Address
+                </span>
               </div>
               <div className="activity-body flex items-start justify-around p-3">
-                <span
-                  style={{ fontFamily: urbanist }}
-                  className="activity-body-span "
-                >
+                <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
                 <span
                   style={{ fontFamily: urbanist }}
-                  className="activity-body-span "
+                  className={`${urbanist.className} activity-body-span `}
                 >
                   Changed Profile
                 </span>
                 <span
                   style={{ fontFamily: urbanist }}
-                  className="activity-body-span "
+                  className={`${urbanist.className} activity-body-span `}
                 >
                   123.22.4312
                 </span>
               </div>
               <div className="activity-line"></div>
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>{" "}
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>{" "}
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>{" "}
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>{" "}
               <div className="activity-body flex items-start justify-around p-3">
-                <span className="activity-body-span ">3 min ago</span>
-                <span className="activity-body-span ">Changed Profile</span>
-                <span className="activity-body-span ">123.22.4312</span>
+                <span className={`${urbanist.className} activity-body-span `}>
+                  3 min ago
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  Changed Profile
+                </span>
+                <span
+                  style={{ fontFamily: urbanist }}
+                  className={`${urbanist.className} activity-body-span `}
+                >
+                  123.22.4312
+                </span>
               </div>
               <div className="activity-line"></div>
             </div>

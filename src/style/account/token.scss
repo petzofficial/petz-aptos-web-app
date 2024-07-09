@@ -1,0 +1,15 @@
+@import "../responsive.scss";
+.marketPlace {
+  padding: 10px 30px;
+  border-radius: 8px;
+  background-color: #ff6900;
+  justify-content: center;
+  max-width: 250px;
+  align-items: center;
+  color: #fff;
+  margin: 2px 0;
+
+  @include mobile {
+    padding: 5px 20px;
+  }
+}

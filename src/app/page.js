@@ -166,7 +166,7 @@ const Page = () => {
   const handleSelectDataFunc = (id) => {
     let tmpCycle = 1;
     const tasks = getTaskData();
-    const filtered = tasks.find((task) => task._id === id);
+    const filtered = tasks?.find((task) => task._id === id);
     if (
       filtered &&
       filtered.currentCycleCount &&

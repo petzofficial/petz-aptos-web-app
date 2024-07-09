@@ -56,7 +56,13 @@ const Page = () => {
   const transactionLoading = useAppSelector(selectIsTransactionLoading);
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
+
   const { connected, account, wallet } = useWallet();
+  const filteredToken = tokens?.filter(
+    (x) =>
+      x.current_token_data?.current_collection?.collection_name !==
+      "PetZ NFT Collection"
+  );
 
   const userData = getUserData();
   const dispatch = useAppDispatch();
@@ -79,7 +85,7 @@ const Page = () => {
 
   const tokensNeedImages = useMemo(() => {
     return tokens?.some((token) => !token?.image);
-  }, [tokens]);
+  }, [tokens, filteredToken]);
 
   useEffect(() => {
     if (tokensNeedImages) {
@@ -94,8 +100,8 @@ const Page = () => {
     }
   }, [dispatch, tokensNeedImages]);
   if (slug === "profile") {
-    return <EditProfileComp />;
-    // return <SignupComp />;
+    // return <EditProfileComp />;
+    return <SignupComp />;
 
     // return <ProfileComp />;
   } else if (slug === "signup") {

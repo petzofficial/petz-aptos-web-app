@@ -90,10 +90,7 @@ const RefferalComp = () => {
             </h2>
             <div className="refferal max-width1 mt-6   md:pr-24 items-center justify-center  flex flex-col gap-4">
               <div className="referral-intro flex flex-col items-center justify-center ">
-                <span
-                  style={{ fontFamily: urbanist }}
-                  className="refferal-intro-span"
-                >
+                <span className={`${urbanist.className} refferal-intro-span`}>
                   Give your friends 10% off, and earn $8 when they buy.
                 </span>
                 <span

@@ -86,7 +86,7 @@ const Transactions = ({ transactions, isLoading }) => {
                 </p>
                 <span>
                   {item?.success === true ? (
-                    "Confirmed."
+                    <span style={{ color: "green" }}> Confirmed </span>
                   ) : (
                     <span className=" text-red-600">Failed. </span>
                   )}{" "}
@@ -120,25 +120,3 @@ const Transactions = ({ transactions, isLoading }) => {
 };
 
 export default Transactions;
-const items = [
-  {
-    id: 1,
-    title: "Network Fee",
-  },
-  {
-    id: 2,
-    title: "Network Fee",
-  },
-  {
-    id: 3,
-    title: "Network Fee",
-  },
-  {
-    id: 4,
-    title: "Network Fee",
-  },
-  {
-    id: 5,
-    title: "Network Fee",
-  },
-];

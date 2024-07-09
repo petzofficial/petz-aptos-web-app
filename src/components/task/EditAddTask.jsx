@@ -10,9 +10,10 @@ import { v4 as uuid } from "uuid";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
-import { client } from "@/app/page";
+// import { client } from "@/app/page";
 import toast from "react-hot-toast";
-import { moduleAddress } from "@/app/page";
+import { AptosClient } from "aptos";
+// import { moduleAddress } from "@/app/page";
 const urban = Urbanist({ subsets: ["latin"] });
 
 const EditAddTask = ({ method }) => {
@@ -22,7 +23,11 @@ const EditAddTask = ({ method }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
-
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
+  const moduleAddress =
+    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
+  // 0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::task3;
   const existingTaskId = searchParams.get("id");
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [task, setTask] = useState({
@@ -54,23 +59,21 @@ const EditAddTask = ({ method }) => {
   const handlePriority = (v) => {
     setPriority(v);
   };
-  // add task apos integration
   const addTask = async (e) => {
     e.preventDefault();
     if (!account) return [];
     setTransactionInProgress(true);
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task4::add_task`,
+        function: `${moduleAddress}::task3::add_task`,
         functionArguments: [task?.title, task?.description, 0, priority],
       },
     };
     try {
       const response = await signAndSubmitTransaction(transactionPayload);
-
       const transaction = await client.waitForTransaction(response.hash);
-
       setAccountHasList(true);
+
       toast.success("Task added");
       router.push("/task", { scroll: true });
     } catch (error) {
@@ -84,16 +87,13 @@ const EditAddTask = ({ method }) => {
     e.preventDefault();
     if (!account) return [];
     setTransactionInProgress(true);
-    // build a transaction payload to be submited
-
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task4::update_task`,
+        function: `${moduleAddress}::task3::update_task`,
         functionArguments: [
           existingTaskId,
           task?.title,
           task?.description,
-
           1,
           priority,
         ],
@@ -102,9 +102,7 @@ const EditAddTask = ({ method }) => {
     try {
       // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(transactionPayload);
-
       const transaction = await client.waitForTransaction(response.hash);
-
       setAccountHasList(true);
       toast.success("Task updated");
       router.push("/task", { scroll: true });
@@ -114,8 +112,7 @@ const EditAddTask = ({ method }) => {
       setTransactionInProgress(false);
     }
   };
-  console.log("this is priority");
-  console.log(priority);
+
   return (
     <section className="task-edit">
       <div className="addconatiner 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">

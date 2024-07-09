@@ -61,6 +61,8 @@ export const TaskContextProvider = ({ children }) => {
         setUserEnergy,
         slug,
         setSlug,
+        tasks,
+        setTasks,
       }}
     >
       {children}

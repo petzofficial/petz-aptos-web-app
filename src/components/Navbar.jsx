@@ -158,7 +158,7 @@ const Navbar = ({ method }) => {
     const handleSelectDataFunc = (id) => {
       let tmpCycle = 1;
       const tasks = getTaskData();
-      const filtered = tasks.find((task) => task._id === id);
+      const filtered = tasks?.find((task) => task._id === id);
       console.log(filtered);
       if (
         filtered &&
@@ -224,7 +224,7 @@ const Navbar = ({ method }) => {
           if (currentState === "focus") {
             statisticsData[formattedDate][selectedTaskId].focus++;
             const tasks = getTaskData();
-            const findData = tasks.find((task) => task._id === selectedTaskId);
+            const findData = tasks?.find((task) => task._id === selectedTaskId);
             let tempTotalTime = 0;
             if (findData && findData.time) {
               tempTotalTime = findData.time;
@@ -249,7 +249,7 @@ const Navbar = ({ method }) => {
             updateUserData({ energy: energy });
           } else if (currentState === "shortBreak") {
             const tasks = getTaskData();
-            const findData = tasks.find((task) => task._id === selectedTaskId);
+            const findData = tasks?.find((task) => task._id === selectedTaskId);
             setTotalSeconds(settings.shortBreakDuration);
             statisticsData[formattedDate][selectedTaskId].shortBreak++;
             let tempTotalTime = 0;
@@ -276,7 +276,7 @@ const Navbar = ({ method }) => {
             updateUserData({ energy: energy });
           } else if (currentState === "longBreak") {
             const tasks = getTaskData();
-            const findData = tasks.find((task) => task._id === selectedTaskId);
+            const findData = tasks?.find((task) => task._id === selectedTaskId);
             let energy = 0;
             if (userData.energy) {
               energy = userData?.energy;
