@@ -18,17 +18,19 @@
     line-height: 24px;
     text-align: left;
     color: #2f2f2f;
+
     @include mobile {
       font-size: 17px;
     }
   }
   .activity-body {
-    width: Fixed (801px) px;
+    width: Fixed (793px) px;
     height: Hug (54px) px;
     padding: 10px 0px 0px 0px;
     gap: 110px;
     border: 0px 0px 1.5px 0px;
     opacity: 0px;
+    border-bottom: 1.5px solid #2f2f2f59;
   }
   .activity-body-span {
     font-family: Urbanist;
@@ -37,6 +39,8 @@
     line-height: 24px;
     text-align: left;
     color: #2f2f2f;
+    padding: 8px;
+
     @include mobile {
       font-size: 14px;
     }

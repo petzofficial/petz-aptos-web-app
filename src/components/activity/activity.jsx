@@ -110,8 +110,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around ">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -128,8 +127,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around ">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -146,8 +144,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>{" "}
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -164,8 +161,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>{" "}
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around ">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -182,8 +178,8 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>
-              <div className="activity-body flex items-start justify-around p-3">
+
+              <div className="activity-body flex items-start justify-around ">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -200,8 +196,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around ">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -218,8 +213,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>{" "}
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -236,8 +230,7 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>{" "}
-              <div className="activity-body flex items-start justify-around p-3">
+              <div className="activity-body flex items-start justify-around ">
                 <span className={`${urbanist.className} activity-body-span `}>
                   3 min ago
                 </span>
@@ -254,7 +247,6 @@ const ActivityComp = () => {
                   123.22.4312
                 </span>
               </div>
-              <div className="activity-line"></div>
             </div>
           </div>
         </div>

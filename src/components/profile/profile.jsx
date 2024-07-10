@@ -121,29 +121,30 @@ const ProfileComp = () => {
               Profile
             </h2>
 
-            <div className="profile flex flex-col items-start mt-8 gap-6">
-              <div className="avatar  rounded-full flex-col items-center flex gap-5">
+            <div className="profile flex flex-col items-start mt-8 gap-8">
+              <div className="avatar rounded-full flex-col items-center flex gap-[10px]">
                 <img
                   src="/profile.jpg"
                   alt="image"
                   className="profile-img h-32 object-cover w-32 rounded-full"
                 />
-                <div className="flex flex-col gap-1 ">
-                  <span className={`profile-username ${urbanist.className}`}>
-                    John David Doe
-                  </span>
-                  <span className={` ${urbanist.className} profile-about`}>
-                    UI Designer
-                  </span>
-                </div>
+
+                <span className={`profile-username ${urbanist.className}`}>
+                  John David Doe
+                </span>
+                <span className={` ${urbanist.className} profile-about`}>
+                  UI Designer
+                </span>
               </div>
               <div className="profile-account-details flex h-full w-full flex-col gap-8">
-                <div className="profile-account-detail-header  items-center  flex justify-between">
-                  <span
+                <div className="profile-account-detail-header p-2 pl-3 pr-3 items-center  flex justify-between">
+                  <div
                     className={` ${urbanist.className} profile-account-detail-header-text`}
                   >
-                    Account Details
-                  </span>
+                    <button className="profile-account-detail-button">
+                      Account Details
+                    </button>
+                  </div>
                   <button
                     className={`profile-edit-button rounded-lg flex items-center justify-center gap-1 ${urbanist.className}`}
                   >
@@ -151,7 +152,7 @@ const ProfileComp = () => {
                     Edit
                   </button>
                 </div>
-                <div className="flex flex-col profile-items-detail  md:gap-7 gap-3  ">
+                <div className="flex  md:mb-16 mb-5 flex-col profile-items-detail  md:gap-7 gap-3  ">
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col ">
                     <span
                       className={`${urbanist.className} profile-item-label`}

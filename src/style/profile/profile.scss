@@ -28,11 +28,17 @@
     }
   }
   .profile-account-details {
-    width: 100%;
+    width: Fixed (805px) px;
+    height: Hug (844px) px;
+    top: 582px;
+    left: 394px;
+    gap: 30px;
+    opacity: 0px;
+
     .profile-account-detail-header {
-      width: 100%;
+      width: Fill (805px) px;
       height: Fixed (100px) px;
-      padding: 15px;
+      // padding: 15px 0px 0px 0px;
       gap: 0px;
       opacity: 0px;
 
@@ -45,6 +51,7 @@
       line-height: 2px;
       text-align: center;
       color: #2f2f2f;
+
       @include mobile {
         font-size: 24px;
         font-weight: 600;
