@@ -27,6 +27,7 @@ const EditAddTask = ({ method }) => {
   const client = new AptosClient(NODE_URL);
   const moduleAddress =
     "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
+
   // 0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::task3;
   const existingTaskId = searchParams.get("id");
   const { account, signAndSubmitTransaction, network } = useWallet();
@@ -82,6 +83,56 @@ const EditAddTask = ({ method }) => {
       setTransactionInProgress(false);
     }
   };
+  const fetchTasks = async () => {
+    if (!account) return [];
+    try {
+      const todoListResource = await client.getAccountResource(
+        account?.address,
+        `${moduleAddress}::task3::TaskManager`
+      );
+      setAccountHasList(true);
+      console.log(todoListResource);
+      // tasks table handle
+      const tableHandle = todoListResource.data.tasks.handle;
+      // tasks table counter
+      const taskCounter = todoListResource.data.task_counter;
+
+      //const eventResource = await client.getEventsByEventHandle(tableHandle);
+
+      console.log(taskCounter);
+      /*   const tableItem = {
+        key_type: "u64",
+        value_type: `${moduleAddress}::todolist::Task`,
+        key: "0x49d2b46aeb9d79937334cbd5c8c3847c1aa0a11a7a4d74a82a12b94661dc2a4c",
+      };
+      const taskResource = await client.getTableItem(tableHandle, tableItem);
+      console.log(taskResource) */
+
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        console.log(counter);
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${moduleAddress}::task3::Task`,
+          key: `${counter}`,
+        };
+        // console.log(tableHandle,"task tableHandle")
+        // console.log(tableItem,"task item")
+        const task = await client.getTableItem(tableHandle, tableItem);
+
+        console.log(task, "task");
+        tasks.push(task);
+
+        counter++;
+      }
+      // set tasks in local state
+      //setTasks(tasks);
+    } catch (e) {
+      setAccountHasList(false);
+    }
+  };
+
   // edit task
   const editingTask = async (e) => {
     e.preventDefault();
@@ -112,7 +163,9 @@ const EditAddTask = ({ method }) => {
       setTransactionInProgress(false);
     }
   };
-
+  useEffect(() => {
+    fetchTasks();
+  }, []);
   return (
     <section className="task-edit">
       <div className="addconatiner 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">

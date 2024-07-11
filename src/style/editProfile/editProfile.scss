@@ -26,14 +26,14 @@
     font-weight: 700;
     line-height: 24px;
     text-align: center;
-    color: #808080;
+    color: #ff6900;
 
     @include mobile {
       font-size: 20px;
     }
   }
   .profile-edit-input {
-    min-width: 500px;
+    min-width: 550px;
     // height: Fixed (20px) px;
     padding: 10px 15px 10px 15px;
     gap: 10px;
@@ -49,29 +49,43 @@
     text-align: left;
     color: #2f2f2f;
 
-    @include mobile {
-      font-size: 18px;
-      font-weight: 550;
-      max-width: 300px;
-      min-width: 300px;
-    }
     @include tablet {
-      max-width: 300px;
+      // max-width: 500px;
+      font-size: 22px;
+      font-weight: 600px;
+      width: 100%;
+    }
+    @include mobile {
+      width: 100%;
+      // max-width: 450px;
+      font-size: 18px;
+      font-weight: 600px;
+      padding: 10px 4px 10px 4px;
     }
   }
+
   .profile-edit-button-submit {
-    width: 500px;
-    top: 1705px;
-    left: 380px;
-    gap: 10px;
-    border: 1px 0px 0px 0px;
+    min-width: 550px;
+    top: 677px;
+    left: 391px;
+    gap: 50px;
     opacity: 0px;
     background: #ff6900;
+    border: 1px solid #ff6900;
+    font-family: Urbanist;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    text-align: center;
     @include tablet {
-      max-width: 400px;
+      // min-width: 400px;
+      font-size: 22px;
     }
     @include mobile {
-      max-width: 300px;
+      width: 100%;
+      min-width: 420px;
+      font-size: 18px;
     }
   }
 }

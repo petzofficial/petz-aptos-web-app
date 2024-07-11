@@ -60,8 +60,6 @@ const SignupComp = () => {
       data: {
         type: "entry_function_payload",
         function: `${moduleAddress}::user3::create_profile`,
-        type_arguments: [],
-
         functionArguments: [
           data.name,
           data.email,
@@ -102,7 +100,6 @@ const SignupComp = () => {
       };
 
       const response = await client.view(payload);
-
       if (response.length > 0) {
         setData({
           username: response[0].username,
@@ -121,6 +118,7 @@ const SignupComp = () => {
   useEffect(() => {
     getProfile();
   }, []);
+
   return (
     <div className="account">
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">

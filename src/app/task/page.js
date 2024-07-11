@@ -34,7 +34,7 @@ const Page = () => {
   const [accountHasList, setAccountHasList] = useState(false);
   const localStorageTasks = getAllTasksFromLocalStorage();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(localStorageTasks);
+
   const fetchTasks = async () => {
     if (!account) return [];
     try {
@@ -62,27 +62,22 @@ const Page = () => {
           value_type: `${moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
-        console.log("this is table item");
-        console.log(tableItem);
-
         const task = await client.getTableItem(tableHandle, tableItem);
-        console.log("this is task ero");
-        console.log(task, "task");
-
-        // Retrieve task status from local storage using task ID
         const taskStatus = localStorageTasks.find(
           (localStorageTask) => localStorageTask.task_id === task.task_id
         )?.status;
-        tasks.push({ ...task, taskStatus: taskStatus });
-
+        tasks.push(task);
         console.log("these are tasks");
         console.log(tasks);
+        setTasks(tasks);
+        setFilteredTasks(tasks);
         counter++;
       }
 
       setFilteredTasks(tasks);
       setTasks(tasks);
       setTasksAndStoreStatus(tasks, "Pending");
+      console.log("Tasks after setting:", tasks);
       setIsLoading(false);
     } catch (e) {
       console.log(e);
@@ -109,10 +104,6 @@ const Page = () => {
       setSlug(status);
     }
   };
-
-  console.log("these are tasks");
-
-  console.log(tasks);
   // Convert total and average time to HH:mm format
   const convertToHHMMSS = (timeInSeconds) => {
     if (timeInSeconds < 60) {
@@ -146,6 +137,8 @@ const Page = () => {
 
   // Get the tasks to display on the current page
   const tasksToDisplay = filteredTasks.slice(startIndex, endIndex);
+  console.log("these are filtered tasks");
+  console.log(tasks);
   if (!isLoading && tasksToDisplay.length === 0) {
     return (
       <div>

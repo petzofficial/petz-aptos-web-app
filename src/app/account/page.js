@@ -46,7 +46,14 @@ const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const Page = () => {
-  const { slug, setSlug } = useContext(TaskContext);
+  const {
+    slug,
+    setSlug,
+    isProfileEditing,
+    setIsProfileEditing,
+    isHavingAccount,
+    setIsHavingAccount,
+  } = useContext(TaskContext);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const newNetwork = useAppSelector(selectNewNetwork);
   const transactions = useAppSelector(selectTransactions);
@@ -56,7 +63,7 @@ const Page = () => {
   const transactionLoading = useAppSelector(selectIsTransactionLoading);
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
-
+  const [profileLoading, setProfileLoading] = useState(false);
   const { connected, account, wallet } = useWallet();
   const filteredToken = tokens?.filter(
     (x) =>
@@ -78,6 +85,31 @@ const Page = () => {
       setTooltipOpen(false);
     }, 2000);
   };
+  const getProfile = async () => {
+    if (!account) return;
+    try {
+      setProfileLoading(true);
+      const payload = {
+        function: `${moduleAddress}::user3::get_profile`,
+        type_arguments: [],
+        arguments: [account.address],
+      };
+      const response = await client.view(payload);
+      setIsHavingAccount(true);
+      if (response.length > 0) {
+        setIsHavingAccount(true);
+        setProfileLoading(false);
+      } else {
+        setIsHavingAccount(false);
+        setProfileLoading(false);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
   useEffect(() => {
     dispatch(fetchTransactionsAction(account?.address));
     dispatch(fetchCoinsAction(account?.address));
@@ -99,11 +131,21 @@ const Page = () => {
       });
     }
   }, [dispatch, tokensNeedImages]);
-  if (slug === "profile") {
-    // return <EditProfileComp />;
-    // return <SignupComp />;
 
-    return <ProfileComp />;
+  if (profileLoading) {
+    return <div className=" h-32  pt-32">Loading...</div>;
+  }
+
+  if (slug === "profile") {
+    if (isHavingAccount) {
+      if (isProfileEditing) {
+        return <EditProfileComp />;
+      } else {
+        return <ProfileComp />;
+      }
+    } else {
+      return <SignupComp />;
+    }
   } else if (slug === "signup") {
   } else if (slug === "activity") {
     return <ActivityComp />;

@@ -141,6 +141,7 @@ const Page = () => {
     const transactionPayload = {
       data: {
         function: `${moduleAddress}::task3::complete_task`,
+        type: "entry_function_payload",
         type_arguments: [],
         functionArguments: [itemID],
       },
@@ -161,6 +162,29 @@ const Page = () => {
       setTransactionInProgress(false);
     }
   };
+  //   const completeTask = async () => {
+  //   if (!account) return [];
+  //   setTransactionInProgress(true);
+  //   // build a transaction payload to be submited
+  //   const payload = {
+  //     type: "entry_function_payload",
+  //     function: `${moduleAddress}::task3::complete_task`,
+  //     type_arguments: [],
+  //     arguments: [1],
+  //   };
+  //   try {
+  //     // sign and submit transaction to chain
+  //     const response = await signAndSubmitTransaction(payload);
+  //     // wait for transaction
+  //     await client.waitForTransaction(response.hash);
+  //     setAccountHasList(true);
+  //   } catch (error: any) {
+  //     setAccountHasList(false);
+  //   } finally {
+  //     setTransactionInProgress(false);
+  //   }
+  // };
+
   return (
     <div>
       <section className="task-details">

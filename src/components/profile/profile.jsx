@@ -17,10 +17,17 @@ const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 const ProfileComp = () => {
-  const { slug, setSlug } = useContext(TaskContext);
+  const {
+    slug,
+    setSlug,
+    isProfileEditing,
+    setIsProfileEditing,
+    isHavingAccount,
+    setIsHavingAccount,
+  } = useContext(TaskContext);
   const [accountHasProfile, setAccountHasProfile] = useState(false);
   const { account, signAndSubmitTransaction } = useWallet();
-
+  const [selectedProfile, setSelectedProfile] = useState("");
   const [data, setData] = useState({
     username: "",
     name: "",
@@ -55,6 +62,12 @@ const ProfileComp = () => {
       console.error("Error:", error);
     }
   };
+  useEffect(() => {
+    const storedImage = localStorage.getItem("profileImage");
+    if (storedImage) {
+      setSelectedProfile(storedImage);
+    }
+  }, []);
   useEffect(() => {
     getProfile();
   }, []);
@@ -124,7 +137,7 @@ const ProfileComp = () => {
             <div className="profile flex flex-col items-start mt-8 gap-8">
               <div className="avatar rounded-full flex-col items-center flex gap-[10px]">
                 <img
-                  src="/profile.jpg"
+                  src={selectedProfile}
                   alt="image"
                   className="profile-img h-32 object-cover w-32 rounded-full"
                 />
@@ -146,6 +159,7 @@ const ProfileComp = () => {
                     </button>
                   </div>
                   <button
+                    onClick={() => setIsProfileEditing(true)}
                     className={`profile-edit-button rounded-lg flex items-center justify-center gap-1 ${urbanist.className}`}
                   >
                     <CreateIcon />
