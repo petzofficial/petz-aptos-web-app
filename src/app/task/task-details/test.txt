@@ -1,0 +1,155 @@
+Task Management
+Module Address: 0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::task3
+
+1. add_task
+public fun add_task(task_name: String, description: String, due_date: u64, priority: u8)
+
+Adds a new task to the system.
+Parameters:
+- task_name: String - The name of the task
+- description: String - A detailed description of the task
+- due_date: u64 - The due date of the task (in timestamp format)
+- priority: u8 - The priority level of the task
+
+2. update_task
+public fun update_task(task_id: u64, task_name: String, description: String, due_date: u64, priority: u8)
+
+Updates an existing task.
+Parameters:
+- task_id: u64 - The unique identifier of the task
+- task_name: String - The updated name of the task
+- description: String - The updated description of the task
+- due_date: u64 - The updated due date (in timestamp format)
+- priority: u8 - The updated priority level
+
+3. complete_task
+public fun complete_task<R>(task_id: u64, pool_addr: address)
+
+Marks a task as complete. This function is generic over type R.
+Type Parameters:
+- R: A generic type parameter. The specific use of R depends on the implementation.
+Parameters:
+- task_id: u64 - The unique identifier of the task
+- pool_addr: address - The address of the pool associated with the task
+
+4. delete_task
+public fun delete_task(task_id: u64)
+
+Removes a task from the system.
+Parameters:
+- task_id: u64 - The unique identifier of the task to be deleted
+
+5. complete_cycle
+public fun complete_cycle(task_id: u64, cycle_duration: u64)
+
+Completes a cycle for a given task.
+Parameters:
+- task_id: u64 - The unique identifier of the task
+- cycle_duration: u64 - The duration of the completed cycle
+
+6. Get Tasks Same Implement like before 
+
+User Profile Management
+Module Address: 0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::user3
+
+1. create_profile
+public fun create_profile(name: String, email: String, username: String, phone: String, birthday: String, gender: String, bio: String, user_addr: String, social: String, location: String, profile_image_url: String)
+
+Creates a new user profile.
+Parameters:
+- name: String - User's full name
+- email: String - User's email address
+- username: String - User's chosen username
+- phone: String - User's phone number
+- birthday: String - User's birthday
+- gender: String - User's gender
+- bio: String - User's biography
+- user_addr: String - User's address
+- social: String - User's social media information
+- location: String - User's location
+- profile_image_url: String - URL of the user's profile image
+
+2. update_profile
+public fun update_profile(name: String, email: String, username: String, phone: String, birthday: String, gender: String, bio: String, user_addr: String, social: String, location: String, profile_image_url: String)
+
+Updates an existing user profile.
+Parameters: (Same as create_profile)
+
+3. record_login
+public fun record_login(ip_address: vector<u8>, device: String)
+
+Records a user login event.
+Parameters:
+- ip_address: vector<u8> - The IP address of the login
+- device: String - The device used for login
+
+4. get_profile
+public fun get_profile(account_addr: address)
+
+Retrieves a user's profile.
+Parameters:
+- account_addr: address - The address of the account
+
+5. claim_energy
+public fun claim_energy()
+
+Allows a user to claim energy.
+
+6. get_energy
+public fun get_energy(account_addr: address)
+
+Retrieves the energy level for a user.
+Parameters:
+- account_addr: address - The address of the account
+
+7. reduce_energy_by_time
+public fun reduce_energy_by_time(duration_seconds: u64)
+
+Reduces a user's energy based on time.
+Parameters:
+- duration_seconds: u64 - The duration in seconds to reduce energy by
+
+8. select_nft
+public fun select_nft(collection_id: address, token_id: address)
+
+Selects an NFT for the user.
+Parameters:
+- collection_id: address - The address of the NFT collection
+- token_id: address - The address of the specific NFT token
+
+9. get_selected_nft
+public fun get_selected_nft(account_addr: address)
+
+Retrieves the selected NFT for a user.
+Parameters:
+- account_addr: address - The address of the account
+
+10. gain_experience
+public fun gain_experience(experience_points: u64)
+
+Adds experience points to a user's profile.
+Parameters:
+- experience_points: u64 - The amount of experience points to add
+
+11. get_user_experience
+public fun get_user_experience(account_addr: address)
+
+Retrieves the experience points for a user.
+Parameters:
+- account_addr: address - The address of the account
+
+12. claim_referral_reward
+public fun claim_referral_reward(referrer_addr: address)
+
+Claims a referral reward for a user.
+Parameters:
+- referrer_addr: address - The address of the referrer
+
+13. get_referral_reward
+public fun get_referral_reward(account_addr: address)
+
+Retrieves the referral reward for a user.
+Parameters:
+- account_addr: address - The address of the account
+
+14. Get Login History Fetching the data same like Get Tasks 

@@ -140,7 +140,7 @@ const Page = () => {
     }
   }, [dispatch, tokensNeedImages]);
 
-  if (profileLoading) {
+  if (profileLoading && slug !== "token") {
     return <div className=" h-32  pt-48 ">Loading...</div>;
   }
 
@@ -160,7 +160,6 @@ const Page = () => {
   } else if (slug === "refferal") {
     return <RefferalComp />;
   }
-  console.log(slug);
   return (
     <AppContext>
       <div>
