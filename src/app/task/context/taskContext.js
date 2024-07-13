@@ -28,7 +28,7 @@ export const TaskContextProvider = ({ children }) => {
   const [userEnergy, setUserEnergy] = useState("");
   const [slug, setSlug] = useState("token");
   // profile
-  const [isHavingAccount, setIsHavingAccount] = useState(true);
+  const [isHavingAccount, setIsHavingAccount] = useState(false);
   const [isProfileEditing, setIsProfileEditing] = useState(false);
   return (
     <TaskContext.Provider

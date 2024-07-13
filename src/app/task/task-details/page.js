@@ -132,23 +132,30 @@ const Page = () => {
     }
   };
   const completeTask = async () => {
-    console.log("this is item id ");
-    console.log(itemID);
     if (!account) return [];
     setTransactionInProgress(true);
-    // build a transaction payload to be submited
 
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::complete_task`,
         type: "entry_function_payload",
-        type_arguments: [],
-        functionArguments: [itemID],
+        function: `${moduleAddress}::task3::complete_task`,
+        type_arguments: [
+          "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::petz_gold_coin::PetZGoldCoin",
+        ],
+        functionArguments: [
+          itemID,
+          "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3",
+        ],
       },
+      //       const payload = {
+      // type: "entry_function_payload",
+      // function: `${moduleAddress}::task3::complete_task`,
+      // type_arguments: ["0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::petz_gold_coin::PetZGoldCoin"],
+      // arguments: [itemID,"0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3"],
+      // };
     };
 
     try {
-      // sign and submit transaction to chain
       const response = await signAndSubmitTransaction(transactionPayload);
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
@@ -156,8 +163,6 @@ const Page = () => {
       router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
-
-      console.log(error);
     } finally {
       setTransactionInProgress(false);
     }
@@ -324,7 +329,7 @@ const Page = () => {
                 >
                   Mark As{" "}
                   {task?.status === "In Progress" || "Pending"
-                    ? "Completed"
+                    ? "Complete"
                     : "Completed"}
                 </button>
               )}

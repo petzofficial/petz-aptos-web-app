@@ -32,27 +32,47 @@ const ProfileComp = () => {
     username: "",
     name: "",
     email: "",
+    phone: "",
+    birthday: "",
+    gender: "",
+    bio: "",
+    user_addr: "",
+    social: "",
+    location: "",
+    profile_image_url: "",
+    social: "",
   });
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
   const client = new AptosClient(NODE_URL);
   const moduleAddress =
-    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
   const getProfile = async () => {
     if (!account) return;
     try {
       const payload = {
-        function: `${moduleAddress}::user::get_profile`,
+        function: `${moduleAddress}::user3::get_profile`,
         type_arguments: [],
         arguments: [account.address],
       };
 
       const response = await client.view(payload);
+      console.log("this is response");
       console.log(response);
       if (response.length > 0) {
         setData({
+          email: response[0].email,
           username: response[0].username,
           name: response[0].name,
           email: response[0].email,
+
+          phone: response[0].phone,
+          birthday: response[0].birthday,
+          gender: response[0].gender,
+          bio: response[0].bio,
+          user_addr: response[0].user_addr,
+          social: response[0].social,
+          location: response[0].location,
+          profile_image_url: response[0].profile_image_url,
         });
         setAccountHasProfile(true);
       } else {
@@ -143,7 +163,7 @@ const ProfileComp = () => {
                 />
 
                 <span className={`profile-username ${urbanist.className}`}>
-                  John David Doe
+                  {data.username}
                 </span>
                 <span className={` ${urbanist.className} profile-about`}>
                   UI Designer
@@ -176,8 +196,7 @@ const ProfileComp = () => {
                     <span
                       className={`profile-item-value ${urbanist.className}`}
                     >
-                      {/* {data.username} */}
-                      abc
+                      {data.username}
                     </span>
                   </div>
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col ">
@@ -190,7 +209,7 @@ const ProfileComp = () => {
                       className={`profile-item-value ${urbanist.className}`}
                     >
                       {/* {data.username} */}
-                      xyz
+                      {data.name}
                     </span>
                   </div>
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
@@ -198,12 +217,12 @@ const ProfileComp = () => {
                       className={`profile-item-label ${urbanist.className}`}
                     >
                       {/* {data.email} */}
-                      xyz@gmail.com
+                      Email
                     </span>
                     <span
                       className={`profile-item-value ${urbanist.className}`}
                     >
-                      johndoe@gmail.com
+                      {data.email}
                     </span>
                   </div>
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
@@ -215,7 +234,7 @@ const ProfileComp = () => {
                     <span
                       className={`profile-item-value ${urbanist.className}`}
                     >
-                      Male
+                      {data.gender}
                     </span>
                   </div>
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
@@ -227,7 +246,7 @@ const ProfileComp = () => {
                     <span
                       className={`profile-item-value ${urbanist.className}`}
                     >
-                      +09 876543211
+                      {data.phone}
                     </span>
                   </div>
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col ">
@@ -239,7 +258,7 @@ const ProfileComp = () => {
                     <span
                       className={`${urbanist.className} profile-item-value`}
                     >
-                      03-12-2000
+                      {data.birthday}
                     </span>
                   </div>
                   <div className="profile-account-details-item gap-1 md:gap-2 flex flex-col">
@@ -251,7 +270,7 @@ const ProfileComp = () => {
                     <span
                       className={`${urbanist.className} profile-item-value`}
                     >
-                      Canada
+                      {data.location}
                     </span>
                   </div>
                 </div>

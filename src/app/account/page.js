@@ -42,6 +42,7 @@ import EditProfileComp from "@/components/EditProfile/editProfile";
 import ActivityComp from "@/components/activity/activity";
 import RefferalComp from "@/components/refferal/refferal";
 import { TaskContext } from "../task/context/taskContext";
+import { AptosClient } from "aptos";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -70,7 +71,11 @@ const Page = () => {
       x.current_token_data?.current_collection?.collection_name !==
       "PetZ NFT Collection"
   );
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
 
+  const moduleAddress =
+    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
   const userData = getUserData();
   const dispatch = useAppDispatch();
   let energy = 0;
@@ -104,12 +109,15 @@ const Page = () => {
         setProfileLoading(false);
       }
     } catch (error) {
+      setIsHavingAccount(false);
+      setProfileLoading(false);
+
       console.error("Error:", error);
     }
   };
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [account?.address]);
   useEffect(() => {
     dispatch(fetchTransactionsAction(account?.address));
     dispatch(fetchCoinsAction(account?.address));
@@ -133,7 +141,7 @@ const Page = () => {
   }, [dispatch, tokensNeedImages]);
 
   if (profileLoading) {
-    return <div className=" h-32  pt-32">Loading...</div>;
+    return <div className=" h-32  pt-48 ">Loading...</div>;
   }
 
   if (slug === "profile") {
