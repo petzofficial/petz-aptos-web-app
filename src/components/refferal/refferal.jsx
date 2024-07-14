@@ -14,6 +14,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Urbanist, Inter } from "next/font/google";
 import { FaFacebook } from "react-icons/fa";
 import { TaskContext } from "@/app/task/context/taskContext";
+import TabSection from "../tabs";
 const { FaArrowRightArrowLeft } = require("react-icons/fa6");
 const { TbCircleLetterT } = require("react-icons/tb");
 const { default: GoBackBtn } = require("../button/GoBackBtn");
@@ -30,65 +31,7 @@ const RefferalComp = () => {
     <div className="account">
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
-          <div className="xl:w-[250px] lg:w-[200px] max-md:m-auto">
-            <Link href={"/"} className="text-[30px] font-bold">
-              <GoBackBtn />
-            </Link>
-
-            <div className="token-trans-btn">
-              <button
-                style={{ width: "100%" }}
-                className={`flex items-start justify-start w-full h-full ${
-                  slug === "token" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
-                }`}
-                onClick={() => setSlug("token")}
-              >
-                <TbCircleLetterT /> <span>Token</span>
-              </button>
-              <button
-                style={{ width: "100%" }}
-                onClick={() => setSlug("transactions")}
-                className={`flex items-start justify-start w-full h-full ${
-                  slug === "transactions" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
-                }`}
-              >
-                <FaArrowRightArrowLeft /> <span>Transactions</span>
-              </button>
-              <button
-                style={{ width: "100%" }}
-                className={`flex items-start justify-start w-full h-full ${
-                  slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900] " : ""
-                }`}
-                onClick={() => setSlug("profile")}
-              >
-                <Avatar style={{ height: "25px", width: "25px" }} />{" "}
-                <span>Profile</span>
-              </button>
-              <button
-                style={{ width: "100%" }}
-                className={`flex z-40 items-start justify-start w-full h-full ${
-                  slug === "activity" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
-                }`}
-                onClick={() => setSlug("activity")}
-              >
-                <HistoryIcon />
-                <span>Activity</span>
-              </button>
-              <button
-                style={{ width: "100%" }}
-                className={`flex z-40 items-start justify-start w-full h-full ${
-                  slug === "refferal" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
-                }`}
-                onClick={() => setSlug("refferal")}
-              >
-                <ThumbUpOffAltIcon />
-                <span>Referral</span>
-              </button>
-              {/* <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
-                NFT Marketplace
-              </span> */}
-            </div>
-          </div>
+          <TabSection />
           <div className="m-auto max-width1  min-h-screen lg:mt-[-400px]">
             <h2 className={`flex justify-center ${outfit.className}`}>
               Refferal
