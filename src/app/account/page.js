@@ -74,7 +74,7 @@ const Page = () => {
   );
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
   const client = new AptosClient(NODE_URL);
-  const nftTokens = tokens.filter(
+  const nftTokens = tokens?.filter(
     (x) =>
       x?.current_token_data?.current_collection?.collection_name ===
       "PetZ NFT Collection"

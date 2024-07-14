@@ -70,6 +70,8 @@ const Page = () => {
     setCurrentState,
     userEnergy,
     setUserEnergy,
+    tasks,
+    setTasks,
   } = useContext(TaskContext);
   console.log(selectedToken);
   const [clickSound] = useSound(click_sound);
@@ -85,6 +87,9 @@ const Page = () => {
   const [hasError, setHasError] = useState(false);
   const moduleAddress =
     "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+  const TaskModuleAddress =
+    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
+
   const getProfile = async () => {
     if (!account) return [];
     console.log("after returned statement");
@@ -123,6 +128,51 @@ const Page = () => {
     }
   };
 
+  const fetchTasks = async () => {
+    if (!account) return [];
+    try {
+      const todoListResource = await client.getAccountResource(
+        account?.address,
+        `${TaskModuleAddress}::task3::TaskManager`
+      );
+
+      console.log(todoListResource);
+
+      const tableHandle = todoListResource.data.tasks.handle;
+      console.log("this is table handle");
+      console.log(tableHandle);
+      const taskCounter = todoListResource.data.set_task_event.counter;
+      console.log("this is task counter");
+      console.log(taskCounter);
+
+      let tasks = [];
+      let counter = 1;
+      while (counter <= taskCounter) {
+        console.log(counter);
+        const tableItem = {
+          key_type: "u64",
+          value_type: `${TaskModuleAddress}::task3::Task`,
+          key: `${counter}`,
+        };
+        const task = await client.getTableItem(tableHandle, tableItem);
+        // const taskStatus = localStorageTasks.find(
+        //   (localStorageTask) => localStorageTask.task_id === task.task_id
+        // )?.status;
+        tasks.push(task);
+        console.log("these are tasks");
+        console.log(tasks);
+        setTasks(tasks);
+        setFilteredTasks(tasks);
+        counter++;
+      }
+
+      setFilteredTasks(tasks);
+      setTasks(tasks);
+      setTasksAndStoreStatus(tasks, "Pending");
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const fetchUserInfo = async () => {
     if (!account) return [];
     try {
@@ -139,11 +189,13 @@ const Page = () => {
   }, []);
   useEffect(() => {
     fetchUserInfo();
+
     getProfile();
   }, [account?.address]);
   useEffect(() => {
     fetchUserInfo();
     getProfile();
+    fetchTasks();
   }, [account?.address]);
 
   useEffect(() => {
@@ -207,7 +259,7 @@ const Page = () => {
       });
     }
 
-    const tasks = getTaskData();
+    // const tasks = getTaskData();
     const status = "Completed";
     const filtered = tasks?.filter((task) => task.status != status);
     setFilteredTasks(filtered);
@@ -514,9 +566,13 @@ const Page = () => {
                   Choose Task
                 </option>
                 {filteredTasks.map((task, index) => {
+                  console.log("these are filtered tasks");
+                  console.log(filteredTasks);
+                  console.log("these are tasks");
+                  console.log(tasks);
                   return (
                     <option value={task._id}>
-                      {index + 1}. {task.title}
+                      {index + 1}. {task?.task_name}
                     </option>
                   );
                 })}
