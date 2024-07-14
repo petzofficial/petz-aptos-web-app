@@ -137,16 +137,16 @@ const ProfileComp = () => {
               </button>
               <button
                 className={`${
-                  slug === "Referral" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  slug === "refferal" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
-                onClick={() => setSlug("Referral")}
+                onClick={() => setSlug("refferal")}
               >
                 <ThumbUpOffAltIcon />
                 <span>Referral</span>
               </button>
               {/* <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
-                NFT Marketplace
-              </span> */}
+                                NFT Marketplace
+                            </span> */}
             </div>
           </div>
           <div className="max-width1  m-auto min-h-screen lg:mt-[-400px]">
