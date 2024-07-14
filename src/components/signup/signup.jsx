@@ -125,11 +125,11 @@ const SignupComp = () => {
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <TabSection />
-          <div className="  m-auto min-h-screen lg:mt-[-400px]">
+          <div className="max-width1   m-auto min-h-screen lg:mt-[-400px]">
             <h2 className={`flex justify-center ${outfit.className}`}>
               Sign Up
             </h2>
-            <div className="signup max-width1 md:justify-center  flex flex-col items-start mt-8 gap-6">
+            <div className="signup  md:justify-center  flex flex-col items-start mt-8 gap-6">
               <div className="flex w-full flex-col justify-start items-start gap-4 ">
                 <label
                   className={`${urbanist.className} signup-label`}
