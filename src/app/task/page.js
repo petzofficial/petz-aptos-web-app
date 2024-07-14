@@ -378,7 +378,7 @@ const Page = () => {
                   <div className="box flex items-center lg:w-[466px] px-2 py-1 justify-between">
                     <div
                       style={{
-                        backgroundColor: StatusColor(item.taskStatus),
+                        backgroundColor: StatusColor(item.status),
                       }}
                       className={`color`}
                     ></div>
