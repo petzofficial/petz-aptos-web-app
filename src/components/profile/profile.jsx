@@ -123,7 +123,7 @@ const ProfileComp = () => {
               <button
                 style={{ width: "100%" }}
                 className={`${
-                  slug === "profile " ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
                 onClick={() => setSlug("profile")}
               >

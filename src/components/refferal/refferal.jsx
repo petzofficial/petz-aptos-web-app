@@ -57,7 +57,7 @@ const RefferalComp = () => {
               <button
                 style={{ width: "100%" }}
                 className={`flex items-start justify-start w-full h-full ${
-                  slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900] z-10" : ""
+                  slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900] " : ""
                 }`}
                 onClick={() => setSlug("profile")}
               >
