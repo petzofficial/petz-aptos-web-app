@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Urbanist, Outfit } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { IoMdEye } from "react-icons/io";
 import "../../style/statistics/statistics.scss";
 import GoBackBtn from "@/components/button/GoBackBtn";
@@ -14,7 +14,6 @@ import moment from "moment";
 import { Bar } from "react-chartjs-2";
 
 const outfit = Outfit({ subsets: ["latin"] });
-const urban = Urbanist({ subsets: ["latin"] });
 
 const Page = () => {
   const [timeRange, setTimeRange] = useState("Weekly");
@@ -195,7 +194,7 @@ const Page = () => {
             </div>
             <div className="statistics-inner">
               <h2 className={`${outfit.className}`}>Statistics</h2>
-              <div className={`week-month-year-btn pb-5 ${urban.className}`}>
+              <div className={`week-month-year-btn pb-5`}>
                 <button
                   onClick={() => setTimeRange("Weekly")}
                   className={

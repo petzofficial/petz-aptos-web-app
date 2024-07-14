@@ -12,8 +12,8 @@
   }
   .profile-edit-upload-button {
     background: #ff6900;
-    font-family: Urbanist;
-    font-size: 20px;
+   
+    font-size: 18px;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.02em;
@@ -21,15 +21,15 @@
   }
   .profile-edit-lable {
     //styleName: Text;
-    font-family: Urbanist;
-    font-size: 30px;
+  
+    font-size: 18px;
     font-weight: 700;
     line-height: 24px;
     text-align: center;
     color: #ff6900;
 
     @include mobile {
-      font-size: 20px;
+      font-size: 18px;
     }
   }
   .profile-edit-input {
@@ -42,8 +42,8 @@
     opacity: 0px;
     border: 3px solid #2f2f2f59;
     //styleName: Text;
-    font-family: Urbanist;
-    font-size: 26px;
+  
+    font-size: 18px;
     font-weight: 700;
     line-height: 24px;
     text-align: left;
@@ -51,7 +51,7 @@
 
     @include tablet {
       // max-width: 500px;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 600px;
       width: 100%;
     }
@@ -72,15 +72,15 @@
     opacity: 0px;
     background: #ff6900;
     border: 1px solid #ff6900;
-    font-family: Urbanist;
-    font-size: 24px;
+
+    font-size: 18px;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.02em;
     text-align: center;
     @include tablet {
       // min-width: 400px;
-      font-size: 22px;
+      font-size: 18px;
     }
     @include mobile {
       width: 100%;

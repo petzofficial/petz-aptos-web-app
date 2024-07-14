@@ -64,14 +64,14 @@ const SignupComp = () => {
           data.name,
           data.email,
           data.username,
-          data.phone,
-          data.birthday,
-          data.gender,
-          data.bio,
-          data.user_addr,
-          data.social,
-          data.location,
-          data.profile_image_url,
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
         ],
       },
     };
@@ -129,7 +129,7 @@ const SignupComp = () => {
             </Link>
 
             <div className="token-trans-btn ">
-              <button
+            <button
                 className={`${
                   slug === "token" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -227,96 +227,8 @@ const SignupComp = () => {
                   onChange={(e) => handleChange(e)}
                 />
               </div>
-              <div className="flex w-full flex-col justify-start items-start gap-4 ">
-                <label
-                  className={`${urbanist.className} signup-label`}
-                  htmlFor=""
-                >
-                  Phone no
-                </label>
-                <input
-                  className={`${urbanist.className} signup-input border p-2 rounded-lg outline-none`}
-                  type="text"
-                  name="phone"
-                  value={data.phone}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div className="flex w-full flex-col justify-start items-start gap-4 ">
-                <label
-                  className={`${urbanist.className} signup-label`}
-                  htmlFor=""
-                >
-                  Gender
-                </label>
-                <input
-                  className={`signup-input border p-2 rounded-lg outline-none ${urbanist.className}`}
-                  type="text"
-                  name="gender"
-                  value={data.gender}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div className="flex w-full flex-col justify-start items-start gap-4 ">
-                <label
-                  className={`${urbanist.className} signup-label`}
-                  htmlFor=""
-                >
-                  Address
-                </label>
-                <input
-                  className={`signup-input border p-2 rounded-lg outline-none ${urbanist.className}`}
-                  type="text"
-                  name="user_addr"
-                  value={data.user_addr}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div className="flex w-full flex-col justify-start items-start gap-4 ">
-                <label
-                  className={`${urbanist.className} signup-label`}
-                  htmlFor=""
-                >
-                  Birdthday
-                </label>
-                <input
-                  className={`signup-input border p-2 rounded-lg outline-none ${urbanist.className}`}
-                  type="text"
-                  name="birthday"
-                  value={data.birthday}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div className="flex w-full flex-col justify-start items-start gap-4 ">
-                <label
-                  className={`${urbanist.className} signup-label`}
-                  htmlFor=""
-                >
-                  Location
-                </label>
-                <input
-                  className={`${urbanist.className} signup-input border p-2 rounded-lg outline-none`}
-                  type="text"
-                  name="location"
-                  value={data.location}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-              <div className="flex w-full flex-col justify-start items-start gap-4 ">
-                <label
-                  className={`${urbanist.className} signup-label`}
-                  htmlFor=""
-                >
-                  Social
-                </label>
-                <input
-                  className={`${urbanist.className} signup-input border p-2 rounded-lg outline-none`}
-                  type="text"
-                  name="social"
-                  value={data.social}
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
+              
+             
               <button
                 onClick={(e) => handlesignUp(e)}
                 className={`${urbanist.className} signup-submit p-2 mb-14  rounded-lg text-white`}

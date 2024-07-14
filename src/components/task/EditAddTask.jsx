@@ -5,7 +5,6 @@ import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useContext, useEffect, useState } from "react";
-import { Urbanist } from "next/font/google";
 import { v4 as uuid } from "uuid";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { addTask, getTaskData, updateTask } from "../../utils/localDB";
@@ -14,7 +13,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { AptosClient } from "aptos";
 // import { moduleAddress } from "@/app/page";
-const urban = Urbanist({ subsets: ["latin"] });
 
 const EditAddTask = ({ method }) => {
   const [newTask, setNewTask] = useState("");
