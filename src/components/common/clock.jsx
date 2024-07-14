@@ -41,7 +41,7 @@ function CircularProgressWithLabel(props) {
         }}
       >
         <span
-          className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${props.barlow.className}`}
+          className={`absolute text-[48px] font-semibold ${props.barlow.className}`}
           variant="caption"
           style={{ color: "#959595" }}
           component="div"
