@@ -1,24 +1,28 @@
 @import "../responsive.scss";
+
 .refferal {
   width: 100%;
+
   .refferal-intro-input-button {
     width: 45px;
     height: 45px;
-    padding: 0px 0px 0px 0px;
+    padding: 0;
     gap: 10px;
     border-radius: 0px 8px 8px 0px;
-    opacity: 0px;
     background: #ff6900;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
   .refferal-intro-div {
-    width: Hug (440px) px;
-    height: Hug (50px) px;
-    top: 560px;
-    left: 470px;
-    gap: 0px;
-    opacity: 0px;
+    width: 440px;
+    height: 50px;
+    display: flex;
+    gap: 0;
   }
+
   .refferal-intro-span {
     font-size: 18px;
     font-weight: 600;
@@ -27,16 +31,14 @@
     text-align: center;
     color: #2f2f2fbd;
   }
+
   .refferal-intro-input-input {
     width: 260px;
     height: 45px;
     gap: 10px;
     border-radius: 8px 0px 0px 8px;
-    border-top: 3px solid #2f2f2f59;
-    border-right: 0px;
-    border-bottom: 3px solid #2f2f2f59;
-    border-left: 3px solid #2f2f2f59;
-    opacity: 0px;
+    border: 3px solid #2f2f2f59;
+    border-right: 0;
     font-size: 18px;
     font-style: italic;
     font-weight: 400;
@@ -46,6 +48,7 @@
     color: #3c5a9a;
   }
 }
+
 .max-width1 {
   max-width: max-content;
   margin-left: 300px;
@@ -61,11 +64,7 @@
   }
 
   @include mobile {
-    // max-width: 300px;
-    // max-width: 100%;
     min-width: 100%;
-
-    // background-color: blue;
     margin-left: 2px;
     display: flex;
     flex-direction: column;

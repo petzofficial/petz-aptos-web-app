@@ -91,6 +91,7 @@ const ProfileComp = () => {
   useEffect(() => {
     getProfile();
   }, []);
+  console.log(slug);
   return (
     <div className="account">
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
@@ -136,10 +137,10 @@ const ProfileComp = () => {
                 <span>Activity</span>
               </button>
               <button
+                onClick={() => setSlug("refferal")}
                 className={`${
-                  slug === "Referral" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  slug === "refferal" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
-                onClick={() => setSlug("Referral")}
               >
                 <ThumbUpOffAltIcon />
                 <span>Referral</span>
