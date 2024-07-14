@@ -103,6 +103,7 @@ const ProfileComp = () => {
 
             <div className="token-trans-btn ">
               <button
+                style={{ width: "100%" }}
                 className={`${
                   slug === "token" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -111,6 +112,7 @@ const ProfileComp = () => {
                 <TbCircleLetterT /> <span>Token</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 className={`${
                   slug === "transactions" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -119,8 +121,9 @@ const ProfileComp = () => {
                 <FaArrowRightArrowLeft /> <span>Transactions</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 className={`${
-                  slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
+                  slug === "profile " ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
                 onClick={() => setSlug("profile")}
               >
@@ -128,6 +131,7 @@ const ProfileComp = () => {
                 <span>Profile</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 className={`${
                   slug === "activity" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -137,6 +141,7 @@ const ProfileComp = () => {
                 <span>Activity</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 onClick={() => setSlug("refferal")}
                 className={`${
                   slug === "refferal" ? "bg-[#FEE4D1] text-[#FF6900]" : ""

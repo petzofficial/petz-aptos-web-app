@@ -37,6 +37,7 @@ const RefferalComp = () => {
 
             <div className="token-trans-btn">
               <button
+                style={{ width: "100%" }}
                 className={`flex items-start justify-start w-full h-full ${
                   slug === "token" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -45,6 +46,7 @@ const RefferalComp = () => {
                 <TbCircleLetterT /> <span>Token</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 onClick={() => setSlug("transactions")}
                 className={`flex items-start justify-start w-full h-full ${
                   slug === "transactions" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
@@ -53,6 +55,7 @@ const RefferalComp = () => {
                 <FaArrowRightArrowLeft /> <span>Transactions</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 className={`flex items-start justify-start w-full h-full ${
                   slug === "profile" ? "bg-[#FEE4D1] text-[#FF6900] z-10" : ""
                 }`}
@@ -62,6 +65,7 @@ const RefferalComp = () => {
                 <span>Profile</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 className={`flex z-40 items-start justify-start w-full h-full ${
                   slug === "activity" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -71,6 +75,7 @@ const RefferalComp = () => {
                 <span>Activity</span>
               </button>
               <button
+                style={{ width: "100%" }}
                 className={`flex z-40 items-start justify-start w-full h-full ${
                   slug === "refferal" ? "bg-[#FEE4D1] text-[#FF6900]" : ""
                 }`}
@@ -84,11 +89,11 @@ const RefferalComp = () => {
               </span> */}
             </div>
           </div>
-          <div className="m-auto min-h-screen lg:mt-[-400px]">
+          <div className="m-auto max-width1  min-h-screen lg:mt-[-400px]">
             <h2 className={`flex justify-center ${outfit.className}`}>
               Refferal
             </h2>
-            <div className="refferal max-width1 mt-6 md:pr-24 items-center justify-center flex flex-col gap-4">
+            <div className="refferal  mt-6 md:pr-24 items-center justify-center flex flex-col gap-4">
               <div className="referral-intro flex flex-col items-center justify-center">
                 <span className={`refferal-intro-span`}>
                   Give your friends 10% off, and earn $8 when they buy.
