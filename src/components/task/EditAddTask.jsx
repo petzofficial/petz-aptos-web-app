@@ -178,7 +178,7 @@ const EditAddTask = ({ method }) => {
             {method === "add" ? "New Task" : ""}
           </h2>
           <form
-            className={typeof window !== "undefined" && urban.className}
+            className={typeof window !== "undefined"}
             action="#"
             method="post"
           >

@@ -97,7 +97,7 @@ const ProfileComp = () => {
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <div className="xl:w-[250px] lg:w-[200px] max-md:m-auto">
-            <Link href={"/home"} className="text-[30px] font-bold">
+            <Link href={"/"} className="text-[30px] font-bold">
               <GoBackBtn />
             </Link>
 
@@ -146,8 +146,8 @@ const ProfileComp = () => {
                 <span>Referral</span>
               </button>
               {/* <span className="marketPlace flex items-center justify-center  font-bold cursor-pointer">
-                NFT Marketplace
-              </span> */}
+                                NFT Marketplace
+                            </span> */}
             </div>
           </div>
           <div className="max-width1  m-auto min-h-screen lg:mt-[-400px]">
