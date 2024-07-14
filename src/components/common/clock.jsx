@@ -41,7 +41,7 @@ function CircularProgressWithLabel(props) {
         }}
       >
         <Typography
-          className={`absolute max-sm:text-[33px] sm:text-[40px] md:text-[43px] lg:text-[48px] font-semibold ${props.barlow.className}`}
+          className={`absolute text-[48px] font-semibold ${props.barlow.className}`}
           variant="caption"
           component="div"
           color="text.secondary"
