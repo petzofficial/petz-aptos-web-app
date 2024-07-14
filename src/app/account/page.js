@@ -64,6 +64,7 @@ const Page = () => {
   const transactionLoading = useAppSelector(selectIsTransactionLoading);
   const tokenLoading = useAppSelector(selectIsTokenLoading);
   const tokens = useAppSelector(selectTokens);
+
   const [profileLoading, setProfileLoading] = useState(false);
   const { connected, account, wallet } = useWallet();
   const filteredToken = tokens?.filter(
@@ -73,7 +74,13 @@ const Page = () => {
   );
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
   const client = new AptosClient(NODE_URL);
-
+  const nftTokens = tokens.filter(
+    (x) =>
+      x?.current_token_data?.current_collection?.collection_name ===
+      "PetZ NFT Collection"
+  );
+  console.log("these are nft tokens");
+  console.log(nftTokens);
   const moduleAddress =
     "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
   const userData = getUserData();
@@ -289,7 +296,7 @@ const Page = () => {
 
             <div className="account-inner">
               {slug === "token" ? (
-                <Token isLoading={tokenLoading} tokens={tokens} />
+                <Token isLoading={tokenLoading} tokens={nftTokens} />
               ) : (
                 ""
               )}
