@@ -106,6 +106,23 @@ const Page = () => {
       console.error("Error:", error);
     }
   };
+  const getEnergy = async () => {
+    if (!account) return [];
+    try {
+      const payload = {
+        function: `${moduleAddress}::user::get_energy`,
+        type_arguments: [],
+        arguments: [account.address],
+      };
+      const response = await client.view(payload);
+      console.log(response);
+      console.log("this is response from user");
+      setUserEnergy(response[0]);
+    } catch (error) {
+      console.log("error occured");
+      console.log(error);
+    }
+  };
   console.log(energy);
   const getSelectedNFT = async () => {
     if (!account) return [];
@@ -180,8 +197,12 @@ const Page = () => {
         account?.address,
         `${moduleAddress}::coin::CoinStore<${moduleAddress}::aptos_coin::AptosCoin>`
       );
+      console.log("these are user info");
       console.log(resp);
-    } catch (e) {}
+    } catch (e) {
+      console.log("error for user info");
+      console.log(e);
+    }
   };
   console.log(taskId);
   useEffect(() => {
@@ -189,7 +210,7 @@ const Page = () => {
   }, []);
   useEffect(() => {
     fetchUserInfo();
-
+    getEnergy();
     getProfile();
   }, [account?.address]);
   useEffect(() => {

@@ -83,6 +83,8 @@ const Navbar = ({ method }) => {
         arguments: [account.address],
       };
       const response = await client.view(payload);
+      console.log(response);
+      console.log("this is response from user");
       setUserEnergy(response[0]);
     } catch (error) {
       console.log("error occured");
