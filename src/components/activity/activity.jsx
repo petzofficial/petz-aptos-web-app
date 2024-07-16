@@ -79,7 +79,7 @@ const ActivityComp = () => {
         <div className="account-top">
           <TabSection />
           <div className="max-width1  m-auto min-h-screen mb-8 lg:mt-[-400px]">
-            <h2 className={`flex justify-center ${outfit.className}`}>
+            <h2 className={`flex justify-center  ${outfit.className}`}>
               Activity
             </h2>
             <div className="activity overscroll-auto mt-8">

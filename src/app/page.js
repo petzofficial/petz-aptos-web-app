@@ -97,10 +97,12 @@ const Page = () => {
       const payload = {
         function: `${moduleAddress}::user::get_profile`,
         type_arguments: [],
-        arguments: [account.address],
+        function: [account.address],
       };
       const response = await client.view(payload);
       // setEnergy(response[0]);
+      console.log("this is response");
+      console.log(response);
       console.log(response);
     } catch (error) {
       console.error("Error:", error);
@@ -116,7 +118,7 @@ const Page = () => {
       };
       const response = await client.view(payload);
       console.log(response);
-      console.log("this is response from user");
+      console.log("this is response from user for energy");
       setUserEnergy(response[0]);
     } catch (error) {
       console.log("error occured");
