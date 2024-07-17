@@ -115,8 +115,8 @@
 
 .max-width1 {
   max-width: max-content;
-  margin-left: 300px;
-  min-width: 700px;
+  margin-left: 355px;
+  min-width: 400px;
 
   @include tablet {
     max-width: 100%;
@@ -128,9 +128,7 @@
   }
 
   @include mobile {
-    max-width: 600px;
-    max-width: 100%;
-
+    min-width: 100%;
     margin-left: 2px;
     display: flex;
     flex-direction: column;

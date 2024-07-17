@@ -98,7 +98,7 @@ const ProfileComp = () => {
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <TabSection />
-          <div className="max-width1  m-auto min-h-screen lg:mt-[-400px]">
+          <div className="max-width  m-auto min-h-screen lg:mt-[-400px]">
             <h2 className={`flex justify-center ${outfit.className}`}>
               Profile
             </h2>
@@ -106,7 +106,7 @@ const ProfileComp = () => {
             <div className="profile flex flex-col items-start mt-8 gap-8">
               <div className="avatar rounded-full flex-col items-center flex gap-[10px]">
                 <img
-                  src={selectedProfile}
+                  src={"/profile.jpg"}
                   alt="image"
                   className="profile-img md:h-32 object-cover h-16 w-16 md:w-32 rounded-full"
                 />
