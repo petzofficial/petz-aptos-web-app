@@ -108,7 +108,7 @@ const ProfileComp = () => {
                 <img
                   src={selectedProfile}
                   alt="image"
-                  className="profile-img h-32 object-cover w-32 rounded-full"
+                  className="profile-img md:h-32 object-cover h-16 w-16 md:w-32 rounded-full"
                 />
 
                 <span className={`profile-username ${urbanist.className}`}>

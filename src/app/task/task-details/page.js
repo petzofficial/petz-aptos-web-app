@@ -123,12 +123,12 @@ const Page = () => {
       // wait for transaction
       await client.waitForTransaction(response.hash);
       setAccountHasList(true);
+      toast.success("Task deleted");
+      router.push("/task", { scroll: true });
     } catch (error) {
       setAccountHasList(false);
     } finally {
       setTransactionInProgress(false);
-      router.push("/task", { scroll: true });
-      toast.success("Task deleted");
     }
   };
   const completeTask = async () => {

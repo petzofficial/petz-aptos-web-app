@@ -32,11 +32,11 @@ const RefferalComp = () => {
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <TabSection />
-          <div className="m-auto max-width1  min-h-screen lg:mt-[-400px]">
+          <div className="m-auto max-width   min-h-screen lg:mt-[-400px]">
             <h2 className={`flex justify-center ${outfit.className}`}>
               Refferal
             </h2>
-            <div className="refferal  mt-6 md:pr-24 items-center justify-center flex flex-col gap-4">
+            <div className="refferal  mt-6  items-center justify-center flex flex-col gap-4">
               <div className="referral-intro flex flex-col items-center justify-center">
                 <span className={`refferal-intro-span`}>
                   Give your friends 10% off, and earn $8 when they buy.

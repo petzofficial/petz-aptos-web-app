@@ -163,7 +163,7 @@ const EditProfileComp = () => {
       <div className="addcontainer   2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <TabSection />
-          <div className="max-width1  m-auto min-h-screen mb-8 lg:mt-[-400px]">
+          <div className="max-width  m-auto min-h-screen mb-8 lg:mt-[-400px]">
             <h2 className={`flex justify-center ${outfit.className}`}>
               Profile
             </h2>
@@ -172,7 +172,7 @@ const EditProfileComp = () => {
                 <img
                   src={selectedFile}
                   alt="image"
-                  className="profile-img  h-32 object-cover w-32 rounded-full"
+                  className="profile-img md:h-32 object-cover h-16 w-16 md:w-32 rounded-full"
                 />
                 <button
                   className="rounded-lg pl-4 pr-4 flex items-center justify-center gap-3 text-white p-2 profile-edit-upload-button"

@@ -566,13 +566,14 @@ const Page = () => {
                   className=" mr-1  font-semibold flex-1 items-start gap-0 flex   flex-col"
                 >
                   <p className="">Energy</p>
-                  <LinearProgressEnergy jakarta={jakarta} energy={userEnergy} />
+                  {/* <LinearProgressEnergy jakarta={jakarta} energy={userEnergy} /> */}
+                  <LinearProgressEnergy jakarta={jakarta} energy={100} />
                 </div>
                 <h4
                   suppressHydrationWarning={true}
                   className={` mt-4  font-bold ${jakarta.className}`}
                 >
-                  {userEnergy ? userEnergy : 0}
+                  {userEnergy ? userEnergy : 100}
                 </h4>
               </div>
             </div>

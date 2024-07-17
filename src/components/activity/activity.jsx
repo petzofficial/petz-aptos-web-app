@@ -78,11 +78,11 @@ const ActivityComp = () => {
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <TabSection />
-          <div className="max-width1  m-auto min-h-screen mb-8 lg:mt-[-400px]">
+          <div className=" m-auto max-width min-h-screen mb-8 lg:mt-[-400px]">
             <h2 className={`flex justify-center  ${outfit.className}`}>
               Activity
             </h2>
-            <div className="activity overscroll-auto mt-8">
+            <div className="activity  overscroll-auto mt-8">
               <div className="activity-header flex items-center  justify-around">
                 <span className={`${urbanist.className} timestamp`}>
                   Timestamp

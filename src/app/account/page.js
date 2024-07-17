@@ -157,8 +157,7 @@ const Page = () => {
       if (isProfileEditing) {
         return <EditProfileComp />;
       } else {
-        // return <ProfileComp />;
-        return <SignupComp />;
+        return <ProfileComp />;
       }
     } else {
       return <SignupComp />;
