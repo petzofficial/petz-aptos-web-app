@@ -232,7 +232,10 @@ const Page = () => {
     secondsRef.current = seconds;
     console.log("this is called fetch coins actions");
   }, [seconds]);
-
+  useEffect(() => {
+    setEnergy(100);
+    setUserEnergy(100);
+  }, []);
   useEffect(() => {
     dispatch(fetchCoinsAction(account?.address));
     console.log("this is called fetch coins actions");
