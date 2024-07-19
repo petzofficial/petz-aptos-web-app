@@ -139,7 +139,7 @@ const Page = () => {
       data: {
         type: "entry_function_payload",
         function: `${moduleAddress}::task3::complete_task`,
-        type_arguments: [
+        typeArguments: [
           "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::petz_gold_coin::PetZGoldCoin",
         ],
         functionArguments: [

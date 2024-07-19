@@ -63,9 +63,20 @@ const Page = () => {
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);
-        const taskStatus = localStorageTasks.find(
-          (localStorageTask) => localStorageTask.task_id === task.task_id
-        )?.status;
+
+        // Determine task status text
+        let taskStatusText;
+        if (task.status === 0) {
+          taskStatusText = "Pending";
+        } else if (task.status === 1) {
+          taskStatusText = "In Progress";
+        } else if (task.status === 2) {
+          taskStatusText = "Completed";
+        }
+
+        // Set task status and status text
+        task.taskStatus = taskStatusText;
+
         tasks.push(task);
         console.log("these are tasks");
         console.log(tasks);
