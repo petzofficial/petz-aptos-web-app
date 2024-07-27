@@ -80,8 +80,7 @@ const Page = () => {
       x?.current_token_data?.current_collection?.collection_name ===
       "PetZ NFT Collection"
   );
-  console.log("these are nft tokens");
-  console.log(nftTokens);
+
   const moduleAddress =
     "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
   const userData = getUserData();
@@ -119,8 +118,6 @@ const Page = () => {
     } catch (error) {
       setIsHavingAccount(false);
       setProfileLoading(false);
-
-      console.error("Error:", error);
     }
   };
   useEffect(() => {

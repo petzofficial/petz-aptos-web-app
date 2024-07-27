@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import Image from "next/image";
 import { TaskContext } from "./task/context/taskContext";
-import group from "@/assets/home/Group 101.png";
 import empty from "@/assets/home/empty.png";
 import "@/style/home/home.scss";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
@@ -92,7 +91,6 @@ const Page = () => {
 
   const getProfile = async () => {
     if (!account) return [];
-    console.log("after returned statement");
     try {
       const payload = {
         function: `${moduleAddress}::user::get_profile`,
@@ -101,9 +99,7 @@ const Page = () => {
       };
       const response = await client.view(payload);
       // setEnergy(response[0]);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    } catch (error) {}
   };
   const getEnergy = async () => {
     if (!account) return [];
@@ -204,7 +200,6 @@ const Page = () => {
   }, [energy]);
   useEffect(() => {
     secondsRef.current = seconds;
-    console.log("this is called fetch coins actions");
   }, [seconds]);
   useEffect(() => {
     setEnergy(100);

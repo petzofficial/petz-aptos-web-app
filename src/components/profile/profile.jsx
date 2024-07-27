@@ -57,8 +57,7 @@ const ProfileComp = () => {
       };
 
       const response = await client.view(payload);
-      console.log("this is response");
-      console.log(response);
+
       if (response.length > 0) {
         setData({
           email: response[0].email,
@@ -79,9 +78,7 @@ const ProfileComp = () => {
       } else {
         setAccountHasProfile(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     const storedImage = localStorage.getItem("profileImage");
@@ -92,7 +89,6 @@ const ProfileComp = () => {
   useEffect(() => {
     getProfile();
   }, []);
-  console.log(slug);
   return (
     <div className="account">
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">

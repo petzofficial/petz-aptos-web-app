@@ -9,7 +9,6 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Outfit, Urbanist } from "next/font/google";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import "@/style/editProfile/editProfile.scss";
-import Link from "next/link";
 import { useContext, useEffect, useState, useRef } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { AptosClient } from "aptos";
@@ -123,8 +122,7 @@ const EditProfileComp = () => {
       };
 
       const response = await client.view(payload);
-      console.log("this is response");
-      console.log(response);
+
       if (response.length > 0) {
         setData({
           email: response[0].email,

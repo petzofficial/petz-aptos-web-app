@@ -36,19 +36,14 @@ const ActivityComp = () => {
         `${moduleAddress}::task3::TaskManager`
       );
       setAccountHasList(true);
-      console.log(todoListResource);
 
       const tableHandle = todoListResource.data.tasks.handle;
-      console.log("this is table handle");
-      console.log(tableHandle);
+
       const taskCounter = todoListResource.data.set_task_event.counter;
-      console.log("this is task counter");
-      console.log(taskCounter);
 
       let tasks = [];
       let counter = 1;
       while (counter <= taskCounter) {
-        console.log(counter);
         const tableItem = {
           key_type: "u64",
           value_type: `${moduleAddress}::task3::Task`,
@@ -56,15 +51,13 @@ const ActivityComp = () => {
         };
         const task = await client.getTableItem(tableHandle, tableItem);
         tasks.push(task);
-        console.log("these are tasks");
-        console.log(tasks);
+
         setTasks(tasks);
         setFilteredTasks(tasks);
         counter++;
       }
 
       setActivityHistory(tasks);
-      console.log("Tasks after setting:", tasks);
       setIsLoading(false);
     } catch (e) {
       console.log(e);

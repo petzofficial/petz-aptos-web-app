@@ -15,12 +15,11 @@ import { AptosClient } from "aptos";
 // import { moduleAddress } from "@/app/page";
 
 const EditAddTask = ({ method }) => {
-  const [newTask, setNewTask] = useState("");
   const [accountHasList, setAccountHasList] = useState(false);
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { taskId, setTaskId, filteredTasks, tasks } = useContext(TaskContext);
+  const { tasks } = useContext(TaskContext);
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
   const client = new AptosClient(NODE_URL);
   const moduleAddress =
@@ -95,17 +94,6 @@ const EditAddTask = ({ method }) => {
       // tasks table counter
       const taskCounter = todoListResource.data.task_counter;
 
-      //const eventResource = await client.getEventsByEventHandle(tableHandle);
-
-      console.log(taskCounter);
-      /*   const tableItem = {
-        key_type: "u64",
-        value_type: `${moduleAddress}::todolist::Task`,
-        key: "0x49d2b46aeb9d79937334cbd5c8c3847c1aa0a11a7a4d74a82a12b94661dc2a4c",
-      };
-      const taskResource = await client.getTableItem(tableHandle, tableItem);
-      console.log(taskResource) */
-
       let tasks = [];
       let counter = 1;
       while (counter <= taskCounter) {
@@ -118,8 +106,6 @@ const EditAddTask = ({ method }) => {
         // console.log(tableHandle,"task tableHandle")
         // console.log(tableItem,"task item")
         const task = await client.getTableItem(tableHandle, tableItem);
-
-        console.log(task, "task");
         tasks.push(task);
 
         counter++;

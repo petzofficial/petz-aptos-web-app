@@ -30,7 +30,6 @@ const Token = ({ tokens, isLoading }) => {
 
   useEffect(() => {
     dispatch(fetchTokensAction(account?.address));
-    console.log("use effect 3 is called");
   }, [dispatch, account, newNetwork]);
 
   if (isLoading) {
