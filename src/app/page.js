@@ -101,9 +101,6 @@ const Page = () => {
       };
       const response = await client.view(payload);
       // setEnergy(response[0]);
-      console.log("this is response");
-      console.log(response);
-      console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -117,15 +114,10 @@ const Page = () => {
         arguments: [account.address],
       };
       const response = await client.view(payload);
-      console.log(response);
-      console.log("this is response from user for energy");
       setUserEnergy(response[0]);
-    } catch (error) {
-      console.log("error occured");
-      console.log(error);
-    }
+    } catch (error) {}
   };
-  console.log(energy);
+
   const getSelectedNFT = async () => {
     if (!account) return [];
     try {
@@ -155,14 +147,9 @@ const Page = () => {
         `${TaskModuleAddress}::task3::TaskManager`
       );
 
-      console.log(todoListResource);
-
       const tableHandle = todoListResource.data.tasks.handle;
-      console.log("this is table handle");
-      console.log(tableHandle);
+
       const taskCounter = todoListResource.data.set_task_event.counter;
-      console.log("this is task counter");
-      console.log(taskCounter);
 
       let tasks = [];
       let counter = 1;
@@ -174,12 +161,7 @@ const Page = () => {
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);
-        // const taskStatus = localStorageTasks.find(
-        //   (localStorageTask) => localStorageTask.task_id === task.task_id
-        // )?.status;
         tasks.push(task);
-        console.log("these are tasks");
-        console.log(tasks);
         setTasks(tasks);
         setFilteredTasks(tasks);
         counter++;
@@ -188,9 +170,7 @@ const Page = () => {
       setFilteredTasks(tasks);
       setTasks(tasks);
       setTasksAndStoreStatus(tasks, "Pending");
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
   const fetchUserInfo = async () => {
     if (!account) return [];
@@ -199,14 +179,8 @@ const Page = () => {
         account?.address,
         `${moduleAddress}::coin::CoinStore<${moduleAddress}::aptos_coin::AptosCoin>`
       );
-      console.log("these are user info");
-      console.log(resp);
-    } catch (e) {
-      console.log("error for user info");
-      console.log(e);
-    }
+    } catch (e) {}
   };
-  console.log(taskId);
   useEffect(() => {
     runOneSignal();
   }, []);
