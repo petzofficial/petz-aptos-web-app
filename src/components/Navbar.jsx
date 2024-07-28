@@ -74,6 +74,7 @@ const Navbar = ({ method }) => {
   const client = new AptosClient(NODE_URL);
   const moduleAddress =
     "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+
   const getEnergy = async () => {
     if (!account) return [];
     try {
@@ -129,6 +130,27 @@ const Navbar = ({ method }) => {
     } catch (error) {
     } finally {
       // setTransactionInProgress(false);
+    }
+  };
+
+  const completeCycle = async (cycleCount) => {
+    console.log(taskId, cycleCount);
+    if (!account) return [];
+    const payload = {
+      data: {
+        type: "entry_function_payload",
+        function: `${moduleAddress}::task3::complete_cycle`,
+        type_arguments: [],
+        functionArguments: [taskId, cycleCount],
+      },
+    };
+
+    try {
+      const response = await signAndSubmitTransaction(payload);
+      await client.waitForTransaction(response.hash);
+    } catch (error) {
+      console.log(error);
+    } finally {
     }
   };
 
@@ -333,6 +355,7 @@ const Navbar = ({ method }) => {
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
       setTotalSeconds(settings.focusDuration);
+      completeCycle(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
       //updateTask(selectedTaskId, { currentCycleCount: 1 });
@@ -352,7 +375,7 @@ const Navbar = ({ method }) => {
       );
 
       updateTaskStatusInLocalStorage(selectedTaskId, "Completed");
-      completeCycle();
+      completeCycle(settings.focusDuration);
       toast.success(`Task is Completed`);
       /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
@@ -378,7 +401,7 @@ const Navbar = ({ method }) => {
     const userData = getUserData();
     const currentTime = new Date();
     const minutes = currentTime.getMinutes();
-    console.log(minutes);
+
     // Check if it's a multiple of 5 minutes and energy is less than 100
     if (minutes % 5 === 0 && userData?.energy < 100) {
       userData.energy += 1;
