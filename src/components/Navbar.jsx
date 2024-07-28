@@ -83,21 +83,14 @@ const Navbar = ({ method }) => {
         arguments: [account.address],
       };
       const response = await client.view(payload);
-      console.log(response);
-      console.log("this is response from user");
+
       setUserEnergy(response[0]);
-    } catch (error) {
-      console.log("error occured");
-      console.log(error);
-    }
+    } catch (error) {}
   };
-  console.log("this is user energy");
-  console.log(userEnergy);
+
   const claimEnergy = async () => {
-    console.log(account);
     if (!account) return [];
-    // setTransactionInProgress(true);
-    // build a transaction payload to be submited
+
     const payload = {
       data: {
         type: "entry_function_payload",
@@ -112,7 +105,6 @@ const Navbar = ({ method }) => {
       await client.waitForTransaction(response.hash);
       // setAccountHasList(true);
     } catch (error) {
-      console.log(error);
     } finally {
     }
   };
@@ -135,8 +127,6 @@ const Navbar = ({ method }) => {
       await client.waitForTransaction(response.hash);
       getEnergy();
     } catch (error) {
-      console.log(error);
-      // setAccountHasList(false);
     } finally {
       // setTransactionInProgress(false);
     }
@@ -360,9 +350,7 @@ const Navbar = ({ method }) => {
       const updatedFilteredTasks = updatedTasks?.filter(
         (task) => task.status !== "Completed"
       );
-      // setFilteredTasks(updatedFilteredTasks);
-      // Show success toast
-      // const reward = 60 * Math.floor(filtered?.time / 60);
+
       updateTaskStatusInLocalStorage(selectedTaskId, "Completed");
       completeCycle();
       toast.success(`Task is Completed`);
@@ -395,7 +383,7 @@ const Navbar = ({ method }) => {
     if (minutes % 5 === 0 && userData?.energy < 100) {
       userData.energy += 1;
       saveUserData(userData);
-      claimEnergy();
+      // claimEnergy();
     }
   }, 100000);
   useEffect(() => {
@@ -408,7 +396,7 @@ const Navbar = ({ method }) => {
       if (minutes % 5 === 0 && userData?.energy < 100) {
         userData.energy += 1;
         saveUserData(userData);
-        claimEnergy();
+        // claimEnergy();
       }
     };
 
