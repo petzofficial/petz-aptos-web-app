@@ -1,31 +1,22 @@
 "use client";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
-
+import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useContext, useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
 // import { client } from "@/app/page";
 import toast from "react-hot-toast";
-import { AptosClient } from "aptos";
-// import { moduleAddress } from "@/app/page";
-
+import { moduleAddress } from "@/utils/aptostask/moduleAddress";
 const EditAddTask = ({ method }) => {
   const [accountHasList, setAccountHasList] = useState(false);
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const { tasks } = useContext(TaskContext);
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
 
-  // 0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::task3;
   const existingTaskId = searchParams.get("id");
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [task, setTask] = useState({
@@ -69,7 +60,7 @@ const EditAddTask = ({ method }) => {
     };
     try {
       const response = await signAndSubmitTransaction(transactionPayload);
-      const transaction = await client.waitForTransaction(response.hash);
+      await client.waitForTransaction(response.hash);
       setAccountHasList(true);
 
       toast.success("Task added");
@@ -103,21 +94,17 @@ const EditAddTask = ({ method }) => {
           value_type: `${moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
-        // console.log(tableHandle,"task tableHandle")
-        // console.log(tableItem,"task item")
+
         const task = await client.getTableItem(tableHandle, tableItem);
         tasks.push(task);
 
         counter++;
       }
-      // set tasks in local state
-      //setTasks(tasks);
     } catch (e) {
       setAccountHasList(false);
     }
   };
 
-  // edit task
   const editingTask = async (e) => {
     e.preventDefault();
     if (!account) return [];

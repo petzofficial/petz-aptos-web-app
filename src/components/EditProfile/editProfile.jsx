@@ -1,19 +1,14 @@
 "use client";
 
-const { FaArrowRightArrowLeft } = require("react-icons/fa6");
-const { TbCircleLetterT } = require("react-icons/tb");
-const { default: GoBackBtn } = require("../button/GoBackBtn");
-const { Avatar } = require("@mui/material");
-import HistoryIcon from "@mui/icons-material/History";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { Outfit, Urbanist } from "next/font/google";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import "@/style/editProfile/editProfile.scss";
 import { useContext, useEffect, useState, useRef } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
-import { AptosClient } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
+import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
+
 const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -45,10 +40,7 @@ const EditProfileComp = () => {
     social: "",
   });
   const [transactionInProgress, setTransactionInProgress] = useState(false);
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
+
   const fileInputRef = useRef(null);
 
   const handleClick = () => {

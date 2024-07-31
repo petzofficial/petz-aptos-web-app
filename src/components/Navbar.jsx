@@ -28,7 +28,8 @@ import { NetworkSelector } from "./aptosIntegrations/networkSelector";
 import { useContext } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { AptosClient } from "aptos";
+import { useSearchParams } from "next/navigation";
+import { moduleAddress, client } from "@/utils/aptostask/moduleAddress.jsx";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
@@ -70,11 +71,10 @@ const Navbar = ({ method }) => {
   const [finishSound] = useSound(finish_sound);
   const { account, signAndSubmitTransaction } = useWallet();
 
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+  const searchParams = useSearchParams();
+  const existingTaskId = searchParams.get("id");
 
+  console.log(process.env);
   const getEnergy = async () => {
     if (!account) return [];
     try {
@@ -95,7 +95,7 @@ const Navbar = ({ method }) => {
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user::claim_energy`,
+        function: `${moduleAddress}::user3::claim_energy`,
         type_arguments: [],
         functionArguments: [],
       },
@@ -111,12 +111,10 @@ const Navbar = ({ method }) => {
   };
   const reduceEnergyByTime = async () => {
     if (!account) return [];
-    // setTransactionInProgress(true);
-    // build a transaction payload to be submited
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user::reduce_energy_by_time`,
+        function: `${moduleAddress}::user3::reduce_energy_by_time`,
         type_arguments: [],
         functionArguments: [60], //duration in seconds
       },
@@ -129,19 +127,17 @@ const Navbar = ({ method }) => {
       getEnergy();
     } catch (error) {
     } finally {
-      // setTransactionInProgress(false);
     }
   };
 
   const completeCycle = async (cycleCount) => {
-    console.log(taskId, cycleCount);
     if (!account) return [];
     const payload = {
       data: {
         type: "entry_function_payload",
         function: `${moduleAddress}::task3::complete_cycle`,
         type_arguments: [],
-        functionArguments: [taskId, cycleCount],
+        functionArguments: [existingTaskId, cycleCount],
       },
     };
 
