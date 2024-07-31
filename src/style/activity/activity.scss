@@ -55,28 +55,16 @@
 }
 
 .max-width1 {
-  max-width: 300px;
-  margin-left: 300px;
-  min-width: 700px;
+  max-width: max-content;
+  min-width: 600px;
 
   @include tablet {
-    max-width: 100%;
-    margin-left: 2px;
-    min-width: 300px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 600px;
+    min-width: 400px;
   }
 
   @include mobile {
     max-width: 600px;
-    max-width: 100%;
-
-    margin-left: 2px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    min-width: 400px;
   }
 }

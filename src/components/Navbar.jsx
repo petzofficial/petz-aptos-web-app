@@ -65,7 +65,6 @@ const Navbar = ({ method }) => {
     userEnergy,
     setUserEnergy,
   } = useContext(TaskContext);
-  console.log(isRunning);
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
@@ -74,7 +73,6 @@ const Navbar = ({ method }) => {
   const searchParams = useSearchParams();
   const existingTaskId = searchParams.get("id");
 
-  console.log(process.env);
   const getEnergy = async () => {
     if (!account) return [];
     try {
