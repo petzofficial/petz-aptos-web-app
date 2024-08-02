@@ -51,6 +51,7 @@ const RefferalComp = () => {
               <div className="refferal-intro-div flex items-center justify-center">
                 <input
                   type="text"
+                  value="http://localhost:3000/account?referral="
                   className="refferal-intro-input-input p-2 outline-none"
                 />
                 <button className="refferal-intro-input-button text-white flex items-center justify-center">

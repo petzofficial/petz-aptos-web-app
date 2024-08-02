@@ -86,7 +86,7 @@ const Transactions = ({ transactions, isLoading }) => {
                 </p>
                 <span>
                   {item?.success === true ? (
-                    <span style={{ color: "green" }}> Confirmed </span>
+                    <span style={{ color: "green" }}>Confirmed. </span>
                   ) : (
                     <span className=" text-red-600">Failed. </span>
                   )}{" "}
