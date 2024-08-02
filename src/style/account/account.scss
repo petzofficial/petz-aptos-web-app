@@ -20,7 +20,20 @@
           margin-top: 30px;
         }
       }
+      .max-width1 {
+        max-width: max-content;
+        min-width: 600px;
 
+        @include tablet {
+          max-width: 600px;
+          min-width: 400px;
+        }
+
+        @include mobile {
+          max-width: 600px;
+          min-width: 400px;
+        }
+      }
       .max-width {
         max-width: max-content;
         min-width: 400px;

@@ -1,32 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import Image from "next/image";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import HistoryIcon from "@mui/icons-material/History";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import CreateIcon from "@mui/icons-material/Create";
+
 import Welcome from "@/assets/refferal/welcome.png";
-import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "@/style/refferal/refferal.scss";
-import Link from "next/link";
-import { FaFacebookMessenger, FaTwitch } from "react-icons/fa";
+import { FaFacebookMessenger } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { Urbanist, Inter } from "next/font/google";
 import { FaFacebook } from "react-icons/fa";
-import { TaskContext } from "@/app/task/context/taskContext";
 import TabSection from "../tabs";
-const { FaArrowRightArrowLeft } = require("react-icons/fa6");
-const { TbCircleLetterT } = require("react-icons/tb");
-const { default: GoBackBtn } = require("../button/GoBackBtn");
-const { Avatar } = require("@mui/material");
+
 const outfit = Outfit({ subsets: ["latin"] });
-const urbanist = Urbanist({ subsets: ["latin"] });
-const inter = Inter({ subsets: ["latin"] });
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const RefferalComp = () => {
-  const { slug, setSlug } = useContext(TaskContext);
-
   return (
     <div className="account">
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">

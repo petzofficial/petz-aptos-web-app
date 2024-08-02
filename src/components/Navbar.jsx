@@ -28,7 +28,8 @@ import { NetworkSelector } from "./aptosIntegrations/networkSelector";
 import { useContext } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { AptosClient } from "aptos";
+import { useSearchParams } from "next/navigation";
+import { moduleAddress, client } from "@/utils/aptostask/moduleAddress.jsx";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
@@ -64,16 +65,14 @@ const Navbar = ({ method }) => {
     userEnergy,
     setUserEnergy,
   } = useContext(TaskContext);
-  console.log(isRunning);
   const userData = getUserData();
   const [clickSound] = useSound(click_sound);
   const [finishSound] = useSound(finish_sound);
   const { account, signAndSubmitTransaction } = useWallet();
 
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+  const searchParams = useSearchParams();
+  const existingTaskId = searchParams.get("id");
+
   const getEnergy = async () => {
     if (!account) return [];
     try {
@@ -83,25 +82,18 @@ const Navbar = ({ method }) => {
         arguments: [account.address],
       };
       const response = await client.view(payload);
-      console.log(response);
-      console.log("this is response from user");
+
       setUserEnergy(response[0]);
-    } catch (error) {
-      console.log("error occured");
-      console.log(error);
-    }
+    } catch (error) {}
   };
-  console.log("this is user energy");
-  console.log(userEnergy);
+
   const claimEnergy = async () => {
-    console.log(account);
     if (!account) return [];
-    // setTransactionInProgress(true);
-    // build a transaction payload to be submited
+
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user::claim_energy`,
+        function: `${moduleAddress}::user3::claim_energy`,
         type_arguments: [],
         functionArguments: [],
       },
@@ -112,18 +104,15 @@ const Navbar = ({ method }) => {
       await client.waitForTransaction(response.hash);
       // setAccountHasList(true);
     } catch (error) {
-      console.log(error);
     } finally {
     }
   };
   const reduceEnergyByTime = async () => {
     if (!account) return [];
-    // setTransactionInProgress(true);
-    // build a transaction payload to be submited
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user::reduce_energy_by_time`,
+        function: `${moduleAddress}::user3::reduce_energy_by_time`,
         type_arguments: [],
         functionArguments: [60], //duration in seconds
       },
@@ -135,10 +124,27 @@ const Navbar = ({ method }) => {
       await client.waitForTransaction(response.hash);
       getEnergy();
     } catch (error) {
-      console.log(error);
-      // setAccountHasList(false);
     } finally {
-      // setTransactionInProgress(false);
+    }
+  };
+
+  const completeCycle = async (cycleCount) => {
+    if (!account) return [];
+    const payload = {
+      data: {
+        type: "entry_function_payload",
+        function: `${moduleAddress}::task3::complete_cycle`,
+        type_arguments: [],
+        functionArguments: [existingTaskId, cycleCount],
+      },
+    };
+
+    try {
+      const response = await signAndSubmitTransaction(payload);
+      await client.waitForTransaction(response.hash);
+    } catch (error) {
+      console.log(error);
+    } finally {
     }
   };
 
@@ -343,6 +349,7 @@ const Navbar = ({ method }) => {
       setCurrentState("focus");
       setSeconds(settings.focusDuration);
       setTotalSeconds(settings.focusDuration);
+      completeCycle(settings.focusDuration);
     } else if (currentState === "longBreak") {
       // cycle update
       //updateTask(selectedTaskId, { currentCycleCount: 1 });
@@ -360,11 +367,9 @@ const Navbar = ({ method }) => {
       const updatedFilteredTasks = updatedTasks?.filter(
         (task) => task.status !== "Completed"
       );
-      // setFilteredTasks(updatedFilteredTasks);
-      // Show success toast
-      // const reward = 60 * Math.floor(filtered?.time / 60);
+
       updateTaskStatusInLocalStorage(selectedTaskId, "Completed");
-      completeCycle();
+      completeCycle(settings.focusDuration);
       toast.success(`Task is Completed`);
       /*  updateTask(selectedTaskId, {
         reward_PGC: 25 * 60,
@@ -390,12 +395,12 @@ const Navbar = ({ method }) => {
     const userData = getUserData();
     const currentTime = new Date();
     const minutes = currentTime.getMinutes();
-    console.log(minutes);
+
     // Check if it's a multiple of 5 minutes and energy is less than 100
     if (minutes % 5 === 0 && userData?.energy < 100) {
       userData.energy += 1;
       saveUserData(userData);
-      claimEnergy();
+      // claimEnergy();
     }
   }, 100000);
   useEffect(() => {
@@ -408,7 +413,7 @@ const Navbar = ({ method }) => {
       if (minutes % 5 === 0 && userData?.energy < 100) {
         userData.energy += 1;
         saveUserData(userData);
-        claimEnergy();
+        // claimEnergy();
       }
     };
 

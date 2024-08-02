@@ -1,19 +1,13 @@
 "use client";
 
-import HistoryIcon from "@mui/icons-material/History";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import CreateIcon from "@mui/icons-material/Create";
 import { Outfit, Urbanist } from "next/font/google";
 import { useContext, useEffect, useState } from "react";
-import Link from "next/link";
 import { TaskContext } from "@/app/task/context/taskContext";
-import { AptosClient } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
-const { FaArrowRightArrowLeft } = require("react-icons/fa6");
-const { TbCircleLetterT } = require("react-icons/tb");
-const { default: GoBackBtn } = require("../button/GoBackBtn");
-const { Avatar } = require("@mui/material");
+import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
+
 const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -43,10 +37,7 @@ const ProfileComp = () => {
     profile_image_url: "",
     social: "",
   });
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
+
   const getProfile = async () => {
     if (!account) return;
     try {
@@ -57,8 +48,7 @@ const ProfileComp = () => {
       };
 
       const response = await client.view(payload);
-      console.log("this is response");
-      console.log(response);
+
       if (response.length > 0) {
         setData({
           email: response[0].email,
@@ -79,9 +69,7 @@ const ProfileComp = () => {
       } else {
         setAccountHasProfile(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     const storedImage = localStorage.getItem("profileImage");
@@ -92,18 +80,17 @@ const ProfileComp = () => {
   useEffect(() => {
     getProfile();
   }, []);
-  console.log(slug);
   return (
     <div className="account">
       <div className="addcontainer 2xl:px-5 lg:px-14 md:px-10 sm:px-6 max-sm:px-3">
         <div className="account-top">
           <TabSection />
-          <div className="max-width  m-auto min-h-screen lg:mt-[-400px]">
-            <h2 className={`flex justify-center ${outfit.className}`}>
+          <div className="   m-auto min-h-screen lg:mt-[-400px]">
+            <h2 className={`flex  justify-center ${outfit.className}`}>
               Profile
             </h2>
 
-            <div className="profile flex flex-col items-start mt-8 gap-8">
+            <div className="profile max-width1 flex flex-col items-start mt-8 gap-8">
               <div className="avatar rounded-full flex-col items-center flex gap-[10px]">
                 <img
                   src={"/profile.jpg"}

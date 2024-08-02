@@ -1,27 +1,18 @@
 "use client";
 
-const { FaArrowRightArrowLeft } = require("react-icons/fa6");
-const { TbCircleLetterT } = require("react-icons/tb");
-const { default: GoBackBtn } = require("../button/GoBackBtn");
-const { Avatar } = require("@mui/material");
-import HistoryIcon from "@mui/icons-material/History";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import CreateIcon from "@mui/icons-material/Create";
 import { Plus_Jakarta_Sans, Outfit, Urbanist } from "next/font/google";
 import { useContext, useEffect } from "react";
 import "@/style/signup/signup.scss";
 const outfit = Outfit({ subsets: ["latin"] });
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 import { useState } from "react";
-import Link from "next/link";
 import { TaskContext } from "../../app/task/context/taskContext";
 import { AptosClient } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
+import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 const SignupComp = () => {
-  const { slug, setSlug } = useContext(TaskContext);
   const [data, setData] = useState({
     username: "",
     name: "",
@@ -37,10 +28,6 @@ const SignupComp = () => {
     social: "",
   });
 
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const [accountHasProfile, setAccountHasProfile] = useState(false);
   const { account, signAndSubmitTransaction } = useWallet();
@@ -79,12 +66,9 @@ const SignupComp = () => {
     try {
       const response = await signAndSubmitTransaction(payload);
       await client.waitForTransaction(response.hash);
-      console.log("respnse ");
-      console.log(response);
+
       setAccountHasProfile(true);
     } catch (error) {
-      console.log("error");
-      console.log(error);
       setAccountHasProfile(false);
     } finally {
       setTransactionInProgress(false);
@@ -111,9 +95,7 @@ const SignupComp = () => {
       } else {
         setAccountHasProfile(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

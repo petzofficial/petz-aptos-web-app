@@ -45,9 +45,7 @@ const Page = () => {
       } else {
         setAccountHasProfile(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    } catch (error) {}
   };
 
   const signUp = async (e) => {
@@ -67,7 +65,6 @@ const Page = () => {
       await client.waitForTransaction(response.hash);
       setAccountHasProfile(true);
     } catch (error) {
-      console.log(error);
       setAccountHasProfile(false);
     } finally {
       setTransactionInProgress(false);
