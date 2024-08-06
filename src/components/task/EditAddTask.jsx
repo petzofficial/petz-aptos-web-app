@@ -9,7 +9,6 @@ import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
 // import { client } from "@/app/page";
 import toast from "react-hot-toast";
-import { moduleAddress } from "@/utils/aptostask/moduleAddress";
 const EditAddTask = ({ method }) => {
   const [accountHasList, setAccountHasList] = useState(false);
   const [transactionInProgress, setTransactionInProgress] = useState(false);
