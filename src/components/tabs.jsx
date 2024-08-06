@@ -12,7 +12,7 @@ const { TbCircleLetterT } = require("react-icons/tb");
 const TabSection = () => {
   const { slug, setSlug } = useContext(TaskContext);
   return (
-    <div className="xl:w-[250px] lg:w-[200px] max-md:m-auto">
+    <div className="xl:w-[250px] z-20 lg:w-[200px] max-md:m-auto">
       <Link href={"/"} className="text-[30px] font-bold">
         <GoBackBtn />
       </Link>

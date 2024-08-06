@@ -136,3 +136,13 @@
     justify-content: center;
   }
 }
+.account-profile {
+  max-width: 660px;
+
+  @include mobile {
+  }
+
+  @include tablet {
+    max-width: 900px;
+  }
+}
