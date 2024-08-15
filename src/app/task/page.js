@@ -23,8 +23,6 @@ import CircularIndeterminate from "@/components/common/loading";
 const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
 // change this to be your module account address
-const moduleAddress =
-  "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
 
 const Page = () => {
   const { filteredTasks, setFilteredTasks, tasks, setTasks } =
@@ -41,7 +39,7 @@ const Page = () => {
       setIsLoading(true);
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${moduleAddress}::task3::TaskManager`
+        `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::TaskManager`
       );
       setAccountHasList(true);
 
@@ -54,7 +52,7 @@ const Page = () => {
       while (counter <= taskCounter) {
         const tableItem = {
           key_type: "u64",
-          value_type: `${moduleAddress}::task3::Task`,
+          value_type: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);

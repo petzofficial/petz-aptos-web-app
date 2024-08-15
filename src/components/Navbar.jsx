@@ -29,7 +29,6 @@ import { useContext } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useSearchParams } from "next/navigation";
-import { moduleAddress, client } from "@/utils/aptostask/moduleAddress.jsx";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
@@ -77,7 +76,7 @@ const Navbar = ({ method }) => {
     if (!account) return [];
     try {
       const payload = {
-        function: `${moduleAddress}::user::get_energy`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user::get_energy`,
         type_arguments: [],
         arguments: [account.address],
       };
@@ -93,7 +92,7 @@ const Navbar = ({ method }) => {
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user3::claim_energy`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user3::claim_energy`,
         type_arguments: [],
         functionArguments: [],
       },
@@ -112,7 +111,7 @@ const Navbar = ({ method }) => {
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user3::reduce_energy_by_time`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user3::reduce_energy_by_time`,
         type_arguments: [],
         functionArguments: [60], //duration in seconds
       },
@@ -133,7 +132,7 @@ const Navbar = ({ method }) => {
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::task3::complete_cycle`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::complete_cycle`,
         type_arguments: [],
         functionArguments: [existingTaskId, cycleCount],
       },

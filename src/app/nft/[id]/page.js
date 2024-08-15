@@ -39,8 +39,7 @@ const Page = () => {
   const { selectedToken, setSelectedToken } = useContext(TaskContext);
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
   const client = new AptosClient(NODE_URL);
-  const moduleAddress =
-    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
+
   // const {
   //   data: image,
   //   isLoading,
@@ -63,7 +62,7 @@ const Page = () => {
     // build a transaction payload to be submited
     // const payload = {
     //   type: "entry_function_payload",
-    //   function: `${moduleAddress}::user::select_nft`,
+    //   function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user::select_nft`,
     //   type_arguments: [],
     //   arguments: [collection_id, token_id], //collection_id, token_id
     // };
@@ -72,7 +71,7 @@ const Page = () => {
       const transactionPayload = {
         data: {
           type: "entry_function_payload",
-          function: `${moduleAddress}::user::select_nft`,
+          function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user::select_nft`,
           type_arguments: [],
           functionArguments: [collection_id, token_id], //collection_id, token_id
         },

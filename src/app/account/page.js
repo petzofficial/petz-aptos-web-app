@@ -81,8 +81,6 @@ const Page = () => {
       "PetZ NFT Collection"
   );
 
-  const moduleAddress =
-    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
   const userData = getUserData();
   const dispatch = useAppDispatch();
   let energy = 0;
@@ -102,7 +100,7 @@ const Page = () => {
     try {
       setProfileLoading(true);
       const payload = {
-        function: `${moduleAddress}::user3::get_profile`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user3::get_profile`,
         type_arguments: [],
         arguments: [account.address],
       };

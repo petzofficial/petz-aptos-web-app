@@ -31,9 +31,7 @@ const outfit = Outfit({ subsets: ["latin"] });
 import StatusComponent from "@/utils/aptostask/taskStatus";
 const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
 const client = new AptosClient(NODE_URL);
-// change this to be your module account address
-const moduleAddress =
-  "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
+
 const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -109,7 +107,7 @@ const Page = () => {
     setTransactionInProgress(true);
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::delete_task`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::delete_task`,
         functionArguments: [itemID],
       },
     };
@@ -135,7 +133,7 @@ const Page = () => {
     const transactionPayload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::task3::complete_task`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::complete_task`,
         typeArguments: [
           "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::petz_gold_coin::PetZGoldCoin",
         ],

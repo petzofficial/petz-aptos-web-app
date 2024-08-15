@@ -1,11 +1,10 @@
 "use client";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import { TaskContext } from "./task/context/taskContext";
 import empty from "@/assets/home/empty.png";
 import "@/style/home/home.scss";
 import click_sound from "@/assets/audioClock/click_sound.mp3";
-import finish_sound from "@/assets/audioClock/finish_sound.mp3";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Barlow_Condensed } from "next/font/google";
 import { FaPlay, FaSquare } from "react-icons/fa";
@@ -39,11 +38,11 @@ const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
   const searchParams = useSearchParams();
-  const { selectedToken, setSelectedToken } = useContext(TaskContext);
-  const ItemId = searchParams.get("id");
+  const { selectedToken } = useContext(TaskContext);
+
   const {
     taskId,
-    setTaskId,
+
     seconds,
     setSeconds,
     totalSeconds,
@@ -56,15 +55,13 @@ const Page = () => {
     setSelectedTaskId,
     settings,
     setSettings,
-    isEnergyRunning,
-    setIsEnergyRunning,
+
     filteredTasks,
     setFilteredTasks,
     secondsRef,
     setCurrentCycle,
     currentCycle,
-    setMinutes,
-    minutes,
+
     currentState,
     setCurrentState,
     userEnergy,
@@ -72,11 +69,10 @@ const Page = () => {
     tasks,
     setTasks,
   } = useContext(TaskContext);
-  console.log(selectedToken);
   const [clickSound] = useSound(click_sound);
   const dispatch = useAppDispatch();
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
+
+  const client = new AptosClient(process.env.NEXT_PUBLIC_ONE_NODE_URL);
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);
@@ -84,16 +80,12 @@ const Page = () => {
   const provider = getWalletNetwork(network);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const moduleAddress =
-    "0x82afe3de6e9acaf4f2de72ae50c3851a65bb86576198ef969937d59190873dfd";
-  const TaskModuleAddress =
-    "0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3";
 
   const getProfile = async () => {
     if (!account) return [];
     try {
       const payload = {
-        function: `${moduleAddress}::user::get_profile`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user::get_profile`,
         type_arguments: [],
         function: [account.address],
       };
@@ -105,7 +97,7 @@ const Page = () => {
     if (!account) return [];
     try {
       const payload = {
-        function: `${moduleAddress}::user::get_energy`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user::get_energy`,
         type_arguments: [],
         arguments: [account.address],
       };
@@ -120,7 +112,7 @@ const Page = () => {
       // Fetch the account resource
       const payload = {
         data: {
-          function: `${moduleAddress}::user::get_selected_nft`,
+          function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user::get_selected_nft`,
           type_arguments: [],
           functionArguments: [account.address],
         },
@@ -140,7 +132,7 @@ const Page = () => {
     try {
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${TaskModuleAddress}::task3::TaskManager`
+        `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::TaskManager`
       );
 
       const tableHandle = todoListResource.data.tasks.handle;
@@ -153,7 +145,7 @@ const Page = () => {
         console.log(counter);
         const tableItem = {
           key_type: "u64",
-          value_type: `${TaskModuleAddress}::task3::Task`,
+          value_type: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);
@@ -173,7 +165,7 @@ const Page = () => {
     try {
       const resp = await provider.getAccountResource(
         account?.address,
-        `${moduleAddress}::coin::CoinStore<${moduleAddress}::aptos_coin::AptosCoin>`
+        `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::coin::CoinStore<${process.env.NEXT_PUBLIC_ONE_moduleAddress}::aptos_coin::AptosCoin>`
       );
     } catch (e) {}
   };

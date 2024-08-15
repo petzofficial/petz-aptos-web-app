@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
-import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
+import { client } from "@/utils/aptostask/client";
 
 const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
@@ -42,7 +42,7 @@ const ProfileComp = () => {
     if (!account) return;
     try {
       const payload = {
-        function: `${moduleAddress}::user3::get_profile`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user3::get_profile`,
         type_arguments: [],
         arguments: [account.address],
       };

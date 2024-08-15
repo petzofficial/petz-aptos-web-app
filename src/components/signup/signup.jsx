@@ -9,7 +9,7 @@ import { TaskContext } from "../../app/task/context/taskContext";
 import { AptosClient } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
-import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
+import { client } from "@/utils/aptostask/client";
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 const SignupComp = () => {
@@ -47,7 +47,7 @@ const SignupComp = () => {
     const payload = {
       data: {
         type: "entry_function_payload",
-        function: `${moduleAddress}::user3::create_profile`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user3::create_profile`,
         functionArguments: [
           data.name,
           data.email,
@@ -79,7 +79,7 @@ const SignupComp = () => {
     if (!account) return;
     try {
       const payload = {
-        function: `${moduleAddress}::user3::get_profile`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::user3::get_profile`,
         type_arguments: [],
         arguments: [account.address],
       };

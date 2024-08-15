@@ -1,7 +1,7 @@
 "use client";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
+import { client } from "@/utils/aptostask/client";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useContext, useEffect, useState } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
@@ -53,7 +53,7 @@ const EditAddTask = ({ method }) => {
     setTransactionInProgress(true);
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::add_task`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::add_task`,
         functionArguments: [task?.title, task?.description, 0, priority],
       },
     };
@@ -75,7 +75,7 @@ const EditAddTask = ({ method }) => {
     try {
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${moduleAddress}::task3::TaskManager`
+        `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::TaskManager`
       );
       setAccountHasList(true);
       console.log(todoListResource);
@@ -90,7 +90,7 @@ const EditAddTask = ({ method }) => {
         console.log(counter);
         const tableItem = {
           key_type: "u64",
-          value_type: `${moduleAddress}::task3::Task`,
+          value_type: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
 
@@ -110,7 +110,7 @@ const EditAddTask = ({ method }) => {
     setTransactionInProgress(true);
     const transactionPayload = {
       data: {
-        function: `${moduleAddress}::task3::update_task`,
+        function: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::update_task`,
         functionArguments: [
           existingTaskId,
           task?.title,

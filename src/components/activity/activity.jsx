@@ -4,7 +4,7 @@ import { Outfit, Urbanist } from "next/font/google";
 import "@/style/activity/activity.scss";
 import { useContext, useState } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
-import { moduleAddress, client } from "@/utils/aptostask/moduleAddress";
+import { client } from "@/utils/aptostask/client";
 import TabSection from "../tabs";
 const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
@@ -17,7 +17,7 @@ const ActivityComp = () => {
       setIsLoading(true);
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${moduleAddress}::task3::TaskManager`
+        `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::TaskManager`
       );
       setAccountHasList(true);
 
@@ -30,7 +30,7 @@ const ActivityComp = () => {
       while (counter <= taskCounter) {
         const tableItem = {
           key_type: "u64",
-          value_type: `${moduleAddress}::task3::Task`,
+          value_type: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::Task`,
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);
