@@ -15,7 +15,7 @@ const EditAddTask = ({ method }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { tasks } = useContext(TaskContext);
-
+  console.log(process.env);
   const existingTaskId = searchParams.get("id");
   const { account, signAndSubmitTransaction, network } = useWallet();
   const [task, setTask] = useState({
