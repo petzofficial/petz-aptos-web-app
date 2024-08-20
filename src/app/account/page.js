@@ -33,6 +33,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Avatar, Tooltip } from "@mui/material";
+import { client } from "@/utils/aptostask/client";
 import { truncateAddress } from "@/components/aptosIntegrations/utils";
 import { getUserData } from "../../utils/localDB";
 import LinearProgressEnergy from "@/components/common/linearProgress";
@@ -42,7 +43,6 @@ import EditProfileComp from "@/components/EditProfile/editProfile";
 import ActivityComp from "@/components/activity/activity";
 import RefferalComp from "@/components/refferal/refferal";
 import { TaskContext } from "../task/context/taskContext";
-import { AptosClient } from "aptos";
 import TabSection from "@/components/tabs";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -73,8 +73,7 @@ const Page = () => {
       x.current_token_data?.current_collection?.collection_name !==
       "PetZ NFT Collection"
   );
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
+
   const nftTokens = tokens?.filter(
     (x) =>
       x?.current_token_data?.current_collection?.collection_name ===

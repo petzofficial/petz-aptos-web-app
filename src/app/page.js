@@ -18,8 +18,7 @@ import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
 import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
-import { AptosClient } from "aptos";
-
+import { client } from "@/utils/aptostask/client";
 import {
   fetchCoinsAction,
   selectCoins,
@@ -72,7 +71,6 @@ const Page = () => {
   const [clickSound] = useSound(click_sound);
   const dispatch = useAppDispatch();
 
-  const client = new AptosClient(process.env.NEXT_PUBLIC_ONE_NODE_URL);
   const coins = useAppSelector(selectCoins);
   const newNetwork = useAppSelector(selectNewNetwork);
   const coinsLoading = useAppSelector(selectIsCoinsLoading);

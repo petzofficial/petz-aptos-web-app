@@ -13,16 +13,13 @@ import StatusColor from "@/utils/aptostask/priorityColor";
 import Image from "next/image";
 import emptyImage from "@/assets/without/empty.png";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { AptosClient } from "aptos";
+import { client } from "@/utils/aptostask/client";
 import { TaskContext } from "./context/taskContext";
 import {
   setTasksAndStoreStatus,
   getAllTasksFromLocalStorage,
 } from "@/utils/localDB.js";
 import CircularIndeterminate from "@/components/common/loading";
-const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-const client = new AptosClient(NODE_URL);
-// change this to be your module account address
 
 const Page = () => {
   const { filteredTasks, setFilteredTasks, tasks, setTasks } =

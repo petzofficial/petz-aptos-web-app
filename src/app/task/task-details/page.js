@@ -23,14 +23,10 @@ import {
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { AptosClient } from "aptos";
-
+import { client } from "@/utils/aptostask/client";
 import { getFormattedDateTime } from "@/components/common/datetime";
 import PriorityComponent from "@/utils/aptostask/aptostask";
 const outfit = Outfit({ subsets: ["latin"] });
-import StatusComponent from "@/utils/aptostask/taskStatus";
-const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-const client = new AptosClient(NODE_URL);
 
 const Page = () => {
   const router = useRouter();
