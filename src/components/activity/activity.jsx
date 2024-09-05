@@ -4,13 +4,15 @@ import { Outfit, Urbanist } from "next/font/google";
 import "@/style/activity/activity.scss";
 import { useContext, useState } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
-import { client } from "@/utils/aptostask/client";
 import TabSection from "../tabs";
+import { AptosClient } from "aptos";
 const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 const ActivityComp = () => {
   const [activityHistory, setActivityHistory] = useState([]);
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
   const fetchTasks = async () => {
     if (!account) return [];
     try {

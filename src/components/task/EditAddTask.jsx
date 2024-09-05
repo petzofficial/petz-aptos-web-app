@@ -1,13 +1,13 @@
 "use client";
 import GoBackBtn from "@/components/button/GoBackBtn";
 import Link from "next/link";
-import { client } from "@/utils/aptostask/client";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useContext, useEffect, useState } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { addTask, getTaskData, updateTask } from "../../utils/localDB";
 import { useRouter, useSearchParams } from "next/navigation";
 // import { client } from "@/app/page";
+import { AptosClient } from "aptos";
 import toast from "react-hot-toast";
 const EditAddTask = ({ method }) => {
   const [accountHasList, setAccountHasList] = useState(false);
@@ -25,7 +25,8 @@ const EditAddTask = ({ method }) => {
   });
   const [priority, setPriority] = useState("");
   const editTask = tasks?.find((task) => task?.task_id === existingTaskId);
-
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
   useEffect(() => {
     if (method === "edit" && editTask) {
       setTask({

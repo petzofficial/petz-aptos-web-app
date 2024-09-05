@@ -33,7 +33,6 @@ import { useAppSelector, useAppDispatch } from "@/redux/app/hooks";
 import Coins from "@/components/coins/coin";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";
 import { Avatar, Tooltip } from "@mui/material";
-import { client } from "@/utils/aptostask/client";
 import { truncateAddress } from "@/components/aptosIntegrations/utils";
 import { getUserData } from "../../utils/localDB";
 import LinearProgressEnergy from "@/components/common/linearProgress";
@@ -44,6 +43,7 @@ import ActivityComp from "@/components/activity/activity";
 import RefferalComp from "@/components/refferal/refferal";
 import { TaskContext } from "../task/context/taskContext";
 import TabSection from "@/components/tabs";
+import { AptosClient } from "aptos";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -67,13 +67,14 @@ const Page = () => {
   const tokens = useAppSelector(selectTokens);
 
   const [profileLoading, setProfileLoading] = useState(false);
-  const { connected, account, wallet } = useWallet();
+  const { connected, account, wallet, network } = useWallet();
   const filteredToken = tokens?.filter(
     (x) =>
       x.current_token_data?.current_collection?.collection_name !==
       "PetZ NFT Collection"
   );
-
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
   const nftTokens = tokens?.filter(
     (x) =>
       x?.current_token_data?.current_collection?.collection_name ===
@@ -162,6 +163,8 @@ const Page = () => {
   } else if (slug === "refferal") {
     return <RefferalComp />;
   }
+  console.log("this is network");
+  console.log(network);
   return (
     <AppContext>
       <div>

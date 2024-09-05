@@ -19,7 +19,6 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import { useQuery } from "react-query";
 import { useAppSelector } from "@/redux/app/hooks";
-import { client } from "../../../utils/aptostask/client";
 import {
   selectSpecificToken,
   selectIsTokenLoading,
@@ -38,7 +37,8 @@ const Page = () => {
   const { account, signAndSubmitTransaction } = useWallet();
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const { selectedToken, setSelectedToken } = useContext(TaskContext);
-
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
   // const {
   //   data: image,
   //   isLoading,

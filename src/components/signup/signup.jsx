@@ -9,7 +9,6 @@ import { TaskContext } from "../../app/task/context/taskContext";
 import { AptosClient } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
-import { client } from "@/utils/aptostask/client";
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 const SignupComp = () => {
@@ -27,7 +26,8 @@ const SignupComp = () => {
     profile_image_url: "",
     social: "",
   });
-
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
+  const client = new AptosClient(NODE_URL);
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const [accountHasProfile, setAccountHasProfile] = useState(false);
   const { account, signAndSubmitTransaction } = useWallet();
