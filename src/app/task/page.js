@@ -36,7 +36,7 @@ const Page = () => {
       setIsLoading(true);
       const todoListResource = await client.getAccountResource(
         account?.address,
-        `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::TaskManager`
+        `0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::task3::TaskManager`
       );
       setAccountHasList(true);
 
@@ -49,7 +49,7 @@ const Page = () => {
       while (counter <= taskCounter) {
         const tableItem = {
           key_type: "u64",
-          value_type: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::Task`,
+          value_type: `0x3562227119a7a6190402c7cc0b987d2ff5432445a8bfa90c3a51be9ff29dcbe3::task3::Task`,
           key: `${counter}`,
         };
         const task = await client.getTableItem(tableHandle, tableItem);

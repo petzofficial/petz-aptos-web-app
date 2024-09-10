@@ -79,7 +79,6 @@ const EditAddTask = ({ method }) => {
         `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::TaskManager`
       );
       setAccountHasList(true);
-      console.log(todoListResource);
       // tasks table handle
       const tableHandle = todoListResource.data.tasks.handle;
       // tasks table counter
@@ -88,7 +87,6 @@ const EditAddTask = ({ method }) => {
       let tasks = [];
       let counter = 1;
       while (counter <= taskCounter) {
-        console.log(counter);
         const tableItem = {
           key_type: "u64",
           value_type: `${process.env.NEXT_PUBLIC_ONE_moduleAddress}::task3::Task`,
