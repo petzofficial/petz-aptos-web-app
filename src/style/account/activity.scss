@@ -2,12 +2,12 @@
 .activity {
   width: 100%;
   .activity-header {
-    width: 795px;
-    height: 64px;
+    width: Fixed (795px) px;
+    height: Hug (64px) px;
     padding: 10px 0px 10px 0px;
     gap: 120px;
     border: 0px 0px 1.5px 0px;
-    // opacity: 0px;
+    opacity: 0px;
     background: #ffd9bf;
     border-bottom: 1.5px solid #ff6900;
   }
@@ -23,12 +23,12 @@
     }
   }
   .activity-body {
-    width: 793px;
-    height: 54px;
+    width: Fixed (793px) px;
+    height: Hug (54px) px;
     padding: 10px 0px 0px 0px;
     gap: 110px;
     border: 0px 0px 1.5px 0px;
-    // opacity: 0px;
+    opacity: 0px;
     border-bottom: 1.5px solid #2f2f2f59;
   }
   .activity-body-span {
@@ -44,12 +44,12 @@
     }
   }
   .activity-line {
-    width: 801px;
-    height: 54px;
+    width: Fixed (801px) px;
+    height: Hug (54px) px;
     padding: 10px 0px 0px 0px;
     gap: 110px;
     border: 0px 0px 1.5px 0px;
-    // opacity: 0px;
+    opacity: 0px;
     border-bottom: 1.5px solid #2f2f2f59;
   }
 }

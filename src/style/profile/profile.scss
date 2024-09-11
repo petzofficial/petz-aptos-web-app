@@ -26,19 +26,18 @@
     }
   }
   .profile-account-details {
-    width: Fixed (805px) px;
-    height: Hug (844px) px;
+    width: Fixed 805 px;
+    height: 844px;
     top: 582px;
     left: 394px;
     gap: 30px;
-    opacity: 0px;
 
     .profile-account-detail-header {
-      width: Fill (805px) px;
-      height: Fixed (100px) px;
+      width: 805px;
+      // height: 100px;
       // padding: 15px 0px 0px 0px;
       gap: 0px;
-      opacity: 0px;
+      // opacity: 0px;
 
       background: #ffd9bf;
     }
@@ -55,11 +54,10 @@
       }
     }
     .profile-edit-button {
-      width: Hug (133px) px;
-      //   height: Fixed (48px) px;
+      width: 133px;
+      height: 48px;
       padding: 10px 18px 10px 18px;
       gap: 12px;
-      opacity: 0px;
       box-shadow: 0px 1px 0px 0px #00000040;
       background: #ff6900;
 
@@ -99,12 +97,11 @@
       }
     }
     .profile-items-detail {
-      width: Fill (805px) px;
-      height: Hug (714px) px;
+      width: 805px;
+      height: 714px;
       padding: 0px 0px 10px 0px;
       // gap: 26px;
       border: 0px 0px 2px 0px;
-      opacity: 0px;
       padding-bottom: 50px;
       @include mobile {
         gap: 10px;

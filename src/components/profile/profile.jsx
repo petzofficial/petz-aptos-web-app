@@ -1,5 +1,3 @@
-"use client";
-
 import CreateIcon from "@mui/icons-material/Create";
 import { Outfit, Urbanist } from "next/font/google";
 import { useContext, useEffect, useState } from "react";
@@ -7,7 +5,7 @@ import { TaskContext } from "@/app/task/context/taskContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import TabSection from "../tabs";
 import { client } from "@/utils/aptostask/client";
-
+import "@/style/profile/profile.scss";
 const outfit = Outfit({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
 

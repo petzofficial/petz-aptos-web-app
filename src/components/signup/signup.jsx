@@ -1,5 +1,3 @@
-"use client";
-
 import { Plus_Jakarta_Sans, Outfit, Urbanist } from "next/font/google";
 import { useContext, useEffect } from "react";
 import "@/style/signup/signup.scss";

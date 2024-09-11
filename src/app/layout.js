@@ -1,5 +1,6 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+
 import { Toaster } from "react-hot-toast";
 import { TaskContextProvider } from "@/app/task/context/taskContext";
 import { AppContext } from "@/components/aptosIntegrations/AppContext";

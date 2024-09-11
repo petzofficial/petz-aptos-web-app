@@ -1,5 +1,3 @@
-"use client";
-
 import { Outfit, Urbanist } from "next/font/google";
 import "@/style/activity/activity.scss";
 import { useContext, useState } from "react";

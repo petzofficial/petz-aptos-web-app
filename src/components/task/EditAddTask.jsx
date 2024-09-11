@@ -14,6 +14,7 @@ const EditAddTask = ({ method }) => {
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const { tasks } = useContext(TaskContext);
   console.log(process.env);
   const existingTaskId = searchParams.get("id");

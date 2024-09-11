@@ -29,11 +29,13 @@ import { useContext } from "react";
 import { TaskContext } from "@/app/task/context/taskContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 const outfit = Outfit({ subsets: ["latin"] });
 
 const Navbar = ({ method }) => {
   const intervalRef = useRef(null);
-
+  const params = useParams();
+  console.log(params);
   const [responsive, setResponsive] = useState(false);
   const {
     taskId,

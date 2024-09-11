@@ -1,16 +1,8 @@
 "use client";
-import GoBackBtn from "@/components/button/GoBackBtn";
-import Link from "next/link";
+
 import React, { useContext, useMemo, useState } from "react";
-import CreateIcon from "@mui/icons-material/Create";
 import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "@/style/account/account.scss";
-import "@/style/profile/profile.scss";
-
-import { TbCircleLetterT } from "react-icons/tb";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
-import HistoryIcon from "@mui/icons-material/History";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { IoCopy } from "react-icons/io5";
 import Token from "@/components/account/Token";
 import Transactions from "@/components/account/Transactions";
@@ -43,7 +35,7 @@ import ActivityComp from "@/components/activity/activity";
 import RefferalComp from "@/components/refferal/refferal";
 import { TaskContext } from "../task/context/taskContext";
 import TabSection from "@/components/tabs";
-import { AptosClient } from "aptos";
+import { client } from "@/utils/aptostask/client";
 const outfit = Outfit({ subsets: ["latin"] });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -73,8 +65,7 @@ const Page = () => {
       x.current_token_data?.current_collection?.collection_name !==
       "PetZ NFT Collection"
   );
-  const NODE_URL = "https://fullnode.testnet.aptoslabs.com";
-  const client = new AptosClient(NODE_URL);
+
   const nftTokens = tokens?.filter(
     (x) =>
       x?.current_token_data?.current_collection?.collection_name ===

@@ -1,5 +1,3 @@
-"use client";
-
 import { Outfit, Urbanist } from "next/font/google";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import "@/style/editProfile/editProfile.scss";

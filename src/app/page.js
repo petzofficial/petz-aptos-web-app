@@ -14,7 +14,6 @@ import useSound from "use-sound";
 import CircularClockProgress from "@/components/common/clock";
 import { getTaskData, rechargeEnergy, updateTask } from "@/utils/localDB";
 import toast from "react-hot-toast";
-import { useSearchParams } from "next/navigation";
 import { FaPause } from "react-icons/fa6";
 import LinearProgressEnergy from "@/components/common/linearProgress";
 import runOneSignal from "@/components/notification/notification";
@@ -36,7 +35,6 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "500" });
 
 const Page = () => {
-  const searchParams = useSearchParams();
   const { selectedToken } = useContext(TaskContext);
 
   const {
